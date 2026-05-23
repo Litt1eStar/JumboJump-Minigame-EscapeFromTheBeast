@@ -23,7 +23,7 @@ public abstract class BaseStateController
 
     public virtual void Dispose() 
     {
-        if (CurrentState?.IsStateActive)
+        if (CurrentState?.IsStateActive == true)
         {
             CurrentState.OnExitState();
         }
