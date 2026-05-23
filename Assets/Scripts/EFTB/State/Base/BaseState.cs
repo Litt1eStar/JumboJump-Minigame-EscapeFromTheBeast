@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public abstract class BaseState
 {
@@ -27,6 +28,7 @@ public abstract class BaseState
 	public virtual void OnEnterState()
 	{
 		IsStateActive = true;
+		Debug.WriteLine($"Entered state: {GetType().Name}");
 	}
 
 	public virtual void UpdateLogic(float deltaTime)
@@ -36,5 +38,6 @@ public abstract class BaseState
 	public virtual void OnExitState()
 	{
 		IsStateActive = false;
+		Debug.WriteLine($"Exited state: {GetType().Name}");
 	}
 }
