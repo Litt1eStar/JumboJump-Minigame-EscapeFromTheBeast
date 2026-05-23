@@ -10,22 +10,12 @@ namespace Assets.Scripts.EFTB.State.Player
         {
             StateTransitionMap.Add(typeof(PlayerWalkingState), null);
         }
-
-        public override void OnEnterState()
-        {
-
-        }
-
         public override void UpdateLogic(float deltaTime)
         {
             if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0)
             {
                 StateController.ChangeState(typeof(PlayerWalkingState));
             }
-        }
-        public override void OnExitState()
-        {
-
         }
 
     }

@@ -14,16 +14,6 @@ namespace Assets.Scripts.EFTB.State.Player
 
         }
 
-        public override void OnEnterState()
-        {
-            
-        }
-
-        public override void OnExitState()
-        {
-            
-        }
-
         public override void UpdateLogic(float deltaTime)
         {
             if(Input.GetAxis("Horizontal") == 0)
