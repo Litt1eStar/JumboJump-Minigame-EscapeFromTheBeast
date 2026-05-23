@@ -6,8 +6,10 @@ namespace Assets.Scripts.EFTB.State.Player
 {
     public class PlayerIdleState : BaseState
     {
+        private PlayerStateController playerStateController;
         public PlayerIdleState(BaseStateController stateController) : base(stateController)
         {
+            playerStateController = (PlayerStateController)stateController;
             StateTransitionMap.Add(typeof(PlayerWalkingState), null);
         }
         public override void UpdateLogic(float deltaTime)
@@ -16,6 +18,7 @@ namespace Assets.Scripts.EFTB.State.Player
             {
                 StateController.ChangeState(typeof(PlayerWalkingState));
             }
+            playerStateController.movementController.Idle();
         }
 
     }

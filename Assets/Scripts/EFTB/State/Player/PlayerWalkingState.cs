@@ -9,8 +9,10 @@ namespace Assets.Scripts.EFTB.State.Player
 {
     public class PlayerWalkingState : BaseState
     {
+        private PlayerStateController playerStateController;
         public PlayerWalkingState(BaseStateController stateController) : base(stateController)
         {
+            playerStateController = (PlayerStateController)stateController;
             StateTransitionMap.Add(typeof(PlayerIdleState), null);
         }
 
@@ -20,6 +22,7 @@ namespace Assets.Scripts.EFTB.State.Player
             {
                 StateController.ChangeState(typeof(PlayerIdleState));
             }
+            playerStateController.movementController.Move();
         }
     }
 }
