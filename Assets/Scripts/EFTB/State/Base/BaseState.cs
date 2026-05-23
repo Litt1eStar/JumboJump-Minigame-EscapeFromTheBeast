@@ -14,7 +14,7 @@ public abstract class BaseState
 		StateTransitionMap = new Dictionary<Type, Func<bool>>();
 	}
 
-	public virtual void InitializeState()
+	public virtual void Initialize()
     {
 
     }
@@ -26,7 +26,7 @@ public abstract class BaseState
 
 	public virtual void OnEnterState()
 	{
-
+		IsStateActive = true;
 	}
 
 	public virtual void UpdateLogic(float deltaTime)
@@ -35,6 +35,6 @@ public abstract class BaseState
 	}
 	public virtual void OnExitState()
 	{
-
+		IsStateActive = false;
 	}
 }
