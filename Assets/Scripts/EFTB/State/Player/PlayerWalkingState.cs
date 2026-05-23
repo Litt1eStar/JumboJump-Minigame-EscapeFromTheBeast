@@ -11,7 +11,7 @@ namespace Assets.Scripts.EFTB.State.Player
     {
         public PlayerWalkingState(BaseStateController stateController) : base(stateController)
         {
-
+            StateTransitionMap.Add(typeof(PlayerIdleState), null);
         }
 
         public override void UpdateLogic(float deltaTime)
