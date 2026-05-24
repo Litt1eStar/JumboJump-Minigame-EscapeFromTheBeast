@@ -38,7 +38,7 @@ namespace Assets.Scripts.EFTB.Utilities
                 }
                 else
                 {
-                    Debug.LogWarning($"Duplicate type {key} found in SceneObjectContext. Only the first instance will be stored.");
+                    DebugLogHelper.LogWarning($"Duplicate type {key} found in SceneObjectContext. Only the first instance will be stored.");
                 }
             }
         }

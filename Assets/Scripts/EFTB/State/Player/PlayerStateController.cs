@@ -10,13 +10,9 @@ namespace Assets.Scripts.EFTB.State.Player
     public class PlayerStateController : BaseStateController
     {
         protected override Type DefaultTypeState => typeof(PlayerIdleState);
-        public PlayerMovementController movementController { get; private set; }
         public PlayerVisualizer visualizer { get; private set; }
         public PlayerStateController()
         {
-            movementController = new PlayerMovementController();
-            movementController.Initialize();
-
             visualizer = new PlayerVisualizer();
             visualizer.Initialize();
 

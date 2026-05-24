@@ -30,6 +30,7 @@ namespace Assets.Scripts.EFTB.GI
         {
 
         }
+
         public void Move(float input)
         {
             FlipSpriteBasedFromInputDirection(input);

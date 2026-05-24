@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.EFTB.Utilities.SceneObjectContext
   sceneObjects:
-  - {fileID: 1198631662}
+  - {fileID: 0}
 --- !u!4 &383511439
 Transform:
   m_ObjectHideFlags: 0

@@ -10,7 +10,10 @@ namespace Assets.Scripts.EFTB.Visualizer
         public void Initialize()
         {
             giPlayer = SceneObjectContext.Instance.Get<GIPlayer>();
-
+            if(giPlayer == null)
+            {
+                DebugLogHelper.LogError("GIPlayer not found in SceneObjectContext. PlayerVisualizer initialization failed.");
+            }
         }
         public void Dispose()
         {
