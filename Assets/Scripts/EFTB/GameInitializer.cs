@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.EFTB.Manager;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,10 @@ namespace Assets.Scripts.EFTB
 {
     public class GameInitializer : MonoBehaviour
     {
-        private PlayerManager playerManager;
+        [SerializeField]
+        private Input2DManager input2DManager;
 
+        private PlayerManager playerManager;
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -20,6 +23,7 @@ namespace Assets.Scripts.EFTB
         private void Update()
         {
             playerManager.UpdateLogic(Time.deltaTime);
+            input2DManager.UpdateLogic(Time.deltaTime);
         }
         private void Initialize()
         {
