@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.EFTB.GI;
+using Assets.Scripts.EFTB.Utilities;
 using UnityEngine;
 
 namespace Assets.Scripts.EFTB.Visualizer
@@ -8,7 +9,8 @@ namespace Assets.Scripts.EFTB.Visualizer
         private GIPlayer giPlayer;
         public void Initialize()
         {
-            giPlayer = GameObject.FindObjectOfType<GIPlayer>();
+            giPlayer = SceneObjectContext.Instance.Get<GIPlayer>();
+
         }
         public void Dispose()
         {

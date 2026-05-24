@@ -20,6 +20,8 @@ namespace Assets.Scripts.EFTB.Utilities
                 return;
             }
             Instance = this;
+
+            Initialize();
         }
 
         public void Initialize()
@@ -46,7 +48,7 @@ namespace Assets.Scripts.EFTB.Utilities
             objects = null;
         }
 
-        public T Get<T> where T : class
+        public T Get<T>() where T : class
         {
             objects.TryGetValue(typeof(T), out var result);
             return result as T;
