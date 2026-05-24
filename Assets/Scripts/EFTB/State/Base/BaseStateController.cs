@@ -67,7 +67,7 @@ public abstract class BaseStateController
         return CurrentState;
     }
 
-    public void UpdateLogic(float deltaTime)
+    public virtual void UpdateLogic(float deltaTime)
     {
         if (CurrentState == null) return;
 

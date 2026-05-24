@@ -31,5 +31,11 @@ namespace Assets.Scripts.EFTB.State.Player
                 { typeof(PlayerWalkingState), new PlayerWalkingState(this) }
             };
         }
+
+        public override void UpdateLogic(float deltaTime)
+        {
+            base.UpdateLogic(deltaTime);
+            visualizer.giCamera.UpdateLogic(deltaTime);
+        }
     }
 }
