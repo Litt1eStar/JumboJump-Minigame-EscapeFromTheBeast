@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.EFTB.GI
 {
+    [ExecuteAlways]
     public class GICamera : MonoBehaviour
     {
         [SerializeField]
@@ -71,13 +72,19 @@ namespace Assets.Scripts.EFTB.GI
                                         boundMax.position.x - boundGap
                                         );
 
-            float clampedY = Mathf.Clamp(
-                                        position.y,
-                                        boundMin.position.y + boundGap,
-                                        boundMax.position.y - boundGap
-                                        );
-
-            return new Vector3(clampedX, clampedY, position.z);
+            return new Vector3(clampedX, position.y, position.z);
         }
+#if UNITY_EDITOR
+        private void Update()
+        {
+            if (Application.isPlaying) return; 
+
+            if (target == null) return;
+
+            
+            Vector3 snappedPosition = ClampToBounds(target.position + offset);
+            transform.position = snappedPosition;
+        }
+#endif
     }
 }
