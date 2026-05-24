@@ -39,7 +39,7 @@ namespace Assets.Scripts.EFTB.Utilities
             objects.Remove(typeof(T));
         }
 
-        public T Get<T>(T obj) where T : class
+        public T Get<T>() where T : class
         {
             objects.TryGetValue(typeof(T), out object result);
             return result as T;

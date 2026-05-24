@@ -14,7 +14,8 @@ namespace Assets.Scripts.EFTB.State.Player
         }
         public override void UpdateLogic(float deltaTime)
         {
-            if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0)
+            float xInput = playerStateController.input2DManager.xInput;
+            if (xInput > 0 || xInput < 0)
             {
                 StateController.ChangeState(typeof(PlayerWalkingState));
             }

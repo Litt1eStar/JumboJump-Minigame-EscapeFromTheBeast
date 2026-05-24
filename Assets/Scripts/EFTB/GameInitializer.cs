@@ -27,6 +27,8 @@ namespace Assets.Scripts.EFTB
         }
         private void Initialize()
         {
+            input2DManager.Initialize();
+
             playerManager = new PlayerManager();
             playerManager.Initialize();
         }

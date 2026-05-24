@@ -15,20 +15,14 @@ public class PlayerManager
 
         GameContext.Instance.Add(this);
     }
-
-    public void Dispose()
-    {
-        stateController = null;
-    }
-
-    public void UpdateLogic(float deltaTime)
-    {
-        stateController.UpdateLogic(deltaTime);
-    }
-
     public void Dispose()
     {
         stateController.Dispose();
         stateController = null;
     }
+    public void UpdateLogic(float deltaTime)
+    {
+        stateController.UpdateLogic(deltaTime);
+    }
+
 }

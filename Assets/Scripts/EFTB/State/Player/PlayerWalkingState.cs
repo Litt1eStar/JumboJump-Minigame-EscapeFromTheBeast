@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.Scripts.EFTB.Manager;
+using Assets.Scripts.EFTB.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,12 +20,12 @@ namespace Assets.Scripts.EFTB.State.Player
 
         public override void UpdateLogic(float deltaTime)
         {
-            float input = Input.GetAxis("Horizontal");
-            if(input == 0)
+            float xInput = playerStateController.input2DManager.xInput; 
+            if(xInput == 0)
             {
                 StateController.ChangeState(typeof(PlayerIdleState));
             }
-            playerStateController.visualizer.Move(input);
+            playerStateController.visualizer.Move(xInput);
         }
     }
 }
