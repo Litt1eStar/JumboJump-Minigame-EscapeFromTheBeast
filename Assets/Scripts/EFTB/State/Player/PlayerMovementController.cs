@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.EFTB.Visualizer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,24 +10,15 @@ namespace Assets.Scripts.EFTB.State.Player
 {
     public class PlayerMovementController
     {
+        private PlayerVisualizer visualizer;
         public void Initialize()
         {
-
+            visualizer = new PlayerVisualizer();
         }
 
         public void Dispose()
         {
 
-        }
-
-        public void Move()
-        {
-            Debug.Log("Player is moving");
-        }
-
-        public void Idle()
-        {
-            Debug.Log("Player is idle");
         }
     }
 }

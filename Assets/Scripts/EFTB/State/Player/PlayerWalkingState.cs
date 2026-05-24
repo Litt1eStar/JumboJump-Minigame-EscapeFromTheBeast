@@ -18,11 +18,12 @@ namespace Assets.Scripts.EFTB.State.Player
 
         public override void UpdateLogic(float deltaTime)
         {
-            if(Input.GetAxis("Horizontal") == 0)
+            float input = Input.GetAxis("Horizontal");
+            if(input == 0)
             {
                 StateController.ChangeState(typeof(PlayerIdleState));
             }
-            playerStateController.movementController.Move();
+            playerStateController.visualizer.Move(input);
         }
     }
 }

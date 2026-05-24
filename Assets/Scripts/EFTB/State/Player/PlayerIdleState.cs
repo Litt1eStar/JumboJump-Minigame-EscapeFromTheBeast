@@ -18,7 +18,7 @@ namespace Assets.Scripts.EFTB.State.Player
             {
                 StateController.ChangeState(typeof(PlayerWalkingState));
             }
-            playerStateController.movementController.Idle();
+            playerStateController.visualizer.Idle();
         }
 
     }
