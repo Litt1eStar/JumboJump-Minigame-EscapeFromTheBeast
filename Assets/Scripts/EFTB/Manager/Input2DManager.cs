@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.EFTB.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,11 @@ namespace Assets.Scripts.EFTB.Manager
         public float xInput { get; private set; }
         public float yInput { get; private set; }  
         
+        public void Initialize()
+        {
+            GameContext.Instance.Add(this);
+        }
+
         public void UpdateLogic(float deltaTime)
         {
             MovementInputHandler();

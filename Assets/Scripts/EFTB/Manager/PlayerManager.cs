@@ -1,4 +1,5 @@
 using Assets.Scripts.EFTB.State.Player;
+using Assets.Scripts.EFTB.Utilities;
 using UnityEngine;
 
 public class PlayerManager
@@ -11,6 +12,13 @@ public class PlayerManager
         stateController = new PlayerStateController();
         stateController.Initialize();
         stateController.StartStateController();
+
+        GameContext.Instance.Add(this);
+    }
+
+    public void Dispose()
+    {
+        stateController = null;
     }
 
     public void UpdateLogic(float deltaTime)
