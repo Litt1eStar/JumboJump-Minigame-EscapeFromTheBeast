@@ -1,3 +1,4 @@
+using Assets.Scripts.EFTB.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,6 +72,7 @@ public abstract class BaseStateController
     {
         if (CurrentState == null) return;
 
+        DebugLogHelper.Log($"[{GetType().Name}] Current State: {CurrentState.GetType().Name}");
         CurrentState.UpdateLogic(deltaTime);
     }
 

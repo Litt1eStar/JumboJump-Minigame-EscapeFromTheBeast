@@ -23,6 +23,8 @@ namespace Assets.Scripts.EFTB.State.Cat
         {
             base.OnEnterState();
             stateController.visualizer.Subscribe();
+            countdownTimer = TIME_TO_CATCH;
+            isRanoutOfTime = false;
         }
 
         public override void OnExitState()
@@ -33,22 +35,21 @@ namespace Assets.Scripts.EFTB.State.Cat
 
         public override void UpdateLogic(float deltaTime)
         {
-            countdownTimer += deltaTime;
-
-            bool isPlayerInSight = stateController.visualizer.IsTargetInSght(); // Replace with actual logic to check if player is in sight
-
-            if (isPlayerInSight && countdownTimer < TIME_TO_CATCH)
+            if(countdownTimer > 0f)
             {
-                // Transition to catch state
-                StateController.ChangeState(typeof(CatCatchState));
-                return;
+                countdownTimer -= deltaTime;
             }
 
-            if (countdownTimer > TIME_TO_CATCH)
+            if(countdownTimer <= 0f)
             {
-                //Transition to sleep state
-                StateController.ChangeState(typeof(CatSleepState));
-                return;
+                if (stateController.visualizer.IsTargetInSght())
+                {
+                    stateController.ChangeState(typeof(CatCatchState));
+                }
+                else
+                {
+                    stateController.ChangeState(typeof(CatSleepState));
+                }
             }
         }
     }

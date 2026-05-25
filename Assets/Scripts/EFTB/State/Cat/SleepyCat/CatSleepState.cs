@@ -14,6 +14,7 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
         public override void OnEnterState()
         {
             base.OnEnterState();
+            countdownTimer = 0f;
         }
 
         public override void OnExitState()

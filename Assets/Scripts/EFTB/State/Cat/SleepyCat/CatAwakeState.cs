@@ -17,6 +17,7 @@
         public override void OnEnterState()
         {
             base.OnEnterState();
+            countdownTimer = 0f;
             stateController.visualizer.Subscribe();
         }
 
