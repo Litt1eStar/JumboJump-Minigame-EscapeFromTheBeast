@@ -150,6 +150,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 257247683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &246388172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 246388173}
+  - component: {fileID: 246388174}
+  m_Layer: 0
+  m_Name: SleepyCat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &246388173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246388172}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.48, y: -3.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &246388174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246388172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c1d8a6cb373cd44ba7aeab278651a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.EFTB.GI.GICatSight
+  sightOrigin: {fileID: 0}
+  fovAngle: 0
+  range: 0
+  sightBlockerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &257247682
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +265,7 @@ MonoBehaviour:
   sceneObjects:
   - {fileID: 1198631664}
   - {fileID: 1680802854}
+  - {fileID: 246388174}
 --- !u!4 &383511439
 Transform:
   m_ObjectHideFlags: 0
@@ -1299,3 +1350,4 @@ SceneRoots:
   - {fileID: 383511439}
   - {fileID: 1231332989}
   - {fileID: 257247683}
+  - {fileID: 246388173}
