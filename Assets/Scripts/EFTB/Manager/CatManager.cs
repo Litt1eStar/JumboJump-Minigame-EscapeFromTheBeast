@@ -6,12 +6,11 @@ namespace Assets.Scripts.EFTB.Manager
     public class CatManager
     {
         private SleepyCatStateController sleepyCatStateController;
-
         public void Intialize()
         {
-            DebugLogHelper.Log($"{GetType().Name} got Initialized");
             sleepyCatStateController = new SleepyCatStateController();
             sleepyCatStateController.Initialize();
+            sleepyCatStateController.StartStateController();
         }
 
         public void Dispose()

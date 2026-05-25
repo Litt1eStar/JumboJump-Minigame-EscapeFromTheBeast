@@ -25,6 +25,7 @@ namespace Assets.Scripts.EFTB
         {
             playerManager.UpdateLogic(Time.deltaTime);
             input2DManager.UpdateLogic(Time.deltaTime);
+            catManager.UpdateLogic(Time.deltaTime);
         }
         private void Initialize()
         {
