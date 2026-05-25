@@ -24,7 +24,6 @@ namespace Assets.Scripts.EFTB.State.Cat
             base.OnEnterState();
             stateController.visualizer.Subscribe();
             countdownTimer = TIME_TO_CATCH;
-            isRanoutOfTime = false;
         }
 
         public override void OnExitState()
