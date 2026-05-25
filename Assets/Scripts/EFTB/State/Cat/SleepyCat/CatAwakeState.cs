@@ -10,6 +10,8 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
     {
         public CatAwakeState(BaseStateController stateController) : base(stateController)
         {
+            StateTransitionMap.Add(typeof(CatSleepState), null);
+            StateTransitionMap.Add(typeof(CatAlertState), null);
         }
 
         public override void OnEnterState()
