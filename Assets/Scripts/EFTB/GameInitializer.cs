@@ -14,6 +14,7 @@ namespace Assets.Scripts.EFTB
         private Input2DManager input2DManager;
 
         private PlayerManager playerManager;
+        private CatManager catManager;
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -31,6 +32,9 @@ namespace Assets.Scripts.EFTB
 
             playerManager = new PlayerManager();
             playerManager.Initialize();
+
+            catManager = new CatManager();
+            catManager.Intialize();
         }
     }
 }
