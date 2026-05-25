@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.EFTB.Detection;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Assets.Scripts.EFTB.GI
@@ -9,7 +8,10 @@ namespace Assets.Scripts.EFTB.GI
         [Header("Sight View Cone Configuration")]
         [SerializeField]
         private Transform sightOrigin;
-        
+
+        [SerializeField]
+        private Transform target;
+
         [SerializeField]
         private float fovAngle;
         
@@ -19,17 +21,9 @@ namespace Assets.Scripts.EFTB.GI
         [SerializeField]
         private LayerMask sightBlockerLayerMask;
 
-        private SightViewCone sightViewConeData;
-        public void Initialize()
-        {
-            sightViewConeData = new SightViewCone(fovAngle, range, sightBlockerLayerMask);
-        }
-
-        public void Dispose()
-        {
-            sightViewConeData = null;
-        }
-
+        public event Action OnTargetSpotted;
+        public event Action OnTargetLost;
+        public bool IsTargetInSight { get; private set; }
         public void UpdateLogic(float deltaTime)
         {
             //Placeholder logic for Sight View Logic Calculation

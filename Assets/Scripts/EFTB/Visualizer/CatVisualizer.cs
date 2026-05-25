@@ -3,8 +3,7 @@ using Assets.Scripts.EFTB.Utilities;
 
 namespace Assets.Scripts.EFTB.Visualizer
 {
-    public class CatVisualizer
-    {
+    public class CatVisualizer    {
         public GICatSight giSleepyCatSight { get; private set; }
         public void Initialize()
         {
@@ -13,8 +12,6 @@ namespace Assets.Scripts.EFTB.Visualizer
             {
                 DebugLogHelper.LogError("GICatSight not found in SceneObjectContext. CatVisualizer initialization failed.");
             }
-
-            giSleepyCatSight.Initialize();
         }
 
         public void Dispose()
