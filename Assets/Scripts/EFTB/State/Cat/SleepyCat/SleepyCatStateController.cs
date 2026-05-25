@@ -21,5 +21,11 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
                 {typeof(CatCatchState), new CatCatchState(this) }
             };
         }
+
+        public override void UpdateLogic(float deltaTime)
+        {
+            base.UpdateLogic(deltaTime);
+            visualizer.UpdateLogic(deltaTime);
+        }
     }
 }
