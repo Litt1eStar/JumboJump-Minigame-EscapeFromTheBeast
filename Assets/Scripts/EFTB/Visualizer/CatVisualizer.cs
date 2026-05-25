@@ -14,7 +14,7 @@ namespace Assets.Scripts.EFTB.Visualizer
                 DebugLogHelper.LogError("GICatSight not found in SceneObjectContext. CatVisualizer initialization failed.");
             }
 
-            DebugLogHelper.Log($"{GetType().Name} got Initialized");
+            giSleepyCatSight.Initialize();
         }
 
         public void Dispose()

@@ -194,12 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c1d8a6cb373cd44ba7aeab278651a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.EFTB.GI.GICatSight
-  sightOrigin: {fileID: 0}
-  fovAngle: 0
-  range: 0
+  sightOrigin: {fileID: 246388173}
+  fovAngle: 45
+  range: 10
   sightBlockerLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!1 &257247682
 GameObject:
   m_ObjectHideFlags: 0

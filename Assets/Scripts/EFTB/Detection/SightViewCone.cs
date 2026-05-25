@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.EFTB.Utilities;
+using System;
 using System.Numerics;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace Assets.Scripts.EFTB.Detection
             FovAngle = fovAngle;
             Range = range;
             SIGHT_BLOCKER_LAYER_MASK = sightBlockerLayerMask;
+        
+            DebugLogHelper.Log($"SightViewCone created with FOV: {FovAngle}, Range: {Range}, Blocker Layers: {SIGHT_BLOCKER_LAYER_MASK}");
         }
     }
 }
