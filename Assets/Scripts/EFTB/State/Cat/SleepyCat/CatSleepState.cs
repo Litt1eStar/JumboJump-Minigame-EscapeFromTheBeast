@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,12 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
 
         public override void UpdateLogic(float deltaTime)
         {
-            base.UpdateLogic(deltaTime);
+
+        }
+
+        private IEnumerator SleepCoroutine(float timeTillAwake)
+        {
+            return null;
         }
     }
 }

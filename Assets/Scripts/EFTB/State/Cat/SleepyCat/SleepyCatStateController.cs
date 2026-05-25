@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.EFTB.Utilities;
+using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
