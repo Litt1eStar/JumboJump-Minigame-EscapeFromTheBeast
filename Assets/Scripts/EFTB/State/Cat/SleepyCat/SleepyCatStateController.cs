@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.EFTB.Visualizer;
+﻿using Assets.Scripts.EFTB.Manager;
+using Assets.Scripts.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
 
@@ -8,16 +9,16 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
     {
         protected override Type DefaultTypeState => typeof(CatSleepState);
         public CatVisualizer visualizer { get; private set; }
-        public SleepyCatStateController()
+        public SleepyCatStateController(SleepyCatBehaviourConfig config)
         {
             visualizer = new CatVisualizer();
             visualizer.Initialize();
 
             States = new Dictionary<Type, BaseState>()
             {
-                {typeof(CatSleepState), new CatSleepState(this) },
-                {typeof(CatAwakeState), new CatAwakeState(this) },
-                {typeof(CatAlertState), new CatAlertState(this) },
+                {typeof(CatSleepState), new CatSleepState(this, config.TIME_TILL_AWAKE) },
+                {typeof(CatAwakeState), new CatAwakeState(this, config.TIME_TO_ALERT) },
+                {typeof(CatAlertState), new CatAlertState(this, config.TIME_TO_CATCH) },
                 {typeof(CatCatchState), new CatCatchState(this) }
             };
         }

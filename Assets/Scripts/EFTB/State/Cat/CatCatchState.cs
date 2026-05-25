@@ -9,10 +9,10 @@ namespace Assets.Scripts.EFTB.State.Cat
 {
     public class CatCatchState : BaseState
     {
-        private SleepyCatStateController controller;
+        private SleepyCatStateController stateController;
         public CatCatchState(BaseStateController stateController) : base(stateController)
         {
-            controller = (SleepyCatStateController)stateController;
+            this.stateController = (SleepyCatStateController)stateController;
         }
 
         public override void OnEnterState()

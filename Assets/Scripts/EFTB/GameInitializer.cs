@@ -15,6 +15,14 @@ namespace Assets.Scripts.EFTB
 
         private PlayerManager playerManager;
         private CatManager catManager;
+
+        [Header("Sleepy Cat Behaviour Config")]
+        [SerializeField]
+        private float TIME_TILL_AWAKE;
+        [SerializeField]
+        private float TIME_TO_ALERT;
+        [SerializeField]
+        private float TIME_TO_CATCH;
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -34,8 +42,14 @@ namespace Assets.Scripts.EFTB
             playerManager = new PlayerManager();
             playerManager.Initialize();
 
+            SleepyCatBehaviourConfig sleepyCatConfig = new SleepyCatBehaviourConfig(
+                TIME_TILL_AWAKE,
+                TIME_TO_ALERT,
+                TIME_TO_CATCH
+                );
+
             catManager = new CatManager();
-            catManager.Intialize();
+            catManager.Intialize(sleepyCatConfig);
         }
     }
 }

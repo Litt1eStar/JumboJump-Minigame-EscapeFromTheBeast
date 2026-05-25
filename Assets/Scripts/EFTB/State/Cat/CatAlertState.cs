@@ -12,12 +12,16 @@ namespace Assets.Scripts.EFTB.State.Cat
         private readonly float TIME_TO_CATCH = 5f;
         private float countdownTimer = 0f;
         private SleepyCatStateController stateController;
-        public CatAlertState(BaseStateController stateController) : base(stateController)
+        public CatAlertState(
+            BaseStateController stateController,
+            float TIME_TO_CATCH
+            ) : base(stateController)
         {
             StateTransitionMap.Add(typeof(CatCatchState), null);
             StateTransitionMap.Add(typeof(CatSleepState), null);
 
             this.stateController = (SleepyCatStateController)stateController;
+            this.TIME_TO_CATCH = TIME_TO_CATCH;
         }
         public override void OnEnterState()
         {

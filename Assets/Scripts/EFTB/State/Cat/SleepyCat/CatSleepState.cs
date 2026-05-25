@@ -6,9 +6,13 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
     {
         private readonly float TIME_TILL_AWAKE = 5f;
         private float countdownTimer = 0f;
-        public CatSleepState(BaseStateController stateController) : base(stateController)
+        public CatSleepState(
+            BaseStateController stateController,
+            float TIME_TILL_AWAKE
+            ): base(stateController)
         {
             StateTransitionMap.Add(typeof(CatAwakeState), null);    
+            this.TIME_TILL_AWAKE = TIME_TILL_AWAKE;
         }
 
         public override void OnEnterState()
