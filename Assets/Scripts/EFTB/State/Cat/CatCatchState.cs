@@ -1,11 +1,16 @@
-﻿namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assets.Scripts.EFTB.State.Cat
 {
-    public class CatAwakeState : BaseState
+    public class CatCatchState : BaseState
     {
-        public CatAwakeState(BaseStateController stateController) : base(stateController)
+        public CatCatchState(BaseStateController stateController) : base(stateController)
         {
-            StateTransitionMap.Add(typeof(CatSleepState), null);
-            StateTransitionMap.Add(typeof(CatCatchState), null);
+
         }
 
         public override void OnEnterState()

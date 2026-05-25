@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.EFTB.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
@@ -14,6 +13,7 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
                 {typeof(CatSleepState), new CatSleepState(this) },
                 {typeof(CatAwakeState), new CatAwakeState(this) },
                 {typeof(CatAlertState), new CatAlertState(this) },
+                {typeof(CatCatchState), new CatCatchState(this) }
             };
         }
     }

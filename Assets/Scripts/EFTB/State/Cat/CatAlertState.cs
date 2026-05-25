@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.EFTB.State.Cat.SleepyCat;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Assets.Scripts.EFTB.State.Cat
     {
         public CatAlertState(BaseStateController stateController) : base(stateController)
         {
+            StateTransitionMap.Add(typeof(CatSleepState), null);
         }
         public override void OnEnterState()
         {
