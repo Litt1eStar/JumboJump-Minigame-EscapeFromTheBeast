@@ -27,16 +27,13 @@ public abstract class BaseState
 	public virtual void OnEnterState()
 	{
 		IsStateActive = true;
-		Debug.Log($"Entered state: {GetType().Name}");
 	}
 
 	public virtual void UpdateLogic(float deltaTime)
 	{
-		Debug.Log($"Update Logic: {GetType().Name}");
 	}
 	public virtual void OnExitState()
 	{
 		IsStateActive = false;
-		Debug.Log($"Exited state: {GetType().Name}");
 	}
 }
