@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.EFTB.Interface
 {
-    public interface ICatStateContrller
+    public interface ICatStateController
     {
         public void Initialize();
         public void Dispose();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.EFTB.Interface;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.EFTB.GI
@@ -8,28 +9,34 @@ namespace Assets.Scripts.EFTB.GI
         [Header("Sight View Cone Configuration")]
         [SerializeField]
         private Transform sightOrigin;
-
-        [SerializeField]
-        private Transform target;
-
         [SerializeField]
         private float fovAngle;
-        
         [SerializeField]
         private float range;
-
         [SerializeField]
         private LayerMask sightBlockerLayerMask;
 
         public event Action OnTargetSpotted;
         public event Action OnTargetLost;
         public bool IsTargetInSight { get; private set; }
+        private Transform target;
+
+        [SerializeField]
+        private BaseCatConfigSO config;
 
         [Header("Debug Visualization")]
         [SerializeField] private bool drawGizmo = true;
         [SerializeField, Range(8, 64)] private int arcSegments = 24;
         [SerializeField] private Color colorClear = new Color(0f, 1f, 0f, 0.6f);
         [SerializeField] private Color colorSpotted = new Color(1f, 0f, 0f, 0.8f);
+       
+        public ICatStateController BuildStateController(Transform target)
+        {
+            this.target = target;
+            var controller = config.BuildStateController(this, target);
+            return controller;
+        }
+
         public void UpdateLogic(float deltaTime)
         {
             if (sightOrigin == null || target == null) return;

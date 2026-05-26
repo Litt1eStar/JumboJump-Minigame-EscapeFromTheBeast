@@ -1,47 +1,42 @@
-﻿using Assets.Scripts.EFTB.State.Cat.SleepyCat;
+﻿using Assets.Scripts.EFTB.GI;
+using Assets.Scripts.EFTB.Interface;
 using Assets.Scripts.EFTB.Utilities;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.EFTB.Manager
 {
-    public class SleepyCatBehaviourConfig
-    {
-        public float TIME_TILL_AWAKE;
-        public float TIME_TO_ALERT;
-        public float TIME_TO_CATCH;
-
-        public SleepyCatBehaviourConfig(
-            float TIME_TILL_AWAKE,
-            float TIME_TO_ALERT,
-            float TIME_TO_CATCH
-            )
-        {
-            this.TIME_TILL_AWAKE = TIME_TILL_AWAKE;
-            this.TIME_TO_ALERT = TIME_TO_ALERT;
-            this.TIME_TO_CATCH = TIME_TO_CATCH;
-        }
-    }
-
     public class CatManager
     {
-        private SleepyCatStateController sleepyCatStateController;
-        public void Intialize(SleepyCatBehaviourConfig config)
+        public List<ICatStateController> cats {  get; private set; }
+        public void Intialize(IEnumerable<GICatSight> sceneCats, Transform playerTarget)
         {
-            sleepyCatStateController = new SleepyCatStateController(config);
-            sleepyCatStateController.Initialize();
-            sleepyCatStateController.StartStateController();
+            cats = new List<ICatStateController>();
+            foreach(var giSight in sceneCats)
+            {
+                var controller = giSight.BuildStateController(playerTarget);
+                controller.Initialize();
+                cats.Add(controller);
+            }
 
             GameContext.Instance.Add(this);
         }
 
         public void Dispose()
         {
-            sleepyCatStateController = null;
-            sleepyCatStateController.Dispose();
+            foreach (var cat in cats)
+            {
+                cat.Dispose();
+            }
+            cats.Clear();
         }
 
         public void UpdateLogic(float deltaTime)
         {
-            sleepyCatStateController.UpdateLogic(deltaTime);
+            foreach (var cat in cats)
+            {
+                cat.UpdateLogic(deltaTime);
+            }
         }
     }
 }

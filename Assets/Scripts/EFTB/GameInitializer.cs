@@ -1,9 +1,7 @@
-﻿using Assets.Scripts.EFTB.Manager;
-using System;
+﻿using Assets.Scripts.EFTB.GI;
+using Assets.Scripts.EFTB.Manager;
+using Assets.Scripts.EFTB.Utilities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.EFTB
@@ -16,13 +14,9 @@ namespace Assets.Scripts.EFTB
         private PlayerManager playerManager;
         private CatManager catManager;
 
-        [Header("Sleepy Cat Behaviour Config")]
         [SerializeField]
-        private float TIME_TILL_AWAKE;
-        [SerializeField]
-        private float TIME_TO_ALERT;
-        [SerializeField]
-        private float TIME_TO_CATCH;
+        private Transform playertransform;
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -42,14 +36,18 @@ namespace Assets.Scripts.EFTB
             playerManager = new PlayerManager();
             playerManager.Initialize();
 
-            SleepyCatBehaviourConfig sleepyCatConfig = new SleepyCatBehaviourConfig(
-                TIME_TILL_AWAKE,
-                TIME_TO_ALERT,
-                TIME_TO_CATCH
-                );
-
             catManager = new CatManager();
-            catManager.Intialize(sleepyCatConfig);
+            IEnumerable<GICatSight> sceneCats = SceneObjectContext.Instance.GetAll<GICatSight>();
+            catManager.Intialize(sceneCats, playertransform);
+        }
+
+        private void Dispose()
+        {
+            playerManager.Dispose();
+            playerManager = null;
+            
+            catManager.Dispose();
+            catManager = null;
         }
     }
 }
