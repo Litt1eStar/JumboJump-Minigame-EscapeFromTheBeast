@@ -1174,7 +1174,7 @@ GameObject:
   - component: {fileID: 1478128172}
   - component: {fileID: 1478128173}
   - component: {fileID: 1478128174}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SpriteRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -26,6 +26,10 @@ namespace Assets.Scripts.EFTB.Visualizer
             giSleepyCatSight = null;
         }
 
+        #region Event Handler
+        /// <summary>
+        /// Subscribe and Unsubscribe only when cat have to use GICatsight
+        /// </summary>
         public void Subscribe()
         {
             giSleepyCatSight.OnTargetSpotted += OnSpotted;
@@ -48,6 +52,7 @@ namespace Assets.Scripts.EFTB.Visualizer
             DebugLogHelper.Log("Cat lost sight of the target.");
         }
 
+        #endregion
         public bool IsTargetInSght() => giSleepyCatSight != null && giSleepyCatSight.IsTargetInSight;
         
     }
