@@ -12,10 +12,10 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
     {
         protected override Type DefaultTypeState => typeof(CatSleepState);
         public CatVisualizer visualizer { get; private set; }
-        public SleepyCatStateController(SleepyCatConfigSO config, GICatSight sight, Transform target)
+        public SleepyCatStateController(SleepyCatConfigSO config, GICat giCat, Transform target)
         {
             visualizer = new CatVisualizer();
-            visualizer.Initialize(sight);
+            visualizer.Initialize(giCat);
 
             States = new Dictionary<Type, BaseState>()
             {

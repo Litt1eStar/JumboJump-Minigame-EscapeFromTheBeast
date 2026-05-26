@@ -15,7 +15,7 @@ namespace Assets.Scripts.EFTB
         private CatManager catManager;
 
         [SerializeField]
-        private Transform playertransform;
+        private Transform playerTransform;
 
         private void Awake()
         {
@@ -37,8 +37,8 @@ namespace Assets.Scripts.EFTB
             playerManager.Initialize();
 
             catManager = new CatManager();
-            IEnumerable<GICatSight> sceneCats = SceneObjectContext.Instance.GetAll<GICatSight>();
-            catManager.Intialize(sceneCats, playertransform);
+            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
+            catManager.Intialize(sceneCats, playerTransform);
         }
 
         private void Dispose()

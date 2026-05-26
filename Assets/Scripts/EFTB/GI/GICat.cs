@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.EFTB.GI
 {
-    public class GICatSight : MonoBehaviour
+    public class GICat : MonoBehaviour
     {
         [Header("Sight View Cone Configuration")]
         [SerializeField]

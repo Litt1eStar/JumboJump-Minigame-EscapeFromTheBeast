@@ -4,21 +4,21 @@ using Assets.Scripts.EFTB.Utilities;
 namespace Assets.Scripts.EFTB.Visualizer
 {
     public class CatVisualizer    {
-        public GICatSight giSleepyCatSight { get; private set; }
-        public void Initialize(GICatSight sight)
+        public GICat giCat { get; private set; }
+        public void Initialize(GICat giCat)
         {
-            giSleepyCatSight = sight;
+            this.giCat = giCat;
         }
 
         public void UpdateLogic(float deltaTime)
         {
-            giSleepyCatSight?.UpdateLogic(deltaTime);
+            giCat?.UpdateLogic(deltaTime);
         }
 
         public void Dispose()
         {
             Unsubscribe();
-            giSleepyCatSight = null;
+            giCat = null;
         }
 
         #region Event Handler
@@ -27,14 +27,14 @@ namespace Assets.Scripts.EFTB.Visualizer
         /// </summary>
         public void Subscribe()
         {
-            giSleepyCatSight.OnTargetSpotted += OnSpotted;
-            giSleepyCatSight.OnTargetLost += OnLost;
+            giCat.OnTargetSpotted += OnSpotted;
+            giCat.OnTargetLost += OnLost;
         }
 
         public void Unsubscribe()
         {
-            giSleepyCatSight.OnTargetSpotted -= OnSpotted;
-            giSleepyCatSight.OnTargetLost -= OnLost;
+            giCat.OnTargetSpotted -= OnSpotted;
+            giCat.OnTargetLost -= OnLost;
         }
 
         public void OnSpotted()
@@ -48,7 +48,7 @@ namespace Assets.Scripts.EFTB.Visualizer
         }
 
         #endregion
-        public bool IsTargetInSght() => giSleepyCatSight != null && giSleepyCatSight.IsTargetInSight;
+        public bool IsTargetInSght() => giCat != null && giCat.IsTargetInSight;
         
     }
 }

@@ -9,7 +9,7 @@ namespace Assets.Scripts.EFTB.Manager
     public class CatManager
     {
         public List<ICatStateController> cats {  get; private set; }
-        public void Intialize(IEnumerable<GICatSight> sceneCats, Transform playerTarget)
+        public void Intialize(IEnumerable<GICat> sceneCats, Transform playerTarget)
         {
             cats = new List<ICatStateController>();
             foreach(var giSight in sceneCats)

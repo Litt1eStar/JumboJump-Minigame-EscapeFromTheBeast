@@ -5,5 +5,5 @@ using UnityEngine;
 
 public abstract class BaseCatConfigSO : ScriptableObject
 {
-    public abstract ICatStateController BuildStateController(GICatSight sight, Transform transform);
+    public abstract ICatStateController BuildStateController(GICat giCat, Transform transform);
 }

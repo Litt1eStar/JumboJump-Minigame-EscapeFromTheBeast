@@ -12,9 +12,9 @@ namespace Assets.Scripts.EFTB.GameData.Cat
         public float TIME_TILL_AWAKE;
         public float TIME_TO_ALERT;
         public float TIME_TO_CATCH;
-        public override ICatStateController BuildStateController(GICatSight sight, Transform transform)
+        public override ICatStateController BuildStateController(GICat giCat, Transform transform)
         {
-            SleepyCatStateController controller = new SleepyCatStateController(this, sight, transform);
+            SleepyCatStateController controller = new SleepyCatStateController(this, giCat, transform);
             return controller;
         }
     }
