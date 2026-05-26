@@ -46,6 +46,7 @@ namespace Assets.Scripts.EFTB.GI
             if (sightOrigin == null || target == null)
             {
                 DebugLogHelper.LogWarning("Sight origin or target not set. Cannot compute visibility.");
+                return;
             }
 
             bool wasVisible = IsTargetInSight;
