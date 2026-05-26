@@ -22,6 +22,8 @@ public abstract class BaseStateController
         {
             state.Initialize();
         }
+
+        StartStateController();
     }
 
     public virtual void Dispose() 
@@ -72,7 +74,7 @@ public abstract class BaseStateController
     {
         if (CurrentState == null) return;
 
-        DebugLogHelper.Log($"[{GetType().Name}] Current State: {CurrentState.GetType().Name}");
+        DebugLogHelper.Log($"[{this.GetHashCode()}] Current State: {CurrentState.GetType().Name}");
         CurrentState.UpdateLogic(deltaTime);
     }
 

@@ -1,18 +1,21 @@
-﻿using Assets.Scripts.EFTB.Manager;
+﻿using Assets.Scripts.EFTB.GameData.Cat;
+using Assets.Scripts.EFTB.GI;
+using Assets.Scripts.EFTB.Interface;
 using Assets.Scripts.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
 {
-    public class SleepyCatStateController : BaseStateController
+    public class SleepyCatStateController : BaseStateController, ICatStateController
     {
         protected override Type DefaultTypeState => typeof(CatSleepState);
         public CatVisualizer visualizer { get; private set; }
-        public SleepyCatStateController(SleepyCatBehaviourConfig config)
+        public SleepyCatStateController(SleepyCatConfigSO config, GICat giCat, Transform target)
         {
             visualizer = new CatVisualizer();
-            visualizer.Initialize();
+            visualizer.Initialize(giCat);
 
             States = new Dictionary<Type, BaseState>()
             {
