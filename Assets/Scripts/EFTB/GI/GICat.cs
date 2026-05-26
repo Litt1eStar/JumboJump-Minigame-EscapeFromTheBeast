@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.EFTB.Interface;
+using Assets.Scripts.EFTB.UI;
+using Assets.Scripts.EFTB.Utilities;
 using System;
 using UnityEngine;
 
@@ -18,6 +20,7 @@ namespace Assets.Scripts.EFTB.GI
 
         public event Action OnTargetSpotted;
         public event Action OnTargetLost;
+        public event Action OnStateChanged;
         public bool IsTargetInSight { get; private set; }
         private Transform target;
 
@@ -29,17 +32,21 @@ namespace Assets.Scripts.EFTB.GI
         [SerializeField, Range(8, 64)] private int arcSegments = 24;
         [SerializeField] private Color colorClear = new Color(0f, 1f, 0f, 0.6f);
         [SerializeField] private Color colorSpotted = new Color(1f, 0f, 0f, 0.8f);
+        [SerializeField] private UICatStateLabel uiCatStateLabel;
        
         public ICatStateController BuildStateController(Transform target)
         {
             this.target = target;
-            var controller = config.BuildStateController(this, target);
+            var controller = config.BuildStateController(this, target, uiCatStateLabel);
             return controller;
         }
 
         public void UpdateLogic(float deltaTime)
         {
-            if (sightOrigin == null || target == null) return;
+            if (sightOrigin == null || target == null)
+            {
+                DebugLogHelper.LogWarning("Sight origin or target not set. Cannot compute visibility.");
+            }
 
             bool wasVisible = IsTargetInSight;
             IsTargetInSight = ComputeVisible();

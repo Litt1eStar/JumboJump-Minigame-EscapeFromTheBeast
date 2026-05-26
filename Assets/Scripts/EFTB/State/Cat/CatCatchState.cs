@@ -28,6 +28,6 @@ namespace Assets.Scripts.EFTB.State.Cat
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-        }
+        } 
     }
 }

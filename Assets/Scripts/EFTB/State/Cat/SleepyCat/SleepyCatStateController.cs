@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.EFTB.GameData.Cat;
 using Assets.Scripts.EFTB.GI;
 using Assets.Scripts.EFTB.Interface;
+using Assets.Scripts.EFTB.UI;
 using Assets.Scripts.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,14 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
     {
         protected override Type DefaultTypeState => typeof(CatSleepState);
         public CatVisualizer visualizer { get; private set; }
-        public SleepyCatStateController(SleepyCatConfigSO config, GICat giCat, Transform target)
+        public SleepyCatStateController(
+            SleepyCatConfigSO config,
+            GICat giCat,
+            UICatStateLabel label,
+            Transform target)
         {
             visualizer = new CatVisualizer();
-            visualizer.Initialize(giCat);
+            visualizer.Initialize(giCat, label, this);
 
             States = new Dictionary<Type, BaseState>()
             {

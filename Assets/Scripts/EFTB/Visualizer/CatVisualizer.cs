@@ -1,13 +1,27 @@
 ﻿using Assets.Scripts.EFTB.GI;
+using Assets.Scripts.EFTB.UI;
 using Assets.Scripts.EFTB.Utilities;
 
 namespace Assets.Scripts.EFTB.Visualizer
 {
     public class CatVisualizer    {
-        public GICat giCat { get; private set; }
-        public void Initialize(GICat giCat)
+        private GICat giCat;
+        private UICatStateLabel label;
+        private BaseStateController controller;
+        public void Initialize(
+            GICat giCat,
+            UICatStateLabel label,
+            BaseStateController controller
+            )
         {
             this.giCat = giCat;
+            this.label = label;
+            this.controller = controller;
+
+            if(controller != null)
+            {
+                this.controller.EventStateChanged += OnStateChange;
+            }
         }
 
         public void UpdateLogic(float deltaTime)
@@ -17,8 +31,15 @@ namespace Assets.Scripts.EFTB.Visualizer
 
         public void Dispose()
         {
+            if(controller != null)
+            {
+                controller.EventStateChanged -= OnStateChange; 
+            }
+
             Unsubscribe();
             giCat = null;
+            label = null;
+            controller = null;
         }
 
         #region Event Handler
@@ -37,6 +58,11 @@ namespace Assets.Scripts.EFTB.Visualizer
             giCat.OnTargetLost -= OnLost;
         }
 
+        public void OnStateChange(BaseState prev, BaseState next)
+        {
+            if(label == null || next == null) return;
+            label.SetText(next.GetType().Name);
+        }
         public void OnSpotted()
         {
             DebugLogHelper.Log("Cat spotted the target!");

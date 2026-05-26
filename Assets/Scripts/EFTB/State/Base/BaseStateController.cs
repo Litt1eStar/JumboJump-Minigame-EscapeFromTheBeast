@@ -52,7 +52,7 @@ public abstract class BaseStateController
         CurrentState.OnEnterState();
     }
 
-    public BaseState ChangeState(Type newState)
+    public virtual BaseState ChangeState(Type newState)
     {
         if (!IsValidToChangeState(newState))
         {
