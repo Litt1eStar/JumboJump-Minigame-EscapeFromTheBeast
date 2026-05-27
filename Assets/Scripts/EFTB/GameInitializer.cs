@@ -13,6 +13,7 @@ namespace Assets.Scripts.EFTB
         [SerializeField]
         private Input2DManager input2DManager;
 
+        private CollectibleManager collectibleManager;
         private PlayerManager playerManager;
         private CatManager catManager;
         private void Awake()
@@ -36,6 +37,9 @@ namespace Assets.Scripts.EFTB
 
             catManager = new CatManager();
             catManager.Intialize();
+
+            collectibleManager = new CollectibleManager();
+            collectibleManager.Initialize();
         }
     }
 }
