@@ -69,12 +69,14 @@ namespace Assets.Scripts.EFTB.GI
             return hit.collider == null;
         }
 
+        #region Gizmos
+
         private void OnDrawGizmos()
         {
             if (!drawGizmo || sightOrigin == null) return;
 
             Vector2 origin = sightOrigin.position;
-            Vector2 facing = -sightOrigin.up;             // matches ComputeVisible()
+            Vector2 facing = -sightOrigin.up; 
             if (facing.sqrMagnitude < 0.0001f) return;
 
             Gizmos.color = IsTargetInSight ? colorSpotted : colorClear;
@@ -112,5 +114,6 @@ namespace Assets.Scripts.EFTB.GI
             float c = Mathf.Cos(rad), s = Mathf.Sin(rad);
             return new Vector2(c * v.x - s * v.y, s * v.x + c * v.y);
         }
+        #endregion
     }
 }

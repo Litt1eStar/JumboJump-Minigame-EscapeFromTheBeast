@@ -10,9 +10,17 @@ namespace Assets.Scripts.EFTB.GameData.Cat
     [CreateAssetMenu(fileName = "SleepyCatConfigSO", menuName = "Scriptable Objects/SleepyCatConfigSO")]
     public class SleepyCatConfigSO : BaseCatConfigSO
     {
-        public float TIME_TILL_AWAKE;
-        public float TIME_TO_ALERT;
-        public float TIME_TO_CATCH;
+        [SerializeField]
+        private float timeTillAwake;
+        [SerializeField]
+        private float timeToAlert;
+        [SerializeField]
+        private float timeToCatch;
+
+        public float TIME_TILL_AWAKE => timeTillAwake;
+        public float TIME_TO_ALERT => timeToAlert;
+        public float TIME_TO_CATCH => timeToCatch;
+
         public override ICatStateController BuildStateController(GICat sight, Transform transform, UICatStateLabel label)
         {
             SleepyCatStateController controller = new SleepyCatStateController(this, sight, label, transform);

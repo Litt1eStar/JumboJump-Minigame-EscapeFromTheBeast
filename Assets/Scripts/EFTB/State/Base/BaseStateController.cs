@@ -17,8 +17,6 @@ public abstract class BaseStateController
 
     public virtual void Initialize()
     {
-        Debug.Log($"{this.GetType().Name} was Initialize");
-
         foreach (var state in States.Values)
         {
             state.Initialize();
@@ -75,8 +73,6 @@ public abstract class BaseStateController
     public virtual void UpdateLogic(float deltaTime)
     {
         if (CurrentState == null) return;
-
-        DebugLogHelper.Log($"[{this.GetHashCode()}] Current State: {CurrentState.GetType().Name}");
         CurrentState.UpdateLogic(deltaTime);
     }
 

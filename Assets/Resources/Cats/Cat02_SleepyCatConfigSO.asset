@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd9c77562f361f4bb35cab44798d555, type: 3}
   m_Name: Cat02_SleepyCatConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.EFTB.GameData.Cat.SleepyCatConfigSO
-  TIME_TILL_AWAKE: 10
-  TIME_TO_ALERT: 3
-  TIME_TO_CATCH: 3
+  timeTillAwake: 10
+  timeToAlert: 3
+  timeToCatch: 5

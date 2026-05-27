@@ -53,7 +53,7 @@ MonoBehaviour:
   sightBlockerLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  config: {fileID: 11400000, guid: e8f674ddf48e3cf418e10ab3ea32a8de, type: 2}
+  config: {fileID: 11400000, guid: 42d62c9bdbd9dad4cbde023397f07a48, type: 2}
   drawGizmo: 1
   arcSegments: 24
   colorClear: {r: 0, g: 1, b: 0, a: 0.6}
