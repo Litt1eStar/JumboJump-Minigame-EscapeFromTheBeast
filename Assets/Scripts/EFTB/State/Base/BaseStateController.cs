@@ -25,6 +25,7 @@ public abstract class BaseStateController
         }
 
         StartStateController();
+        EventStateChanged?.Invoke(null, CurrentState);
     }
 
     public virtual void Dispose() 

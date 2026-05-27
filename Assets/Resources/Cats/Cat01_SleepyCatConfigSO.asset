@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Cat01_SleepyCatConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.EFTB.GameData.Cat.SleepyCatConfigSO
   TIME_TILL_AWAKE: 5
-  TIME_TO_ALERT: 5
+  TIME_TO_ALERT: 10
   TIME_TO_CATCH: 5
