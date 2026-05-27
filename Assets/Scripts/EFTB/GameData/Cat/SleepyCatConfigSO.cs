@@ -2,7 +2,6 @@
 using Assets.Scripts.EFTB.Interface;
 using Assets.Scripts.EFTB.State.Cat.SleepyCat;
 using Assets.Scripts.EFTB.UI;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.EFTB.GameData.Cat

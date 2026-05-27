@@ -18,6 +18,9 @@ namespace Assets.Scripts.EFTB.GI
         [SerializeField]
         private LayerMask sightBlockerLayerMask;
 
+        [Header("Reference")]
+        [SerializeField] private UICatStateLabel uiCatStateLabel;
+
         public event Action OnTargetSpotted;
         public event Action OnTargetLost;
         public event Action OnStateChanged;
@@ -28,11 +31,14 @@ namespace Assets.Scripts.EFTB.GI
         private BaseCatConfigSO config;
 
         [Header("Debug Visualization")]
-        [SerializeField] private bool drawGizmo = true;
-        [SerializeField, Range(8, 64)] private int arcSegments = 24;
-        [SerializeField] private Color colorClear = new Color(0f, 1f, 0f, 0.6f);
-        [SerializeField] private Color colorSpotted = new Color(1f, 0f, 0f, 0.8f);
-        [SerializeField] private UICatStateLabel uiCatStateLabel;
+        [SerializeField]
+        private bool drawGizmo = true;
+        [SerializeField, Range(8, 64)] 
+        private int arcSegments = 24;
+        [SerializeField] 
+        private Color colorClear = new Color(0f, 1f, 0f, 0.6f);
+        [SerializeField] 
+        private Color colorSpotted = new Color(1f, 0f, 0f, 0.8f);
        
         public ICatStateController BuildStateController(Transform target)
         {

@@ -1,7 +1,5 @@
-using Assets.Scripts.EFTB.Utilities;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 public abstract class BaseStateController
 {
     public event Action<BaseState, BaseState> EventStateChanged;
