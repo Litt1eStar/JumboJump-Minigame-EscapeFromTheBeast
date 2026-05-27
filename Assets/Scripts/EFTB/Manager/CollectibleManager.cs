@@ -20,6 +20,7 @@ namespace Assets.Scripts.EFTB.Manager
         public void AddCoin(int value)
         {
             TotalCoinValue += value;
+            DebugLogHelper.Log($"Total Coin Value: {TotalCoinValue}");
             EventTotalCoinValueChanged?.Invoke(TotalCoinValue); //Notify UI to update coin value
         }
     }
