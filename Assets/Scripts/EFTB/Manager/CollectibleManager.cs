@@ -21,10 +21,12 @@ namespace Assets.Scripts.EFTB.Manager
 
         public void Dispose()
         {
-
+            visualizer.Dispose();
+            visualizer = null;
+            EventTotalCoinValueChanged -= visualizer.OnTotalCoinValueChanged;
         }
 
-        public void AddCoin(int value)
+        public void AddValue(int value)
         {
             TotalCoinValue += value;
             EventTotalCoinValueChanged?.Invoke(TotalCoinValue); //Notify UI to update coin value

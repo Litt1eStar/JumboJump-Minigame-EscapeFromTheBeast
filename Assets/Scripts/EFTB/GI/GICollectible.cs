@@ -9,10 +9,7 @@ namespace Assets.Scripts.EFTB.GI
     {
         [SerializeField]
         private CollectibleSO collectibleData;
-
-        private SpriteRenderer spriteRenderer;
         private bool isCollected = false;
-
         public void Initialize()
         {
 
@@ -27,7 +24,7 @@ namespace Assets.Scripts.EFTB.GI
         {
             if(collision.CompareTag("Player") && !isCollected)
             {
-                GameContext.Instance.Get<CollectibleManager>().AddCoin(collectibleData.Value);
+                GameContext.Instance.Get<CollectibleManager>().AddValue(collectibleData.Value);
                 isCollected = true;
 
                 //Play Collection Effect
