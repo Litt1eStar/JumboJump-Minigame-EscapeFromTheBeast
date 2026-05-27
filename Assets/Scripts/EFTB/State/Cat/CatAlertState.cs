@@ -38,10 +38,8 @@ namespace Assets.Scripts.EFTB.State.Cat
 
         public override void UpdateLogic(float deltaTime)
         {
-            if(countdownTimer > 0f)
-            {
-                countdownTimer -= deltaTime;
-            }
+            countdownTimer -= deltaTime;
+            StateController.InvokeEventTimerChanged(countdownTimer);
 
             if(countdownTimer <= 0f)
             {

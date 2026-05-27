@@ -7,12 +7,22 @@ namespace Assets.Scripts.EFTB.UI
     {
         [SerializeField]
         private TextMeshProUGUI label;
+        [SerializeField]
+        private TextMeshProUGUI timerCountdown;
 
         public void SetText(string text)
         {
             if (label != null)
             {
                 label.text = text;
+            }
+        }
+
+        public void SetTimerCountdown(string text)
+        {
+            if(timerCountdown != null)
+            {
+                timerCountdown.text = text;
             }
         }
     }

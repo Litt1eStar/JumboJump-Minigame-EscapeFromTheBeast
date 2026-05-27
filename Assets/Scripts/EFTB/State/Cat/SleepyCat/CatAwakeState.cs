@@ -21,7 +21,7 @@
         public override void OnEnterState()
         {
             base.OnEnterState();
-            countdownTimer = 0f;
+            countdownTimer = TIME_TO_ALERT;
             stateController.visualizer.Subscribe();
         }
 
@@ -33,18 +33,18 @@
 
         public override void UpdateLogic(float deltaTime)
         {
-            countdownTimer += deltaTime;
-            
+            countdownTimer -= deltaTime;
+            StateController.InvokeEventTimerChanged(countdownTimer);
             bool isPlayerInSight = stateController.visualizer.IsTargetInSght(); // Replace with actual logic to check if player is in sight
             
-            if(isPlayerInSight && countdownTimer < TIME_TO_ALERT)
+            if(isPlayerInSight && countdownTimer > 0)
             {
                 // Transition to alert state
                 StateController.ChangeState(typeof(CatAlertState));
                 return;
             }
 
-            if(countdownTimer > TIME_TO_ALERT)
+            if(countdownTimer <= 0)
             {
                 //Transition to sleep state
                 StateController.ChangeState(typeof(CatSleepState));

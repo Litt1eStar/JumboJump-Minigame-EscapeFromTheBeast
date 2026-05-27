@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class BaseStateController
 {
     public event Action<BaseState, BaseState> EventStateChanged;
+    public event Action<float> EventTimerChanged;
     public BaseState CurrentState { get; protected set; }
     protected Dictionary<Type, BaseState> States { get; set; }
     protected abstract Type DefaultTypeState { get; }
@@ -96,5 +97,10 @@ public abstract class BaseStateController
         }
 
         return true;
+    }
+
+    public void InvokeEventTimerChanged(float value)
+    {
+        EventTimerChanged?.Invoke(value);
     }
 }

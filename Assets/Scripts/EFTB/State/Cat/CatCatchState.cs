@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.EFTB.State.Cat.SleepyCat;
+using Assets.Scripts.EFTB.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Assets.Scripts.EFTB.State.Cat
         public override void OnEnterState()
         {
             base.OnEnterState();
+            DebugLogHelper.Log("PLAYER GOT CATCH");
         }
 
         public override void OnExitState()

@@ -21,6 +21,7 @@ namespace Assets.Scripts.EFTB.Visualizer
             if(controller != null)
             {
                 this.controller.EventStateChanged += OnStateChange;
+                this.controller.EventTimerChanged += OnTransitionTimerCountdown;
             }
         }
 
@@ -31,9 +32,10 @@ namespace Assets.Scripts.EFTB.Visualizer
 
         public void Dispose()
         {
-            if(controller != null)
+            if (controller != null)
             {
-                controller.EventStateChanged -= OnStateChange; 
+                controller.EventStateChanged -= OnStateChange;
+                controller.EventTimerChanged -= OnTransitionTimerCountdown;
             }
 
             Unsubscribe();
@@ -62,6 +64,11 @@ namespace Assets.Scripts.EFTB.Visualizer
         {
             if(label == null || next == null) return;
             label.SetText(next.GetType().Name);
+            label.SetTimerCountdown("");
+        }
+        public void OnTransitionTimerCountdown(float seconds) 
+        {
+            label.SetTimerCountdown($"{seconds.ToString("F2")}s");
         }
         public void OnSpotted()
         {

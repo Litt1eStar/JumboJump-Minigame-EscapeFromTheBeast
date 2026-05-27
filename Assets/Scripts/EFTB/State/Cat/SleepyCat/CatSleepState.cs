@@ -18,7 +18,7 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
         public override void OnEnterState()
         {
             base.OnEnterState();
-            countdownTimer = 0f;
+            countdownTimer = TIME_TILL_AWAKE;
         }
 
         public override void OnExitState()
@@ -28,12 +28,12 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
 
         public override void UpdateLogic(float deltaTime)
         {
-            countdownTimer += deltaTime;
+            countdownTimer -= deltaTime;
+            StateController.InvokeEventTimerChanged(countdownTimer);
             //DebugLogHelper.LogWarning($"[{GetType().Name}] Countdown Timer: {countdownTimer}");
-            if (countdownTimer > TIME_TILL_AWAKE)
+            if (countdownTimer <= 0)
             {
                 // Transition to awake state
-                countdownTimer = 0f;
                 StateController.ChangeState(typeof(CatAwakeState));
                 return;
             }
