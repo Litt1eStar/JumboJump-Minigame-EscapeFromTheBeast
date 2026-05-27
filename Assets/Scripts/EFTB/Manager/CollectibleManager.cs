@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.EFTB.Utilities;
+using Assets.Scripts.EFTB.Visualizer;
 using System;
 
 namespace Assets.Scripts.EFTB.Manager
@@ -7,8 +8,14 @@ namespace Assets.Scripts.EFTB.Manager
     {
         public event Action<int> EventTotalCoinValueChanged;
         public int TotalCoinValue { get; private set; }
+
+        private CollectibleVisualizer visualizer;
         public void Initialize()
         {
+            visualizer = new CollectibleVisualizer();
+            visualizer.Initialize();
+            EventTotalCoinValueChanged += visualizer.OnTotalCoinValueChanged;
+
             GameContext.Instance.Add(this);
         }
 
@@ -20,7 +27,6 @@ namespace Assets.Scripts.EFTB.Manager
         public void AddCoin(int value)
         {
             TotalCoinValue += value;
-            DebugLogHelper.Log($"Total Coin Value: {TotalCoinValue}");
             EventTotalCoinValueChanged?.Invoke(TotalCoinValue); //Notify UI to update coin value
         }
     }
