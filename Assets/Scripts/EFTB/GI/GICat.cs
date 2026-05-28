@@ -96,8 +96,8 @@ namespace JumboJumps.EFTB.GI
             float half = fovAngle * 0.5f;
 
             // Edge lines
-            Vector2 leftEnd = origin + Rotate(facing, +half) * range;
-            Vector2 rightEnd = origin + Rotate(facing, -half) * range;
+            Vector2 leftEnd = origin + (Vector2)(Quaternion.Euler(0, 0, +half) * facing) * range;
+            Vector2 rightEnd = origin + (Vector2)(Quaternion.Euler(0, 0, -half) * facing) * range;
             Gizmos.DrawLine(origin, leftEnd);
             Gizmos.DrawLine(origin, rightEnd);
 
@@ -107,8 +107,7 @@ namespace JumboJumps.EFTB.GI
             {
                 float t = (float)i / arcSegments;
                 float angle = Mathf.Lerp(-half, +half, t);
-                //Vector2 curr = origin + Rotate(facing, angle) * range;
-                Vector2 curr = origin + Rotate(facing, angle) * range;
+                Vector2 curr = origin + (Vector2)(Quaternion.Euler(0, 0, angle) * facing) * range;
                 Gizmos.DrawLine(prev, curr);
                 prev = curr;
             }
@@ -119,13 +118,6 @@ namespace JumboJumps.EFTB.GI
                 Gizmos.color = IsTargetInSight ? Color.red : new Color(1f, 1f, 1f, 0.3f);
                 Gizmos.DrawLine(origin, target.position);
             }
-        }
-
-        private static Vector2 Rotate(Vector2 v, float degrees)
-        {
-            float rad = degrees * Mathf.Deg2Rad;
-            float c = Mathf.Cos(rad), s = Mathf.Sin(rad);
-            return new Vector2(c * v.x - s * v.y, s * v.x + c * v.y);
         }
 #endif
     }
