@@ -13,8 +13,7 @@ namespace Assets.Scripts.EFTB.Manager
         public void Initialize()
         {
             visualizer = new CollectibleVisualizer();
-            visualizer.Initialize();
-            EventTotalCoinValueChanged += visualizer.OnTotalCoinValueChanged;
+            visualizer.Initialize(this);
 
             GameContext.Instance.Add(this);
         }
@@ -23,7 +22,8 @@ namespace Assets.Scripts.EFTB.Manager
         {
             visualizer.Dispose();
             visualizer = null;
-            EventTotalCoinValueChanged -= visualizer.OnTotalCoinValueChanged;
+            
+            GameContext.Instance.Remove(this);
         }
 
         public void AddValue(int value)
