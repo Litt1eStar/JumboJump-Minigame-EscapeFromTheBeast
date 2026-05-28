@@ -19,6 +19,8 @@ public class PlayerManager
     {
         stateController.Dispose();
         stateController = null;
+
+        GameContext.Instance.Remove(this);
     }
     public void UpdateLogic(float deltaTime)
     {

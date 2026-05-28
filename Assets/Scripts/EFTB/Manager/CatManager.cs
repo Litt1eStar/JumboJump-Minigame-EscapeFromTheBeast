@@ -18,6 +18,7 @@ namespace JumboJumps.EFTB.Manager
                 controller.Initialize();
                 Cats.Add(controller);
             }
+            GameContext.Instance.Add(this);
         }
 
         public void Dispose()
@@ -27,6 +28,7 @@ namespace JumboJumps.EFTB.Manager
                 cat.Dispose();
             }
             Cats.Clear();
+            GameContext.Instance.Remove(this);
         }
 
         public void UpdateLogic(float deltaTime)
