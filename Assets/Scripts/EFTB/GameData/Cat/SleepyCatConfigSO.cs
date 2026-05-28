@@ -9,10 +9,13 @@ namespace Assets.Scripts.EFTB.GameData.Cat
     [CreateAssetMenu(fileName = "SleepyCatConfigSO", menuName = "Scriptable Objects/SleepyCatConfigSO")]
     public class SleepyCatConfigSO : BaseCatConfigSO
     {
+
         [SerializeField]
         private float timeTillAwake;
+        
         [SerializeField]
         private float timeToAlert;
+        
         [SerializeField]
         private float timeToCatch;
 
