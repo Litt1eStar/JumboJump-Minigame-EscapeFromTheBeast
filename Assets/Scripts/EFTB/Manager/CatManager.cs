@@ -18,8 +18,6 @@ namespace Assets.Scripts.EFTB.Manager
                 controller.Initialize();
                 Cats.Add(controller);
             }
-
-            GameContext.Instance.Add(this);
         }
 
         public void Dispose()
