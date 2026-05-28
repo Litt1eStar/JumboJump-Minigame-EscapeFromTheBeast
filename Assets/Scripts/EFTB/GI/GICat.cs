@@ -25,9 +25,9 @@ namespace JumboJumps.EFTB.GI
         [SerializeField] 
         private UICatStateLabel uiCatStateLabel;
 
-        public event Action OnTargetSpotted;
-        public event Action OnTargetLost;
-        public event Action OnStateChanged;
+        public event Action EventTargetSpotted;
+        public event Action EventTargetLost;
+        public event Action EventStateChanged;
         public bool IsTargetInSight { get; private set; }
         private Transform target;
 
@@ -65,8 +65,8 @@ namespace JumboJumps.EFTB.GI
             bool wasVisible = IsTargetInSight;
             IsTargetInSight = ComputeVisible();
 
-            if (!wasVisible && IsTargetInSight) OnTargetSpotted?.Invoke();
-            else if (wasVisible && !IsTargetInSight) OnTargetLost?.Invoke();
+            if (!wasVisible && IsTargetInSight) EventTargetSpotted?.Invoke();
+            else if (wasVisible && !IsTargetInSight) EventTargetLost?.Invoke();
         }
 
         private bool ComputeVisible()

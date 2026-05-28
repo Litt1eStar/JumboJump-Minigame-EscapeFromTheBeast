@@ -27,13 +27,10 @@ namespace JumboJumps.EFTB.Visualizer
 
         public void UpdateLogic(float deltaTime)
         {
-            if (!giCat)
+            if (giCat)
             {
-                DebugLogHelper.LogWarning("GICat reference is null.");
-                return;
+                giCat.UpdateLogic(deltaTime);
             }
-
-            giCat.UpdateLogic(deltaTime);
         }
 
         public void Dispose()
@@ -56,26 +53,21 @@ namespace JumboJumps.EFTB.Visualizer
         /// </summary>
         public void Subscribe()
         {
-            if(!giCat)
+            if(giCat)
             {
-                DebugLogHelper.LogWarning("GICat reference is null. Cannot subscribe events.");
-                return;
+                giCat.EventTargetSpotted += OnSpotted;
+                giCat.EventTargetLost += OnLost;
             }
-
-            giCat.OnTargetSpotted += OnSpotted;
-            giCat.OnTargetLost += OnLost;
         }
 
         public void Unsubscribe()
         {
-            if (!giCat)
+            if (giCat)
             {
-                DebugLogHelper.LogWarning("GICat reference is null. Cannot unsubscribe events.");
-                return;
+                giCat.EventTargetSpotted -= OnSpotted;
+                giCat.EventTargetLost -= OnLost;
             }
 
-            giCat.OnTargetSpotted -= OnSpotted;
-            giCat.OnTargetLost -= OnLost;
         }
 
         public void OnStateChange(BaseState prev, BaseState next)
