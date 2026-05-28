@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 public abstract class BaseStateController
 {
-    public event Action<BaseState, BaseState> EventStateChanged;
-    public event Action<float> EventTimerChanged;
+    public event Action<BaseState, BaseState> EventStateChanged; //This Event will Invoke when state changed.
+    public event Action<float> EventTimerChanged; //This Event will Invoke when State Transition Timer is changed.
     public BaseState CurrentState { get; protected set; }
     protected Dictionary<Type, BaseState> States { get; set; }
     protected abstract Type DefaultTypeState { get; }
