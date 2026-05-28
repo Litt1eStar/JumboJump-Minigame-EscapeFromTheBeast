@@ -27,7 +27,13 @@ namespace Assets.Scripts.EFTB.Visualizer
 
         public void UpdateLogic(float deltaTime)
         {
-            giCat?.UpdateLogic(deltaTime);
+            if (!giCat)
+            {
+                DebugLogHelper.LogWarning("GICat reference is null.");
+                return;
+            }
+
+            giCat.UpdateLogic(deltaTime);
         }
 
         public void Dispose()
@@ -50,12 +56,24 @@ namespace Assets.Scripts.EFTB.Visualizer
         /// </summary>
         public void Subscribe()
         {
+            if(!giCat)
+            {
+                DebugLogHelper.LogWarning("GICat reference is null. Cannot subscribe events.");
+                return;
+            }
+
             giCat.OnTargetSpotted += OnSpotted;
             giCat.OnTargetLost += OnLost;
         }
 
         public void Unsubscribe()
         {
+            if (!giCat)
+            {
+                DebugLogHelper.LogWarning("GICat reference is null. Cannot unsubscribe events.");
+                return;
+            }
+
             giCat.OnTargetSpotted -= OnSpotted;
             giCat.OnTargetLost -= OnLost;
         }
