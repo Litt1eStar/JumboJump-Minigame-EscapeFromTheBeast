@@ -70,7 +70,12 @@ namespace Assets.Scripts.EFTB.Utilities
 
             var typed = new List<T>(list.Count);
             foreach (var mb in list)
-                if (mb is T t) typed.Add(t);
+            {
+                if (mb is T t)
+                {
+                    typed.Add(t);
+                }
+            }
             return typed;
         }
     }
