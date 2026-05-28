@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90c621e48ead62b48ae4314e5204734d, type: 3}
-  m_Name: CollectibleData
+  m_Name: Coin
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.EFTB.GameData.CollectibleSO
   collectibleSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   value: 1
