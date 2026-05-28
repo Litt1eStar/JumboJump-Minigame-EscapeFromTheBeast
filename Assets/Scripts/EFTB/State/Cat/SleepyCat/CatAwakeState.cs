@@ -8,14 +8,14 @@
         private SleepyCatStateController stateController;
         public CatAwakeState(
             BaseStateController stateController,
-            float TIME_TO_ALERT
+            float timeToAlert
             ) : base(stateController)
         {
             StateTransitionMap.Add(typeof(CatSleepState), null);
             StateTransitionMap.Add(typeof(CatAlertState), null);
             
             this.stateController = (SleepyCatStateController)stateController;
-            this.TIME_TO_ALERT = TIME_TO_ALERT;
+            TIME_TO_ALERT = timeToAlert;
         }
 
         public override void OnEnterState()

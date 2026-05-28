@@ -9,14 +9,14 @@ namespace Assets.Scripts.EFTB.State.Cat
         private SleepyCatStateController stateController;
         public CatAlertState(
             BaseStateController stateController,
-            float TIME_TO_CATCH
+            float timeToCatch
             ) : base(stateController)
         {
             StateTransitionMap.Add(typeof(CatCatchState), null);
             StateTransitionMap.Add(typeof(CatSleepState), null);
 
             this.stateController = (SleepyCatStateController)stateController;
-            this.TIME_TO_CATCH = TIME_TO_CATCH;
+            TIME_TO_CATCH = timeToCatch;
         }
         public override void OnEnterState()
         {
