@@ -11,6 +11,7 @@ namespace JumboJumps.EFTB
         [SerializeField]
         private Input2DManager input2DManager;
 
+        private GameManager gameManager;
         private CollectibleManager collectibleManager;
         private PlayerManager playerManager;
         private CatManager catManager;

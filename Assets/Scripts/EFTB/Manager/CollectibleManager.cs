@@ -9,20 +9,13 @@ namespace Assets.Scripts.EFTB.Manager
         public event Action<int> EventTotalCoinValueChanged;
         public int TotalCoinValue { get; private set; }
 
-        private CollectibleVisualizer visualizer;
         public void Initialize()
         {
-            visualizer = new CollectibleVisualizer();
-            visualizer.Initialize(this);
-
             GameContext.Instance.Add(this);
         }
 
         public void Dispose()
         {
-            visualizer.Dispose();
-            visualizer = null;
-            
             GameContext.Instance.Remove(this);
         }
 
