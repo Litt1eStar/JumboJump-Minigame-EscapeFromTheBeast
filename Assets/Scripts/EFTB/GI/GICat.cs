@@ -75,8 +75,7 @@ namespace Assets.Scripts.EFTB.GI
             return hit.collider == null;
         }
 
-        #region Gizmos
-
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (!drawGizmo || sightOrigin == null) return;
@@ -120,6 +119,6 @@ namespace Assets.Scripts.EFTB.GI
             float c = Mathf.Cos(rad), s = Mathf.Sin(rad);
             return new Vector2(c * v.x - s * v.y, s * v.x + c * v.y);
         }
-        #endregion
+#endif
     }
 }
