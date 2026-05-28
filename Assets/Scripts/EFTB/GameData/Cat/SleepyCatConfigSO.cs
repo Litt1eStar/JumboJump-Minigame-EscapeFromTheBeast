@@ -16,9 +16,9 @@ namespace Assets.Scripts.EFTB.GameData.Cat
         [SerializeField]
         private float timeToCatch;
 
-        public float TIME_TILL_AWAKE => timeTillAwake;
-        public float TIME_TO_ALERT => timeToAlert;
-        public float TIME_TO_CATCH => timeToCatch;
+        public float TimeTillAwake => timeTillAwake;
+        public float TimeToAlert => timeToAlert;
+        public float TimeToCatch => timeToCatch;
 
         public override ICatStateController BuildStateController(GICat sight, Transform transform, UICatStateLabel label)
         {

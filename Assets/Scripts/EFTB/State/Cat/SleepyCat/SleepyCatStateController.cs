@@ -24,9 +24,9 @@ namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
 
             States = new Dictionary<Type, BaseState>()
             {
-                {typeof(CatSleepState), new CatSleepState(this, config.TIME_TILL_AWAKE) },
-                {typeof(CatAwakeState), new CatAwakeState(this, config.TIME_TO_ALERT) },
-                {typeof(CatAlertState), new CatAlertState(this, config.TIME_TO_CATCH) },
+                {typeof(CatSleepState), new CatSleepState(this, config.TimeTillAwake) },
+                {typeof(CatAwakeState), new CatAwakeState(this, config.TimeToAlert) },
+                {typeof(CatAlertState), new CatAlertState(this, config.TimeToCatch) },
                 {typeof(CatCatchState), new CatCatchState(this) }
             };
         }
