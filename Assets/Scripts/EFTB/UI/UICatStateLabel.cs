@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.UI
+namespace JumboJumps.EFTB.UI
 {
     public class UICatStateLabel : MonoBehaviour
     {

@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.EFTB.GI;
-using Assets.Scripts.EFTB.UI;
-using Assets.Scripts.EFTB.Utilities;
+﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.UI;
+using JumboJumps.EFTB.Utilities;
 
-namespace Assets.Scripts.EFTB.Visualizer
+namespace JumboJumps.EFTB.Visualizer
 {
     public class CatVisualizer    {
         private GICat giCat;

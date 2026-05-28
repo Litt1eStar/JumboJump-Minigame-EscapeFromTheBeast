@@ -1,10 +1,10 @@
-﻿using Assets.Scripts.EFTB.GI;
-using Assets.Scripts.EFTB.Interface;
-using Assets.Scripts.EFTB.Utilities;
+﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Interface;
+using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class CatManager
     {

@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.EFTB.Interface
+﻿namespace JumboJumps.EFTB.Interface
 {
     public interface ICatStateController
     {

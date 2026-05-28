@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.EFTB.GI
+namespace JumboJumps.EFTB.GI
 {
     public class GIPlayer : MonoBehaviour
     {

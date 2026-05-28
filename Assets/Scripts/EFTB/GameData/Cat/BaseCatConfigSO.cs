@@ -1,6 +1,6 @@
-using Assets.Scripts.EFTB.GI;
-using Assets.Scripts.EFTB.Interface;
-using Assets.Scripts.EFTB.UI;
+using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Interface;
+using JumboJumps.EFTB.UI;
 using UnityEngine;
 
 

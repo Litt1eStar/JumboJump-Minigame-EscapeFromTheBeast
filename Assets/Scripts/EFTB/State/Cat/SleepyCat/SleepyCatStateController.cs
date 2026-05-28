@@ -1,13 +1,13 @@
-﻿using Assets.Scripts.EFTB.GameData.Cat;
-using Assets.Scripts.EFTB.GI;
-using Assets.Scripts.EFTB.Interface;
-using Assets.Scripts.EFTB.UI;
-using Assets.Scripts.EFTB.Visualizer;
+﻿using JumboJumps.EFTB.GameData.Cat;
+using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Interface;
+using JumboJumps.EFTB.UI;
+using JumboJumps.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
+namespace JumboJumps.EFTB.State.Cat.SleepyCat
 {
     public class SleepyCatStateController : BaseStateController, ICatStateController
     {

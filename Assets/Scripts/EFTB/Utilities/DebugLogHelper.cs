@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.Utilities
+namespace JumboJumps.EFTB.Utilities
 {
     public class DebugLogHelper
     {

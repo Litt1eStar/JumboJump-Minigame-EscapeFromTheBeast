@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.Utilities
+namespace JumboJumps.EFTB.Utilities
 {
     public class SceneObjectContext : MonoBehaviour
     {

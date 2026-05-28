@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.GI
+namespace JumboJumps.EFTB.GI
 {
     [ExecuteAlways]
     public class GICamera : MonoBehaviour

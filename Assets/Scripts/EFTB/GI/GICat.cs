@@ -1,10 +1,10 @@
-﻿using Assets.Scripts.EFTB.Interface;
-using Assets.Scripts.EFTB.UI;
-using Assets.Scripts.EFTB.Utilities;
+﻿using JumboJumps.EFTB.Interface;
+using JumboJumps.EFTB.UI;
+using JumboJumps.EFTB.Utilities;
 using System;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.GI
+namespace JumboJumps.EFTB.GI
 {
     public class GICat : MonoBehaviour
     {
@@ -107,6 +107,7 @@ namespace Assets.Scripts.EFTB.GI
             {
                 float t = (float)i / arcSegments;
                 float angle = Mathf.Lerp(-half, +half, t);
+                //Vector2 curr = origin + Rotate(facing, angle) * range;
                 Vector2 curr = origin + Rotate(facing, angle) * range;
                 Gizmos.DrawLine(prev, curr);
                 prev = curr;

@@ -1,10 +1,10 @@
-﻿using Assets.Scripts.EFTB.GI;
-using Assets.Scripts.EFTB.Interface;
-using Assets.Scripts.EFTB.State.Cat.SleepyCat;
-using Assets.Scripts.EFTB.UI;
+﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Interface;
+using JumboJumps.EFTB.State.Cat.SleepyCat;
+using JumboJumps.EFTB.UI;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.GameData.Cat
+namespace JumboJumps.EFTB.GameData.Cat
 {
     [CreateAssetMenu(fileName = "SleepyCatConfigSO", menuName = "Scriptable Objects/SleepyCatConfigSO")]
     public class SleepyCatConfigSO : BaseCatConfigSO

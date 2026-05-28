@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.EFTB.Utilities
+namespace JumboJumps.EFTB.Utilities
 {
     public class GameContext
     {

@@ -1,10 +1,10 @@
-﻿using Assets.Scripts.EFTB.GI;
-using Assets.Scripts.EFTB.Manager;
-using Assets.Scripts.EFTB.Utilities;
+﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB
+namespace JumboJumps.EFTB
 {
     public class GameInitializer : MonoBehaviour
     {

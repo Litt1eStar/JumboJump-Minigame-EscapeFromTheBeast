@@ -1,5 +1,5 @@
-using Assets.Scripts.EFTB.State.Player;
-using Assets.Scripts.EFTB.Utilities;
+using JumboJumps.EFTB.State.Player;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
 public class PlayerManager

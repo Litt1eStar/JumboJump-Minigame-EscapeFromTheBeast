@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.EFTB.State.Cat.SleepyCat;
+﻿using JumboJumps.EFTB.State.Cat.SleepyCat;
 
-namespace Assets.Scripts.EFTB.State.Cat
+namespace JumboJumps.EFTB.State.Cat
 {
     public class CatAlertState : BaseState
     {
