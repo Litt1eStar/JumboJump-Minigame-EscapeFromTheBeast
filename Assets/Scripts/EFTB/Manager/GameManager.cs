@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.EFTB.State;
+﻿using JumboJumps.EFTB.State;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.EFTB.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class GameManager
     {

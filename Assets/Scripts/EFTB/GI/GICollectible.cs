@@ -1,9 +1,9 @@
-﻿using Assets.Scripts.EFTB.GameData;
-using Assets.Scripts.EFTB.Manager;
-using Assets.Scripts.EFTB.Utilities;
+﻿using JumboJumps.EFTB.GameData;
+using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.GI
+namespace JumboJumps.EFTB.GI
 {
     public class GICollectible : MonoBehaviour
     {

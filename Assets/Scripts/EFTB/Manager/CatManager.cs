@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Interface;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;

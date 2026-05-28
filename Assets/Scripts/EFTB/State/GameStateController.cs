@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.EFTB.State.Gameplay;
+﻿using JumboJumps.EFTB.State.Gameplay;
 using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.EFTB.State
+namespace JumboJumps.EFTB.State
 {
     public class GameStateController : BaseStateController
     {
