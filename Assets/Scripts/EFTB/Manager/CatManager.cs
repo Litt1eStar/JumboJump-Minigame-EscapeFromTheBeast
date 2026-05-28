@@ -11,12 +11,12 @@ namespace Assets.Scripts.EFTB.Manager
         public List<ICatStateController> Cats {  get; private set; }
         public void Intialize(IEnumerable<GICat> sceneCats, Transform playerTarget)
         {
-            cats = new List<ICatStateController>();
+            Cats = new List<ICatStateController>();
             foreach(var giSight in sceneCats)
             {
                 var controller = giSight.BuildStateController(playerTarget);
                 controller.Initialize();
-                cats.Add(controller);
+                Cats.Add(controller);
             }
 
             GameContext.Instance.Add(this);
@@ -24,16 +24,16 @@ namespace Assets.Scripts.EFTB.Manager
 
         public void Dispose()
         {
-            foreach (var cat in cats)
+            foreach (var cat in Cats)
             {
                 cat.Dispose();
             }
-            cats.Clear();
+            Cats.Clear();
         }
 
         public void UpdateLogic(float deltaTime)
         {
-            foreach (var cat in cats)
+            foreach (var cat in Cats)
             {
                 cat.UpdateLogic(deltaTime);
             }
