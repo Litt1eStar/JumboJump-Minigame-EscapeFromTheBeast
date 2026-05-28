@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.State.Player
+namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerIdleState : BaseState
     {

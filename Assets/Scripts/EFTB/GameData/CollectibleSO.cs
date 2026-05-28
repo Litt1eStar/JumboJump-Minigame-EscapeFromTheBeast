@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.EFTB.GameData
+namespace JumboJumps.EFTB.GameData
 {
     [CreateAssetMenu(fileName = "CollectibleData", menuName = "CollectibleSO")]
     public class CollectibleSO : ScriptableObject

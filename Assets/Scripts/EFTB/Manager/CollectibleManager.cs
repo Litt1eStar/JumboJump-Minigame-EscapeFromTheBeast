@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.EFTB.Utilities;
-using Assets.Scripts.EFTB.Visualizer;
+﻿using JumboJumps.EFTB.Utilities;
 using System;
 
-namespace Assets.Scripts.EFTB.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class CollectibleManager
     {

@@ -1,13 +1,13 @@
-﻿using Assets.Scripts.EFTB.Manager;
-using Assets.Scripts.EFTB.Utilities;
-using Assets.Scripts.EFTB.Visualizer;
+﻿using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.EFTB.State.Player
+namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerStateController : BaseStateController
     {

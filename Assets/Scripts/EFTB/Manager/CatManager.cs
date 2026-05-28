@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.EFTB.State.Cat.SleepyCat;
-using Assets.Scripts.EFTB.Utilities;
+﻿using JumboJumps.EFTB.State.Cat.SleepyCat;
+using JumboJumps.EFTB.Utilities;
 
-namespace Assets.Scripts.EFTB.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class CatManager
     {

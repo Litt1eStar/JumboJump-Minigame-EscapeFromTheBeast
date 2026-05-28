@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.EFTB.Utilities;
+﻿using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.EFTB.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class Input2DManager : MonoBehaviour
     {

@@ -1,11 +1,6 @@
-﻿using Assets.Scripts.EFTB.Visualizer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JumboJumps.EFTB.Visualizer;
 
-namespace Assets.Scripts.EFTB.State.Gameplay
+namespace JumboJumps.EFTB.State.Gameplay
 {
     public class GameplayState : BaseState
     {
