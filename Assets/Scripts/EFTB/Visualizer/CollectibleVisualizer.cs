@@ -7,9 +7,13 @@ namespace Assets.Scripts.EFTB.Visualizer
     public class CollectibleVisualizer
     {
         private CollectibleManager collectibleManager;
-        public void Initialize(CollectibleManager collectibleManager)
+        public void Initialize()
         {
-            this.collectibleManager = collectibleManager;
+            collectibleManager = GameContext.Instance.Get<CollectibleManager>();
+            if(collectibleManager == null)
+            {
+                DebugLogHelper.LogWarning("CollectibleVisualizer: CollectibleManager not found in GameContext. Visualization will not work.");
+            }
             collectibleManager.EventTotalCoinValueChanged += OnTotalCoinValueChanged;
         }
 

@@ -10,6 +10,7 @@ namespace Assets.Scripts.EFTB
         [SerializeField]
         private Input2DManager input2DManager;
 
+        private GameManager gameManager;
         private CollectibleManager collectibleManager;
         private PlayerManager playerManager;
         private CatManager catManager;
@@ -37,6 +38,9 @@ namespace Assets.Scripts.EFTB
 
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
+
+            gameManager = new GameManager();
+            gameManager.Initialize();
         }
     }
 }
