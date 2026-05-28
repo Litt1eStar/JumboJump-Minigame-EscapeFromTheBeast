@@ -63,6 +63,7 @@ namespace Assets.Scripts.EFTB.Utilities
             objects.TryGetValue(typeof(T), out var result);
             return result as T;
         }
+
         public IReadOnlyList<T> GetAll<T>() where T : class
         {
             if (!objectGroups.TryGetValue(typeof(T), out var list))
