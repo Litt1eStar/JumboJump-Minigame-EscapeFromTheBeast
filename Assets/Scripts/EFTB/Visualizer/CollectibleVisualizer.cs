@@ -1,18 +1,21 @@
-﻿using Assets.Scripts.EFTB.Utilities;
+﻿using Assets.Scripts.EFTB.Manager;
+using Assets.Scripts.EFTB.Utilities;
 using System;
 
 namespace Assets.Scripts.EFTB.Visualizer
 {
     public class CollectibleVisualizer
     {
-        public void Initialize()
+        private CollectibleManager collectibleManager;
+        public void Initialize(CollectibleManager collectibleManager)
         {
-
+            this.collectibleManager = collectibleManager;
+            collectibleManager.EventTotalCoinValueChanged += OnTotalCoinValueChanged;
         }
 
         public void Dispose()
         {
-
+            collectibleManager.EventTotalCoinValueChanged -= OnTotalCoinValueChanged;
         }
 
         public void OnTotalCoinValueChanged(int newTotalValue)
