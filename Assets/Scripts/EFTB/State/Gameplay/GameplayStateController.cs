@@ -1,4 +1,4 @@
-﻿using JumboJump.Assets.Scripts.EFTB.State.Gameplay;
+﻿using JumboJump.EFTB.State.Gameplay;
 using JumboJump.EFTB.State.MainMenu;
 using System;
 using System.Collections.Generic;
