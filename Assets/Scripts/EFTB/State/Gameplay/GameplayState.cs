@@ -20,7 +20,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleVisualizer.Initialize();
             
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-            gameplayStateManager.Initialize();
         }
 
         public override void OnExitState()
