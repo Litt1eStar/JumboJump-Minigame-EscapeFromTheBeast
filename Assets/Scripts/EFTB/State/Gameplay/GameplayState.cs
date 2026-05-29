@@ -1,9 +1,11 @@
-﻿using JumboJumps.EFTB.Visualizer;
+﻿using JumboJump.Assets.Scripts.EFTB.Manager;
+using JumboJumps.EFTB.Visualizer;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
     public class GameplayState : BaseState
     {
+        private GameplayStateManager gameplayStateManager;
         private CollectibleVisualizer collectibleVisualizer;
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
@@ -15,6 +17,9 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             collectibleVisualizer = new CollectibleVisualizer();
             collectibleVisualizer.Initialize();
+            
+            gameplayStateManager = new GameplayStateManager();
+            gameplayStateManager.Initialize();
         }
 
         public override void OnExitState()
