@@ -13,5 +13,10 @@ namespace JumboJump.Assets.Scripts.EFTB.Manager
         {
             GameContext.Instance.Remove(this);
         }
+
+        public void UpdateLogic(float deltaTime)
+        {
+
+        }
     }
 }

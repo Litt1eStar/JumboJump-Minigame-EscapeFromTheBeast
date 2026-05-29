@@ -1,3 +1,4 @@
+using JumboJump.Assets.Scripts.EFTB.Manager;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
@@ -17,6 +18,8 @@ namespace JumboJumps.EFTB
         private PlayerManager playerManager;
         private CatManager catManager;
 
+        private GameplayStateManager gameplayStateManager;
+
         [SerializeField]
         private Transform playerTransform;
 
@@ -28,6 +31,8 @@ namespace JumboJumps.EFTB
 
         private void Update()
         {
+            gameplayStateManager.UpdateLogic(Time.deltaTime);
+
             playerManager.UpdateLogic(Time.deltaTime);
             input2DManager.UpdateLogic(Time.deltaTime);
             catManager.UpdateLogic(Time.deltaTime);
@@ -45,6 +50,9 @@ namespace JumboJumps.EFTB
 
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
+
+            gameplayStateManager = new GameplayStateManager();
+            gameplayStateManager.Initialize();
 
             gameManager = new GameManager();
             gameManager.Initialize();

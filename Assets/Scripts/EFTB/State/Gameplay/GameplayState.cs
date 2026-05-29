@@ -1,4 +1,5 @@
 ﻿using JumboJump.Assets.Scripts.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 
 namespace JumboJumps.EFTB.State.Gameplay
@@ -18,7 +19,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleVisualizer = new CollectibleVisualizer();
             collectibleVisualizer.Initialize();
             
-            gameplayStateManager = new GameplayStateManager();
+            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
             gameplayStateManager.Initialize();
         }
 
@@ -28,11 +29,16 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             collectibleVisualizer?.Dispose();
             collectibleVisualizer = null;
+
+            gameplayStateManager?.Dispose();
+            gameplayStateManager = null;
         }
 
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
+
+            gameplayStateManager.UpdateLogic(deltaTime);
         }
     }
 }
