@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JumboJumps.EFTB.Utilities;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 public abstract class BaseState
@@ -27,6 +28,7 @@ public abstract class BaseState
 	public virtual void OnEnterState()
 	{
 		IsStateActive = true;
+		DebugLogHelper.Log($"Current State : {GetType().Name}");
 	}
 
 	public virtual void UpdateLogic(float deltaTime)
