@@ -1,14 +1,21 @@
-﻿using System;
+﻿using JumboJump.Assets.Scripts.EFTB.State.Gameplay;
+using System;
+using System.Collections.Generic;
 
 namespace JumboJump.EFTB.State.Gameplay
 {
     public class GameplayStateController : BaseStateController
     {
-        protected override Type DefaultTypeState => throw new NotImplementedException();
+        protected override Type DefaultTypeState => typeof(InGameState);
 
         public GameplayStateController()
         {
-
+            States = new Dictionary<Type, BaseState>()
+            {
+                {typeof(InGameState), new InGameState(this)},
+                {typeof(PauseMenuState), new PauseMenuState(this)},
+                {typeof(FinishGameState), new FinishGameState(this)},
+            };
         }
     }
 }
