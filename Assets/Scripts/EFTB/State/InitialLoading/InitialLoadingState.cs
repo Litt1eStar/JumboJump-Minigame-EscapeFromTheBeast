@@ -1,9 +1,12 @@
-﻿namespace JumboJump.Assets.Scripts.EFTB.State.InitialLoading
+﻿using JumboJump.Assets.Scripts.EFTB.State.MainMenu;
+
+namespace JumboJump.Assets.Scripts.EFTB.State.InitialLoading
 {
     public class InitialLoadingState : BaseState
     {
         public InitialLoadingState(BaseStateController stateController) : base(stateController)
         {
+            StateTransitionMap.Add(typeof(MainMenuState), null);
         }
 
         public override void OnEnterState()

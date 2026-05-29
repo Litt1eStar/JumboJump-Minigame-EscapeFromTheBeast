@@ -1,9 +1,12 @@
-﻿namespace JumboJump.Assets.Scripts.EFTB.State.MainMenu
+﻿using JumboJumps.EFTB.State.Gameplay;
+
+namespace JumboJump.Assets.Scripts.EFTB.State.MainMenu
 {
     public class MainMenuState : BaseState
     {
         public MainMenuState(BaseStateController stateController) : base(stateController)
         {
+            StateTransitionMap.Add(typeof(GameplayState), null);
         }
 
         public override void OnEnterState()
