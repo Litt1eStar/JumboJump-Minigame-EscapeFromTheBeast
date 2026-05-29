@@ -4,6 +4,7 @@
     {
         public PauseMenuState(BaseStateController stateController) : base(stateController)
         {
+            StateTransitionMap.Add(typeof(InGameState), null);
         }
 
         public override void OnEnterState()
