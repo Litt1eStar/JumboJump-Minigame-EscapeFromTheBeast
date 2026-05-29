@@ -1,9 +1,8 @@
-﻿using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace JumboJumps.EFTB
@@ -13,8 +12,14 @@ namespace JumboJumps.EFTB
         [SerializeField]
         private Input2DManager input2DManager;
 
+        private GameManager gameManager;
+        private CollectibleManager collectibleManager;
         private PlayerManager playerManager;
         private CatManager catManager;
+
+        [SerializeField]
+        private Transform playerTransform;
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -35,7 +40,23 @@ namespace JumboJumps.EFTB
             playerManager.Initialize();
 
             catManager = new CatManager();
-            catManager.Intialize();
+            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
+            catManager.Intialize(sceneCats, playerTransform);
+
+            collectibleManager = new CollectibleManager();
+            collectibleManager.Initialize();
+
+            gameManager = new GameManager();
+            gameManager.Initialize();
+        }
+
+        private void Dispose()
+        {
+            playerManager.Dispose();
+            playerManager = null;
+            
+            catManager.Dispose();
+            catManager = null;
         }
     }
 }
