@@ -41,6 +41,12 @@ namespace JumboJumps.EFTB
             catManager = new CatManager();
             IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
             catManager.Intialize(sceneCats, playerTransform);
+
+            collectibleManager = new CollectibleManager();
+            collectibleManager.Initialize();
+
+            gameManager = new GameManager();
+            gameManager.Initialize();
         }
 
         private void Dispose()
