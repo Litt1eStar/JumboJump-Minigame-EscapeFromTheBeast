@@ -4,6 +4,8 @@ namespace JumboJump.Assets.Scripts.EFTB.State.Gameplay
 {
     public class FinishGameState : BaseState
     {
+        private float transitionTime = 3f;
+        private float timer;
         public FinishGameState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(MainMenuState), null);
@@ -12,6 +14,8 @@ namespace JumboJump.Assets.Scripts.EFTB.State.Gameplay
         public override void OnEnterState()
         {
             base.OnEnterState();
+
+            timer = transitionTime;
         }
 
         public override void OnExitState()
@@ -22,6 +26,11 @@ namespace JumboJump.Assets.Scripts.EFTB.State.Gameplay
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
+            timer -= deltaTime;
+            if(timer <= 0)
+            {
+                StateController.ChangeState(typeof(MainMenuState));
+            }
         }
     }
 }

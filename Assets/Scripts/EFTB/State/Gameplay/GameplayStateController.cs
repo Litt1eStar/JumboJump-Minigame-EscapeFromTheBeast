@@ -1,4 +1,5 @@
 ﻿using JumboJump.Assets.Scripts.EFTB.State.Gameplay;
+using JumboJump.EFTB.State.MainMenu;
 using System;
 using System.Collections.Generic;
 
@@ -15,6 +16,7 @@ namespace JumboJump.EFTB.State.Gameplay
                 {typeof(InGameState), new InGameState(this)},
                 {typeof(PauseMenuState), new PauseMenuState(this)},
                 {typeof(FinishGameState), new FinishGameState(this)},
+                {typeof(MainMenuState), new MainMenuState(this)},
             };
         }
     }
