@@ -1,6 +1,6 @@
 ﻿using JumboJumps.EFTB.State.Gameplay;
 
-namespace JumboJump.Assets.Scripts.EFTB.State.MainMenu
+namespace JumboJump.EFTB.State.MainMenu
 {
     public class MainMenuState : BaseState
     {

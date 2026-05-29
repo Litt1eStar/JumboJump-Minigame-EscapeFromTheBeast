@@ -1,4 +1,4 @@
-﻿using JumboJump.Assets.Scripts.EFTB.Manager;
+﻿using JumboJump.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 

@@ -1,5 +1,5 @@
-﻿using JumboJump.Assets.Scripts.EFTB.State.InitialLoading;
-using JumboJump.Assets.Scripts.EFTB.State.MainMenu;
+﻿using JumboJump.EFTB.State.InitialLoading;
+using JumboJump.EFTB.State.MainMenu;
 using JumboJumps.EFTB.State.Gameplay;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
-﻿using JumboJump.Assets.Scripts.EFTB.State.MainMenu;
+﻿using JumboJump.EFTB.State.MainMenu;
 
-namespace JumboJump.Assets.Scripts.EFTB.State.InitialLoading
+namespace JumboJump.EFTB.State.InitialLoading
 {
     public class InitialLoadingState : BaseState
     {
