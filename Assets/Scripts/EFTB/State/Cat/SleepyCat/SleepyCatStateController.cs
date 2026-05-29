@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.EFTB.Visualizer;
+﻿using JumboJumps.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
+namespace JumboJumps.EFTB.State.Cat.SleepyCat
 {
     public class SleepyCatStateController : BaseStateController
     {

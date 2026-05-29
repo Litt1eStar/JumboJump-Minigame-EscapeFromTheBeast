@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.EFTB.Utilities;
+﻿using JumboJumps.EFTB.Utilities;
 
-namespace Assets.Scripts.EFTB.State.Cat.SleepyCat
+namespace JumboJumps.EFTB.State.Cat.SleepyCat
 {
     public class CatSleepState : BaseState
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Windows;
 
-namespace Assets.Scripts.EFTB.GI
+namespace JumboJumps.EFTB.GI
 {
     public class GIPlayer : MonoBehaviour
     {

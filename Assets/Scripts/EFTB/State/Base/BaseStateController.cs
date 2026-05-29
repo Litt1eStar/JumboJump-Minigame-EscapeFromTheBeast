@@ -1,4 +1,4 @@
-using Assets.Scripts.EFTB.Utilities;
+using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
