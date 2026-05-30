@@ -1,9 +1,18 @@
 using System;
 using System.Collections.Generic;
-public abstract class BaseStateController
+namespace JumboJumps.EFTB.State
+{ 
+    public abstract class BaseStateController
 {
-    public event Action<BaseState, BaseState> EventStateChanged; //This Event will Invoke when state changed.
-    public event Action<float> EventTimerChanged; //This Event will Invoke when State Transition Timer is changed.
+    /// <summary>
+    /// EventStateChanged will be invoked when state changed, and pass previous state and current state as parameters.
+    /// </summary>
+    public event Action<BaseState, BaseState> EventStateChanged;
+    
+    /// <summary>
+    /// EventTimerChanged will be invoked when State Transition Timer is changed, and pass the timer value as parameter.
+    /// </summary>
+    public event Action<float> EventTimerChanged;
     public BaseState CurrentState { get; protected set; }
     protected Dictionary<Type, BaseState> States { get; set; }
     protected abstract Type DefaultTypeState { get; }
@@ -98,4 +107,5 @@ public abstract class BaseStateController
     {
         EventTimerChanged?.Invoke(value);
     }
+}
 }
