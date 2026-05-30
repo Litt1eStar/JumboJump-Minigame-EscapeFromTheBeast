@@ -1,9 +1,7 @@
-﻿using JumboJumps.EFTB.Manager;
-using System;
+using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace JumboJumps.EFTB
@@ -15,6 +13,10 @@ namespace JumboJumps.EFTB
 
         private PlayerManager playerManager;
         private CatManager catManager;
+
+        [SerializeField]
+        private Transform playerTransform;
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -27,6 +29,11 @@ namespace JumboJumps.EFTB
             input2DManager.UpdateLogic(Time.deltaTime);
             catManager.UpdateLogic(Time.deltaTime);
         }
+
+        private void OnDestroy()
+        {
+            Dispose();
+        }
         private void Initialize()
         {
             input2DManager.Initialize();
@@ -35,7 +42,17 @@ namespace JumboJumps.EFTB
             playerManager.Initialize();
 
             catManager = new CatManager();
-            catManager.Intialize();
+            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
+            catManager.Intialize(sceneCats, playerTransform);
+        }
+
+        private void Dispose()
+        {
+            playerManager.Dispose();
+            playerManager = null;
+            
+            catManager.Dispose();
+            catManager = null;
         }
     }
 }

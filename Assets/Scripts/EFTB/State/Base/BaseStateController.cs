@@ -1,10 +1,18 @@
-using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-public abstract class BaseStateController
+namespace JumboJumps.EFTB.State
+{ 
+    public abstract class BaseStateController
 {
+    /// <summary>
+    /// EventStateChanged will be invoked when state changed, and pass previous state and current state as parameters.
+    /// </summary>
     public event Action<BaseState, BaseState> EventStateChanged;
+    
+    /// <summary>
+    /// EventTimerChanged will be invoked when State Transition Timer is changed, and pass the timer value as parameter.
+    /// </summary>
+    public event Action<float> EventTimerChanged;
     public BaseState CurrentState { get; protected set; }
     protected Dictionary<Type, BaseState> States { get; set; }
     protected abstract Type DefaultTypeState { get; }
@@ -16,12 +24,13 @@ public abstract class BaseStateController
 
     public virtual void Initialize()
     {
-        Debug.Log($"{this.GetType().Name} was Initialize");
-
         foreach (var state in States.Values)
         {
             state.Initialize();
         }
+
+        StartStateController();
+        EventStateChanged?.Invoke(null, CurrentState);
     }
 
     public virtual void Dispose() 
@@ -50,7 +59,7 @@ public abstract class BaseStateController
         CurrentState.OnEnterState();
     }
 
-    public BaseState ChangeState(Type newState)
+    public virtual BaseState ChangeState(Type newState)
     {
         if (!IsValidToChangeState(newState))
         {
@@ -71,8 +80,6 @@ public abstract class BaseStateController
     public virtual void UpdateLogic(float deltaTime)
     {
         if (CurrentState == null) return;
-
-        DebugLogHelper.Log($"[{GetType().Name}] Current State: {CurrentState.GetType().Name}");
         CurrentState.UpdateLogic(deltaTime);
     }
 
@@ -95,4 +102,10 @@ public abstract class BaseStateController
 
         return true;
     }
+
+    public void InvokeEventTimerChanged(float value)
+    {
+        EventTimerChanged?.Invoke(value);
+    }
+}
 }

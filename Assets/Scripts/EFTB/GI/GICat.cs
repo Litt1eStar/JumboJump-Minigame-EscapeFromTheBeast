@@ -1,44 +1,81 @@
-﻿using System;
+﻿using JumboJumps.EFTB.GameData.Cat;
+using JumboJumps.EFTB.Interface;
+using JumboJumps.EFTB.UI;
+using JumboJumps.EFTB.Utilities;
+using System;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
 {
-    public class GICatSight : MonoBehaviour
+    public class GICat : MonoBehaviour
     {
+        public event Action EventTargetSpotted;
+        public event Action EventTargetLost;
+        public event Action EventStateChanged;
+
         [Header("Sight View Cone Configuration")]
         [SerializeField]
         private Transform sightOrigin;
-
-        [SerializeField]
-        private Transform target;
-
+        
         [SerializeField]
         private float fovAngle;
         
         [SerializeField]
         private float range;
-
+        
         [SerializeField]
         private LayerMask sightBlockerLayerMask;
 
-        public event Action OnTargetSpotted;
-        public event Action OnTargetLost;
-        public bool IsTargetInSight { get; private set; }
+        [Header("Reference")]
+        [SerializeField] 
+        private UICatStateLabel uiCatStateLabel;
+
+        [SerializeField]
+        private BaseCatConfigSO config;
 
         [Header("Debug Visualization")]
-        [SerializeField] private bool drawGizmo = true;
-        [SerializeField, Range(8, 64)] private int arcSegments = 24;
-        [SerializeField] private Color colorClear = new Color(0f, 1f, 0f, 0.6f);
-        [SerializeField] private Color colorSpotted = new Color(1f, 0f, 0f, 0.8f);
+        [SerializeField]
+        private bool drawGizmo = true;
+        
+        [SerializeField, Range(8, 64)] 
+        private int arcSegments = 24;
+        
+        [SerializeField] 
+        private Color colorClear = new Color(0f, 1f, 0f, 0.6f);
+        
+        [SerializeField] 
+        private Color colorSpotted = new Color(1f, 0f, 0f, 0.8f);
+        public bool IsTargetInSight { get; private set; }
+        private Transform target;
+
+        public ICatStateController BuildStateController(Transform target)
+        {
+            this.target = target;
+            var controller = config.BuildStateController(this, target, uiCatStateLabel);
+            return controller;
+        }
+
         public void UpdateLogic(float deltaTime)
         {
-            if (sightOrigin == null || target == null) return;
+            if (sightOrigin == null || target == null)
+            {
+                DebugLogHelper.LogError("Sight origin or target not set. Cannot compute visibility.");
+                return;
+            }
 
             bool wasVisible = IsTargetInSight;
             IsTargetInSight = ComputeVisible();
 
-            if (!wasVisible && IsTargetInSight) OnTargetSpotted?.Invoke();
-            else if (wasVisible && !IsTargetInSight) OnTargetLost?.Invoke();
+            if (wasVisible == IsTargetInSight) return;
+
+            if (IsTargetInSight)
+            {
+                EventTargetSpotted?.Invoke();
+            }
+            else
+            {
+                EventTargetLost?.Invoke();
+            }
         }
 
         private bool ComputeVisible()
@@ -54,12 +91,13 @@ namespace JumboJumps.EFTB.GI
             return hit.collider == null;
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (!drawGizmo || sightOrigin == null) return;
 
             Vector2 origin = sightOrigin.position;
-            Vector2 facing = -sightOrigin.up;             // matches ComputeVisible()
+            Vector2 facing = -sightOrigin.up; 
             if (facing.sqrMagnitude < 0.0001f) return;
 
             Gizmos.color = IsTargetInSight ? colorSpotted : colorClear;
@@ -67,8 +105,8 @@ namespace JumboJumps.EFTB.GI
             float half = fovAngle * 0.5f;
 
             // Edge lines
-            Vector2 leftEnd = origin + Rotate(facing, +half) * range;
-            Vector2 rightEnd = origin + Rotate(facing, -half) * range;
+            Vector2 leftEnd = origin + (Vector2)(Quaternion.Euler(0, 0, +half) * facing) * range;
+            Vector2 rightEnd = origin + (Vector2)(Quaternion.Euler(0, 0, -half) * facing) * range;
             Gizmos.DrawLine(origin, leftEnd);
             Gizmos.DrawLine(origin, rightEnd);
 
@@ -78,7 +116,7 @@ namespace JumboJumps.EFTB.GI
             {
                 float t = (float)i / arcSegments;
                 float angle = Mathf.Lerp(-half, +half, t);
-                Vector2 curr = origin + Rotate(facing, angle) * range;
+                Vector2 curr = origin + (Vector2)(Quaternion.Euler(0, 0, angle) * facing) * range;
                 Gizmos.DrawLine(prev, curr);
                 prev = curr;
             }
@@ -90,12 +128,6 @@ namespace JumboJumps.EFTB.GI
                 Gizmos.DrawLine(origin, target.position);
             }
         }
-
-        private static Vector2 Rotate(Vector2 v, float degrees)
-        {
-            float rad = degrees * Mathf.Deg2Rad;
-            float c = Mathf.Cos(rad), s = Mathf.Sin(rad);
-            return new Vector2(c * v.x - s * v.y, s * v.x + c * v.y);
-        }
+#endif
     }
 }

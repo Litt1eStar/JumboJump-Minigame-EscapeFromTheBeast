@@ -1,23 +1,20 @@
 ﻿using JumboJumps.EFTB.State.Cat.SleepyCat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Cat
 {
     public class CatCatchState : BaseState
     {
-        private SleepyCatStateController controller;
+        private SleepyCatStateController stateController;
         public CatCatchState(BaseStateController stateController) : base(stateController)
         {
-            controller = (SleepyCatStateController)stateController;
+            this.stateController = (SleepyCatStateController)stateController;
         }
 
         public override void OnEnterState()
         {
             base.OnEnterState();
+            DebugLogHelper.Log("PLAYER GOT CATCH");
         }
 
         public override void OnExitState()
@@ -28,6 +25,6 @@ namespace JumboJumps.EFTB.State.Cat
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-        }
+        } 
     }
 }

@@ -1,27 +1,42 @@
-﻿using JumboJumps.EFTB.State.Cat.SleepyCat;
+using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Interface;
 using JumboJumps.EFTB.Utilities;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.Manager
 {
     public class CatManager
     {
-        private SleepyCatStateController sleepyCatStateController;
-        public void Intialize()
+        public List<ICatStateController> Cats {  get; private set; }
+        public void Intialize(IEnumerable<GICat> sceneCats, Transform playerTarget)
         {
-            sleepyCatStateController = new SleepyCatStateController();
-            sleepyCatStateController.Initialize();
-            sleepyCatStateController.StartStateController();
+            Cats = new List<ICatStateController>();
+            foreach(var giCat in sceneCats)
+            {
+                var controller = giCat.BuildStateController(playerTarget);
+                controller.Initialize();
+                Cats.Add(controller);
+            }
+            GameContext.Instance.Add(this);
         }
 
         public void Dispose()
         {
-            sleepyCatStateController = null;
-            sleepyCatStateController.Dispose();
+            foreach (var cat in Cats)
+            {
+                cat.Dispose();
+            }
+            Cats.Clear();
+            GameContext.Instance.Remove(this);
         }
 
         public void UpdateLogic(float deltaTime)
         {
-            sleepyCatStateController.UpdateLogic(deltaTime);
+            foreach (var cat in Cats)
+            {
+                cat.UpdateLogic(deltaTime);
+            }
         }
     }
 }

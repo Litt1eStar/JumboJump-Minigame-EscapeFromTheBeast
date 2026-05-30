@@ -14,7 +14,7 @@ namespace JumboJumps.EFTB.State.Player
         }
         public override void UpdateLogic(float deltaTime)
         {
-            float xInput = playerStateController.input2DManager.xInput;
+            float xInput = playerStateController.input2DManager.XInput;
             if (xInput > 0 || xInput < 0)
             {
                 StateController.ChangeState(typeof(PlayerWalkingState));
