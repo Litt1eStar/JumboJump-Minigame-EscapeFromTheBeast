@@ -9,6 +9,7 @@ namespace JumboJumps.EFTB.GI
     {
         [SerializeField]
         private CollectibleSO collectibleData;
+
         private bool isCollected = false;
         public void Initialize()
         {
