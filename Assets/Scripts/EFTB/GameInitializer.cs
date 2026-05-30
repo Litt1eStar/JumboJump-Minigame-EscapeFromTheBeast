@@ -44,7 +44,8 @@ namespace JumboJumps.EFTB
             playerManager.Initialize();
 
             catManager = new CatManager();
-            catManager.Intialize();
+            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
+            catManager.Intialize(sceneCats, playerTransform);
 
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
