@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.GameData.Cat;
+using JumboJumps.EFTB.GameData.Cat;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Interface;
 using JumboJumps.EFTB.UI;
