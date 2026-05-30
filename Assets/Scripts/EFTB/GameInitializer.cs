@@ -30,11 +30,11 @@ namespace JumboJumps.EFTB
 
         private void Update()
         {
-            gameplayStateManager.UpdateLogic(Time.deltaTime);
-
             playerManager.UpdateLogic(Time.deltaTime);
             input2DManager.UpdateLogic(Time.deltaTime);
             catManager.UpdateLogic(Time.deltaTime);
+
+            gameManager.UpdateLogic(Time.deltaTime);
         }
 
         private void OnDestroy()

@@ -19,6 +19,8 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnEnterState();
 
+            DebugLogHelper.Log("GameplayState: Entered Gameplay State");
+
             collectibleManager = GameContext.Instance.Get<CollectibleManager>();
             if(collectibleManager == null)
             {

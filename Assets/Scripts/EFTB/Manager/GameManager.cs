@@ -15,13 +15,17 @@ namespace JumboJumps.EFTB.Manager
         {
             stateController = new GameStateController();
             stateController?.Initialize();
-            stateController?.StartStateController();
         }
 
         public void Dispose()
         {
             stateController?.Dispose();
             stateController = null;
+        }
+
+        public void UpdateLogic(float deltaTime)
+        {
+            stateController?.UpdateLogic(deltaTime);
         }
     }
 }
