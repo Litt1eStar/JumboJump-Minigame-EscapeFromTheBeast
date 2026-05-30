@@ -4,10 +4,8 @@
     {
         private readonly float TIME_TILL_AWAKE = 5f;
         private float countdownTimer = 0f;
-        public CatSleepState(
-            BaseStateController stateController,
-            float timeTillAwake
-            ): base(stateController)
+        public CatSleepState(BaseStateController stateController,
+                             float timeTillAwake) : base(stateController)
         {
             StateTransitionMap.Add(typeof(CatAwakeState), null);    
             TIME_TILL_AWAKE = timeTillAwake;
