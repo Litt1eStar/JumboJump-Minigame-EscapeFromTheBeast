@@ -22,8 +22,8 @@ namespace JumboJumps.EFTB.GameData.Cat
         public float TimeToCatch => timeToCatch;
         public override ICatStateController BuildStateController(GICat giCat, Transform transform, UICatStateLabel label)
         {
-            SleepyCatStateController controller = new SleepyCatStateController(this, giCat, label, transform);
-            return controller;
+            SleepyCatStateController stateController = new SleepyCatStateController(this, giCat, label, transform);
+            return stateController;
         }
     }
 }
