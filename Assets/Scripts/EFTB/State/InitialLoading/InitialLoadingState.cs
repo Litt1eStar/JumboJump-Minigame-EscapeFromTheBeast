@@ -1,4 +1,5 @@
-﻿using JumboJump.EFTB.State.MainMenu;
+﻿using JumboJumps.EFTB.State;
+using JumboJumps.EFTB.State.MainMenu;
 
 namespace JumboJump.EFTB.State.InitialLoading
 {

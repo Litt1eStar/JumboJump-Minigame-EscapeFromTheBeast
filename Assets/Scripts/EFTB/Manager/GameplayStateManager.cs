@@ -1,7 +1,7 @@
-﻿using JumboJump.EFTB.State.Gameplay;
+﻿using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 
-namespace JumboJump.EFTB.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class GameplayStateManager
     {

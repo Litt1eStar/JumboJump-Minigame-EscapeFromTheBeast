@@ -1,4 +1,4 @@
-﻿namespace JumboJump.EFTB.State.Gameplay
+﻿namespace JumboJumps.EFTB.State.Gameplay
 {
     public class PauseMenuState : BaseState
     {
