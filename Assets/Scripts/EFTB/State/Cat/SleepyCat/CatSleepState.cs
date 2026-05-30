@@ -26,10 +26,9 @@
         {
             countdownTimer -= deltaTime;
             StateController.InvokeEventTimerChanged(countdownTimer);
-            //DebugLogHelper.LogWarning($"[{GetType().Name}] Countdown Timer: {countdownTimer}");
+            
             if (countdownTimer <= 0)
             {
-                // Transition to awake state
                 StateController.ChangeState(typeof(CatAwakeState));
                 return;
             }

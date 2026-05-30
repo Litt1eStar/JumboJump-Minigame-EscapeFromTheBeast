@@ -29,6 +29,11 @@ namespace JumboJumps.EFTB
             input2DManager.UpdateLogic(Time.deltaTime);
             catManager.UpdateLogic(Time.deltaTime);
         }
+
+        private void OnDestroy()
+        {
+            Dispose();
+        }
         private void Initialize()
         {
             input2DManager.Initialize();
