@@ -2,27 +2,31 @@ using JumboJumps.EFTB.State.Player;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
-public class PlayerManager
+namespace JumboJumps.EFTB.Manager
 {
-    private PlayerStateController stateController;
-
-    public void Initialize()
+    public class PlayerManager
     {
-        Debug.Log($"{this.GetType().Name} was Initialize");
-        stateController = new PlayerStateController();
-        stateController.Initialize();
-        stateController.StartStateController();
+        private PlayerStateController stateController;
 
-        GameContext.Instance.Add(this);
-    }
-    public void Dispose()
-    {
-        stateController.Dispose();
-        stateController = null;
-    }
-    public void UpdateLogic(float deltaTime)
-    {
-        stateController.UpdateLogic(deltaTime);
-    }
+        public void Initialize()
+        {
+            Debug.Log($"{this.GetType().Name} was Initialize");
+            stateController = new PlayerStateController();
+            stateController.Initialize();
+            stateController.StartStateController();
 
+            GameContext.Instance.Add(this);
+        }
+        public void Dispose()
+        {
+            stateController.Dispose();
+            stateController = null;
+
+            GameContext.Instance.Remove(this);
+        }
+        public void UpdateLogic(float deltaTime)
+        {
+            stateController.UpdateLogic(deltaTime);
+        }
+    }
 }

@@ -1,5 +1,6 @@
-﻿using JumboJumps.EFTB.Manager;
-using System;
+using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,10 @@ namespace JumboJumps.EFTB
         private CollectibleManager collectibleManager;
         private PlayerManager playerManager;
         private CatManager catManager;
+
+        [SerializeField]
+        private Transform playerTransform;
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);

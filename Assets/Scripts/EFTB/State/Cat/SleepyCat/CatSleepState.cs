@@ -1,20 +1,20 @@
-﻿using JumboJumps.EFTB.Utilities;
-
 namespace JumboJumps.EFTB.State.Cat.SleepyCat
 {
     public class CatSleepState : BaseState
     {
         private readonly float TIME_TILL_AWAKE = 5f;
         private float countdownTimer = 0f;
-        public CatSleepState(BaseStateController stateController) : base(stateController)
+        public CatSleepState(BaseStateController stateController,
+                             float timeTillAwake) : base(stateController)
         {
             StateTransitionMap.Add(typeof(CatAwakeState), null);    
+            TIME_TILL_AWAKE = timeTillAwake;
         }
 
         public override void OnEnterState()
         {
             base.OnEnterState();
-            countdownTimer = 0f;
+            countdownTimer = TIME_TILL_AWAKE;
         }
 
         public override void OnExitState()
@@ -24,12 +24,11 @@ namespace JumboJumps.EFTB.State.Cat.SleepyCat
 
         public override void UpdateLogic(float deltaTime)
         {
-            countdownTimer += deltaTime;
-            //DebugLogHelper.LogWarning($"[{GetType().Name}] Countdown Timer: {countdownTimer}");
-            if (countdownTimer > TIME_TILL_AWAKE)
+            countdownTimer -= deltaTime;
+            StateController.InvokeEventTimerChanged(countdownTimer);
+            
+            if (countdownTimer <= 0)
             {
-                // Transition to awake state
-                countdownTimer = 0f;
                 StateController.ChangeState(typeof(CatAwakeState));
                 return;
             }
