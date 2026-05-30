@@ -5,8 +5,10 @@ namespace JumboJumps.EFTB.State.Gameplay
     public class GameplayState : BaseState
     {
         private CollectibleVisualizer collectibleVisualizer;
+
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
+
         }
 
         public override void OnEnterState()
