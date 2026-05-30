@@ -11,6 +11,8 @@ namespace JumboJumps.EFTB
         [SerializeField]
         private Input2DManager input2DManager;
 
+        private GameManager gameManager;
+        private CollectibleManager collectibleManager;
         private PlayerManager playerManager;
         private CatManager catManager;
 
@@ -42,17 +44,28 @@ namespace JumboJumps.EFTB
             playerManager.Initialize();
 
             catManager = new CatManager();
-            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
-            catManager.Intialize(sceneCats, playerTransform);
+            catManager.Intialize();
+
+            collectibleManager = new CollectibleManager();
+            collectibleManager.Initialize();
+
+            gameManager = new GameManager();
+            gameManager.Initialize();
         }
 
         private void Dispose()
         {
-            playerManager.Dispose();
+            playerManager?.Dispose();
             playerManager = null;
-            
-            catManager.Dispose();
+
+            catManager?.Dispose();
             catManager = null;
+
+            collectibleManager?.Dispose();
+            collectibleManager = null;
+
+            gameManager?.Dispose();
+            gameManager = null;
         }
     }
 }
