@@ -1,9 +1,4 @@
 ﻿using JumboJumps.EFTB.State.Cat.SleepyCat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JumboJumps.EFTB.State.Cat
 {
@@ -12,10 +7,8 @@ namespace JumboJumps.EFTB.State.Cat
         private readonly float TIME_TO_CATCH = 5f;
         private float countdownTimer = 0f;
         private SleepyCatStateController stateController;
-        public CatAlertState(
-            BaseStateController stateController,
-            float timeToCatch
-            ) : base(stateController)
+        public CatAlertState(BaseStateController stateController,
+                             float timeToCatch) : base(stateController)
         {
             StateTransitionMap.Add(typeof(CatCatchState), null);
             StateTransitionMap.Add(typeof(CatSleepState), null);

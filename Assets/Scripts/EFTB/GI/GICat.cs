@@ -1,4 +1,5 @@
-﻿using JumboJumps.EFTB.Interface;
+﻿using JumboJumps.EFTB.GameData.Cat;
+using JumboJumps.EFTB.Interface;
 using JumboJumps.EFTB.UI;
 using JumboJumps.EFTB.Utilities;
 using System;
@@ -8,6 +9,10 @@ namespace JumboJumps.EFTB.GI
 {
     public class GICat : MonoBehaviour
     {
+        public event Action EventTargetSpotted;
+        public event Action EventTargetLost;
+        public event Action EventStateChanged;
+
         [Header("Sight View Cone Configuration")]
         [SerializeField]
         private Transform sightOrigin;
@@ -25,12 +30,6 @@ namespace JumboJumps.EFTB.GI
         [SerializeField] 
         private UICatStateLabel uiCatStateLabel;
 
-        public event Action EventTargetSpotted;
-        public event Action EventTargetLost;
-        public event Action EventStateChanged;
-        public bool IsTargetInSight { get; private set; }
-        private Transform target;
-
         [SerializeField]
         private BaseCatConfigSO config;
 
@@ -46,7 +45,9 @@ namespace JumboJumps.EFTB.GI
         
         [SerializeField] 
         private Color colorSpotted = new Color(1f, 0f, 0f, 0.8f);
-       
+        public bool IsTargetInSight { get; private set; }
+        private Transform target;
+
         public ICatStateController BuildStateController(Transform target)
         {
             this.target = target;
@@ -58,15 +59,23 @@ namespace JumboJumps.EFTB.GI
         {
             if (sightOrigin == null || target == null)
             {
-                DebugLogHelper.LogWarning("Sight origin or target not set. Cannot compute visibility.");
+                DebugLogHelper.LogError("Sight origin or target not set. Cannot compute visibility.");
                 return;
             }
 
             bool wasVisible = IsTargetInSight;
             IsTargetInSight = ComputeVisible();
 
-            if (!wasVisible && IsTargetInSight) EventTargetSpotted?.Invoke();
-            else if (wasVisible && !IsTargetInSight) EventTargetLost?.Invoke();
+            if (wasVisible == IsTargetInSight) return;
+
+            if (IsTargetInSight)
+            {
+                EventTargetSpotted?.Invoke();
+            }
+            else
+            {
+                EventTargetLost?.Invoke();
+            }
         }
 
         private bool ComputeVisible()

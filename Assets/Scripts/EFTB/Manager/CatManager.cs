@@ -12,9 +12,9 @@ namespace JumboJumps.EFTB.Manager
         public void Intialize(IEnumerable<GICat> sceneCats, Transform playerTarget)
         {
             Cats = new List<ICatStateController>();
-            foreach(var giSight in sceneCats)
+            foreach(var giCat in sceneCats)
             {
-                var controller = giSight.BuildStateController(playerTarget);
+                var controller = giCat.BuildStateController(playerTarget);
                 controller.Initialize();
                 Cats.Add(controller);
             }

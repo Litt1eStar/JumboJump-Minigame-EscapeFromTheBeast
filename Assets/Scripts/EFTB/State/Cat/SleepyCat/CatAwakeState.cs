@@ -6,10 +6,8 @@
         private float countdownTimer = 0f;
 
         private SleepyCatStateController stateController;
-        public CatAwakeState(
-            BaseStateController stateController,
-            float timeToAlert
-            ) : base(stateController)
+        public CatAwakeState(BaseStateController stateController,
+                             float timeToAlert) : base(stateController)
         {
             StateTransitionMap.Add(typeof(CatSleepState), null);
             StateTransitionMap.Add(typeof(CatAlertState), null);
@@ -35,18 +33,16 @@
         {
             countdownTimer -= deltaTime;
             StateController.InvokeEventTimerChanged(countdownTimer);
-            bool isPlayerInSight = stateController.visualizer.IsTargetInSght(); // Replace with actual logic to check if player is in sight
+            bool isPlayerInSight = stateController.visualizer.IsTargetInSght();
             
             if(isPlayerInSight && countdownTimer > 0)
             {
-                // Transition to alert state
                 StateController.ChangeState(typeof(CatAlertState));
                 return;
             }
 
             if(countdownTimer <= 0)
             {
-                //Transition to sleep state
                 StateController.ChangeState(typeof(CatSleepState));
                 return;
             }

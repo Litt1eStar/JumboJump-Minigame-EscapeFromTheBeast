@@ -37,6 +37,11 @@ namespace JumboJumps.EFTB
             input2DManager.UpdateLogic(Time.deltaTime);
             catManager.UpdateLogic(Time.deltaTime);
         }
+
+        private void OnDestroy()
+        {
+            Dispose();
+        }
         private void Initialize()
         {
             input2DManager.Initialize();
@@ -60,11 +65,17 @@ namespace JumboJumps.EFTB
 
         private void Dispose()
         {
-            playerManager.Dispose();
+            playerManager?.Dispose();
             playerManager = null;
-            
-            catManager.Dispose();
+
+            catManager?.Dispose();
             catManager = null;
+
+            collectibleManager?.Dispose();
+            collectibleManager = null;
+
+            gameManager?.Dispose();
+            gameManager = null;
         }
     }
 }
