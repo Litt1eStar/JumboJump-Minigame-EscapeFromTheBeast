@@ -5,8 +5,8 @@ namespace JumboJumps.EFTB.Manager
 {
     public class Input2DManager : MonoBehaviour
     {
-        public float xInput { get; private set; }
-        public float yInput { get; private set; }  
+        public float XInput { get; private set; }
+        public float YInput { get; private set; }  
         
         public void Initialize()
         {
@@ -25,8 +25,8 @@ namespace JumboJumps.EFTB.Manager
 
         private void MovementInputHandler()
         {
-            xInput = Input.GetAxis("Horizontal");
-            yInput = Input.GetAxis("Vertical");
+            XInput = Input.GetAxis("Horizontal");
+            YInput = Input.GetAxis("Vertical");
         }
     }
 }
