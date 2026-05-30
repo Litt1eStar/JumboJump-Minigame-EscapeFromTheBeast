@@ -1,9 +1,6 @@
 ﻿using JumboJumps.EFTB.Manager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace JumboJumps.EFTB
@@ -13,6 +10,8 @@ namespace JumboJumps.EFTB
         [SerializeField]
         private Input2DManager input2DManager;
 
+        private GameManager gameManager;
+        private CollectibleManager collectibleManager;
         private PlayerManager playerManager;
         private CatManager catManager;
         private void Awake()
@@ -36,6 +35,12 @@ namespace JumboJumps.EFTB
 
             catManager = new CatManager();
             catManager.Intialize();
+
+            collectibleManager = new CollectibleManager();
+            collectibleManager.Initialize();
+
+            gameManager = new GameManager();
+            gameManager.Initialize();
         }
     }
 }
