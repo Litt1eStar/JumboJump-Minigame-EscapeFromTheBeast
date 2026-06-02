@@ -2,11 +2,14 @@
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
+using System;
 
 namespace JumboJump.Assets.Scripts.EFTB.State.Gameplay
 {
     public class GameplayController
     {
+        public event Action EventReturnBackToMainMenu;
+
         private CollectibleManager collectibleManager;
         private CollectibleVisualizer collectibleVisualizer;
         public void Initialize()
