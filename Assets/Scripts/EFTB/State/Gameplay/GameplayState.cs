@@ -22,17 +22,11 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnEnterState();
 
-            DebugLogHelper.Log("GameplayState: Entered Gameplay State");
-
             gameplayController = new GameplayController();
             gameplayController.Initialize();
 
             gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
 
-            /*
-            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-            gameplayStateManager?.SetGameplayController(gameplayController);
-        */
             gameplayStateManager = new GameplayStateManager();
             gameplayStateManager.Initialize(gameplayController);
          }

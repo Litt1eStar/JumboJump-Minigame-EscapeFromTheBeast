@@ -15,7 +15,6 @@ namespace JumboJumps.EFTB.State.MainMenu
         public override void OnEnterState()
         {
             base.OnEnterState();
-            DebugLogHelper.Log("MainMenuState: Entered Main Menu State");
             timer = transitionTime;
         }
 

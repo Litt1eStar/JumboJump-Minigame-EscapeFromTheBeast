@@ -16,7 +16,6 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void OnEnterState()
         {
             base.OnEnterState();
-            DebugLogHelper.Log("InGameState: Entered In-Game State");
             timer = transitionTime;
         }
 

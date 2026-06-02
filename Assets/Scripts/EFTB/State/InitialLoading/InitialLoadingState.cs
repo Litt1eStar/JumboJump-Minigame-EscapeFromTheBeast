@@ -17,7 +17,6 @@ namespace JumboJump.EFTB.State.InitialLoading
         public override void OnEnterState()
         {
             base.OnEnterState();
-            DebugLogHelper.Log("InitialLoadingState: Entered Initial Loading State");
             timer = transitionTime;
         }
 

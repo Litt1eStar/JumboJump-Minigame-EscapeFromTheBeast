@@ -12,7 +12,6 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void OnEnterState()
         {
             base.OnEnterState();
-            DebugLogHelper.Log("PauseMenuState: Entered Pause Menu State");
         }
 
         public override void OnExitState()
