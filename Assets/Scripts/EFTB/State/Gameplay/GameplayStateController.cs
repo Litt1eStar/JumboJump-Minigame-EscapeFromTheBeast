@@ -1,4 +1,5 @@
-﻿using JumboJump.EFTB.State.Gameplay;
+﻿using JumboJump.Assets.Scripts.EFTB.Visualizer;
+using JumboJump.EFTB.State.Gameplay;
 using JumboJumps.EFTB.State.MainMenu;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,11 @@ namespace JumboJumps.EFTB.State.Gameplay
     {
         protected override Type DefaultTypeState => typeof(InGameState);
         public GameplayController GameplayController { get; private set; }
+        
         public GameplayStateController(GameplayController gameplayController)
         {
+            GameplayController = gameplayController;
+            
             States = new Dictionary<Type, BaseState>()
             {
                 {typeof(InGameState), new InGameState(this)},
@@ -18,7 +22,6 @@ namespace JumboJumps.EFTB.State.Gameplay
                 {typeof(FinishGameState), new FinishGameState(this)},
             };
 
-            GameplayController = gameplayController;
         }
     }
 }
