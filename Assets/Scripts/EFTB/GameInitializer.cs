@@ -73,6 +73,9 @@ namespace JumboJumps.EFTB
             collectibleManager?.Dispose();
             collectibleManager = null;
 
+            gameplayStateManager?.Dispose();
+            gameplayStateManager = null;
+
             gameManager?.Dispose();
             gameManager = null;
         }

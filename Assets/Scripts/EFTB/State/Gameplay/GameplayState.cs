@@ -1,3 +1,4 @@
+using JumboJump.Assets.Scripts.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
@@ -7,9 +8,7 @@ namespace JumboJumps.EFTB.State.Gameplay
     public class GameplayState : BaseState
     {
         private GameplayStateManager gameplayStateManager;
-        private CollectibleVisualizer collectibleVisualizer;
-        private CollectibleManager collectibleManager;
-
+        private GameplayController gameplayController;
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
 
@@ -21,17 +20,9 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             DebugLogHelper.Log("GameplayState: Entered Gameplay State");
 
-            collectibleManager = GameContext.Instance.Get<CollectibleManager>();
-            if(collectibleManager == null)
-            {
-                DebugLogHelper.LogError("GameplayState: CollectibleManager not found in GameContext.");
-             }
+            gameplayController = new GameplayController();
+            gameplayController.Initialize();
 
-            collectibleVisualizer = new CollectibleVisualizer();
-            collectibleVisualizer.Initialize();
-
-            collectibleManager.EventTotalCoinValueChanged += collectibleVisualizer.UpdateCoinChanged;
-            
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
         }
 
@@ -39,13 +30,6 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnExitState();
             
-            if(collectibleManager != null)
-            {
-                collectibleManager.EventTotalCoinValueChanged -= collectibleVisualizer.UpdateCoinChanged;
-            }
-
-            collectibleVisualizer?.Dispose();
-            collectibleVisualizer = null;
 
             gameplayStateManager?.Dispose();
             gameplayStateManager = null;
