@@ -1,4 +1,5 @@
-﻿using JumboJumps.EFTB.State.Gameplay;
+﻿using JumboJump.EFTB.State.Gameplay;
+using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.Manager
@@ -6,11 +7,13 @@ namespace JumboJumps.EFTB.Manager
     public class GameplayStateManager
     {
         private GameplayStateController stateController;
-        public void Initialize()
+        private GameplayController gameplayController;
+        public void Initialize(GameplayController gameplayController)
         {
-            stateController = new GameplayStateController();
+            stateController = new GameplayStateController(gameplayController);
             stateController.Initialize();
-            stateController.StartStateController();
+
+            this.gameplayController = gameplayController;
 
             GameContext.Instance.Add(this);
         }

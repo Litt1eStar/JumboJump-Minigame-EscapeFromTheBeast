@@ -55,9 +55,6 @@ namespace JumboJumps.EFTB
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
 
-            gameplayStateManager = new GameplayStateManager();
-            gameplayStateManager.Initialize();
-
             gameManager = new GameManager();
             gameManager.Initialize();
         }

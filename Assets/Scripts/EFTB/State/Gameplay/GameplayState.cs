@@ -1,4 +1,4 @@
-using JumboJump.Assets.Scripts.EFTB.State.Gameplay;
+using JumboJump.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
@@ -14,6 +14,8 @@ namespace JumboJumps.EFTB.State.Gameplay
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
             this.stateController = (GameStateController)stateController;
+
+            StateTransitionMap.Add(typeof(MainMenuState), null);
         }
 
         public override void OnEnterState()
@@ -27,8 +29,13 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
 
+            /*
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-        }
+            gameplayStateManager?.SetGameplayController(gameplayController);
+        */
+            gameplayStateManager = new GameplayStateManager();
+            gameplayStateManager.Initialize(gameplayController);
+         }
 
         public override void OnExitState()
         {

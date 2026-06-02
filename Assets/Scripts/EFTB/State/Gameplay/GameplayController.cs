@@ -4,7 +4,7 @@ using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 using System;
 
-namespace JumboJump.Assets.Scripts.EFTB.State.Gameplay
+namespace JumboJump.EFTB.State.Gameplay
 {
     public class GameplayController
     {
@@ -31,11 +31,16 @@ namespace JumboJump.Assets.Scripts.EFTB.State.Gameplay
             if (collectibleManager != null)
             {
                 collectibleManager.EventTotalCoinValueChanged -= collectibleVisualizer.UpdateCoinChanged;
-                collectibleManager.Dispose();
+                collectibleManager = null;
             }
 
             collectibleVisualizer?.Dispose();
             collectibleVisualizer = null;
+        }
+
+        public void ReturnToMainMenu()
+        {
+            EventReturnBackToMainMenu?.Invoke();
         }
     }
 }

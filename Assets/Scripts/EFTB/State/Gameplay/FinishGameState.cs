@@ -1,15 +1,16 @@
-﻿using JumboJumps.EFTB.State.MainMenu;
-using JumboJumps.EFTB.Utilities;
+﻿using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
     public class FinishGameState : BaseState
     {
+        private GameplayStateController stateController;
+
         private float transitionTime = 3f;
         private float timer;
         public FinishGameState(BaseStateController stateController) : base(stateController)
         {
-            StateTransitionMap.Add(typeof(MainMenuState), null);
+            this.stateController = (GameplayStateController)stateController;
         }
 
         public override void OnEnterState()
@@ -36,7 +37,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             timer -= deltaTime;
             if(timer <= 0)
             {
-                
+               stateController.GameplayController.ReturnToMainMenu();
             }
         }
     }
