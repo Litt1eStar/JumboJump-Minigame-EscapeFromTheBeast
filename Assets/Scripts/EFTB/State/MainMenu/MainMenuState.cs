@@ -1,5 +1,4 @@
 ﻿using JumboJumps.EFTB.State.Gameplay;
-using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.MainMenu
 {

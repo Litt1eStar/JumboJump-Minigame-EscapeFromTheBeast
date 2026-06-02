@@ -17,8 +17,6 @@ namespace JumboJumps.EFTB
         private PlayerManager playerManager;
         private CatManager catManager;
 
-        private GameplayStateManager gameplayStateManager;
-
         [SerializeField]
         private Transform playerTransform;
 
@@ -69,9 +67,6 @@ namespace JumboJumps.EFTB
 
             collectibleManager?.Dispose();
             collectibleManager = null;
-
-            gameplayStateManager?.Dispose();
-            gameplayStateManager = null;
 
             gameManager?.Dispose();
             gameManager = null;

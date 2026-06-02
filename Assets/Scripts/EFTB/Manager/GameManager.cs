@@ -1,31 +1,43 @@
-﻿using JumboJumps.EFTB.State;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JumboJumps.EFTB.Visualizer;
+using JumboJumps.EFTB.State;
 
 namespace JumboJumps.EFTB.Manager
 {
     public class GameManager
     {
         private GameStateController stateController;
-
+        private GameVisualizer gameVisualizer;
         public void Initialize()
         {
+            gameVisualizer = new GameVisualizer();
+            gameVisualizer.Initialize();
+
             stateController = new GameStateController();
-            stateController?.Initialize();
+            stateController.EventStateChanged += OnGameStateChanged;
+            stateController.Initialize();
         }
 
         public void Dispose()
         {
-            stateController?.Dispose();
-            stateController = null;
+            if(stateController != null)
+            {
+                stateController.EventStateChanged -= OnGameStateChanged;    
+                stateController.Dispose();
+                stateController = null;
+            }
+
+            gameVisualizer?.Dispose();
+            gameVisualizer = null;
         }
 
         public void UpdateLogic(float deltaTime)
         {
             stateController?.UpdateLogic(deltaTime);
+        }
+
+        public void OnGameStateChanged(BaseState prev, BaseState next)
+        {
+            gameVisualizer.UpdateOuterStateLabel(next.GetType().Name);
         }
     }
 }

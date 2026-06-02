@@ -1,5 +1,4 @@
-﻿using JumboJump.Assets.Scripts.EFTB.Visualizer;
-using JumboJump.EFTB.State.InitialLoading;
+﻿using JumboJumps.EFTB.State.InitialLoading;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.State.MainMenu;
 using System;
@@ -10,12 +9,8 @@ namespace JumboJumps.EFTB.State
     public class GameStateController : BaseStateController
     {
         protected override Type DefaultTypeState => typeof(InitialLoadingState);
-        public GameVisualizer Visualizer { get; private set; }
         public GameStateController()
         {
-            Visualizer = new GameVisualizer();
-            Visualizer.Initialize();
-
             States = new Dictionary<Type, BaseState>()
             {
                 {typeof(InitialLoadingState), new InitialLoadingState(this) },

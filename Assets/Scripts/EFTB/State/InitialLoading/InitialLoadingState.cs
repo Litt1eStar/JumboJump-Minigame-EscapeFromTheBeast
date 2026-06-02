@@ -1,17 +1,20 @@
-﻿using JumboJumps.EFTB.State;
+﻿using JumboJumps.EFTB.Visualizer;
+using JumboJumps.EFTB.State;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
 
-namespace JumboJump.EFTB.State.InitialLoading
+namespace JumboJumps.EFTB.State.InitialLoading
 {
     public class InitialLoadingState : BaseState
     {
+        private GameStateController stateController;
         private float transitionTime = 1f;
         private float timer;
         public InitialLoadingState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(MainMenuState), null);
+            this.stateController = (GameStateController)stateController;
         }
 
         public override void OnEnterState()

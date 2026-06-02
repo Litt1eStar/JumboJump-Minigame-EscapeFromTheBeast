@@ -1,8 +1,6 @@
-using JumboJump.EFTB.State.Gameplay;
+using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
-using JumboJumps.EFTB.Utilities;
-using JumboJumps.EFTB.Visualizer;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
@@ -24,7 +22,6 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayController = new GameplayController();
             gameplayController.Initialize();
-
             gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
 
             gameplayStateManager = new GameplayStateManager();
@@ -51,7 +48,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.UpdateLogic(deltaTime);
 
-            gameplayStateManager.UpdateLogic(deltaTime);
+            gameplayStateManager?.UpdateLogic(deltaTime);
         }
 
         public void ReturnBackToMainMenu()

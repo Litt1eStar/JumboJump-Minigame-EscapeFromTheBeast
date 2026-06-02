@@ -1,10 +1,9 @@
-﻿
-using JumboJumps.EFTB.Manager;
+﻿using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 using System;
 
-namespace JumboJump.EFTB.State.Gameplay
+namespace JumboJumps.EFTB.State.Gameplay
 {
     public class GameplayController
     {
@@ -18,6 +17,7 @@ namespace JumboJump.EFTB.State.Gameplay
             if(collectibleManager == null)
             {
                 DebugLogHelper.LogError("GameplayController: CollectibleManager not found in GameContext.");
+                return;
             }
 
             collectibleVisualizer = new CollectibleVisualizer();
