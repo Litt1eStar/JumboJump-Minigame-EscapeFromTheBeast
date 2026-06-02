@@ -1,4 +1,6 @@
-﻿namespace JumboJumps.EFTB.State.Gameplay
+﻿using JumboJumps.EFTB.Utilities;
+
+namespace JumboJumps.EFTB.State.Gameplay
 {
     public class PauseMenuState : BaseState
     {
@@ -10,6 +12,7 @@
         public override void OnEnterState()
         {
             base.OnEnterState();
+            DebugLogHelper.Log("PauseMenuState: Entered Pause Menu State");
         }
 
         public override void OnExitState()

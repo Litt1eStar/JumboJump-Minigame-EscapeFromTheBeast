@@ -15,7 +15,6 @@ namespace JumboJumps.EFTB.State.Gameplay
                 {typeof(InGameState), new InGameState(this)},
                 {typeof(PauseMenuState), new PauseMenuState(this)},
                 {typeof(FinishGameState), new FinishGameState(this)},
-                {typeof(MainMenuState), new MainMenuState(this)},
             };
         }
     }

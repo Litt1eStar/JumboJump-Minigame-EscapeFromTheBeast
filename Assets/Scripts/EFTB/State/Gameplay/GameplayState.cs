@@ -38,7 +38,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void OnExitState()
         {
             base.OnExitState();
-
+            
             if(collectibleManager != null)
             {
                 collectibleManager.EventTotalCoinValueChanged -= collectibleVisualizer.UpdateCoinChanged;

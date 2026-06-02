@@ -1,4 +1,5 @@
 ﻿using JumboJumps.EFTB.State.MainMenu;
+using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
@@ -15,6 +16,8 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnEnterState();
 
+            DebugLogHelper.Log("FinishGameState: Entered Finish Game State");
+
             timer = transitionTime;
         }
 
@@ -26,10 +29,14 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
+            
+            // For testing, automatically transition to MainMenuState after a short delay
+            // In a real implementation, the transition to MainMenuState would be triggered by user input (e.g., player click MainMenu Button)
+
             timer -= deltaTime;
             if(timer <= 0)
             {
-                StateController.ChangeState(typeof(MainMenuState));
+                
             }
         }
     }

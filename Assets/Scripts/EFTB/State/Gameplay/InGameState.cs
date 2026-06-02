@@ -1,4 +1,6 @@
-﻿namespace JumboJumps.EFTB.State.Gameplay
+﻿using JumboJumps.EFTB.Utilities;
+
+namespace JumboJumps.EFTB.State.Gameplay
 {
     public class InGameState : BaseState
     {
@@ -14,7 +16,7 @@
         public override void OnEnterState()
         {
             base.OnEnterState();
-
+            DebugLogHelper.Log("InGameState: Entered In-Game State");
             timer = transitionTime;
         }
 
@@ -27,12 +29,16 @@
         {
             base.UpdateLogic(deltaTime);
 
+            // For testing, automatically transition to FinishGameState after a short delay
+
             timer -= deltaTime;
             if(timer <= 0)
             {
                 StateController.ChangeState(typeof(FinishGameState));
-                //PauseMenuState also working
             }
+
+            // In a real implementation, the transition to FinishGameState would be triggered by game events (e.g., player reaches the end of the level or loses all health)
+            // The transition to PauseMenuState would be triggered by user input (e.g., pressing the "Pause" button)
         }
     }
 }
