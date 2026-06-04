@@ -1,4 +1,3 @@
-using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
 
@@ -32,7 +31,6 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnExitState();
             
-
             gameplayStateManager?.Dispose();
             gameplayStateManager = null;
 

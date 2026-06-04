@@ -28,6 +28,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
         {
             base.UpdateLogic(deltaTime);
 
+            //For testing purpose
             timer -= deltaTime;
 
             if (timer <= 0f)

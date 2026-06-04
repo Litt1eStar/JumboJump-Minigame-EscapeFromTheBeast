@@ -1,7 +1,6 @@
 ﻿using JumboJumps.EFTB.Visualizer;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.State;
-using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.Manager
