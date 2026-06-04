@@ -1,8 +1,4 @@
-﻿using JumboJumps.EFTB.Visualizer;
-using JumboJumps.EFTB.State;
-using JumboJumps.EFTB.State.Gameplay;
-using JumboJumps.EFTB.State.MainMenu;
-using JumboJumps.EFTB.Utilities;
+﻿using JumboJumps.EFTB.State.MainMenu;
 
 namespace JumboJumps.EFTB.State.InitialLoading
 {

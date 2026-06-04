@@ -1,10 +1,11 @@
-﻿namespace JumboJumps.EFTB.State.Gameplay
+﻿using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
+
+namespace JumboJumps.EFTB.State.Gameplay
 {
     public class InGameState : BaseState
     {
-        //For Testing Game State Transition
-        private float transitionTime = 3f;
-        private float timer;
+        private Input2DManager input2DManager;
         public InGameState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(FinishGameState), null);
@@ -14,22 +15,21 @@
         public override void OnEnterState()
         {
             base.OnEnterState();
-            timer = transitionTime;
+            input2DManager = GameContext.Instance.Get<Input2DManager>();
         }
 
         public override void OnExitState()
         {
             base.OnExitState();
+            input2DManager = null;
         }
 
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
 
-            // For testing, automatically transition to FinishGameState after a short delay
-
-            timer -= deltaTime;
-            if(timer <= 0)
+            // For testing
+            if(input2DManager.IsChangeState())
             {
                 StateController.ChangeState(typeof(FinishGameState));
             }
