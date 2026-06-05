@@ -88,6 +88,8 @@ namespace JumboJumps.EFTB.State.Gameplay
             base.UpdateLogic(deltaTime);
 
             gameplayStateManager?.UpdateLogic(deltaTime);
+            playerManager?.UpdateLogic(deltaTime);
+            catManager?.UpdateLogic(deltaTime);
         }
 
         public void ReturnBackToMainMenu()

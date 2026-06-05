@@ -14,7 +14,6 @@ namespace JumboJumps.EFTB
         private CoroutineHelper coroutineHelper;
 
         private GameManager gameManager;
-        private CollectibleManager collectibleManager;
 
         private void Awake()
         {
