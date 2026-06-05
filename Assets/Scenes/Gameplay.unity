@@ -691,51 +691,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2286018002799495436, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
   m_PrefabInstance: {fileID: 884730415}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &907232402
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 907232403}
-  - component: {fileID: 907232404}
-  m_Layer: 0
-  m_Name: Input2DManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &907232403
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 907232402}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1979147681}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &907232404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 907232402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5fe3ad66f5ab194c9e704143261004c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Manager.Input2DManager
-  changeStateKey: 32
 --- !u!1 &975584084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,52 +1306,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &1979147680
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1979147681}
-  - component: {fileID: 1979147682}
-  m_Layer: 0
-  m_Name: GameInitializer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1979147681
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979147680}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.38145, y: -2.33775, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 907232403}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1979147682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979147680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 280d5f27d019c6f4bbbbcf7b62c63a7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.GameInitializer
-  input2DManager: {fileID: 907232404}
 --- !u!1 &2007805839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,7 +1340,6 @@ MonoBehaviour:
   - {fileID: 1575949716}
   - {fileID: 732969594}
   - {fileID: 195812734}
-  - {fileID: 0}
 --- !u!4 &2007805841
 Transform:
   m_ObjectHideFlags: 0
@@ -1547,6 +1455,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 780380737}
   - {fileID: 2007805841}
-  - {fileID: 1979147681}
   - {fileID: 2135549365}
   - {fileID: 606722195}

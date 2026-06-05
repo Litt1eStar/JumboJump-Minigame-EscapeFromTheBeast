@@ -1,3 +1,4 @@
+using JumboJump.EFTB.Utilities;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
@@ -10,6 +11,9 @@ namespace JumboJumps.EFTB
     {
         [SerializeField]
         private Input2DManager input2DManager;
+
+        [SerializeField]
+        private CoroutineHelper coroutineHelper;
 
         private GameManager gameManager;
         private CollectibleManager collectibleManager;
@@ -45,8 +49,6 @@ namespace JumboJumps.EFTB
             gameManager = new GameManager();
             gameManager.Initialize();
 
-            input2DManager.Initialize();
-
             playerManager = new PlayerManager();
             playerManager.Initialize();
 
@@ -56,10 +58,26 @@ namespace JumboJumps.EFTB
 
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
+
+            input2DManager.Initialize();
+            coroutineHelper.Initialize();            
         }
 
         private void Dispose()
         {
+            if(input2DManager != null)
+            {
+                input2DManager.Dispose();
+            }
+
+            if(coroutineHelper != null)
+            {
+                coroutineHelper.Dispose();
+            }
+
+            gameManager?.Dispose();
+            gameManager = null;
+
             playerManager?.Dispose();
             playerManager = null;
 
@@ -68,9 +86,6 @@ namespace JumboJumps.EFTB
 
             collectibleManager?.Dispose();
             collectibleManager = null;
-
-            gameManager?.Dispose();
-            gameManager = null;
         }
 
         private void StartGame()
