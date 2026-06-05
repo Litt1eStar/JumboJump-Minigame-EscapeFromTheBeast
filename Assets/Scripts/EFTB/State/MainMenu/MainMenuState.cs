@@ -26,7 +26,8 @@ namespace JumboJumps.EFTB.State.MainMenu
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-
+            
+            #if UNITY_EDITOR
             // For testing, automatically transition to GameplayState after a short delay
             // In a real implementation, this would be triggered by user input (e.g., pressing "Start Game")
 
@@ -36,6 +37,8 @@ namespace JumboJumps.EFTB.State.MainMenu
             {
                 StateController.ChangeState(typeof(GameplayState));
             }
+            #endif
         }
+
     }
 }

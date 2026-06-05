@@ -27,7 +27,8 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-            
+
+            #if UNITY_EDITOR
             // For testing, automatically transition to MainMenuState after a short delay
             // In a real implementation, the transition to MainMenuState would be triggered by user input (e.g., player click MainMenu Button)
 
@@ -35,6 +36,8 @@ namespace JumboJumps.EFTB.State.Gameplay
             {
                stateController.GameplayController.ReturnToMainMenu();
             }
+            #endif
         }
+
     }
 }

@@ -28,7 +28,8 @@ namespace JumboJumps.EFTB.State.InitialLoading
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-
+            
+            #if UNITY_EDITOR
             //For testing purpose
             timer -= deltaTime;
 
@@ -36,6 +37,9 @@ namespace JumboJumps.EFTB.State.InitialLoading
             {
                 StateController.ChangeState(typeof(MainMenuState));
             }
+
+            #endif
         }
+
     }
 }

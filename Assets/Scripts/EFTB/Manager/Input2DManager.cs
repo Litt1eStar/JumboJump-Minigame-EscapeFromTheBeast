@@ -35,9 +35,11 @@ namespace JumboJumps.EFTB.Manager
         /// <summary>
         /// For testing purpose
         /// </summary>
+#if UNITY_EDITOR
         public bool IsChangeState()
         {
             return Input.GetKeyDown(changeStateKey);
         }
+#endif
     }
 }

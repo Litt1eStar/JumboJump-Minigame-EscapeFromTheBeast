@@ -6,6 +6,7 @@ namespace JumboJumps.EFTB.Visualizer
     public class GameVisualizer
     {
         private UIGameStateDebugLabel uiGameStateDebugLabel;
+
         public void Initialize()
         {
             uiGameStateDebugLabel = SceneObjectContext.Instance.Get<UIGameStateDebugLabel>();
