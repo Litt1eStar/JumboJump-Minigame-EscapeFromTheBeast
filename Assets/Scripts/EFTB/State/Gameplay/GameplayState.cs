@@ -1,11 +1,22 @@
+using JumboJump.Assets.Scripts.EFTB.Constant.Scene;
+using JumboJump.Assets.Scripts.EFTB.State.Base;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
+using JumboJumps.EFTB.Utilities;
+using System.Collections.Generic;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
-    public class GameplayState : BaseState
+    public class GameplayState : BaseLoadSceneState
     {
+        protected override string SceneName => ConstScene.GAMEPLAY;
+
         private GameplayStateManager gameplayStateManager;
+        private PlayerManager playerManager;
+        private CatManager catManager;
+        private CollectibleManager collectibleManager;
+
         private GameplayController gameplayController;
         private GameStateController stateController;
 
@@ -16,9 +27,19 @@ namespace JumboJumps.EFTB.State.Gameplay
             StateTransitionMap.Add(typeof(MainMenuState), null);
         }
 
-        public override void OnEnterState()
+        protected override void OnSceneLoadSucceeded()
         {
-            base.OnEnterState();
+            base.OnSceneLoadSucceeded();
+
+            playerManager = new PlayerManager();
+            playerManager.Initialize();
+
+            catManager = new CatManager();
+            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
+            catManager.Intialize(sceneCats, playerManager.PlayerTransform);
+
+            collectibleManager = new CollectibleManager();
+            collectibleManager.Initialize();
 
             gameplayController = new GameplayController();
             gameplayController.Initialize();
@@ -26,16 +47,35 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayStateManager = new GameplayStateManager();
             gameplayStateManager.Initialize(gameplayController);
-         }
+
+
+            DebugLogHelper.Log("GameplayState: Scene loaded successfully.");
+        }
+
+        public override void OnEnterState()
+        {
+            base.OnEnterState();
+
+
+        }
 
         public override void OnExitState()
         {
             base.OnExitState();
-            
+
             gameplayStateManager?.Dispose();
             gameplayStateManager = null;
 
-            if(gameplayController != null)
+            playerManager?.Dispose();
+            playerManager = null;
+
+            catManager?.Dispose();
+            catManager = null;
+
+            collectibleManager?.Dispose();
+            collectibleManager = null;
+
+            if (gameplayController != null)
             {
                 gameplayController.EventReturnBackToMainMenu -= ReturnBackToMainMenu;
                 gameplayController.Dispose();

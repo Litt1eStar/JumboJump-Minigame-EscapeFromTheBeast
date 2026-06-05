@@ -12,12 +12,12 @@
 
         public override void UpdateLogic(float deltaTime)
         {
-            float xInput = playerStateController.input2DManager.XInput; 
+            float xInput = playerStateController.Input2DManager.XInput; 
             if(xInput == 0)
             {
                 StateController.ChangeState(typeof(PlayerIdleState));
             }
-            playerStateController.visualizer.Move(xInput);
+            playerStateController.Visualizer.Move(xInput);
         }
     }
 }

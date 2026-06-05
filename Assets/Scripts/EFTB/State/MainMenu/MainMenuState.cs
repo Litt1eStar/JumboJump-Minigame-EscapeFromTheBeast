@@ -1,15 +1,27 @@
-﻿using JumboJumps.EFTB.State.Gameplay;
+﻿using JumboJump.Assets.Scripts.EFTB.Constant.Scene;
+using JumboJump.Assets.Scripts.EFTB.State.Base;
+using JumboJumps.EFTB.State.Gameplay;
+using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.MainMenu
 {
-    public class MainMenuState : BaseState
+    public class MainMenuState : BaseLoadSceneState
     {
+        protected override string SceneName => ConstScene.MAIN_MENU;
+
         private float transitionTime = 1f;
         private float timer;
 
         public MainMenuState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(GameplayState), null);
+        }
+
+        protected override void OnSceneLoadSucceeded()
+        {
+            base.OnSceneLoadSucceeded();
+
+            DebugLogHelper.Log("MainMenu : OnSceneLoadSucceeded");
         }
 
         public override void OnEnterState()
