@@ -20,12 +20,24 @@ namespace JumboJumps.EFTB.Visualizer
 
         public void UpdateOuterStateLabel(string text)
         {
-            uiGameStateDebugLabel?.SetOuterLabel(text);
+            if(uiGameStateDebugLabel == null)
+            {
+                DebugLogHelper.LogError("UIGameStateDebugLabel not found in SceneObjectContext. Cannot update outer state label.");
+                return;
+            }
+
+            uiGameStateDebugLabel.SetOuterLabel(text);
         }
 
         public void UpdateInnerStateLabel(string text)
         {
-            uiGameStateDebugLabel?.SetInnerLabel(text);
+            if (uiGameStateDebugLabel == null)
+            {
+                DebugLogHelper.LogError("UIGameStateDebugLabel not found in SceneObjectContext. Cannot update inner state label.");
+                return;
+            }
+
+            uiGameStateDebugLabel.SetInnerLabel(text);
         }
     }
 }

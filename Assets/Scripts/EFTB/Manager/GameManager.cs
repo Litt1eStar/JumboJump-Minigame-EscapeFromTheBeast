@@ -7,6 +7,7 @@ namespace JumboJumps.EFTB.Manager
     {
         private GameStateController stateController;
         private GameVisualizer gameVisualizer;
+
         public void Initialize()
         {
             gameVisualizer = new GameVisualizer();

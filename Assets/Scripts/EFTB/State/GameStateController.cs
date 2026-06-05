@@ -9,6 +9,7 @@ namespace JumboJumps.EFTB.State
     public class GameStateController : BaseStateController
     {
         protected override Type DefaultTypeState => typeof(InitialLoadingState);
+
         public GameStateController()
         {
             States = new Dictionary<Type, BaseState>()

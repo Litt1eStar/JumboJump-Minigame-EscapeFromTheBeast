@@ -11,6 +11,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
         private CollectibleManager collectibleManager;
         private CollectibleVisualizer collectibleVisualizer;
+
         public void Initialize()
         {
             collectibleManager = GameContext.Instance.Get<CollectibleManager>();

@@ -17,6 +17,7 @@ namespace JumboJumps.EFTB.Manager
 
             GameContext.Instance.Add(this);
         }
+
         public void Dispose()
         {
             stateController.Dispose();
@@ -24,6 +25,7 @@ namespace JumboJumps.EFTB.Manager
 
             GameContext.Instance.Remove(this);
         }
+
         public void UpdateLogic(float deltaTime)
         {
             stateController.UpdateLogic(deltaTime);

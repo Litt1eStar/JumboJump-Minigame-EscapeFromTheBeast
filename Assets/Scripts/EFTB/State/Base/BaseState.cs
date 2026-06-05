@@ -9,7 +9,6 @@ namespace JumboJumps.EFTB.State
         public bool IsStateActive { get; private set; }
         protected BaseStateController StateController;
 
-
         public BaseState(BaseStateController stateController)
         {
             StateController = stateController;
@@ -34,6 +33,7 @@ namespace JumboJumps.EFTB.State
         public virtual void UpdateLogic(float deltaTime)
         {
         }
+
         public virtual void OnExitState()
         {
             IsStateActive = false;

@@ -6,6 +6,7 @@ namespace JumboJumps.EFTB.Utilities
     public class GameContext
     {
         private static GameContext instance;
+
         public static GameContext Instance
         {
             get

@@ -3,9 +3,6 @@ using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JumboJumps.EFTB.State.Player
 {
@@ -14,6 +11,7 @@ namespace JumboJumps.EFTB.State.Player
         protected override Type DefaultTypeState => typeof(PlayerIdleState);
         public PlayerVisualizer visualizer { get; private set; }
         public Input2DManager input2DManager { get; private set; }
+
         public PlayerStateController()
         {
             visualizer = new PlayerVisualizer();

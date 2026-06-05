@@ -6,6 +6,7 @@ namespace JumboJumps.EFTB.State.MainMenu
     {
         private float transitionTime = 1f;
         private float timer;
+
         public MainMenuState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(GameplayState), null);

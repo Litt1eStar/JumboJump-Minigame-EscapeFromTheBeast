@@ -7,6 +7,7 @@ namespace JumboJumps.EFTB.UI
     {
         [SerializeField]
         private TextMeshProUGUI label;
+
         [SerializeField]
         private TextMeshProUGUI timerCountdown;
 

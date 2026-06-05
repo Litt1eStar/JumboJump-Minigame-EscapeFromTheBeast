@@ -11,6 +11,7 @@ namespace JumboJumps.EFTB.GI
         private CollectibleSO collectibleData;
 
         private bool isCollected = false;
+
         public void Initialize()
         {
 

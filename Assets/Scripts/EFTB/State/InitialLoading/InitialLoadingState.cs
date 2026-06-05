@@ -7,6 +7,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
         private GameStateController stateController;
         private float transitionTime = 1f;
         private float timer;
+
         public InitialLoadingState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(MainMenuState), null);

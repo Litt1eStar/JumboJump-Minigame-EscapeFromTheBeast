@@ -8,6 +8,7 @@ namespace JumboJumps.EFTB.State.Gameplay
     {
         protected override Type DefaultTypeState => typeof(InGameState);
         public GameplayController GameplayController { get; private set; }
+
         public GameplayStateController(GameplayController gameplayController)
         {
             GameplayController = gameplayController;

@@ -13,6 +13,7 @@ namespace JumboJumps.EFTB.State.Cat.SleepyCat
     {
         protected override Type DefaultTypeState => typeof(CatSleepState);
         public CatVisualizer visualizer { get; private set; }
+
         public SleepyCatStateController(
             SleepyCatConfigSO config,
             GICat giCat,

@@ -9,6 +9,7 @@ namespace JumboJumps.EFTB.Visualizer
         private GICat giCat;
         private UICatStateLabel label;
         private BaseStateController controller;
+
         public void Initialize(
             GICat giCat,
             UICatStateLabel label,
@@ -50,7 +51,7 @@ namespace JumboJumps.EFTB.Visualizer
 
         #region Event Handler
         /// <summary>
-        /// Subscribe and Unsubscribe only when cat have to use GICatsight
+        /// Subscribe and Unsubscribe only when cat have to use GICat
         /// </summary>
         public void Subscribe()
         {

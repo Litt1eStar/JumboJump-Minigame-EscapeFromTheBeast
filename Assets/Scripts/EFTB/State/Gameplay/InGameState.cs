@@ -6,6 +6,7 @@ namespace JumboJumps.EFTB.State.Gameplay
     public class InGameState : BaseState
     {
         private Input2DManager input2DManager;
+
         public InGameState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(FinishGameState), null);

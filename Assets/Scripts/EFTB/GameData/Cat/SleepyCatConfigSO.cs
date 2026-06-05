@@ -20,6 +20,7 @@ namespace JumboJumps.EFTB.GameData.Cat
         public float TimeTillAwake => timeTillAwake;
         public float TimeToAlert => timeToAlert;
         public float TimeToCatch => timeToCatch;
+
         public override ICatStateController BuildStateController(GICat giCat, Transform transform, UICatStateLabel label)
         {
             SleepyCatStateController stateController = new SleepyCatStateController(this, giCat, label, transform);

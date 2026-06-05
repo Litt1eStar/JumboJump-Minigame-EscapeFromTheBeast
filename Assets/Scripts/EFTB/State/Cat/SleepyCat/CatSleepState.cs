@@ -4,6 +4,7 @@ namespace JumboJumps.EFTB.State.Cat.SleepyCat
     {
         private readonly float TIME_TILL_AWAKE = 5f;
         private float countdownTimer = 0f;
+
         public CatSleepState(BaseStateController stateController,
                              float timeTillAwake) : base(stateController)
         {

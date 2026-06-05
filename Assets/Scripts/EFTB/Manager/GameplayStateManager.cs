@@ -9,6 +9,7 @@ namespace JumboJumps.EFTB.Manager
     {
         private GameplayStateController stateController;
         private GameVisualizer gameVisualizer;
+
         public void Initialize(GameplayController gameplayController)
         {
             gameVisualizer = GameContext.Instance.Get<GameVisualizer>();

@@ -24,8 +24,10 @@ namespace JumboJumps.EFTB.GI
         [Header("Bound Min, Bound Max")]
         [SerializeField]
         private Transform boundMin;
+
         [SerializeField]
         private Transform boundMax;
+
         [SerializeField]
         private float boundGap = 5f;
 
@@ -74,6 +76,7 @@ namespace JumboJumps.EFTB.GI
 
             return new Vector3(clampedX, position.y, position.z);
         }
+
 #if UNITY_EDITOR
         private void Update()
         {

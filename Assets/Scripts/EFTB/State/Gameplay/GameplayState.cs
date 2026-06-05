@@ -8,6 +8,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private GameplayStateManager gameplayStateManager;
         private GameplayController gameplayController;
         private GameStateController stateController;
+
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
             this.stateController = (GameStateController)stateController;

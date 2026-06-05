@@ -6,6 +6,7 @@
         private float countdownTimer = 0f;
 
         private SleepyCatStateController stateController;
+
         public CatAwakeState(BaseStateController stateController,
                              float timeToAlert) : base(stateController)
         {

@@ -9,6 +9,7 @@ namespace JumboJumps.EFTB.Manager
     public class CatManager
     {
         public List<ICatStateController> Cats {  get; private set; }
+
         public void Intialize(IEnumerable<GICat> sceneCats, Transform playerTarget)
         {
             Cats = new List<ICatStateController>();

@@ -10,6 +10,7 @@ namespace JumboJumps.EFTB.Utilities
 
         [SerializeField]
         private MonoBehaviour[] sceneObjects;
+
         private Dictionary<Type, MonoBehaviour> objects;
         private Dictionary<Type, List<MonoBehaviour>> objectGroups;
 
