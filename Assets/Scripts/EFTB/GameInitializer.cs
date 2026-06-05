@@ -16,9 +16,6 @@ namespace JumboJumps.EFTB
         private PlayerManager playerManager;
         private CatManager catManager;
 
-        [SerializeField]
-        private Transform playerTransform;
-
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -47,7 +44,7 @@ namespace JumboJumps.EFTB
 
             catManager = new CatManager();
             IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
-            catManager.Intialize(sceneCats, playerTransform);
+            catManager.Intialize(sceneCats, playerManager.PlayerTransform);
 
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
