@@ -20,6 +20,11 @@ namespace JumboJumps.EFTB.State
                 {typeof(GameplayState), new GameplayState(this) },
                 {typeof(MainMenuState), new MainMenuState(this) }
             };
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
 
             Visualizer = new GameVisualizer();
             Visualizer.Initialize();

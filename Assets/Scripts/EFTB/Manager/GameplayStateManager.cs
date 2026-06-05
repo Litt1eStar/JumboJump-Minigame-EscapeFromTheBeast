@@ -15,8 +15,10 @@ namespace JumboJumps.EFTB.Manager
             gameVisualizer = GameContext.Instance.Get<GameVisualizer>();
 
             stateController = new GameplayStateController(gameplayController);
-            stateController.EventStateChanged += OnGameStateChanged;
+          
             stateController.Initialize();
+            stateController.StartStateController();
+            stateController.EventStateChanged += OnGameStateChanged;
 
             GameContext.Instance.Add(this);
         }

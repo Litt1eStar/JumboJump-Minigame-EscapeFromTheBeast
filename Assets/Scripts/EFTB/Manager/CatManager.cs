@@ -1,5 +1,6 @@
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Interface;
+using JumboJumps.EFTB.State;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,10 @@ namespace JumboJumps.EFTB.Manager
             foreach(var giCat in sceneCats)
             {
                 var controller = giCat.BuildStateController(playerTarget);
-                controller.Initialize();
-                Cats.Add(controller);
+                BaseStateController baseController = controller as BaseStateController;
+                baseController.Initialize();
+                baseController.StartStateController();
+                Cats.Add((ICatStateController)baseController);
             }
             GameContext.Instance.Add(this);
         }

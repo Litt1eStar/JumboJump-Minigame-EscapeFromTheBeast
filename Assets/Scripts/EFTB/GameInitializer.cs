@@ -42,6 +42,9 @@ namespace JumboJumps.EFTB
         }
         private void Initialize()
         {
+            gameManager = new GameManager();
+            gameManager.Initialize();
+
             input2DManager.Initialize();
 
             playerManager = new PlayerManager();
@@ -53,9 +56,6 @@ namespace JumboJumps.EFTB
 
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
-
-            gameManager = new GameManager();
-            gameManager.Initialize();
         }
 
         private void Dispose()

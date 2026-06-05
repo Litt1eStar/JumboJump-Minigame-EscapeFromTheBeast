@@ -29,7 +29,6 @@ namespace JumboJumps.EFTB.State
                 state.Initialize();
             }
 
-            StartStateController();
             EventStateChanged?.Invoke(null, CurrentState);
         }
 
