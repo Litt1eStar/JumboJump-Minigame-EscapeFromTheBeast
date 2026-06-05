@@ -22,6 +22,11 @@ namespace JumboJumps.EFTB
             Initialize();
         }
 
+        private void Start()
+        {
+            StartGame();
+        }
+
         private void Update()
         {
             playerManager.UpdateLogic(Time.deltaTime);
@@ -66,6 +71,12 @@ namespace JumboJumps.EFTB
 
             gameManager?.Dispose();
             gameManager = null;
+        }
+
+        private void StartGame()
+        {
+            DebugLogHelper.Log($"{GetType().Name}: StartGame");
+            gameManager?.StartGame();
         }
     }
 }
