@@ -44,17 +44,12 @@ namespace JumboJumps.EFTB.State
 
         private void Subscribe()
         {
-            EventStateChanged += OnGameStateChanged;
+
         }
 
         private void Unsubscribe()
         {
-            EventStateChanged -= OnGameStateChanged;
-        }
 
-        public void OnGameStateChanged(BaseState prev, BaseState next)
-        {
-            Visualizer.UpdateOuterStateLabel(next.GetType().Name);
         }
     }
 }

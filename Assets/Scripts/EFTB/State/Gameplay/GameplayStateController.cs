@@ -1,5 +1,4 @@
-﻿using JumboJumps.EFTB.State.Gameplay;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace JumboJumps.EFTB.State.Gameplay
