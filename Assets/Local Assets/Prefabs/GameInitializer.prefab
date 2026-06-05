@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.GameInitializer
   input2DManager: {fileID: 2189062362361336719}
+  coroutineHelper: {fileID: 3935307853082323436}
 --- !u!1 &7373137502973700564
 GameObject:
   m_ObjectHideFlags: 0
