@@ -47,16 +47,11 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayStateManager = new GameplayStateManager();
             gameplayStateManager.Initialize(gameplayController);
-
-
-            DebugLogHelper.Log("GameplayState: Scene loaded successfully.");
         }
 
         public override void OnEnterState()
         {
             base.OnEnterState();
-
-
         }
 
         public override void OnExitState()

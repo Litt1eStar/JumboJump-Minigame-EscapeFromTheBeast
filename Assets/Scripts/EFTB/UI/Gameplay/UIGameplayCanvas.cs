@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace JumboJumps.EFTB.UI.Gameplay
 {
-    public class UIGameplayCanvas
+    public class UIGameplayCanvas : MonoBehaviour
     {
         [SerializeField]
         private UIGameplayPanel uiGameplayPanel;

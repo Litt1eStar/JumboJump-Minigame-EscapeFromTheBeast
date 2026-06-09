@@ -1,6 +1,7 @@
 ﻿using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
+using JumboJumps.EFTB.Visualizer.Gameplay;
 using System;
 
 namespace JumboJumps.EFTB.State.Gameplay
@@ -11,7 +12,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
         private CollectibleManager collectibleManager;
         private CollectibleVisualizer collectibleVisualizer;
-
+        private GameplayVisualizer gameplayVisualizer;
         public void Initialize()
         {
             collectibleManager = GameContext.Instance.Get<CollectibleManager>();
@@ -24,19 +25,36 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleVisualizer = new CollectibleVisualizer();
             collectibleVisualizer.Initialize();
 
-            collectibleManager.EventTotalCoinValueChanged += collectibleVisualizer.UpdateCoinChanged;
+            gameplayVisualizer = new GameplayVisualizer();
+            gameplayVisualizer.Initialize();
+            gameplayVisualizer.Subscribe(OnClickPauseButton);
+
+            collectibleManager.EventTotalCoinValueChanged += OnCoinCollected;
         }
 
         public void Dispose()
         {
             if (collectibleManager != null)
             {
-                collectibleManager.EventTotalCoinValueChanged -= collectibleVisualizer.UpdateCoinChanged;
+                collectibleManager.EventTotalCoinValueChanged -= OnCoinCollected;
                 collectibleManager = null;
             }
 
             collectibleVisualizer?.Dispose();
             collectibleVisualizer = null;
+
+            gameplayVisualizer?.Dispose();
+            gameplayVisualizer = null;
+        }
+
+        public void OnCoinCollected(int totalCoinValue)
+        {
+            gameplayVisualizer.SetCoinCounterLabel(totalCoinValue);
+        }   
+
+        public void OnClickPauseButton()
+        {
+            DebugLogHelper.Log("OnClickPauseButton");
         }
 
         public void ReturnToMainMenu()
