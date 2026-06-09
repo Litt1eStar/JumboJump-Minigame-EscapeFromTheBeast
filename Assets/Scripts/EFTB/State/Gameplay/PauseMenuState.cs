@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.Utilities;
+﻿using UnityEngine;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
@@ -13,11 +13,13 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnEnterState();
 
-            DebugLogHelper.Log("Entered PauseMenuState");
+            Time.timeScale = 0f;
         }
 
         public override void OnExitState()
         {
+            Time.timeScale = 1f;
+
             base.OnExitState();
         }
 

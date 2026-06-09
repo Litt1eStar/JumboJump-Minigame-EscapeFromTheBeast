@@ -69,7 +69,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         public void OnClickResumeButton()
         {
             gameplayVisualizer.HidePauseMenu();
-            stateController.ChangeState(typeof(GameplayState));
+            stateController.ChangeState(typeof(InGameState));
         }
         public void OnClickMainMenuButton()
         {
