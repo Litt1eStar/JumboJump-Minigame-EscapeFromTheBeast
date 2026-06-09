@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace JumboJumps.Assets.Scripts.EFTB.UI
+namespace JumboJumps.EFTB.UI
 {
     public abstract class UIBasePanel : MonoBehaviour
     {

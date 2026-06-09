@@ -1,6 +1,5 @@
 ﻿using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Utilities;
-using UnityEngine;
 
 namespace JumboJumps.EFTB.Visualizer
 {

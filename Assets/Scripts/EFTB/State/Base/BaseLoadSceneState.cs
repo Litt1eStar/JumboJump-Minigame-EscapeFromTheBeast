@@ -1,12 +1,11 @@
-﻿using JumboJump.EFTB.Utilities;
-using JumboJumps.EFTB.State;
+﻿using JumboJumps.EFTB.State;
 using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace JumboJump.Assets.Scripts.EFTB.State.Base
+namespace JumboJumps.EFTB.State.Base
 {
     public abstract class BaseLoadSceneState : BaseState
     {

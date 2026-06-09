@@ -1,5 +1,4 @@
-﻿using JumboJumps.EFTB.Utilities;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.Utilities

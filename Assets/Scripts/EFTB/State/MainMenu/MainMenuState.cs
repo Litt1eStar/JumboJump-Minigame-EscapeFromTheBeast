@@ -1,5 +1,5 @@
-﻿using JumboJump.Assets.Scripts.EFTB.Constant.Scene;
-using JumboJump.Assets.Scripts.EFTB.State.Base;
+﻿using JumboJumps.EFTB.Constant.Scene;
+using JumboJumps.EFTB.State.Base;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 

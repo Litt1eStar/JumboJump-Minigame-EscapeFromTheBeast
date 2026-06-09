@@ -1,5 +1,4 @@
-﻿using JumboJumps.EFTB.UI;
-using JumboJumps.EFTB.Utilities;
+﻿using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.Visualizer
 {
