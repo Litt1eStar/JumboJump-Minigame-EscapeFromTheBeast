@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b794f23e490cf448f212973f94d7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.InitialLoading.UILoadingCanvas
-  uiLoadingPanel: {fileID: 0}
+  uiLoadingPanel: {fileID: 1763151111}
 --- !u!1 &1440808000
 GameObject:
   m_ObjectHideFlags: 0
