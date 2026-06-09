@@ -41,12 +41,12 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
 
-            gameplayController = new GameplayController();
-            gameplayController.Initialize();
-            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
-
             gameplayStateManager = new GameplayStateManager();
             gameplayStateManager.Initialize(gameplayController);
+
+            gameplayController = new GameplayController();
+            gameplayController.Initialize(gameplayStateManager.StateController);
+            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
         }
 
         public override void OnEnterState()

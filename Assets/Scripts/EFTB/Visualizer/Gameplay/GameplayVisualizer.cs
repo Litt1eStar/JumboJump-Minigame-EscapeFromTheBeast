@@ -12,10 +12,12 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         {
             uiGameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
 
-            if(uiGameplayCanvas == null)
+            if (uiGameplayCanvas == null)
             {
                 DebugLogHelper.LogError("Failed to initialize GameplayVisualizer: UIGameplayCanvas not found in scene.");
             }
+
+            HidePauseMenu();
         }
 
         public void Dispose()
@@ -23,14 +25,28 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             uiGameplayCanvas = null;
         }
 
-        public void Subscribe(Action pauseBtnCallback)
+        public void Subscribe(
+            Action pauseBtnCallback,
+            Action resumeBtnCallback,
+            Action mainMenuCallback
+            )
         {
-            uiGameplayCanvas?.Subscribe(pauseBtnCallback);
+            uiGameplayCanvas?.Subscribe(pauseBtnCallback, resumeBtnCallback, mainMenuCallback);
         }
 
         public void SetCoinCounterLabel(int value)
         {
             uiGameplayCanvas?.SetCoinCounterLabel(value);
+        }
+
+        public void ShowPauseMenu()
+        {
+            uiGameplayCanvas?.ShowPauseMenu();
+        }
+
+        public void HidePauseMenu()
+        {
+            uiGameplayCanvas?.HidePauseMenu();
         }
 
         public void Show()

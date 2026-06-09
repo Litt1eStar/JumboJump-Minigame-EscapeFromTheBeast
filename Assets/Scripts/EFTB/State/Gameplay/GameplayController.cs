@@ -13,7 +13,9 @@ namespace JumboJumps.EFTB.State.Gameplay
         private CollectibleManager collectibleManager;
         private CollectibleVisualizer collectibleVisualizer;
         private GameplayVisualizer gameplayVisualizer;
-        public void Initialize()
+
+        private GameplayStateController stateController;
+        public void Initialize(GameplayStateController stateController)
         {
             collectibleManager = GameContext.Instance.Get<CollectibleManager>();
             if (collectibleManager == null)
@@ -22,12 +24,18 @@ namespace JumboJumps.EFTB.State.Gameplay
                 return;
             }
 
+            this.stateController = stateController;
+
             collectibleVisualizer = new CollectibleVisualizer();
             collectibleVisualizer.Initialize();
 
             gameplayVisualizer = new GameplayVisualizer();
             gameplayVisualizer.Initialize();
-            gameplayVisualizer.Subscribe(OnClickPauseButton);
+            gameplayVisualizer.Subscribe(
+                OnClickPauseButton,
+                OnClickResumeButton,
+                OnClickMainMenuButton
+                );
 
             collectibleManager.EventTotalCoinValueChanged += OnCoinCollected;
         }
@@ -50,13 +58,23 @@ namespace JumboJumps.EFTB.State.Gameplay
         public void OnCoinCollected(int totalCoinValue)
         {
             gameplayVisualizer.SetCoinCounterLabel(totalCoinValue);
-        }   
+        }
 
         public void OnClickPauseButton()
         {
-            DebugLogHelper.Log("OnClickPauseButton");
+            gameplayVisualizer.ShowPauseMenu();
+            stateController.ChangeState(typeof(PauseMenuState));
         }
 
+        public void OnClickResumeButton()
+        {
+            gameplayVisualizer.HidePauseMenu();
+            stateController.ChangeState(typeof(GameplayState));
+        }
+        public void OnClickMainMenuButton()
+        {
+            ReturnToMainMenu();
+        }
         public void ReturnToMainMenu()
         {
             EventReturnBackToMainMenu?.Invoke();

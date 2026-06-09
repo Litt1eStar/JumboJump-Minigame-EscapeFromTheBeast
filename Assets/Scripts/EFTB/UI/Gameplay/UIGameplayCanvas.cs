@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JumboJumps.EFTB.UI.Gameplay.PauseMenu;
+using System;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.UI.Gameplay
@@ -8,6 +9,8 @@ namespace JumboJumps.EFTB.UI.Gameplay
         [SerializeField]
         private UIGameplayPanel uiGameplayPanel;
 
+        [SerializeField]
+        private UIPauseMenuPanel uiPauseMenuPanel;
         public void Show()
         {
             uiGameplayPanel?.Show();
@@ -18,14 +21,29 @@ namespace JumboJumps.EFTB.UI.Gameplay
             uiGameplayPanel?.Hide();
         }
 
-        public void Subscribe(Action pauseBtnCallback)
+        public void Subscribe(
+            Action pauseBtnCallback,
+            Action resumeButtonCallback,
+            Action mainMenuButtonCallback
+            )
         {
             uiGameplayPanel?.Subscribe(pauseBtnCallback);
+            uiPauseMenuPanel?.Subscribe(resumeButtonCallback, mainMenuButtonCallback);
         }
 
         public void SetCoinCounterLabel(int value)
         {
             uiGameplayPanel?.SetCoinCounterLabel(value);
+        }
+
+        public void ShowPauseMenu()
+        {
+            uiPauseMenuPanel?.Show();
+        }
+
+        public void HidePauseMenu()
+        {
+            uiPauseMenuPanel?.Hide();
         }
     }
 }
