@@ -7,6 +7,7 @@ namespace JumboJumps.EFTB.GameData
     {
         [SerializeField]
         private Sprite collectibleSprite;
+
         [SerializeField]
         private int value;
 

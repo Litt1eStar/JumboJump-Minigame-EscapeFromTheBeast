@@ -7,6 +7,7 @@ namespace JumboJumps.EFTB.State.Cat
         private readonly float TIME_TO_CATCH = 5f;
         private float countdownTimer = 0f;
         private SleepyCatStateController stateController;
+
         public CatAlertState(BaseStateController stateController,
                              float timeToCatch) : base(stateController)
         {
@@ -16,6 +17,7 @@ namespace JumboJumps.EFTB.State.Cat
             this.stateController = (SleepyCatStateController)stateController;
             TIME_TO_CATCH = timeToCatch;
         }
+
         public override void OnEnterState()
         {
             base.OnEnterState();

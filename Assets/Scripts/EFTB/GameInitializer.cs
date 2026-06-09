@@ -1,7 +1,6 @@
-using JumboJumps.EFTB.GI;
+using JumboJump.EFTB.Utilities;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace JumboJumps.EFTB
@@ -11,13 +10,10 @@ namespace JumboJumps.EFTB
         [SerializeField]
         private Input2DManager input2DManager;
 
-        private GameManager gameManager;
-        private CollectibleManager collectibleManager;
-        private PlayerManager playerManager;
-        private CatManager catManager;
-
         [SerializeField]
-        private Transform playerTransform;
+        private CoroutineHelper coroutineHelper;
+
+        private GameManager gameManager;
 
         private void Awake()
         {
@@ -25,47 +21,51 @@ namespace JumboJumps.EFTB
             Initialize();
         }
 
+        private void Start()
+        {
+            StartGame();
+        }
+
         private void Update()
         {
-            playerManager.UpdateLogic(Time.deltaTime);
             input2DManager.UpdateLogic(Time.deltaTime);
-            catManager.UpdateLogic(Time.deltaTime);
+            gameManager.UpdateLogic(Time.deltaTime);
         }
 
         private void OnDestroy()
         {
             Dispose();
         }
+
         private void Initialize()
         {
-            input2DManager.Initialize();
-
-            playerManager = new PlayerManager();
-            playerManager.Initialize();
-
-            catManager = new CatManager();
-            catManager.Intialize();
-
-            collectibleManager = new CollectibleManager();
-            collectibleManager.Initialize();
-
             gameManager = new GameManager();
             gameManager.Initialize();
+
+            input2DManager.Initialize();
+            coroutineHelper.Initialize();
         }
 
         private void Dispose()
         {
-            playerManager?.Dispose();
-            playerManager = null;
+            if (input2DManager != null)
+            {
+                input2DManager.Dispose();
+            }
 
-            catManager?.Dispose();
-            catManager = null;
-
-            collectibleManager?.Dispose();
-            collectibleManager = null;
+            if (coroutineHelper != null)
+            {
+                coroutineHelper.Dispose();
+            }
 
             gameManager?.Dispose();
             gameManager = null;
+        }
+
+        private void StartGame()
+        {
+            DebugLogHelper.Log($"{GetType().Name}: StartGame");
+            gameManager?.StartGame();
         }
     }
 }

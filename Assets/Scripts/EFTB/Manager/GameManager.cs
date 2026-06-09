@@ -1,9 +1,4 @@
 ﻿using JumboJumps.EFTB.State;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JumboJumps.EFTB.Manager
 {
@@ -14,14 +9,22 @@ namespace JumboJumps.EFTB.Manager
         public void Initialize()
         {
             stateController = new GameStateController();
-            stateController?.Initialize();
-            stateController?.StartStateController();
+            stateController.Initialize();
         }
 
         public void Dispose()
         {
             stateController?.Dispose();
-            stateController = null;
+            stateController = null;   
+        }
+        public void StartGame()
+        {
+            stateController.StartStateController();
+        }
+
+        public void UpdateLogic(float deltaTime)
+        {
+            stateController?.UpdateLogic(deltaTime);
         }
     }
 }

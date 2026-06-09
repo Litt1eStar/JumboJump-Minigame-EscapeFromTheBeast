@@ -1,17 +1,9 @@
-﻿using JumboJumps.EFTB.Manager;
-using JumboJumps.EFTB.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-
-namespace JumboJumps.EFTB.State.Player
+﻿namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerWalkingState : BaseState
     {
         private PlayerStateController playerStateController;
+
         public PlayerWalkingState(BaseStateController stateController) : base(stateController)
         {
             playerStateController = (PlayerStateController)stateController;
@@ -20,12 +12,12 @@ namespace JumboJumps.EFTB.State.Player
 
         public override void UpdateLogic(float deltaTime)
         {
-            float xInput = playerStateController.input2DManager.XInput; 
+            float xInput = playerStateController.Input2DManager.XInput; 
             if(xInput == 0)
             {
                 StateController.ChangeState(typeof(PlayerIdleState));
             }
-            playerStateController.visualizer.Move(xInput);
+            playerStateController.Visualizer.Move(xInput);
         }
     }
 }

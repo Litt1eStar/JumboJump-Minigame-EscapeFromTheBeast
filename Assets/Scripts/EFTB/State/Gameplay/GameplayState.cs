@@ -1,51 +1,100 @@
-﻿using JumboJumps.EFTB.Manager;
+using JumboJump.Assets.Scripts.EFTB.Constant.Scene;
+using JumboJump.Assets.Scripts.EFTB.State.Base;
+using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
-using JumboJumps.EFTB.Visualizer;
+using System.Collections.Generic;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
-    public class GameplayState : BaseState
+    public class GameplayState : BaseLoadSceneState
     {
-        private CollectibleVisualizer collectibleVisualizer;
+        protected override string SceneName => ConstScene.GAMEPLAY;
+
+        private GameplayStateManager gameplayStateManager;
+        private PlayerManager playerManager;
+        private CatManager catManager;
         private CollectibleManager collectibleManager;
+
+        private GameplayController gameplayController;
+        private GameStateController stateController;
 
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
+            this.stateController = (GameStateController)stateController;
 
+            StateTransitionMap.Add(typeof(MainMenuState), null);
+        }
+
+        protected override void OnSceneLoadSucceeded()
+        {
+            base.OnSceneLoadSucceeded();
+
+            playerManager = new PlayerManager();
+            playerManager.Initialize();
+
+            catManager = new CatManager();
+            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
+            catManager.Intialize(sceneCats, playerManager.PlayerTransform);
+
+            collectibleManager = new CollectibleManager();
+            collectibleManager.Initialize();
+
+            gameplayController = new GameplayController();
+            gameplayController.Initialize();
+            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
+
+            gameplayStateManager = new GameplayStateManager();
+            gameplayStateManager.Initialize(gameplayController);
+
+
+            DebugLogHelper.Log("GameplayState: Scene loaded successfully.");
         }
 
         public override void OnEnterState()
         {
             base.OnEnterState();
 
-            collectibleManager = GameContext.Instance.Get<CollectibleManager>();
-            if(collectibleManager == null)
-            {
-                DebugLogHelper.LogError("GameplayState: CollectibleManager not found in GameContext.");
-             }
 
-            collectibleVisualizer = new CollectibleVisualizer();
-            collectibleVisualizer.Initialize();
-
-            collectibleManager.EventTotalCoinValueChanged += collectibleVisualizer.UpdateCoinChanged;
         }
 
         public override void OnExitState()
         {
             base.OnExitState();
 
-            if(collectibleManager != null)
-            {
-                collectibleManager.EventTotalCoinValueChanged -= collectibleVisualizer.UpdateCoinChanged;
-            }
+            gameplayStateManager?.Dispose();
+            gameplayStateManager = null;
 
-            collectibleVisualizer?.Dispose();
-            collectibleVisualizer = null;
+            playerManager?.Dispose();
+            playerManager = null;
+
+            catManager?.Dispose();
+            catManager = null;
+
+            collectibleManager?.Dispose();
+            collectibleManager = null;
+
+            if (gameplayController != null)
+            {
+                gameplayController.EventReturnBackToMainMenu -= ReturnBackToMainMenu;
+                gameplayController.Dispose();
+                gameplayController = null;
+            }
         }
 
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
+
+            gameplayStateManager?.UpdateLogic(deltaTime);
+            playerManager?.UpdateLogic(deltaTime);
+            catManager?.UpdateLogic(deltaTime);
+        }
+
+        public void ReturnBackToMainMenu()
+        {
+            stateController.ChangeState(typeof(MainMenuState));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JumboJumps.EFTB.Utilities;
+using System;
 using System.Collections.Generic;
 namespace JumboJumps.EFTB.State
 {
@@ -7,7 +8,6 @@ namespace JumboJumps.EFTB.State
         public Dictionary<Type, Func<bool>> StateTransitionMap;
         public bool IsStateActive { get; private set; }
         protected BaseStateController StateController;
-
 
         public BaseState(BaseStateController stateController)
         {
@@ -33,6 +33,7 @@ namespace JumboJumps.EFTB.State
         public virtual void UpdateLogic(float deltaTime)
         {
         }
+
         public virtual void OnExitState()
         {
             IsStateActive = false;

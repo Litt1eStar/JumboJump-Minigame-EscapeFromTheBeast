@@ -6,6 +6,7 @@ namespace JumboJumps.EFTB.State.Cat
     public class CatCatchState : BaseState
     {
         private SleepyCatStateController stateController;
+
         public CatCatchState(BaseStateController stateController) : base(stateController)
         {
             this.stateController = (SleepyCatStateController)stateController;

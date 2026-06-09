@@ -3,24 +3,22 @@ using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerStateController : BaseStateController
     {
         protected override Type DefaultTypeState => typeof(PlayerIdleState);
-        public PlayerVisualizer visualizer { get; private set; }
-        public Input2DManager input2DManager { get; private set; }
+        public PlayerVisualizer Visualizer { get; private set; }
+        public Input2DManager Input2DManager { get; private set; }
+
         public PlayerStateController()
         {
-            visualizer = new PlayerVisualizer();
-            visualizer.Initialize();
+            Visualizer = new PlayerVisualizer();
+            Visualizer.Initialize();
 
-            input2DManager = GameContext.Instance.Get<Input2DManager>();
-            if(input2DManager == null)
+            Input2DManager = GameContext.Instance.Get<Input2DManager>();
+            if(Input2DManager == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] {nameof(PlayerStateController)}| Failed to get {typeof(Input2DManager).AssemblyQualifiedName} from GameContext");
             }
@@ -35,7 +33,7 @@ namespace JumboJumps.EFTB.State.Player
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-            visualizer.giCamera.UpdateLogic(deltaTime);
+            Visualizer.giCamera.UpdateLogic(deltaTime);
         }
     }
 }

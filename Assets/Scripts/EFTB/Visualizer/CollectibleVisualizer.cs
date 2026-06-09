@@ -1,6 +1,4 @@
-﻿using JumboJumps.EFTB.Manager;
-using JumboJumps.EFTB.Utilities;
-using System;
+﻿using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.Visualizer
 {

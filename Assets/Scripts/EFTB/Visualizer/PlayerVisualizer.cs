@@ -8,6 +8,7 @@ namespace JumboJumps.EFTB.Visualizer
     {
         private GIPlayer giPlayer;
         public GICamera giCamera { get; private set;}
+
         public void Initialize()
         {
             giPlayer = SceneObjectContext.Instance.Get<GIPlayer>();
