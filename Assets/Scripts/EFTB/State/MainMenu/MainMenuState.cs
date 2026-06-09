@@ -2,12 +2,16 @@
 using JumboJumps.EFTB.State.Base;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Visualizer.MainMenu;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.State.MainMenu
 {
     public class MainMenuState : BaseLoadSceneState
     {
         protected override string SceneName => ConstScene.MAIN_MENU;
+
+        private MainMenuVisualizer visualizer;
 
         private float transitionTime = 1f;
         private float timer;
@@ -21,36 +25,32 @@ namespace JumboJumps.EFTB.State.MainMenu
         {
             base.OnSceneLoadSucceeded();
 
-            DebugLogHelper.Log("MainMenu : OnSceneLoadSucceeded");
+            visualizer = new MainMenuVisualizer();
+            visualizer.Initialize();
+            visualizer.Subscribe(OnPlayButtonClicked, OnExitButtonClicked);
         }
 
         public override void OnEnterState()
         {
             base.OnEnterState();
-            timer = transitionTime;
         }
 
         public override void OnExitState()
         {
+            visualizer?.Dispose();
+            visualizer = null;
+
             base.OnExitState();
         }
 
-        public override void UpdateLogic(float deltaTime)
+        public void OnPlayButtonClicked()
         {
-            base.UpdateLogic(deltaTime);
-            
-#if UNITY_EDITOR
-            // For testing, automatically transition to GameplayState after a short delay
-            // In a real implementation, this would be triggered by user input (e.g., pressing "Start Game")
+            StateController.ChangeState(typeof(GameplayState));
+        }   
 
-            timer -= deltaTime;
-
-            if (timer <= 0f) 
-            {
-                StateController.ChangeState(typeof(GameplayState));
-            }
-#endif
+        public void OnExitButtonClicked()
+        {
+            Application.Quit();
         }
-
     }
 }

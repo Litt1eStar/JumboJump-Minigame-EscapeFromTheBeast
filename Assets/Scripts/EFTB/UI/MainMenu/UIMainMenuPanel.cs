@@ -34,21 +34,5 @@ namespace JumboJumps.EFTB.UI.MainMenu
                 exitButton.onClick.AddListener(() => exitBtnCallback());
             }
         }
-
-        public void OnClickPlayButton()
-        {
-            if (playButton != null) 
-            {
-                playButton.onClick.Invoke();
-            }
-        }
-
-        public void OnClickExitButton()
-        {
-            if(exitButton != null)
-            {
-                exitButton.onClick.Invoke();
-            }
-        }
     }
 }
