@@ -1,4 +1,3 @@
-using JumboJump.EFTB.Utilities;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
