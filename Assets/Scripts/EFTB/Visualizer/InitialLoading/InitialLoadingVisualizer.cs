@@ -10,6 +10,11 @@ namespace JumboJumps.EFTB.Visualizer.InitialLoading
         public void Initialize()
         {
             uiLoadingCanvas = SceneObjectContext.Instance.Get<UILoadingCanvas>();
+
+            if(uiLoadingCanvas == null)
+            {
+                DebugLogHelper.LogError("Failed to initialize InitialLoadingVisualizer: UILoadingCanvas not found in scene.");
+            }
         }
 
         public void Dispose()
