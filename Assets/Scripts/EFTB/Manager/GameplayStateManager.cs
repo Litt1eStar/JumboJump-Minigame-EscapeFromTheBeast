@@ -21,8 +21,6 @@ namespace JumboJumps.EFTB.Manager
             stateController.Initialize();
             stateController.StartStateController();
 
-            CurrentGameStatus = GameStatus.None;
-
             GameContext.Instance.Add(this);
         }
 
