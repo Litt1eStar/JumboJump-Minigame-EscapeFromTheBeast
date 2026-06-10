@@ -22,10 +22,5 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             base.OnExitState();
         }
-
-        public override void UpdateLogic(float deltaTime)
-        {
-            base.UpdateLogic(deltaTime);
-        }
     }
 }

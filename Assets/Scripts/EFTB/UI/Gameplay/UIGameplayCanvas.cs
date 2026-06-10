@@ -16,6 +16,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
         [SerializeField]
         private UIFinishLevelPanel uiFinishLevelPanel;
+
         public void Show()
         {
             uiGameplayPanel?.Show();
@@ -37,11 +38,14 @@ namespace JumboJumps.EFTB.UI.Gameplay
             uiFinishLevelPanel?.Subscribe(mainMenuButtonCallback);
         }
 
+        #region Coin Counter
         public void SetCoinCounterLabel(int value)
         {
             uiGameplayPanel?.SetCoinCounterLabel(value);
         }
+        #endregion
 
+        #region Pause Menu
         public void ShowPauseMenu()
         {
             uiPauseMenuPanel?.Show();
@@ -51,7 +55,9 @@ namespace JumboJumps.EFTB.UI.Gameplay
         {
             uiPauseMenuPanel?.Hide();
         }
+        #endregion
 
+        #region Finish Level Panel
         public void ShowFinishLevelPanel()
         {
             uiFinishLevelPanel?.Show();
@@ -67,5 +73,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
             ShowFinishLevelPanel();
             uiFinishLevelPanel?.SetFinishTextLavel(gameStatus);
         }
+
+        #endregion
     }
 }

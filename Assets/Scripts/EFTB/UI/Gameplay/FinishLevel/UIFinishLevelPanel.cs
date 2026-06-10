@@ -1,5 +1,4 @@
-﻿
-using JumboJumps.EFTB.State.Gameplay;
+﻿using JumboJumps.EFTB.State.Gameplay;
 using System;
 using TMPro;
 using UnityEngine;
@@ -14,6 +13,7 @@ namespace JumboJumps.EFTB.UI.Gameplay.FinishLevel
 
         [SerializeField]
         private Button mainMenuButton;
+
         public void SetFinishTextLavel(GameStatus gameStatus)
         {
             if (gameStatus == GameStatus.Win)

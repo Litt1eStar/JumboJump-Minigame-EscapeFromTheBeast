@@ -11,6 +11,7 @@ namespace JumboJumps.EFTB.UI.Gameplay.PauseMenu
 
         [SerializeField]
         private Button mainMenuButton;
+
         public override void Show()
         {
             base.Show();
