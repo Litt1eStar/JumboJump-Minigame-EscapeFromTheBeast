@@ -1,4 +1,6 @@
-﻿using JumboJumps.EFTB.UI.Gameplay.PauseMenu;
+﻿using JumboJumps.EFTB.State.Gameplay;
+using JumboJumps.EFTB.UI.Gameplay.FinishLevel;
+using JumboJumps.EFTB.UI.Gameplay.PauseMenu;
 using System;
 using UnityEngine;
 
@@ -11,6 +13,9 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
         [SerializeField]
         private UIPauseMenuPanel uiPauseMenuPanel;
+
+        [SerializeField]
+        private UIFinishLevelPanel uiFinishLevelPanel;
         public void Show()
         {
             uiGameplayPanel?.Show();
@@ -29,6 +34,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
         {
             uiGameplayPanel?.Subscribe(pauseBtnCallback);
             uiPauseMenuPanel?.Subscribe(resumeButtonCallback, mainMenuButtonCallback);
+            uiFinishLevelPanel?.Subscribe(mainMenuButtonCallback);
         }
 
         public void SetCoinCounterLabel(int value)
@@ -44,6 +50,22 @@ namespace JumboJumps.EFTB.UI.Gameplay
         public void HidePauseMenu()
         {
             uiPauseMenuPanel?.Hide();
+        }
+
+        public void ShowFinishLevelPanel()
+        {
+            uiFinishLevelPanel?.Show();
+        }
+
+        public void HideFinishLevelPanel()
+        {
+            uiFinishLevelPanel?.Hide();
+        }
+
+        public void SetFinishLevelTextLabel(GameStatus gameStatus)
+        {
+            ShowFinishLevelPanel();
+            uiFinishLevelPanel?.SetFinishTextLavel(gameStatus);
         }
     }
 }

@@ -41,10 +41,11 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager = new CollectibleManager();
             collectibleManager.Initialize();
 
+            gameplayController = new GameplayController();
+
             gameplayStateManager = new GameplayStateManager();
             gameplayStateManager.Initialize(gameplayController);
 
-            gameplayController = new GameplayController();
             gameplayController.Initialize(gameplayStateManager.StateController);
             gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
         }

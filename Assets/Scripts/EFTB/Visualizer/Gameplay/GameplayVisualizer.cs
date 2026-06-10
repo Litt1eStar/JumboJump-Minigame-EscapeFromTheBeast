@@ -1,4 +1,6 @@
-﻿using JumboJumps.EFTB.UI.Gameplay;
+﻿using JumboJumps.EFTB.State.Gameplay;
+using JumboJumps.EFTB.UI.Gameplay;
+using JumboJumps.EFTB.UI.Gameplay.PauseMenu;
 using JumboJumps.EFTB.Utilities;
 using System;
 
@@ -17,7 +19,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
                 DebugLogHelper.LogError("Failed to initialize GameplayVisualizer: UIGameplayCanvas not found in scene.");
             }
 
-            HidePauseMenu();
+            HidePanel();
         }
 
         public void Dispose()
@@ -44,9 +46,30 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             uiGameplayCanvas?.ShowPauseMenu();
         }
 
-        public void HidePauseMenu()
+        public void HidePanel()
         {
             uiGameplayCanvas?.HidePauseMenu();
+            uiGameplayCanvas?.HideFinishLevelPanel();
+        }
+
+        public void OnFinishLevel(GameStatus gameStatus)
+        {
+            SetFinishLevelTextLabel(gameStatus);
+            ShowFinishLevelPanel();
+        }
+        public void ShowFinishLevelPanel()
+        {
+            uiGameplayCanvas?.ShowFinishLevelPanel();
+        }
+
+        public void HideFinishLevelPanel()
+        {
+            uiGameplayCanvas?.HideFinishLevelPanel();
+        }
+
+        public void SetFinishLevelTextLabel(GameStatus gameStatus)
+        {
+            uiGameplayCanvas?.SetFinishLevelTextLabel(gameStatus);
         }
 
         public void Show()

@@ -4,20 +4,13 @@ using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.Manager
 {
-    public enum GameStatus 
-    { 
-        Default,
-        Winning,
-        Losing
-    }
-
     public class GameplayStateManager
     {
         private GameplayStateController stateController;
         private GameVisualizer gameVisualizer;
 
         public GameplayStateController StateController => stateController;
-        public GameStatus GameStatus { get; private set; } = GameStatus.Default;
+        public GameStatus CurrentGameStatus;
 
         public void Initialize(GameplayController gameplayController)
         {
@@ -27,6 +20,8 @@ namespace JumboJumps.EFTB.Manager
 
             stateController.Initialize();
             stateController.StartStateController();
+
+            CurrentGameStatus = GameStatus.None;
 
             GameContext.Instance.Add(this);
         }
@@ -46,18 +41,14 @@ namespace JumboJumps.EFTB.Manager
             stateController?.UpdateLogic(deltaTime);
         }
 
-        public void WinGame()
+        public void InvokeFinishLevel(GameStatus gameStatus)
         {
-            if(GameStatus != GameStatus.Default) return;
-
-            GameStatus = GameStatus.Winning;
-        }
-
-        public void LoseGame()
-        {
-            if(GameStatus != GameStatus.Default) return;
-
-            GameStatus = GameStatus.Losing;
+            if(stateController.GameplayController == null)
+            {
+                DebugLogHelper.LogError("GameplayController is null. Cannot invoke finish level.");
+                return;
+            }
+            stateController.GameplayController.InvokeFinishLevel(gameStatus);
         }
     }
 }

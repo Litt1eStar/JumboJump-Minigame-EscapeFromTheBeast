@@ -6,9 +6,23 @@ using System;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
+    public enum GameStatus
+    {
+        None,
+        Win,
+        Lose
+    }
     public class GameplayController
     {
+        /// <summary>
+        /// EventReturnBackToMainMenu will triggerd when player want to go back to main menu
+        /// </summary>
         public event Action EventReturnBackToMainMenu;
+
+        /// <summary>
+        /// Parameter : GameStatus - Win or Lose
+        /// </summary>
+        public event Action<GameStatus> EventFinishLevel;
 
         private CollectibleManager collectibleManager;
         private CollectibleVisualizer collectibleVisualizer;
@@ -37,22 +51,37 @@ namespace JumboJumps.EFTB.State.Gameplay
                 OnClickMainMenuButton
                 );
 
-            collectibleManager.EventTotalCoinValueChanged += OnCoinCollected;
+            Subscribe();
         }
 
         public void Dispose()
         {
-            if (collectibleManager != null)
-            {
-                collectibleManager.EventTotalCoinValueChanged -= OnCoinCollected;
-                collectibleManager = null;
-            }
-
+            Unsubscribe();
+            
+            collectibleManager?.Dispose();
+            collectibleManager = null;
+            
             collectibleVisualizer?.Dispose();
             collectibleVisualizer = null;
 
             gameplayVisualizer?.Dispose();
             gameplayVisualizer = null;
+        }
+
+        public void Subscribe()
+        {
+            collectibleManager.EventTotalCoinValueChanged += OnCoinCollected;
+            EventFinishLevel += OnFinishLevel;
+        }
+
+        public void Unsubscribe()
+        {
+            collectibleManager.EventTotalCoinValueChanged -= OnCoinCollected;
+        }
+
+        public void OnFinishLevel(GameStatus gameStatus)
+        {
+            gameplayVisualizer.OnFinishLevel(gameStatus);
         }
 
         public void OnCoinCollected(int totalCoinValue)
@@ -68,7 +97,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
         public void OnClickResumeButton()
         {
-            gameplayVisualizer.HidePauseMenu();
+            gameplayVisualizer.HidePanel();
             stateController.ChangeState(typeof(InGameState));
         }
         public void OnClickMainMenuButton()
@@ -78,6 +107,11 @@ namespace JumboJumps.EFTB.State.Gameplay
         public void ReturnToMainMenu()
         {
             EventReturnBackToMainMenu?.Invoke();
+        }
+
+        public void InvokeFinishLevel(GameStatus gameStatus)
+        {
+            EventFinishLevel?.Invoke(gameStatus);
         }
     }
 }

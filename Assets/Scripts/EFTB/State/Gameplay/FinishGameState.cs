@@ -6,7 +6,6 @@ namespace JumboJumps.EFTB.State.Gameplay
     public class FinishGameState : BaseState
     {
         private GameplayStateController stateController;
-        private Input2DManager input2DManager;
 
         public FinishGameState(BaseStateController stateController) : base(stateController)
         {
@@ -16,28 +15,8 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void OnEnterState()
         {
             base.OnEnterState();
-            input2DManager = GameContext.Instance.Get<Input2DManager>();
+            GameplayStateManager gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
+            gameplayStateManager.InvokeFinishLevel(gameplayStateManager.CurrentGameStatus);
         }
-
-        public override void OnExitState()
-        {
-            base.OnExitState();
-        }
-
-        public override void UpdateLogic(float deltaTime)
-        {
-            base.UpdateLogic(deltaTime);
-
-            #if UNITY_EDITOR
-            // For testing, automatically transition to MainMenuState after a short delay
-            // In a real implementation, the transition to MainMenuState would be triggered by user input (e.g., player click MainMenu Button)
-
-            if(input2DManager.IsChangeState())
-            {
-               stateController.GameplayController.ReturnToMainMenu();
-            }
-            #endif
-        }
-
     }
 }

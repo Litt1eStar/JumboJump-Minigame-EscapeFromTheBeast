@@ -24,22 +24,5 @@ namespace JumboJumps.EFTB.State.Gameplay
             base.OnExitState();
             input2DManager = null;
         }
-
-        public override void UpdateLogic(float deltaTime)
-        {
-            base.UpdateLogic(deltaTime);
-            
-            #if UNITY_EDITOR
-            // For testing
-            if (input2DManager.IsChangeState())
-            {
-                StateController.ChangeState(typeof(FinishGameState));
-            }
-            #endif
-
-            // In a real implementation, the transition to FinishGameState would be triggered by game events (e.g., player reaches the end of the level or loses all health)
-            // The transition to PauseMenuState would be triggered by user input (e.g., pressing the "Pause" button)
-        }
-
     }
 }
