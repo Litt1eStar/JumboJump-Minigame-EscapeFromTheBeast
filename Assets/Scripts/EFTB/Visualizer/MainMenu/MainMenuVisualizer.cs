@@ -31,6 +31,7 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
 
         public void Dispose() 
         {
+            UnSubscribe();
             uiMainMenuCanvas = null;
         }
 
@@ -38,6 +39,12 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
         {
             uiMainMenuPanel.EventPlayUIButtonClicked += OnPlayButtonClicked;
             uiMainMenuPanel.EventExitUIButtonClicked += OnExitButtonClicked;
+        }
+
+        public void UnSubscribe()
+        {
+            uiMainMenuPanel.EventPlayUIButtonClicked -= OnPlayButtonClicked;
+            uiMainMenuPanel.EventExitUIButtonClicked -= OnExitButtonClicked;
         }
 
         public void OnPlayButtonClicked()

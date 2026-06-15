@@ -1,7 +1,5 @@
 ﻿using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
-using JumboJumps.EFTB.Visualizer;
-using JumboJumps.EFTB.Visualizer.Gameplay;
 using System;
 
 namespace JumboJumps.EFTB.State.Gameplay
@@ -24,9 +22,6 @@ namespace JumboJumps.EFTB.State.Gameplay
         public event Action<GameStatus> EventFinishLevel;
 
         private CollectibleManager collectibleManager;
-        private GameplayVisualizer gameplayVisualizer;
-
-        private GameplayStateController stateController;
 
         public void Initialize(GameplayStateController stateController)
         {
@@ -36,57 +31,16 @@ namespace JumboJumps.EFTB.State.Gameplay
                 DebugLogHelper.LogError("GameplayController: CollectibleManager not found in GameContext.");
                 return;
             }
-
-            this.stateController = stateController;
-
-            gameplayVisualizer = new GameplayVisualizer();
-            gameplayVisualizer.Initialize();
-
-            gameplayVisualizer.EventPauseUIButtonClicked += OnClickPauseButton;
-            gameplayVisualizer.EventResumeUIButtonClicked += OnClickResumeButton;
-            gameplayVisualizer.EventMainMenuUIButtonClicked += OnClickMainMenuButton;
         }
 
         public void Dispose()
         {
-            Unsubscribe();
-
             collectibleManager?.Dispose();
             collectibleManager = null;
-
-            gameplayVisualizer?.Dispose();
-            gameplayVisualizer = null;
         }
 
         #region Event Handler
-        public void Unsubscribe()
-        {
-            collectibleManager.EventTotalCoinValueChanged -= OnCoinCollected;
-        }
-
-        public void OnFinishLevel(GameStatus gameStatus)
-        {
-            gameplayVisualizer.OnFinishLevel(gameStatus);
-        }
-
-        public void OnCoinCollected(int totalCoinValue)
-        {
-            gameplayVisualizer.SetCoinCounterLabel(totalCoinValue);
-        }
-
-        public void OnClickPauseButton()
-        {
-            gameplayVisualizer.ShowPauseMenu();
-            stateController.ChangeState(typeof(PauseMenuState));
-        }
-
-        public void OnClickResumeButton()
-        {
-            DebugLogHelper.Log("Resume button clicked. Returning to InGameState.");
-            gameplayVisualizer.HidePanel();
-            stateController.ChangeState(typeof(InGameState));
-        }
-
+        
         public void OnClickMainMenuButton()
         {
             ReturnToMainMenu();
