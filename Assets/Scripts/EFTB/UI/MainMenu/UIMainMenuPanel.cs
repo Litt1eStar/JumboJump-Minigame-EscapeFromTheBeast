@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JumboJumps.EFTB.Utilities;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,33 +7,36 @@ namespace JumboJumps.EFTB.UI.MainMenu
 {
     public class UIMainMenuPanel : UIBasePanel
     {
+        public event Action EventPlayUIButtonClicked;
+        public event Action EventExitUIButtonClicked;
+
         [SerializeField]
         private Button playButton;
 
         [SerializeField]
         private Button exitButton;
 
-        public override void Show()
+        public void Initialize()
         {
-            base.Show();
+            Subscribe();
         }
 
-        public override void Hide()
+        public void Subscribe()
         {
-            base.Hide();
+            playButton.onClick.AddListener(OnPlayButtonClicked);
+            exitButton.onClick.AddListener(OnExitButtonClicked);
+
+            DebugLogHelper.Log("Subscribe UIMainMenuPanel");
         }
 
-        public void Subscribe(Action playBtnCallback, Action exitBtnCallback)
+        private void OnPlayButtonClicked()
         {
-            if (playButton != null)
-            {
-                playButton.onClick.AddListener(() => playBtnCallback());
-            }
+            EventPlayUIButtonClicked?.Invoke();
+        }
 
-            if (exitButton != null)
-            {
-                exitButton.onClick.AddListener(() => exitBtnCallback());
-            }
+        private void OnExitButtonClicked()
+        {
+            EventExitUIButtonClicked?.Invoke(); 
         }
     }
 }

@@ -3,7 +3,7 @@ using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
-namespace JumboJump.Assets.Scripts.EFTB.GI
+namespace JumboJump.EFTB.GI
 {
     public class GIGoal : MonoBehaviour
     {

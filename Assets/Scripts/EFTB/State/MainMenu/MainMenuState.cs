@@ -27,7 +27,9 @@ namespace JumboJumps.EFTB.State.MainMenu
 
             visualizer = new MainMenuVisualizer();
             visualizer.Initialize();
-            visualizer.Subscribe(OnPlayButtonClicked, OnExitButtonClicked);
+
+            visualizer.EventPlayUIButtonClicked += OnPlayButtonClicked;
+            visualizer.EventExitUIButtonClicked += OnExitButtonClicked;
         }
 
         public override void OnEnterState()

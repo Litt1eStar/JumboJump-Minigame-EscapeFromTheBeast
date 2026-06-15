@@ -6,7 +6,12 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
 {
     public class MainMenuVisualizer
     {
+        public event Action EventPlayUIButtonClicked;
+        public event Action EventExitUIButtonClicked;
+
         private UIMainMenuCanvas uiMainMenuCanvas;
+        
+        private UIMainMenuPanel uiMainMenuPanel;
         
         public void Initialize()
         {
@@ -16,6 +21,12 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
             {
                 DebugLogHelper.LogError("Failed to initialize MainMenuVisualizer: UIMainMenuCanvas not found in scene.");
             }
+
+            uiMainMenuCanvas.Initialize();
+
+            uiMainMenuPanel = uiMainMenuCanvas?.UIMainMenuPanel;
+
+            Subscribe();
         }
 
         public void Dispose() 
@@ -23,9 +34,20 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
             uiMainMenuCanvas = null;
         }
 
-        public void Subscribe(Action playBtnCallback, Action exitBtnCallback)
+        public void Subscribe()
         {
-            uiMainMenuCanvas?.Subscribe(playBtnCallback, exitBtnCallback);
+            uiMainMenuPanel.EventPlayUIButtonClicked += OnPlayButtonClicked;
+            uiMainMenuPanel.EventExitUIButtonClicked += OnExitButtonClicked;
+        }
+
+        public void OnPlayButtonClicked()
+        {
+            EventPlayUIButtonClicked?.Invoke();
+        }
+
+        public void OnExitButtonClicked()
+        {
+            EventExitUIButtonClicked?.Invoke();
         }
     }
 }

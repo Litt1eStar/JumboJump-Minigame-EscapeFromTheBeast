@@ -8,6 +8,12 @@ namespace JumboJumps.EFTB.UI.MainMenu
         [SerializeField]
         private UIMainMenuPanel uiMainMenuPanel;
 
+        public UIMainMenuPanel UIMainMenuPanel => uiMainMenuPanel;
+
+        public void Initialize()
+        {
+            uiMainMenuPanel.Initialize();
+        }
         public void Show()
         {
             uiMainMenuPanel?.Show();
@@ -16,11 +22,6 @@ namespace JumboJumps.EFTB.UI.MainMenu
         public void Hide()
         {
             uiMainMenuPanel?.Hide();
-        }
-        
-        public void Subscribe(Action playBtnCallback, Action exitBtnCallback)
-        {
-            uiMainMenuPanel?.Subscribe(playBtnCallback, exitBtnCallback);
         }
     }
 }
