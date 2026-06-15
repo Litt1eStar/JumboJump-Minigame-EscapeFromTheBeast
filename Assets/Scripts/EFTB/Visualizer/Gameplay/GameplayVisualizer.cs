@@ -68,13 +68,14 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         public void UnSubscribe()
         {
             uiGameplayPanel.EventPauseUIButtonClicked -= OnPauseButtonClicked;
-            
+
             uiPauseMenuPanel.EventResumeUIButtonClicked -= OnResumeButtonClicked;
             uiPauseMenuPanel.EventMainMenuUIButtonClicked -= OnMainMenuButtonClicked;
 
             uiFinishLevelPanel.EventMainMenuUIButtonClicked -= OnFinishMainMenuButtonClicked;
             collectibleManager.EventTotalCoinValueChanged -= SetCoinCounterLabel;
         }
+
 
         public void OnPauseButtonClicked()
         {
@@ -83,12 +84,12 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void OnResumeButtonClicked()
         {
-           EventResumeUIButtonClicked?.Invoke();
+            EventResumeUIButtonClicked?.Invoke();
         }
 
         public void OnMainMenuButtonClicked()
         {
-           EventMainMenuUIButtonClicked?.Invoke();
+            EventMainMenuUIButtonClicked?.Invoke();
         }
 
         public void OnFinishMainMenuButtonClicked()
@@ -130,12 +131,12 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void ShowGameplayCanvas()
         {
-            uiGameplayCanvas?.Show();
+            uiGameplayCanvas?.ShowGameplayPanel();
         }
 
         public void HideGameplayCanvas()
         {
-            uiGameplayCanvas?.Hide();
+            uiGameplayCanvas?.HideGameplayPanel();
         }
     }
 }

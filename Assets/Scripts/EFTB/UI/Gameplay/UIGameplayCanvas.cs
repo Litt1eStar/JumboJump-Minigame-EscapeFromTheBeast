@@ -21,12 +21,12 @@ namespace JumboJumps.EFTB.UI.Gameplay
         public UIGameplayPanel UIGameplayPanel => uiGameplayPanel;
         public UIFinishLevelPanel UIFinishLevelPanel => uiFinishLevelPanel;
 
-        public void Show()
+        public void ShowGameplayPanel()
         {
             uiGameplayPanel?.Show();
         }
 
-        public void Hide()
+        public void HideGameplayPanel()
         {
             uiGameplayPanel?.Hide();
         }
@@ -59,7 +59,6 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
         public void SetFinishLevelTextLabel(GameStatus gameStatus)
         {
-            ShowFinishLevelPanel();
             uiFinishLevelPanel?.SetFinishTextLavel(gameStatus);
         }
 

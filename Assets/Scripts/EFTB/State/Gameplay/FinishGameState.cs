@@ -1,7 +1,4 @@
-﻿using JumboJumps.EFTB.Manager;
-using JumboJumps.EFTB.Utilities;
-
-namespace JumboJumps.EFTB.State.Gameplay
+﻿namespace JumboJumps.EFTB.State.Gameplay
 {
     public class FinishGameState : BaseState
     {

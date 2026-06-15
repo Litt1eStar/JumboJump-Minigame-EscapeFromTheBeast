@@ -13,9 +13,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
         private CoroutineHelper coroutineHelper;
         private Coroutine loadingProgressCoroutine;
 
-#if UNITY_EDITOR
         private float simulateDuration = 5.0f; // Simulated loading duration in seconds
-#endif
 
         public InitialLoadingState(BaseStateController stateController) : base(stateController)
         {
@@ -34,7 +32,12 @@ namespace JumboJumps.EFTB.State.InitialLoading
 
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
 
-            loadingProgressCoroutine = coroutineHelper.Play(SimulatedLoadingRoutine());
+            #if UNITY_EDITOR
+                loadingProgressCoroutine = coroutineHelper.Play(SimulatedLoadingRoutine());
+            #else 
+                // In Real game, do real loading pre-load assets
+                StateController.ChangeState(typeof(MainMenuState));
+            #endif
         }
 
         private IEnumerator SimulatedLoadingRoutine()
@@ -61,7 +64,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
         {
             visualizer?.Dispose();
             visualizer = null;
-         
+            coroutineHelper.StopAllCoroutines();
             base.OnExitState();
         }
     }

@@ -1,6 +1,4 @@
-﻿using JumboJumps.EFTB.Utilities;
-using JumboJumps.EFTB.Visualizer;
-using JumboJumps.EFTB.Visualizer.Gameplay;
+﻿using JumboJumps.EFTB.Visualizer.Gameplay;
 using System;
 using System.Collections.Generic;
 

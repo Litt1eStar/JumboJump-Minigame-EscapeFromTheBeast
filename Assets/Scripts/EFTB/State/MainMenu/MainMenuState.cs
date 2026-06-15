@@ -1,7 +1,6 @@
 ﻿using JumboJumps.EFTB.Constant.Scene;
 using JumboJumps.EFTB.State.Base;
 using JumboJumps.EFTB.State.Gameplay;
-using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.MainMenu;
 using UnityEngine;
 
@@ -12,9 +11,6 @@ namespace JumboJumps.EFTB.State.MainMenu
         protected override string SceneName => ConstScene.MAIN_MENU;
 
         private MainMenuVisualizer visualizer;
-
-        private float transitionTime = 1f;
-        private float timer;
 
         public MainMenuState(BaseStateController stateController) : base(stateController)
         {
@@ -48,7 +44,7 @@ namespace JumboJumps.EFTB.State.MainMenu
         public void OnPlayButtonClicked()
         {
             StateController.ChangeState(typeof(GameplayState));
-        }   
+        }
 
         public void OnExitButtonClicked()
         {

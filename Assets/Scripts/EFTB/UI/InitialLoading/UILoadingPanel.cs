@@ -7,17 +7,6 @@ namespace JumboJumps.EFTB.UI.InitialLoading
     {
         [SerializeField]
         private Slider loadingProgressBar;
-
-        public override void Show()
-        {
-            base.Show();
-        }
-
-        public override void Hide()
-        {
-            base.Hide();
-        }
-
         public void SetProgress(float value)
         {
             if(loadingProgressBar != null)
