@@ -8,7 +8,11 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 {
     public class GameplayVisualizer
     {
+        public event Action EventResumeUIButtonClicked;
+        public event Action EventMainMenuUIButtonClicked;
+
         private UIGameplayCanvas uiGameplayCanvas;
+        private UIPauseMenuPanel uiPauseMenuPanel;
 
         public void Initialize()
         {
@@ -18,8 +22,17 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             {
                 DebugLogHelper.LogError("Failed to initialize GameplayVisualizer: UIGameplayCanvas not found in scene.");
             }
+            uiGameplayCanvas.Initialize();
 
-            HidePanel();
+            uiPauseMenuPanel = uiGameplayCanvas?.UIPauseMenuPanel;
+            if(uiPauseMenuPanel == null)
+            {
+                DebugLogHelper.LogError("Failed to initialize GameplayVisualizer: UIPauseMenuPanel not found in UIGameplayCanvas.");
+                return;
+            }
+
+            //HidePanel();
+            Subscribe();
         }
 
         public void Dispose()
@@ -27,13 +40,20 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             uiGameplayCanvas = null;
         }
 
-        public void Subscribe(
-            Action pauseBtnCallback,
-            Action resumeBtnCallback,
-            Action mainMenuCallback
-            )
+        public void Subscribe()
         {
-            uiGameplayCanvas?.Subscribe(pauseBtnCallback, resumeBtnCallback, mainMenuCallback);
+            uiPauseMenuPanel.EventResumeUIButtonClicked += OnResumeButtonClicked;
+            uiPauseMenuPanel.EventMainMenuUIButtonClicked += OnMainMenuButtonClicked;
+        }
+
+        public void OnResumeButtonClicked()
+        {
+           EventResumeUIButtonClicked?.Invoke();
+        }
+
+        public void OnMainMenuButtonClicked()
+        {
+           EventMainMenuUIButtonClicked?.Invoke();
         }
 
         public void SetCoinCounterLabel(int value)

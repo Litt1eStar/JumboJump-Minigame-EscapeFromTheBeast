@@ -17,6 +17,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
         [SerializeField]
         private UIFinishLevelPanel uiFinishLevelPanel;
 
+        public UIPauseMenuPanel UIPauseMenuPanel => uiPauseMenuPanel;
         public void Show()
         {
             uiGameplayPanel?.Show();
@@ -27,15 +28,9 @@ namespace JumboJumps.EFTB.UI.Gameplay
             uiGameplayPanel?.Hide();
         }
 
-        public void Subscribe(
-            Action pauseBtnCallback,
-            Action resumeButtonCallback,
-            Action mainMenuButtonCallback
-            )
+        public void Initialize()
         {
-            uiGameplayPanel?.Subscribe(pauseBtnCallback);
-            uiPauseMenuPanel?.Subscribe(resumeButtonCallback, mainMenuButtonCallback);
-            uiFinishLevelPanel?.Subscribe(mainMenuButtonCallback);
+            uiPauseMenuPanel.Initialize();
         }
 
         #region Coin Counter

@@ -46,7 +46,8 @@ namespace JumboJumps.EFTB.State.Gameplay
             gameplayVisualizer = new GameplayVisualizer();
             gameplayVisualizer.Initialize();
 
-            Subscribe();
+            gameplayVisualizer.EventResumeUIButtonClicked += OnClickResumeButton;
+            gameplayVisualizer.EventMainMenuUIButtonClicked += OnClickMainMenuButton;
         }
 
         public void Dispose()
@@ -64,18 +65,6 @@ namespace JumboJumps.EFTB.State.Gameplay
         }
 
         #region Event Handler
-        public void Subscribe()
-        {
-            gameplayVisualizer.Subscribe(
-                        OnClickPauseButton,
-                        OnClickResumeButton,
-                        OnClickMainMenuButton
-                        );
-
-            collectibleManager.EventTotalCoinValueChanged += OnCoinCollected;
-            EventFinishLevel += OnFinishLevel;
-        }
-
         public void Unsubscribe()
         {
             collectibleManager.EventTotalCoinValueChanged -= OnCoinCollected;
@@ -99,6 +88,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
         public void OnClickResumeButton()
         {
+            DebugLogHelper.Log("Resume button clicked. Returning to InGameState.");
             gameplayVisualizer.HidePanel();
             stateController.ChangeState(typeof(InGameState));
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JumboJumps.EFTB.Utilities;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,33 +7,34 @@ namespace JumboJumps.EFTB.UI.Gameplay.PauseMenu
 {
     public class UIPauseMenuPanel : UIBasePanel
     {
+        public event Action EventResumeUIButtonClicked;
+        public event Action EventMainMenuUIButtonClicked;
+
         [SerializeField]
         private Button resumeButton;
 
         [SerializeField]
         private Button mainMenuButton;
 
-        public override void Show()
+        public void Initialize()
         {
-            base.Show();
+            Subscribe();
         }
 
-        public override void Hide()
+        public void Subscribe()
         {
-            base.Hide();
+            resumeButton.onClick.AddListener(OnResumeButtonClicked);
+            mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
         }
 
-        public void Subscribe(Action resumeButtonCallback, Action mainMenuButtonCallback)
+        public void OnResumeButtonClicked()
         {
-            if(resumeButton != null)
-            {
-                resumeButton.onClick.AddListener(() => resumeButtonCallback());
-            }
+            EventResumeUIButtonClicked?.Invoke();
+        }
 
-            if (mainMenuButton != null)
-            {
-                mainMenuButton.onClick.AddListener(() => mainMenuButtonCallback());
-            }
+        public void OnMainMenuButtonClicked()
+        {
+            EventMainMenuUIButtonClicked?.Invoke();
         }
     }
 }
