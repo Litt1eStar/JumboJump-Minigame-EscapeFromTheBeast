@@ -1,4 +1,5 @@
-﻿using JumboJumps.EFTB.State.Gameplay;
+﻿using JumboJump.EFTB.Constant.UI;
+using JumboJumps.EFTB.State.Gameplay;
 using System;
 using TMPro;
 using UnityEngine;
@@ -35,11 +36,11 @@ namespace JumboJumps.EFTB.UI.Gameplay.FinishLevel
         {
             if (gameStatus == GameStatus.Win)
             {
-                finishLevelLabel.text = "Level Complete!";
+                finishLevelLabel.text = ConstUI.Gameplay.WIN_CONDITION_LABEL;
             }
             else
             {
-                finishLevelLabel.text = "Level Failed!";
+                finishLevelLabel.text = ConstUI.Gameplay.LOSE_CONDITION_LABEL;
             }
         }
     }

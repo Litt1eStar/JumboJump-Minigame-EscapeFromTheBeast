@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JumboJump.EFTB.Constant.UI;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
         {
             if (coinCounterLabel != null)
             {
-                coinCounterLabel.text = "Coins: 0";
+                coinCounterLabel.text = $"{ConstUI.Gameplay.BASE_COIN_COUNTER_LABEL}{0}";
             }
 
             Subscribe();
@@ -37,7 +38,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
         public void SetCoinCounterLabel(int value)
         {
-            coinCounterLabel.text = $"Coins: {value}";
+            coinCounterLabel.text = $"{ConstUI.Gameplay.BASE_COIN_COUNTER_LABEL}{value}";
         }
     }
 }
