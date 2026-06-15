@@ -24,7 +24,6 @@ namespace JumboJumps.EFTB.State.Gameplay
         public event Action<GameStatus> EventFinishLevel;
 
         private CollectibleManager collectibleManager;
-        private CollectibleVisualizer collectibleVisualizer;
         private GameplayVisualizer gameplayVisualizer;
 
         private GameplayStateController stateController;
@@ -40,9 +39,6 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             this.stateController = stateController;
 
-            collectibleVisualizer = new CollectibleVisualizer();
-            collectibleVisualizer.Initialize();
-
             gameplayVisualizer = new GameplayVisualizer();
             gameplayVisualizer.Initialize();
 
@@ -57,9 +53,6 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             collectibleManager?.Dispose();
             collectibleManager = null;
-
-            collectibleVisualizer?.Dispose();
-            collectibleVisualizer = null;
 
             gameplayVisualizer?.Dispose();
             gameplayVisualizer = null;

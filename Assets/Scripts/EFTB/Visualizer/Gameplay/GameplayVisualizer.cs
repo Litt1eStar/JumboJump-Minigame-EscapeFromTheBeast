@@ -1,4 +1,5 @@
-﻿using JumboJumps.EFTB.State.Gameplay;
+﻿using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.UI.Gameplay;
 using JumboJumps.EFTB.UI.Gameplay.PauseMenu;
 using JumboJumps.EFTB.Utilities;
@@ -11,6 +12,8 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         public event Action EventPauseUIButtonClicked;
         public event Action EventResumeUIButtonClicked;
         public event Action EventMainMenuUIButtonClicked;
+
+        private CollectibleManager collectibleManager;
 
         private UIGameplayCanvas uiGameplayCanvas;
         private UIPauseMenuPanel uiPauseMenuPanel;
@@ -25,6 +28,10 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
                 DebugLogHelper.LogError("Failed to initialize GameplayVisualizer: UIGameplayCanvas not found in scene.");
             }
             uiGameplayCanvas.Initialize();
+
+            collectibleManager = GameContext.Instance.Get<CollectibleManager>();
+
+            SetCoinCounterLabel(collectibleManager.TotalCoinValue);
 
             uiPauseMenuPanel = uiGameplayCanvas?.UIPauseMenuPanel;
             uiGameplayPanel = uiGameplayCanvas?.UIGameplayPanel;
@@ -44,6 +51,8 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
             uiPauseMenuPanel.EventResumeUIButtonClicked += OnResumeButtonClicked;
             uiPauseMenuPanel.EventMainMenuUIButtonClicked += OnMainMenuButtonClicked;
+
+            collectibleManager.EventTotalCoinValueChanged += SetCoinCounterLabel;
         }
 
         public void OnPauseButtonClicked()
