@@ -15,13 +15,13 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             GameplayController = gameplayController;
             GameplayVisualizer = new GameplayVisualizer();
-            GameplayVisualizer.Initialize();
+            GameplayVisualizer.Initialize(GameplayController);
 
             States = new Dictionary<Type, BaseState>()
             {
                 {typeof(InGameState), new InGameState(this)},
                 {typeof(PauseMenuState), new PauseMenuState(this, GameplayController)},
-                {typeof(FinishGameState), new FinishGameState(this)},
+                {typeof(FinishGameState), new FinishGameState(this, GameplayController)},
             };
         }
     }

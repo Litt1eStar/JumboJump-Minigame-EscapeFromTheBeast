@@ -1,6 +1,7 @@
 ﻿using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.UI.Gameplay;
+using JumboJumps.EFTB.UI.Gameplay.FinishLevel;
 using JumboJumps.EFTB.UI.Gameplay.PauseMenu;
 using JumboJumps.EFTB.Utilities;
 using System;
@@ -12,14 +13,17 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         public event Action EventPauseUIButtonClicked;
         public event Action EventResumeUIButtonClicked;
         public event Action EventMainMenuUIButtonClicked;
+        public event Action EventFinishMainMenuButtonClicked;
 
         private CollectibleManager collectibleManager;
+        private GameplayController gameplayController;
 
         private UIGameplayCanvas uiGameplayCanvas;
         private UIPauseMenuPanel uiPauseMenuPanel;
         private UIGameplayPanel uiGameplayPanel;
+        private UIFinishLevelPanel uiFinishLevelPanel;
 
-        public void Initialize()
+        public void Initialize(GameplayController gameplayController)
         {
             uiGameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
 
@@ -29,12 +33,14 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             }
             uiGameplayCanvas.Initialize();
 
+            this.gameplayController = gameplayController;
             collectibleManager = GameContext.Instance.Get<CollectibleManager>();
 
             SetCoinCounterLabel(collectibleManager.TotalCoinValue);
 
             uiPauseMenuPanel = uiGameplayCanvas?.UIPauseMenuPanel;
             uiGameplayPanel = uiGameplayCanvas?.UIGameplayPanel;
+            uiFinishLevelPanel = uiGameplayCanvas?.UIFinishLevelPanel;
 
             HidePanel();
             Subscribe();
@@ -53,7 +59,10 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             uiPauseMenuPanel.EventResumeUIButtonClicked += OnResumeButtonClicked;
             uiPauseMenuPanel.EventMainMenuUIButtonClicked += OnMainMenuButtonClicked;
 
+            uiFinishLevelPanel.EventMainMenuUIButtonClicked += OnFinishMainMenuButtonClicked;
             collectibleManager.EventTotalCoinValueChanged += SetCoinCounterLabel;
+
+            gameplayController.EventFinishLevel += OnLevelFinished;
         }
 
         public void UnSubscribe()
@@ -63,6 +72,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             uiPauseMenuPanel.EventResumeUIButtonClicked -= OnResumeButtonClicked;
             uiPauseMenuPanel.EventMainMenuUIButtonClicked -= OnMainMenuButtonClicked;
 
+            uiFinishLevelPanel.EventMainMenuUIButtonClicked -= OnFinishMainMenuButtonClicked;
             collectibleManager.EventTotalCoinValueChanged -= SetCoinCounterLabel;
         }
 
@@ -81,6 +91,17 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
            EventMainMenuUIButtonClicked?.Invoke();
         }
 
+        public void OnFinishMainMenuButtonClicked()
+        {
+            EventFinishMainMenuButtonClicked?.Invoke();
+        }
+
+        public void OnLevelFinished(GameStatus gameStatus)
+        {
+            SetFinishLevelTextLabel(gameStatus);
+            ShowFinishLevelPanel();
+        }
+
         public void SetCoinCounterLabel(int value)
         {
             uiGameplayCanvas?.SetCoinCounterLabel(value);
@@ -88,24 +109,18 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void ShowPauseMenu()
         {
-            uiGameplayCanvas?.ShowPauseMenu();
+            uiPauseMenuPanel.Show();
         }
 
         public void HidePanel()
         {
-            uiGameplayCanvas?.HidePauseMenu();
-            uiGameplayCanvas?.HideFinishLevelPanel();
-        }
-
-        public void OnFinishLevel(GameStatus gameStatus)
-        {
-            SetFinishLevelTextLabel(gameStatus);
-            ShowFinishLevelPanel();
+            uiPauseMenuPanel?.Hide();
+            uiFinishLevelPanel?.Hide();
         }
 
         public void ShowFinishLevelPanel()
         {
-            uiGameplayCanvas?.ShowFinishLevelPanel();
+            uiFinishLevelPanel?.Show();
         }
 
         public void SetFinishLevelTextLabel(GameStatus gameStatus)

@@ -20,11 +20,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             stateController.GameplayVisualizer.EventPauseUIButtonClicked += OnClickPauseButton;
         }
 
-        public override void OnExitState()
-        {
-            base.OnExitState();
-        }
-
         public void OnClickPauseButton()
         {
             stateController.GameplayVisualizer.ShowPauseMenu();

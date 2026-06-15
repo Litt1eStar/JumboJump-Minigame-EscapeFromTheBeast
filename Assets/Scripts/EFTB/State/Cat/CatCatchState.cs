@@ -20,14 +20,7 @@ namespace JumboJumps.EFTB.State.Cat
             base.OnEnterState();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
 
-            if(gameplayStateManager == null)
-            {
-                DebugLogHelper.LogError("GameplayStateManager not found in GameContext.");
-                return;
-            }
-            
-            gameplayStateManager.CurrentGameStatus = GameStatus.Lose;
-            gameplayStateManager.StateController.ChangeState(typeof(FinishGameState));
+            gameplayStateManager.GameplayController.InvokeFinishLevel(GameStatus.Lose);
         }
 
         public override void OnExitState()

@@ -8,11 +8,28 @@ namespace JumboJumps.EFTB.UI.Gameplay.FinishLevel
 {
     public class UIFinishLevelPanel : UIBasePanel
     {
+        public event Action EventMainMenuUIButtonClicked;
+
         [SerializeField]
         private TextMeshProUGUI finishLevelLabel;
 
         [SerializeField]
         private Button mainMenuButton;
+
+        public void Initialize()
+        {
+            Subscribe();
+        }
+
+        public void Subscribe()
+        {
+            mainMenuButton.onClick.AddListener(OnMainMenuBUttonClicked);
+        }
+
+        public void OnMainMenuBUttonClicked()
+        {
+            EventMainMenuUIButtonClicked?.Invoke();
+        }
 
         public void SetFinishTextLavel(GameStatus gameStatus)
         {
@@ -23,14 +40,6 @@ namespace JumboJumps.EFTB.UI.Gameplay.FinishLevel
             else
             {
                 finishLevelLabel.text = "Level Failed!";
-            }
-        }
-
-        public void Subscribe(Action mainMenuButtonCallback)
-        {
-            if (mainMenuButton != null)
-            {
-                mainMenuButton.onClick.AddListener(() => mainMenuButtonCallback());
             }
         }
     }

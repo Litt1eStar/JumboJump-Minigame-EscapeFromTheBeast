@@ -9,9 +9,9 @@ namespace JumboJump.EFTB.GI
     {
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(collision.CompareTag("Player"))
+            if (collision.CompareTag("Player"))
             {
-                GameContext.Instance.Get<GameplayStateManager>().InvokeFinishLevel(GameStatus.Win);
+                GameContext.Instance.Get<GameplayStateManager>().GameplayController.InvokeFinishLevel(GameStatus.Win);
             }
         }
     }

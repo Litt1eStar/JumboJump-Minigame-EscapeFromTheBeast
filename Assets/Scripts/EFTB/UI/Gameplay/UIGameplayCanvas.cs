@@ -19,6 +19,8 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
         public UIPauseMenuPanel UIPauseMenuPanel => uiPauseMenuPanel;
         public UIGameplayPanel UIGameplayPanel => uiGameplayPanel;
+        public UIFinishLevelPanel UIFinishLevelPanel => uiFinishLevelPanel;
+
         public void Show()
         {
             uiGameplayPanel?.Show();
@@ -33,24 +35,14 @@ namespace JumboJumps.EFTB.UI.Gameplay
         {
             uiGameplayPanel.Initialize();
             uiPauseMenuPanel.Initialize();
+            uiFinishLevelPanel.Initialize();
         }
+
 
         #region Coin Counter
         public void SetCoinCounterLabel(int value)
         {
             uiGameplayPanel?.SetCoinCounterLabel(value);
-        }
-        #endregion
-
-        #region Pause Menu
-        public void ShowPauseMenu()
-        {
-            uiPauseMenuPanel?.Show();
-        }
-
-        public void HidePauseMenu()
-        {
-            uiPauseMenuPanel?.Hide();
         }
         #endregion
 

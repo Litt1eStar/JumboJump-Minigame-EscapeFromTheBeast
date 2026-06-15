@@ -8,18 +8,21 @@ namespace JumboJumps.EFTB.Manager
     {
         private GameplayStateController stateController;
         private GameVisualizer gameVisualizer;
-
+        private GameplayController gameplayController;
         public GameplayStateController StateController => stateController;
-        public GameStatus CurrentGameStatus;
+        public GameplayController GameplayController => gameplayController;
 
         public void Initialize(GameplayController gameplayController)
         {
             gameVisualizer = GameContext.Instance.Get<GameVisualizer>();
+            this.gameplayController = gameplayController;
 
             stateController = new GameplayStateController(gameplayController);
 
             stateController.Initialize();
             stateController.StartStateController();
+
+            gameplayController.EventFinishLevel += OnLevelFinished;
 
             GameContext.Instance.Add(this);
         }
@@ -30,7 +33,6 @@ namespace JumboJumps.EFTB.Manager
             stateController = null;
 
             gameVisualizer = null;
-
             GameContext.Instance.Remove(this);
         }
 
@@ -39,14 +41,9 @@ namespace JumboJumps.EFTB.Manager
             stateController?.UpdateLogic(deltaTime);
         }
 
-        public void InvokeFinishLevel(GameStatus gameStatus)
+        public void OnLevelFinished(GameStatus gameStatus)
         {
-            if(stateController.GameplayController == null)
-            {
-                DebugLogHelper.LogError("GameplayController is null. Cannot invoke finish level.");
-                return;
-            }
-            stateController.GameplayController.InvokeFinishLevel(gameStatus);
+            stateController.ChangeState(typeof(FinishGameState));
         }
     }
 }
