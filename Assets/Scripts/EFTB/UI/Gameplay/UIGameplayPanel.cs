@@ -7,6 +7,8 @@ namespace JumboJumps.EFTB.UI.Gameplay
 {
     public class UIGameplayPanel : UIBasePanel
     {
+        public event Action EventPauseUIButtonClicked;
+
         [SerializeField]
         private Button pauseButton;
 
@@ -19,24 +21,18 @@ namespace JumboJumps.EFTB.UI.Gameplay
             {
                 coinCounterLabel.text = "Coins: 0";
             }
+
+            Subscribe();
         }
 
-        public override void Show()
+        private void Subscribe()
         {
-            base.Show();
+            pauseButton.onClick.AddListener(OnPauseButtonClicked);
         }
 
-        public override void Hide()
+        public void OnPauseButtonClicked()
         {
-            base.Hide();
-        }
-
-        public void Subscribe(Action pauseBtnCallback)
-        {
-            if (pauseButton != null)
-            {
-                pauseButton.onClick.AddListener(() => pauseBtnCallback());
-            }
+            EventPauseUIButtonClicked?.Invoke();
         }
 
         public void SetCoinCounterLabel(int value)

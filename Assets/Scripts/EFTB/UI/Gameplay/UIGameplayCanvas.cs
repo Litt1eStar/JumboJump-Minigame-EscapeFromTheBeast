@@ -18,6 +18,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
         private UIFinishLevelPanel uiFinishLevelPanel;
 
         public UIPauseMenuPanel UIPauseMenuPanel => uiPauseMenuPanel;
+        public UIGameplayPanel UIGameplayPanel => uiGameplayPanel;
         public void Show()
         {
             uiGameplayPanel?.Show();
@@ -30,6 +31,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
         public void Initialize()
         {
+            uiGameplayPanel.Initialize();
             uiPauseMenuPanel.Initialize();
         }
 

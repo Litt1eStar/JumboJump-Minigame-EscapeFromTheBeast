@@ -46,6 +46,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             gameplayVisualizer = new GameplayVisualizer();
             gameplayVisualizer.Initialize();
 
+            gameplayVisualizer.EventPauseUIButtonClicked += OnClickPauseButton;
             gameplayVisualizer.EventResumeUIButtonClicked += OnClickResumeButton;
             gameplayVisualizer.EventMainMenuUIButtonClicked += OnClickMainMenuButton;
         }

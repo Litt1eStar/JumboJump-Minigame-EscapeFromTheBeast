@@ -8,11 +8,13 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 {
     public class GameplayVisualizer
     {
+        public event Action EventPauseUIButtonClicked;
         public event Action EventResumeUIButtonClicked;
         public event Action EventMainMenuUIButtonClicked;
 
         private UIGameplayCanvas uiGameplayCanvas;
         private UIPauseMenuPanel uiPauseMenuPanel;
+        private UIGameplayPanel uiGameplayPanel;
 
         public void Initialize()
         {
@@ -25,13 +27,9 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             uiGameplayCanvas.Initialize();
 
             uiPauseMenuPanel = uiGameplayCanvas?.UIPauseMenuPanel;
-            if(uiPauseMenuPanel == null)
-            {
-                DebugLogHelper.LogError("Failed to initialize GameplayVisualizer: UIPauseMenuPanel not found in UIGameplayCanvas.");
-                return;
-            }
+            uiGameplayPanel = uiGameplayCanvas?.UIGameplayPanel;
 
-            //HidePanel();
+            HidePanel();
             Subscribe();
         }
 
@@ -42,8 +40,15 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void Subscribe()
         {
+            uiGameplayPanel.EventPauseUIButtonClicked += OnPauseButtonClicked;
+
             uiPauseMenuPanel.EventResumeUIButtonClicked += OnResumeButtonClicked;
             uiPauseMenuPanel.EventMainMenuUIButtonClicked += OnMainMenuButtonClicked;
+        }
+
+        public void OnPauseButtonClicked()
+        {
+            EventPauseUIButtonClicked?.Invoke();
         }
 
         public void OnResumeButtonClicked()
