@@ -1,4 +1,5 @@
-﻿using JumboJumps.EFTB.Manager;
+﻿using JumboJump.Assets.Scripts.EFTB.State.Player;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 using System;
@@ -26,7 +27,8 @@ namespace JumboJumps.EFTB.State.Player
             States = new Dictionary<Type, BaseState>
             {
                 { typeof(PlayerIdleState), new PlayerIdleState(this) },
-                { typeof(PlayerWalkingState), new PlayerWalkingState(this) }
+                { typeof(PlayerMovingState), new PlayerMovingState(this) },
+                { typeof(PlayerSwitchLaneState), new PlayerSwitchLaneState(this) }
             };
         }
 
