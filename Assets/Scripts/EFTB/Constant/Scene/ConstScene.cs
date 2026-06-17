@@ -1,4 +1,4 @@
-﻿namespace JumboJump.Assets.Scripts.EFTB.Constant.Scene
+﻿namespace JumboJumps.EFTB.Constant.Scene
 {
     public static class ConstScene
     {

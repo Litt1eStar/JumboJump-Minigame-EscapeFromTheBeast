@@ -1,18 +1,29 @@
 ﻿using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
-using JumboJumps.EFTB.Visualizer;
 using System;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
+    public enum GameStatus
+    {
+        Win,
+        Lose
+    }
     public class GameplayController
     {
+        /// <summary>
+        /// EventReturnBackToMainMenu will triggerd when player want to go back to main menu
+        /// </summary>
         public event Action EventReturnBackToMainMenu;
 
-        private CollectibleManager collectibleManager;
-        private CollectibleVisualizer collectibleVisualizer;
+        /// <summary>
+        /// Parameter : GameStatus - Win or Lose
+        /// </summary>
+        public event Action<GameStatus> EventFinishLevel;
 
-        public void Initialize()
+        private CollectibleManager collectibleManager;
+
+        public void Initialize(GameplayStateController stateController)
         {
             collectibleManager = GameContext.Instance.Get<CollectibleManager>();
             if (collectibleManager == null)
@@ -20,28 +31,32 @@ namespace JumboJumps.EFTB.State.Gameplay
                 DebugLogHelper.LogError("GameplayController: CollectibleManager not found in GameContext.");
                 return;
             }
-
-            collectibleVisualizer = new CollectibleVisualizer();
-            collectibleVisualizer.Initialize();
-
-            collectibleManager.EventTotalCoinValueChanged += collectibleVisualizer.UpdateCoinChanged;
+            
         }
 
         public void Dispose()
         {
-            if (collectibleManager != null)
-            {
-                collectibleManager.EventTotalCoinValueChanged -= collectibleVisualizer.UpdateCoinChanged;
-                collectibleManager = null;
-            }
+            collectibleManager?.Dispose();
+            collectibleManager = null;
+        }
 
-            collectibleVisualizer?.Dispose();
-            collectibleVisualizer = null;
+        #region Event Handler
+        
+        public void OnClickMainMenuButton()
+        {
+            ReturnToMainMenu();
         }
 
         public void ReturnToMainMenu()
         {
             EventReturnBackToMainMenu?.Invoke();
         }
+
+        public void InvokeFinishLevel(GameStatus gameStatus)
+        {
+            EventFinishLevel?.Invoke(gameStatus);
+        }
+
+        #endregion
     }
 }

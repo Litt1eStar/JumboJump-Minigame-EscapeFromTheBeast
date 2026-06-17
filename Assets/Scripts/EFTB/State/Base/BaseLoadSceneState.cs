@@ -1,12 +1,10 @@
-﻿using JumboJump.EFTB.Utilities;
-using JumboJumps.EFTB.State;
-using JumboJumps.EFTB.Utilities;
+﻿using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace JumboJump.Assets.Scripts.EFTB.State.Base
+namespace JumboJumps.EFTB.State.Base
 {
     public abstract class BaseLoadSceneState : BaseState
     {
@@ -16,7 +14,7 @@ namespace JumboJump.Assets.Scripts.EFTB.State.Base
         protected bool IsSceneLoaded;
         protected CoroutineHelper CoroutineHelper;
         private Coroutine loadSceneCoroutine;
-        
+
         public BaseLoadSceneState(BaseStateController stateController) : base(stateController)
         {
         }
@@ -34,7 +32,7 @@ namespace JumboJump.Assets.Scripts.EFTB.State.Base
 
         public override void OnExitState()
         {
-            if(CoroutineHelper != null)
+            if (CoroutineHelper != null)
             {
                 CoroutineHelper.Stop(loadSceneCoroutine);
 

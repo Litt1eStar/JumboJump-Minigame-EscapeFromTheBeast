@@ -1,5 +1,5 @@
-using JumboJump.Assets.Scripts.EFTB.Constant.Scene;
-using JumboJump.Assets.Scripts.EFTB.State.Base;
+using JumboJumps.EFTB.Constant.Scene;
+using JumboJumps.EFTB.State.Base;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
@@ -42,21 +42,17 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager.Initialize();
 
             gameplayController = new GameplayController();
-            gameplayController.Initialize();
-            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
 
             gameplayStateManager = new GameplayStateManager();
             gameplayStateManager.Initialize(gameplayController);
 
-
-            DebugLogHelper.Log("GameplayState: Scene loaded successfully.");
+            gameplayController.Initialize(gameplayStateManager.StateController);
+            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
         }
 
         public override void OnEnterState()
         {
             base.OnEnterState();
-
-
         }
 
         public override void OnExitState()

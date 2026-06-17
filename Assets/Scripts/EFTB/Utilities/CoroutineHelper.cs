@@ -1,8 +1,7 @@
-﻿using JumboJumps.EFTB.Utilities;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-namespace JumboJump.EFTB.Utilities
+namespace JumboJumps.EFTB.Utilities
 {
     public class CoroutineHelper : MonoBehaviour
     {
