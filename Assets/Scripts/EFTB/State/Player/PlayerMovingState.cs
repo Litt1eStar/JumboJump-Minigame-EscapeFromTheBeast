@@ -9,6 +9,7 @@ namespace JumboJumps.EFTB.State.Player
     {
         private PlayerStateController playerStateController;
         private bool isMovingForward;
+
         public PlayerMovingState(BaseStateController stateController) : base(stateController)
         {
             playerStateController = (PlayerStateController)stateController;

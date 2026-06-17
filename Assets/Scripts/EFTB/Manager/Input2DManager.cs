@@ -30,6 +30,7 @@ namespace JumboJumps.EFTB.Manager
         private bool isHoldTriggered;
 
         public bool IsTouchingScreen => isTouchingScreen;
+
         public void Initialize()
         {
             GameContext.Instance.Add(this);
@@ -69,7 +70,7 @@ namespace JumboJumps.EFTB.Manager
                     if (isSwiping) return;
 
                     Vector2 moveDelta = touch.position - startTouchPosition;
-                    if(moveDelta.magnitude > swipeThreshold)
+                    if (moveDelta.magnitude > swipeThreshold)
                     {
                         isSwiping = true;
 
@@ -83,13 +84,13 @@ namespace JumboJumps.EFTB.Manager
                         return;
                     }
 
-                    if(!isHoldTriggered && !isSwiping && (Time.time - touchStartTime) > holdThreshold)
+                    if (!isHoldTriggered && !isSwiping && (Time.time - touchStartTime) > holdThreshold)
                     {
                         isHoldTriggered = true;
                         EventHoldStarted?.Invoke();
                     }
                     break;
-                
+
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     HandleTouchEnded(touch);
@@ -102,7 +103,7 @@ namespace JumboJumps.EFTB.Manager
             if (!isTouchingScreen) return;
             isTouchingScreen = false;
 
-            if (isHoldTriggered) 
+            if (isHoldTriggered)
             {
                 EventHoldEnded?.Invoke();
             }
