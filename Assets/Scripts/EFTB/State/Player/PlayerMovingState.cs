@@ -1,7 +1,5 @@
-﻿using JumboJump.Assets.Scripts.EFTB.State.Player;
-using JumboJump.EFTB.Model;
-using JumboJumps.EFTB.Utilities;
-using UnityEngine;
+﻿using JumboJumps.EFTB.Utilities;
+
 
 namespace JumboJumps.EFTB.State.Player
 {

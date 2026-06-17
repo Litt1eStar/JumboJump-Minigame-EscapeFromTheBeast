@@ -1,7 +1,6 @@
-﻿using JumboJump.Assets.Scripts.EFTB.State.Player;
+﻿using JumboJump.EFTB.State.Player;
 using JumboJump.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
-using UnityEditor;
 
 namespace JumboJumps.EFTB.State.Player
 {

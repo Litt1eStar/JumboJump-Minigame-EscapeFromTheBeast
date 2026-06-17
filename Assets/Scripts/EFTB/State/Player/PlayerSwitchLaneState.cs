@@ -1,11 +1,10 @@
-﻿using JumboJump.EFTB.Model;
-using JumboJumps.EFTB.State;
+﻿using JumboJumps.EFTB.State;
 using JumboJumps.EFTB.State.Player;
 using JumboJumps.EFTB.Utilities;
 using System.Collections;
 using UnityEngine;
 
-namespace JumboJump.Assets.Scripts.EFTB.State.Player
+namespace JumboJump.EFTB.State.Player
 {
     public class PlayerSwitchLaneState : BaseState
     {
