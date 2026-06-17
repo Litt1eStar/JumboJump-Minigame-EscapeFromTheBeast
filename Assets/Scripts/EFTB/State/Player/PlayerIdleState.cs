@@ -12,12 +12,14 @@
 
         public override void UpdateLogic(float deltaTime)
         {
+            /*
             float xInput = playerStateController.Input2DManager.XInput;
             if (xInput > 0 || xInput < 0)
             {
                 StateController.ChangeState(typeof(PlayerWalkingState));
             }
             playerStateController.Visualizer.Idle();
+            */
         }
 
     }
