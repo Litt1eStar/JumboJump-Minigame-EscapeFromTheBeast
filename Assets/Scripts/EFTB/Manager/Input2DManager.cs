@@ -49,6 +49,7 @@ namespace JumboJumps.EFTB.Manager
                     touchStartTime = Time.time;
                     isHolding = false;
 
+                    EventTap?.Invoke();
                     break;
 
                 case TouchPhase.Stationary:
