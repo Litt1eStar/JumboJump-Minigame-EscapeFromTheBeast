@@ -14,7 +14,6 @@ namespace JumboJumps.EFTB.State.Player
             playerStateController = (PlayerStateController)stateController;
 
             StateTransitionMap.Add(typeof(PlayerIdleState), null);
-            StateTransitionMap.Add(typeof(PlayerSwitchLaneState), null);
         }
 
         public override void OnEnterState()
@@ -23,12 +22,23 @@ namespace JumboJumps.EFTB.State.Player
             DebugLogHelper.Log("Enter PlayerMovingState");
 
             isMovingForward = true;
+            Subscribe();
         }
 
         public override void OnExitState()
         {
-
+            Unsubscribe();
             base.OnExitState();
+        }
+
+        public void Subscribe()
+        {
+            playerStateController.Input2DManager.EventHoldEnded += OnStopMoving;
+        }
+
+        public void Unsubscribe()
+        {
+            playerStateController.Input2DManager.EventHoldEnded -= OnStopMoving;
         }
 
         public override void UpdateLogic(float deltaTime)
@@ -36,6 +46,12 @@ namespace JumboJumps.EFTB.State.Player
             if (isMovingForward == false) return;
 
             DebugLogHelper.Log("Moving Forward");
+        }
+
+        public void OnStopMoving()
+        {
+            isMovingForward = false;
+            playerStateController.ChangeState(typeof(PlayerIdleState));
         }
     }
 }

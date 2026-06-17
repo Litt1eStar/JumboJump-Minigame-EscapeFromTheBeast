@@ -1,5 +1,7 @@
-﻿using JumboJumps.EFTB.State;
+﻿using JumboJump.EFTB.Model;
+using JumboJumps.EFTB.State;
 using JumboJumps.EFTB.State.Player;
+using JumboJumps.EFTB.Utilities;
 
 namespace JumboJump.Assets.Scripts.EFTB.State.Player
 {
@@ -17,6 +19,8 @@ namespace JumboJump.Assets.Scripts.EFTB.State.Player
         public override void OnEnterState()
         {
             base.OnEnterState();
+
+            DebugLogHelper.Log("Enter PlayerSwitchLaneState");
         }
 
         public override void OnExitState()

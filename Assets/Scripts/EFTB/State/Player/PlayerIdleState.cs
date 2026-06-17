@@ -1,5 +1,7 @@
 ﻿using JumboJump.Assets.Scripts.EFTB.State.Player;
+using JumboJump.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
+using UnityEditor;
 
 namespace JumboJumps.EFTB.State.Player
 {
@@ -19,12 +21,37 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
+            DebugLogHelper.Log("Enter PlayerIdleState");
+            Subscribe();
         }
 
         public override void OnExitState()
         {
+            Unsubscribe();
+            
             base.OnExitState();
+        }
 
+        public void Subscribe()
+        {
+            playerStateController.Input2DManager.EventHoldStarted += OnPlayerStartMovingForward;
+            playerStateController.Input2DManager.EventSwipe += OnPlayerSwitchingLane;
+        }
+
+        public void Unsubscribe() 
+        {
+            playerStateController.Input2DManager.EventHoldStarted -= OnPlayerStartMovingForward;
+            playerStateController.Input2DManager.EventSwipe -= OnPlayerSwitchingLane;
+        }
+
+        public void OnPlayerStartMovingForward()
+        {
+            playerStateController.ChangeState(typeof(PlayerMovingState));
+        }
+
+        public void OnPlayerSwitchingLane(SwipeDirectionEnum swipeDirection)
+        {
+            playerStateController.ChangeState(typeof(PlayerSwitchLaneState));
         }
     }
 }
