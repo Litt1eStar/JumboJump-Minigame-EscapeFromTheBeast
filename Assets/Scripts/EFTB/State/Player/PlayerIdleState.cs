@@ -33,22 +33,22 @@ namespace JumboJumps.EFTB.State.Player
 
         public void Subscribe()
         {
-            playerStateController.Input2DManager.EventHoldStarted += OnPlayerStartMovingForward;
-            playerStateController.Input2DManager.EventSwipe += OnPlayerSwitchingLane;
+            playerStateController.Input2DManager.EventHoldStarted += OnHoldStarted;
+            playerStateController.Input2DManager.EventSwipe += OnSwipe;
         }
 
         public void Unsubscribe() 
         {
-            playerStateController.Input2DManager.EventHoldStarted -= OnPlayerStartMovingForward;
-            playerStateController.Input2DManager.EventSwipe -= OnPlayerSwitchingLane;
+            playerStateController.Input2DManager.EventHoldStarted -= OnHoldStarted;
+            playerStateController.Input2DManager.EventSwipe -= OnSwipe;
         }
 
-        public void OnPlayerStartMovingForward()
+        public void OnHoldStarted()
         {
             playerStateController.ChangeState(typeof(PlayerMovingState));
         }
 
-        public void OnPlayerSwitchingLane(SwipeDirectionEnum swipeDirection)
+        public void OnSwipe(SwipeDirectionEnum swipeDirection)
         {
             playerStateController.ChangeState(typeof(PlayerSwitchLaneState));
         }
