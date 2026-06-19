@@ -1,26 +1,24 @@
-﻿using JumboJumps.EFTB.Utilities;
-
+using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerMovingState : BaseState
     {
-        private PlayerStateController playerStateController;
+        private PlayerStateController playerStateController => (PlayerStateController)StateController;
+
         private bool isMovingForward;
 
         public PlayerMovingState(BaseStateController stateController) : base(stateController)
         {
-            playerStateController = (PlayerStateController)stateController;
-
             StateTransitionMap.Add(typeof(PlayerIdleState), null);
         }
 
         public override void OnEnterState()
         {
             base.OnEnterState();
-            DebugLogHelper.Log("Enter PlayerMovingState");
 
             isMovingForward = true;
+
             Subscribe();
         }
 
@@ -32,25 +30,25 @@ namespace JumboJumps.EFTB.State.Player
 
         public void Subscribe()
         {
-            playerStateController.Input2DManager.EventHoldEnded += OnStopMoving;
+            playerStateController.Input2DManager.EventHoldEnded += OnHoldEnded;
         }
 
         public void Unsubscribe()
         {
-            playerStateController.Input2DManager.EventHoldEnded -= OnStopMoving;
+            playerStateController.Input2DManager.EventHoldEnded -= OnHoldEnded;
         }
 
         public override void UpdateLogic(float deltaTime)
         {
-            if (isMovingForward == false) return;
+            if (!isMovingForward) return;
 
             DebugLogHelper.Log("Moving Forward");
         }
 
-        public void OnStopMoving()
+        public void OnHoldEnded()
         {
             isMovingForward = false;
-            playerStateController.ChangeState(typeof(PlayerIdleState));
+            StateController.ChangeState(typeof(PlayerIdleState));
         }
     }
 }

@@ -1,17 +1,14 @@
-﻿using JumboJump.EFTB.State.Player;
+using JumboJump.EFTB.State.Player;
 using JumboJump.EFTB.Model;
-using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerIdleState : BaseState
     {
-        private PlayerStateController playerStateController;
+        private PlayerStateController playerStateController => (PlayerStateController)StateController;
 
         public PlayerIdleState(BaseStateController stateController) : base(stateController)
         {
-            playerStateController = (PlayerStateController)stateController;
-
             StateTransitionMap.Add(typeof(PlayerMovingState), null);            
             StateTransitionMap.Add(typeof(PlayerSwitchLaneState), null);
         }
@@ -20,7 +17,6 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
-            DebugLogHelper.Log("Enter PlayerIdleState");
             Subscribe();
         }
 
@@ -45,12 +41,12 @@ namespace JumboJumps.EFTB.State.Player
 
         public void OnHoldStarted()
         {
-            playerStateController.ChangeState(typeof(PlayerMovingState));
+            StateController.ChangeState(typeof(PlayerMovingState));
         }
 
         public void OnSwipe(SwipeDirectionEnum swipeDirection)
         {
-            playerStateController.ChangeState(typeof(PlayerSwitchLaneState));
+            StateController.ChangeState(typeof(PlayerSwitchLaneState));
         }
     }
 }

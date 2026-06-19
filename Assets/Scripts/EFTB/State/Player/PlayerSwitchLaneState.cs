@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.State;
+using JumboJumps.EFTB.State;
 using JumboJumps.EFTB.State.Player;
 using JumboJumps.EFTB.Utilities;
 using System.Collections;
@@ -8,12 +8,8 @@ namespace JumboJump.EFTB.State.Player
 {
     public class PlayerSwitchLaneState : BaseState
     {
-        private PlayerStateController playerStateController;
-
         public PlayerSwitchLaneState(BaseStateController stateController) : base(stateController)
         {
-            playerStateController = (PlayerStateController)stateController;
-
             StateTransitionMap.Add(typeof(PlayerIdleState), null);
         }
 
@@ -42,7 +38,7 @@ namespace JumboJump.EFTB.State.Player
         public void OnFinishSwitchingLane()
         {
             // Call this method when Finish Switch Lane routine
-            playerStateController.ChangeState(typeof(PlayerIdleState));
+            StateController.ChangeState(typeof(PlayerIdleState));
         }
     }
 }
