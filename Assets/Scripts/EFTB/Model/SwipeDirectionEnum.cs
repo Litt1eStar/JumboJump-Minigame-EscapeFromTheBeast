@@ -2,8 +2,8 @@
 {
     public enum SwipeDirectionEnum
     {
-        Left = 0,
-        Right = 1,
-        None = 2
+        None = 0,
+        Left = 1,
+        Right = 2,
     }
 }
