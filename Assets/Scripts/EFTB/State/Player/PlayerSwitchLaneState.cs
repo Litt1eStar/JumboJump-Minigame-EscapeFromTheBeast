@@ -8,6 +8,9 @@ namespace JumboJump.EFTB.State.Player
 {
     public class PlayerSwitchLaneState : BaseState
     {
+        private CoroutineHelper coroutineHelper;
+        private Coroutine switchLaneCoroutine;
+
         public PlayerSwitchLaneState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(PlayerIdleState), null);
@@ -20,18 +23,29 @@ namespace JumboJump.EFTB.State.Player
             DebugLogHelper.Log("Enter PlayerSwitchLaneState");
 
             // Perform Switch Lane Logic then Switch back to Player Idle State
-            GameContext.Instance.Get<CoroutineHelper>().Play(SimulatedSwitchLane());
+            coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
+            switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SimulatedSwitchLane());
         }
 
         private IEnumerator SimulatedSwitchLane()
         {
-            yield return new WaitForSeconds(3);
+            #if UNITY_EDITOR
+                yield return new WaitForSeconds(3); //This is for testing purpose. I will replace it with real logic later
+            #endif
 
             OnFinishSwitchingLane();
         }
 
+
         public override void OnExitState()
         {
+            if (coroutineHelper != null) 
+            {
+                coroutineHelper.Stop(switchLaneCoroutine);
+                coroutineHelper = null;
+                switchLaneCoroutine = null;
+            }
+
             base.OnExitState();
         }
 

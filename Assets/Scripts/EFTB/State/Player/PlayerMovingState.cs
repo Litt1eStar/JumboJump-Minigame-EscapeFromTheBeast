@@ -17,6 +17,8 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
+            DebugLogHelper.Log("Enter PlayerMovingState");
+
             isMovingForward = true;
 
             Subscribe();

@@ -33,7 +33,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnSceneLoadSucceeded();
 
-            input2DManager = GameContext.Instance.Get<Input2DManager>();
+            input2DManager = SceneObjectContext.Instance.Get<Input2DManager>();
             input2DManager.Initialize();
 
             playerManager = new PlayerManager();
@@ -94,10 +94,13 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.UpdateLogic(deltaTime);
 
-            input2DManager.UpdateLogic(deltaTime);
+            if (!IsSceneLoaded) return;
+
             gameplayStateManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
+
+            input2DManager.UpdateLogic(deltaTime);
         }
 
         public void ReturnBackToMainMenu()

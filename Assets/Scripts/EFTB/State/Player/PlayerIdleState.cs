@@ -1,5 +1,6 @@
 using JumboJump.EFTB.State.Player;
 using JumboJump.EFTB.Model;
+using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Player
 {
@@ -16,6 +17,8 @@ namespace JumboJumps.EFTB.State.Player
         public override void OnEnterState()
         {
             base.OnEnterState();
+
+            DebugLogHelper.Log("Enter PlayerIdleState");
 
             Subscribe();
         }

@@ -7,9 +7,6 @@ namespace JumboJumps.EFTB
     public class GameInitializer : MonoBehaviour
     {
         [SerializeField]
-        private Input2DManager input2DManager;
-
-        [SerializeField]
         private CoroutineHelper coroutineHelper;
 
         private GameManager gameManager;
