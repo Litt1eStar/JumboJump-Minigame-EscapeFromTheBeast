@@ -20,6 +20,8 @@ namespace JumboJumps.EFTB.State.Gameplay
         private GameplayController gameplayController;
         private GameStateController stateController;
 
+        private Input2DManager input2DManager;
+
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
             this.stateController = (GameStateController)stateController;
@@ -30,6 +32,9 @@ namespace JumboJumps.EFTB.State.Gameplay
         protected override void OnSceneLoadSucceeded()
         {
             base.OnSceneLoadSucceeded();
+
+            input2DManager = SceneObjectContext.Instance.Get<Input2DManager>();
+            input2DManager.Initialize();
 
             playerManager = new PlayerManager();
             playerManager.Initialize();
@@ -71,6 +76,12 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager?.Dispose();
             collectibleManager = null;
 
+            if(input2DManager != null)
+            {
+                input2DManager.Dispose();
+                input2DManager = null;
+            }
+
             if (gameplayController != null)
             {
                 gameplayController.EventReturnBackToMainMenu -= ReturnBackToMainMenu;
@@ -83,9 +94,13 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.UpdateLogic(deltaTime);
 
+            if (!IsSceneLoaded) return;
+
             gameplayStateManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
+
+            input2DManager.UpdateLogic(deltaTime);
         }
 
         public void ReturnBackToMainMenu()

@@ -1,4 +1,5 @@
-﻿using JumboJumps.EFTB.Manager;
+﻿using JumboJump.EFTB.State.Player;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 using System;
@@ -17,16 +18,17 @@ namespace JumboJumps.EFTB.State.Player
             Visualizer = new PlayerVisualizer();
             Visualizer.Initialize();
 
-            Input2DManager = GameContext.Instance.Get<Input2DManager>();
+            Input2DManager = SceneObjectContext.Instance.Get<Input2DManager>(); 
             if(Input2DManager == null)
             {
-                DebugLogHelper.LogError($"[{GetType().Name}] {nameof(PlayerStateController)}| Failed to get {typeof(Input2DManager).AssemblyQualifiedName} from GameContext");
+                DebugLogHelper.LogError($"[{GetType().Name}] {nameof(PlayerStateController)}| Failed to get {typeof(Input2DManager).AssemblyQualifiedName} from SceneObjectContext");
             }
 
             States = new Dictionary<Type, BaseState>
             {
                 { typeof(PlayerIdleState), new PlayerIdleState(this) },
-                { typeof(PlayerWalkingState), new PlayerWalkingState(this) }
+                { typeof(PlayerMovingState), new PlayerMovingState(this) },
+                { typeof(PlayerSwitchLaneState), new PlayerSwitchLaneState(this) }
             };
         }
 
