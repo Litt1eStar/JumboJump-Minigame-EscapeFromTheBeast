@@ -40,7 +40,7 @@ namespace JumboJump.Assets.Scripts.EFTB.Manager
             string key = prefab.name;
             PoolableObject poolableObject = null;
 
-            if(pools.TryGetValue(key, out var queue) && queue.Count < 0)
+            if(pools.TryGetValue(key, out var queue) && queue.Count > 0)
             {
                 poolableObject = queue.Dequeue();
                 poolableObject.transform.position = position;

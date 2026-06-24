@@ -5,6 +5,9 @@ using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
+using JumboJump.EFTB.Manager;
+using JumboJump.EFTB.GI;
+using JumboJump.Assets.Scripts.EFTB.Manager;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
@@ -13,6 +16,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         protected override string SceneName => ConstScene.GAMEPLAY;
 
         private GameplayStateManager gameplayStateManager;
+        private LevelGeneratorManager levelGeneratorManager;
         private PlayerManager playerManager;
         private CatManager catManager;
         private CollectibleManager collectibleManager;
@@ -21,6 +25,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private GameStateController stateController;
 
         private Input2DManager input2DManager;
+        private ObjectPoolManager poolManager;
 
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
@@ -53,6 +58,13 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayController.Initialize(gameplayStateManager.StateController);
             gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
+
+            poolManager = new ObjectPoolManager();
+            poolManager.Initialize();
+
+            levelGeneratorManager = new LevelGeneratorManager();
+            GILevelGenerator giLevelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
+            levelGeneratorManager.Initialize(giLevelGenerator.configSo, playerManager.PlayerTransform);
         }
 
         public override void OnEnterState()
@@ -69,6 +81,12 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             playerManager?.Dispose();
             playerManager = null;
+
+            poolManager?.Dispose();
+            poolManager = null;
+
+            levelGeneratorManager?.Dispose();
+            levelGeneratorManager = null;
 
             catManager?.Dispose();
             catManager = null;
@@ -98,6 +116,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayStateManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
+            levelGeneratorManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
 
             input2DManager.UpdateLogic(deltaTime);

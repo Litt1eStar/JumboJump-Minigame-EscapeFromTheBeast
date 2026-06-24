@@ -55,7 +55,7 @@ namespace JumboJump.EFTB.Visualizer.LevelGenerator
             return segment;
         }
 
-        public void RecycleSegment()
+        public void RecycleOldestSegment()
         {
             if (activeSegments.Count <= 0 || poolManager == null) return;
 

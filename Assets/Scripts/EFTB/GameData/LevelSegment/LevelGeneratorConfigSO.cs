@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace JumboJump.EFTB.GameData.LevelSegment
 {
+    [CreateAssetMenu(fileName = "LevelGeneratorSO", menuName = "EFTB/LevelGeneratorSO")]
     public class LevelGeneratorConfigSO : ScriptableObject
     {
         [Header("Templates")]
@@ -12,6 +13,7 @@ namespace JumboJump.EFTB.GameData.LevelSegment
         [Header("Lane Setting")]
         public float[] laneXPositions = new float[5] { -2f, -1f, 0f, 1f, 2f };
         public int maxSegmentAmount = 3;
+        public float segmentHeight = 20f;
 
         [Header("Progression Setting")] //Adjust and implement it later
         public float mediumDifficultyDistance = 500f;
