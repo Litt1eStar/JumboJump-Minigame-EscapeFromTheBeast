@@ -107,3 +107,4 @@ InitTestScene*.unity*
 
 # Claude mentor artifacts (design specs, plans, notes) — local only
 /AGENT/
+/.agents/
