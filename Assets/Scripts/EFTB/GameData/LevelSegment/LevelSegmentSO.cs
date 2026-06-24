@@ -5,7 +5,7 @@ using System;
 namespace JumboJump.EFTB.GameData.LevelSegment
 {
     [CreateAssetMenu(fileName = "LevelSegmentData", menuName = "EFTB/LevelSegmentData")]
-    public class LevelSegmentData : ScriptableObject
+    public class LevelSegmentSO : ScriptableObject
     {
         [Header("Segment Settings")]
         public GameObject segmentPrefab;
