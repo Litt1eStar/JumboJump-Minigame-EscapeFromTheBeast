@@ -1,5 +1,5 @@
-using JumboJump.EFTB.State.Player;
-using JumboJump.EFTB.Model;
+using JumboJumps.EFTB.State.Player;
+using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Player
@@ -47,6 +47,7 @@ namespace JumboJumps.EFTB.State.Player
 
         public void OnSwipe(SwipeDirectionEnum swipeDirection)
         {
+            playerStateController.LastSwipeDirection = swipeDirection;
             StateController.ChangeState(typeof(PlayerSwitchLaneState));
         }
     }

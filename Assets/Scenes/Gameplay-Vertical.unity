@@ -1643,7 +1643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5fe3ad66f5ab194c9e704143261004c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Manager.Input2DManager
-  swipeThreshold: 50
+  swipeThreshold: 200
   holdThreshold: 0.1
 --- !u!4 &1184252901
 Transform:

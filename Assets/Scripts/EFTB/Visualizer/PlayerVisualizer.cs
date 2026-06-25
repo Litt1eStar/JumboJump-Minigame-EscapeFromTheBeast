@@ -1,5 +1,6 @@
 ﻿using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Utilities;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.Visualizer
 {
@@ -7,6 +8,7 @@ namespace JumboJumps.EFTB.Visualizer
     {
         private GIPlayer giPlayer;
         public GICamera giCamera { get; private set;}
+        public Vector3 PlayerPosition => giPlayer != null ? giPlayer.PlayerPosition : Vector3.zero;
 
         public void Initialize()
         {
@@ -37,6 +39,11 @@ namespace JumboJumps.EFTB.Visualizer
         public void MoveForward(float deltaTime)
         {
             giPlayer.MoveForward(deltaTime);
+        }
+
+        public void SetXPosition(float x) 
+        {
+            giPlayer.SetXPosition(x);
         }
     }
 }
