@@ -26,10 +26,9 @@ namespace JumboJumps.EFTB.GI
 
         }
 
-        public void Move(float input)
+        public void MoveForward(float deltaTime)
         {
-            FlipSpriteBasedFromInputDirection(input);
-            playerTransform.position += new Vector3(input * playerMovementSpeed * Time.deltaTime, 0, 0);
+            playerTransform.position += new Vector3(0, playerMovementSpeed * deltaTime, 0);
         }
 
         private void FlipSpriteBasedFromInputDirection(float input)

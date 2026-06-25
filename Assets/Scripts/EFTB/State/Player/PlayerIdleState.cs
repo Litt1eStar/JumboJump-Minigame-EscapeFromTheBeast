@@ -18,8 +18,6 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
-            DebugLogHelper.Log("Enter PlayerIdleState");
-
             Subscribe();
         }
 

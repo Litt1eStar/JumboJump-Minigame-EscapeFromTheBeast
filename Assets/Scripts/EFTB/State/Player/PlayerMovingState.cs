@@ -17,8 +17,6 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
-            DebugLogHelper.Log("Enter PlayerMovingState");
-
             isMovingForward = true;
 
             Subscribe();
@@ -44,7 +42,7 @@ namespace JumboJumps.EFTB.State.Player
         {
             if (!isMovingForward) return;
 
-            DebugLogHelper.Log("Moving Forward");
+            playerStateController.Visualizer.MoveForward(deltaTime);
         }
 
         public void OnHoldEnded()

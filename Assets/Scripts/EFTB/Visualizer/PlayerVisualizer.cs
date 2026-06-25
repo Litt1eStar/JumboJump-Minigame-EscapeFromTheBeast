@@ -26,9 +26,9 @@ namespace JumboJumps.EFTB.Visualizer
         {
             giPlayer = null;
         }
-        public void Move(float input)
+        public void MoveForward(float deltaTime)
         {
-            giPlayer.Move(input);
+            giPlayer.MoveForward(deltaTime);
         }
         public void Idle()
         {

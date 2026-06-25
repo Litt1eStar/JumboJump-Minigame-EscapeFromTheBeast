@@ -19,10 +19,7 @@ namespace JumboJump.EFTB.State.Player
         public override void OnEnterState()
         {
             base.OnEnterState();
-            
-            DebugLogHelper.Log("Enter PlayerSwitchLaneState");
 
-            // Perform Switch Lane Logic then Switch back to Player Idle State
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
             switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SimulatedSwitchLane());
         }
