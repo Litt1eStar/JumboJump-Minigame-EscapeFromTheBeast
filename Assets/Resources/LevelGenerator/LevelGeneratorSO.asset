@@ -24,7 +24,7 @@ MonoBehaviour:
   - 0
   - 1
   - 2
-  maxSegmentAmount: 3
+  maxSegmentAmount: 5
   segmentHeight: 20
   segmentRecycleTriggerOffset: 15
   mediumDifficultyDistance: 500
