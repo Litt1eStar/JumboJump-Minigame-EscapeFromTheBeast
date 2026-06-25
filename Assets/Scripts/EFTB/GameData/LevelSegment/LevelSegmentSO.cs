@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using JumboJumps.EFTB.Model;
 
 namespace JumboJumps.EFTB.GameData.LevelSegment
 {
@@ -14,6 +15,9 @@ namespace JumboJumps.EFTB.GameData.LevelSegment
         [Header("Object Spawn Layout")]
         public List<LaneObjectSpawnData> prePlacedObjectsData;
         public List<LaneEventSpawnData> spawnEventData;
+
+        [Header("Difficulty Settings")]
+        public SegmentDifficultyEnum difficulty = SegmentDifficultyEnum.Easy;
     }
 
     [Serializable]

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumboJump.EFTB.GameData.LevelSegment.LevelGeneratorConfigSO
   segmentTemplates:
   - {fileID: 11400000, guid: 8a3834708ea68b246bbd541984ff51c1, type: 2}
+  - {fileID: 11400000, guid: 3c5215765e63fe04e9f50e4e8fce316e, type: 2}
+  - {fileID: 11400000, guid: 0d4e2da118ea91240b49aab7c95af8b5, type: 2}
   laneXPositions:
   - -2
   - -1

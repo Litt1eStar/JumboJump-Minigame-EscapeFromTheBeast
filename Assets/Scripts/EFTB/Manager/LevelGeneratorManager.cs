@@ -85,7 +85,7 @@ namespace JumboJumps.EFTB.Manager
 
         private GameObject SpawnSegmentAt(float yPosition)
         {
-            int randomIndex = UnityEngine.Random.Range(0, configSo.segmentTemplates.Count);
+            int randomIndex = Random.Range(0, configSo.segmentTemplates.Count);
             
             LevelSegmentSO selectedTemplate = configSo.segmentTemplates[randomIndex];
             GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate.segmentPrefab, yPosition);
