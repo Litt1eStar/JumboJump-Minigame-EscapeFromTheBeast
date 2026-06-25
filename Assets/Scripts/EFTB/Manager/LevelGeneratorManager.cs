@@ -1,5 +1,4 @@
 using JumboJumps.EFTB.GameData.LevelSegment;
-using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.LevelGenerator;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ namespace JumboJumps.EFTB.Manager
 
             segmentSize = configSo.segmentHeight;
 
-            nextTriggerPosition = segmentSize;
+            nextTriggerPosition = segmentSize + configSo.segmentRecycleTriggerOffset;
             nextYSpawnPosition = segmentSize * configSo.maxSegmentAmount;
 
             for (int i = 0; i < configSo.maxSegmentAmount; i++)
@@ -51,11 +50,6 @@ namespace JumboJumps.EFTB.Manager
             GameContext.Instance.Remove(this);
         }
 
-
-        /// <summary>
-        /// UpdateLogic : use yTestPosition only when player movement is not implemented for testing purpose
-        /// Working on PlayerMovement in next PR
-        /// </summary>
         public void UpdateLogic(float deltaTime)
         {
             if(playerTransform.position.y >= nextTriggerPosition)
@@ -72,7 +66,7 @@ namespace JumboJumps.EFTB.Manager
             GameObject newSegment = SpawnSegmentAt(nextYSpawnPosition);
             segmentQueue.Enqueue(newSegment);
 
-            nextTriggerPosition += segmentSize;
+            nextTriggerPosition += segmentSize + configSo.segmentRecycleTriggerOffset;
             nextYSpawnPosition += segmentSize;
         }
 

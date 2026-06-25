@@ -22,7 +22,7 @@ namespace JumboJumps.EFTB.Visualizer
 
         public void OnInitialize()
         {
-            giPlayer.SetPlayerOnMiddleLane();
+            giPlayer.SetInitialStartPosition();
         }
 
         public void Dispose()
