@@ -50,7 +50,6 @@ namespace JumboJumps.EFTB.State.Player
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-            Visualizer.giCamera.UpdateLogic(deltaTime);
         }
     }
 }

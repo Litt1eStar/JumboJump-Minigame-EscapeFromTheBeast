@@ -7,7 +7,6 @@ namespace JumboJumps.EFTB.Visualizer
     public class PlayerVisualizer
     {
         private GIPlayer giPlayer;
-        public GICamera giCamera { get; private set;}
         public Vector3 PlayerPosition => giPlayer != null ? giPlayer.PlayerPosition : Vector3.zero;
 
         public void Initialize()
@@ -16,12 +15,6 @@ namespace JumboJumps.EFTB.Visualizer
             if(giPlayer == null)
             {
                 DebugLogHelper.LogError("GIPlayer not found in SceneObjectContext. PlayerVisualizer initialization failed.");
-            }
-
-            giCamera = SceneObjectContext.Instance.Get<GICamera>(); 
-            if(giCamera == null)
-            {
-                DebugLogHelper.LogError("GICamera not found in SceneObjectContext. PlayerVisualizer initialization failed.");
             }
 
             OnInitialize();
