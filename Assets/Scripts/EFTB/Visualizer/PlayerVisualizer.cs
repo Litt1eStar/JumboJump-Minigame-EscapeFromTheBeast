@@ -21,7 +21,15 @@ namespace JumboJumps.EFTB.Visualizer
             {
                 DebugLogHelper.LogError("GICamera not found in SceneObjectContext. PlayerVisualizer initialization failed.");
             }
+
+            OnInitialize();
         }
+
+        public void OnInitialize()
+        {
+            giPlayer.SetPlayerOnMiddleLane();
+        }
+
         public void Dispose()
         {
             giPlayer = null;
@@ -30,9 +38,5 @@ namespace JumboJumps.EFTB.Visualizer
         {
             giPlayer.MoveForward(deltaTime);
         }
-        public void Idle()
-        {
-            //Idle Logic
-        }   
     }
 }

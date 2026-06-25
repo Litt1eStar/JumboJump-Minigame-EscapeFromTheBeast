@@ -26,6 +26,11 @@ namespace JumboJumps.EFTB.GI
 
         }
 
+        public void SetPlayerOnMiddleLane()
+        {
+            transform.position = new Vector3(0, 0, 0);
+        }
+
         public void MoveForward(float deltaTime)
         {
             playerTransform.position += new Vector3(0, playerMovementSpeed * deltaTime, 0);
