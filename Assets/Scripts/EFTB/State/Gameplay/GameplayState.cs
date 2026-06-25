@@ -45,7 +45,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
             catManager.Intialize(sceneCats, playerManager.PlayerTransform);
 
-            collectibleManager = new CollectibleManager();
+            collectibleManager = new CollectibleManager();  
             collectibleManager.Initialize();
 
             gameplayController = new GameplayController();
@@ -79,11 +79,11 @@ namespace JumboJumps.EFTB.State.Gameplay
             playerManager?.Dispose();
             playerManager = null;
 
-            poolManager?.Dispose();
-            poolManager = null;
-
             levelGeneratorManager?.Dispose();
             levelGeneratorManager = null;
+
+            poolManager?.Dispose();
+            poolManager = null;
 
             catManager?.Dispose();
             catManager = null;

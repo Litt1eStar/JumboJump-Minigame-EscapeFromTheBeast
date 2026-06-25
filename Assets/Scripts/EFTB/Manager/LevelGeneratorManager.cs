@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.GameData.LevelSegment;
+using JumboJumps.EFTB.GameData.LevelSegment;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.LevelGenerator;

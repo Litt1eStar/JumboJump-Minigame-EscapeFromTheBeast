@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
@@ -27,13 +27,11 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
                 return;
             }
- 
         }
 
         public void Dispose() 
         {
             gILevelGenerator = null;
-            poolManager = null;
             activeSegments.Clear();
         }
 
