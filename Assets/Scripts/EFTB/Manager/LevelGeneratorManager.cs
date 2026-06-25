@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.GameData.LevelSegment;
+using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.LevelGenerator;
 using System.Collections.Generic;
@@ -66,17 +67,51 @@ namespace JumboJumps.EFTB.Manager
             GameObject newSegment = SpawnSegmentAt(nextYSpawnPosition);
             segmentQueue.Enqueue(newSegment);
 
-            nextTriggerPosition += segmentSize + configSo.segmentRecycleTriggerOffset;
+            nextTriggerPosition += segmentSize;
             nextYSpawnPosition += segmentSize;
+        }
+
+        private SegmentDifficultyEnum GetCurrentDifficulty(float playerY)
+        {
+            if (playerY < configSo.mediumDifficultyDistance)
+            {
+                return SegmentDifficultyEnum.Easy;
+            }
+            else if (playerY < configSo.hardDifficultyDistance)
+            {
+                return SegmentDifficultyEnum.Normal;
+            }
+            else
+            {
+                return SegmentDifficultyEnum.Hard;
+            }
         }
 
         private GameObject SpawnSegmentAt(float yPosition)
         {
-            int randomIndex = Random.Range(0, configSo.segmentTemplates.Count);
-            
-            LevelSegmentSO selectedTemplate = configSo.segmentTemplates[randomIndex];
-            GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate.segmentPrefab, yPosition);
+            if (configSo.segmentTemplates == null || configSo.segmentTemplates.Count == 0)
+            {
+                return null;
+            }
 
+            float playerY = playerTransform != null ? playerTransform.position.y : 0f;
+            SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty(playerY);
+
+            List<LevelSegmentSO> matchedTemplates = configSo.segmentTemplates.FindAll(t => t.difficulty == currentDifficulty);
+            LevelSegmentSO selectedTemplate = null;
+
+            if (matchedTemplates.Count > 0)
+            {
+                int randomIndex = Random.Range(0, matchedTemplates.Count);
+                selectedTemplate = matchedTemplates[randomIndex];
+            }
+            else
+            {
+                int randomIndex = Random.Range(0, configSo.segmentTemplates.Count);
+                selectedTemplate = configSo.segmentTemplates[randomIndex];
+            }
+
+            GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);
             return segmentInstance;
         }
     }

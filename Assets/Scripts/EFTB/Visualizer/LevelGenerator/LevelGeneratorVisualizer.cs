@@ -1,6 +1,7 @@
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.GameData.LevelSegment;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,20 +36,46 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             activeSegments.Clear();
         }
 
-        public GameObject SpawnSegment(GameObject segmentPrefab, float yPosition)
+        public GameObject SpawnSegment(LevelSegmentSO template, float yPosition)
         {
             /// <summary>
-            /// segmentPrefab : prefab to Spawn
-            /// yPosition : y position to spawn an object, note -> we set x, z position to 0 for segment spawn
+            /// template : LevelSegmentSO template configuration containing prefab and layout data
+            /// yPosition : y position to spawn the segment
             /// </summary>
 
-            if(gILevelGenerator == null || poolManager == null)
+            if(gILevelGenerator == null || poolManager == null || template == null || template.segmentPrefab == null)
             {
                 return null;
             }
 
             Vector3 position = new Vector3(0, yPosition, 0);
-            GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity, gILevelGenerator.transform);
+            GameObject segment = poolManager.Spawn(template.segmentPrefab, position, Quaternion.identity, gILevelGenerator.transform);
+            
+            GISegment giSegment = segment.GetComponent<GISegment>();
+            if (giSegment == null)
+            {
+                giSegment = segment.AddComponent<GISegment>();
+            }
+
+            // Spawn pre-placed objects (collectibles, hidableObjects)
+            if (template.prePlacedObjectsData != null)
+            {
+                float[] lanePositions = gILevelGenerator.configSo.laneXPositions;
+                foreach (var objectData in template.prePlacedObjectsData)
+                {
+                    if (objectData.prefab == null) continue;
+
+                    int laneIdx = Mathf.Clamp(objectData.laneIndex, 0, lanePositions.Length - 1);
+                    float targetX = lanePositions[laneIdx];
+
+                    Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.yOffset, 0f);
+
+                    GameObject spawnedObj = poolManager.Spawn(objectData.prefab, spawnPosition, Quaternion.identity, segment.transform);
+
+                    giSegment.RegisterSpawnedObject(spawnedObj);
+                }
+            }
+
             activeSegments.Enqueue(segment);
             return segment;
         }
@@ -58,6 +85,21 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             if (activeSegments.Count <= 0 || poolManager == null) return;
 
             GameObject oldestSegment = activeSegments.Dequeue();
+
+            GISegment giSegment = oldestSegment.GetComponent<GISegment>();
+            if (giSegment != null)
+            {
+                IReadOnlyList<GameObject> spawnedObjs = giSegment.SpawnedObjects;
+                for (int i = 0; i < spawnedObjs.Count; i++)
+                {
+                    if (spawnedObjs[i] != null)
+                    {
+                        poolManager.Recycle(spawnedObjs[i]);
+                    }
+                }
+                giSegment.ClearSpawnedObjects();
+            }
+
             poolManager.Recycle(oldestSegment);
         }
     }
