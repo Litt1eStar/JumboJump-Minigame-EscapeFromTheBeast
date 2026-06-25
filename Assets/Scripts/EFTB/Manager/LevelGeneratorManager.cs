@@ -51,6 +51,11 @@ namespace JumboJumps.EFTB.Manager
             GameContext.Instance.Remove(this);
         }
 
+
+        /// <summary>
+        /// UpdateLogic : use yTestPosition only when player movement is not implemented for testing purpose
+        /// Working on PlayerMovement in next PR
+        /// </summary>
         public void UpdateLogic(float deltaTime)
         {
             /*
@@ -60,13 +65,8 @@ namespace JumboJumps.EFTB.Manager
             }
             */
 
-            /// <summary>
-            /// use yTestPosition only when player movement is not implemented for testing purpose
-            /// </summary>
-
             if (SceneObjectContext.Instance.Get<GILevelGenerator>().yTestPosition >= nextTriggerPosition)
             {
-                DebugLogHelper.Log("Working");
                 RecycleSegment();
             }
         }
