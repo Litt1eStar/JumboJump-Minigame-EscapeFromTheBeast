@@ -5,9 +5,6 @@ using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
-using JumboJump.EFTB.Manager;
-using JumboJump.EFTB.GI;
-using JumboJump.Assets.Scripts.EFTB.Manager;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {

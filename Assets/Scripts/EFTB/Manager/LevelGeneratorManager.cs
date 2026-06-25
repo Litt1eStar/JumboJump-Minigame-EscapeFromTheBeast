@@ -1,12 +1,11 @@
-﻿using JumboJump.EFTB.GameData.LevelSegment;
-using JumboJump.EFTB.GI;
-using JumboJump.EFTB.Visualizer.LevelGenerator;
+﻿using JumboJumps.EFTB.GameData.LevelSegment;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Utilities;
-using System;
+using JumboJumps.EFTB.Visualizer.LevelGenerator;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JumboJump.EFTB.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class LevelGeneratorManager
     {
@@ -60,6 +59,10 @@ namespace JumboJump.EFTB.Manager
                 RecycleSegment();
             }
             */
+
+            /// <summary>
+            /// use yTestPosition only when player movement is not implemented for testing purpose
+            /// </summary>
 
             if (SceneObjectContext.Instance.Get<GILevelGenerator>().yTestPosition >= nextTriggerPosition)
             {

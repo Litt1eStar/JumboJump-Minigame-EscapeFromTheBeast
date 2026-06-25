@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace JumboJump.EFTB.GameData.LevelSegment
+namespace JumboJumps.EFTB.GameData.LevelSegment
 {
     [CreateAssetMenu(fileName = "LevelSegmentData", menuName = "EFTB/LevelSegmentData")]
     public class LevelSegmentSO : ScriptableObject

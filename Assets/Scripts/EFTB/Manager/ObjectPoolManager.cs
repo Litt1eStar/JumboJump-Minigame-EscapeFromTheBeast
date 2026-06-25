@@ -1,10 +1,8 @@
-﻿using JumboJump.EFTB.Utilities;
 using JumboJumps.EFTB.Utilities;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JumboJump.Assets.Scripts.EFTB.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class ObjectPoolManager
     {

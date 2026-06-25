@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace JumboJump.EFTB.GameData.LevelSegment
+namespace JumboJumps.EFTB.GameData.LevelSegment
 {
     [CreateAssetMenu(fileName = "LevelGeneratorSO", menuName = "EFTB/LevelGeneratorSO")]
     public class LevelGeneratorConfigSO : ScriptableObject

@@ -1,10 +1,10 @@
-﻿using JumboJump.Assets.Scripts.EFTB.Manager;
-using JumboJump.EFTB.GI;
+﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JumboJump.EFTB.Visualizer.LevelGenerator
+namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 {
     public class LevelGeneratorVisualizer
     {

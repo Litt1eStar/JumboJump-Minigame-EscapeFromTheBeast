@@ -1,7 +1,7 @@
-﻿using JumboJump.EFTB.GameData.LevelSegment;
+﻿using JumboJumps.EFTB.GameData.LevelSegment;
 using UnityEngine;
 
-namespace JumboJump.EFTB.GI
+namespace JumboJumps.EFTB.GI
 {
     public class GILevelGenerator : MonoBehaviour
     {
