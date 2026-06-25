@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19346884, g: 0, b: 0.44025147, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -101,6 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5195179276759529340}
   - component: {fileID: 4242535455984555523}
+  - component: {fileID: -6158464362377565317}
   m_Layer: 0
   m_Name: Segment-Prefab-01
   m_TagString: Untagged
@@ -136,3 +137,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c77efebb9660a4490fcd64991f57e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJump.EFTB.Utilities.PoolableObject
+--- !u!114 &-6158464362377565317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6526298158145371105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227a98ac4df9a604c9521c4cf3a278b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.GI.GISegment
