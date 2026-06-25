@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Constant.Gameplay;
 
 namespace JumboJumps.EFTB.GameData.LevelSegment
 {
@@ -10,7 +11,7 @@ namespace JumboJumps.EFTB.GameData.LevelSegment
     {
         [Header("Segment Settings")]
         public GameObject segmentPrefab;
-        public float segmentHeight = 20f;
+        public float segmentHeight = ConstGameplay.LevelGenerator.DEFAULT_SEGMENT_HEIGHT;
 
         [Header("Object Spawn Layout")]
         public List<LaneObjectSpawnData> prePlacedObjectsData;
