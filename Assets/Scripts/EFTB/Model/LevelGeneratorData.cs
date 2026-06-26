@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace JumboJump.Assets.Scripts.EFTB.Model
+namespace JumboJumps.EFTB.Model
 {
     public class LevelGeneratorData
     {
@@ -20,8 +20,9 @@ namespace JumboJump.Assets.Scripts.EFTB.Model
         [Serializable]
         public class LevelSegmentData
         {
+            public int id;
             public string segmentPrefabName;
-            public string segmentHeight;
+            public float segmentHeight;
             public string difficulty;
             public List<LaneObjectData> prePlacedObjectDatas;
             public List<LaneEventData> laneEventDatas;
@@ -38,8 +39,8 @@ namespace JumboJump.Assets.Scripts.EFTB.Model
         [Serializable]
         public class LaneEventData
         {
-            public int laneIndex;
-            public float yOffset;
+            public int targetLaneIndex;
+            public float triggerYOffset;
             public float speed;
             public string prefabName;
         }
