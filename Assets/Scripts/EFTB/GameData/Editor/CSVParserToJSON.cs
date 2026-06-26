@@ -10,23 +10,41 @@ using UnityEngine;
 
 namespace JumboJumps.EFTB.GameData
 {
-    public static class CSVParserToJSON
+    public class CSVParserToJSON : EditorWindow
     {
+        private TextAsset csvFile;
+
         [MenuItem("Tools/EFTB/CSVtoJSON")]
-        public static void ParseCSV()
+        public static void ShowWindow()
         {
-            string csvRelativePath = "Local Assets/LevelData/JumboJumps-EFTB-GameData - SegmentData.csv";
-            string csvPath = Path.Combine(Application.dataPath, csvRelativePath);
+            GetWindow<CSVParserToJSON>("CSV Parser Window");
+        }
 
-            if (!File.Exists(csvPath))
+        private void OnGUI()
+        {
+            GUILayout.Label("CSV to JSON Parser", EditorStyles.boldLabel);
+            EditorGUILayout.Space();
+
+            csvFile = (TextAsset)EditorGUILayout.ObjectField("CSV TextAsset", csvFile, typeof(TextAsset), false);
+
+            EditorGUILayout.Space();
+
+            if (GUILayout.Button("Parse CSV to JSON"))
             {
-                Debug.LogError($"[CSVParserToJSON] CSV file not found at: {csvPath}");
-                return;
-            }
+                if (csvFile == null)
+                {
+                    EditorUtility.DisplayDialog("Error", "Please drag a valid CSV TextAsset file!", "OK");
+                    return;
+                }
 
+                ParseCSV(csvFile.text);
+            }
+        }
+
+        private void ParseCSV(string rawText)
+        {
             try
             {
-                string rawText = File.ReadAllText(csvPath);
                 var lines = rawText.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
                 List<string> activeLines = new List<string>();
@@ -42,6 +60,7 @@ namespace JumboJumps.EFTB.GameData
                 if (activeLines.Count < 2)
                 {
                     Debug.LogError("[CSVParserToJSON] CSV file has insufficient data.");
+                    EditorUtility.DisplayDialog("Error", "CSV file has insufficient data.", "OK");
                     return;
                 }
 
@@ -61,6 +80,7 @@ namespace JumboJumps.EFTB.GameData
                 if (idIdx == -1 || segmentTypeIdx == -1 || prefabIdx == -1)
                 {
                     Debug.LogError("[CSVParserToJSON] CSV headers are missing required columns (ID, Segment-Type, Prefab).");
+                    EditorUtility.DisplayDialog("Error", "CSV headers are missing required columns (ID, Segment-Type, Prefab).", "OK");
                     return;
                 }
 
@@ -119,21 +139,21 @@ namespace JumboJumps.EFTB.GameData
 
                 string jsonText = JsonUtility.ToJson(wrapper, true);
 
-                string destinationFolder = Path.Combine(Application.dataPath, "Resources", "LevelData");
-                if (!Directory.Exists(destinationFolder))
+                string outFolder = Path.Combine(Application.dataPath, "Resources", "LevelData");
+                if (!Directory.Exists(outFolder))
                 {
-                    Directory.CreateDirectory(destinationFolder);
+                    Directory.CreateDirectory(outFolder);
                 }
 
-                string destinationPath = Path.Combine(destinationFolder, "LocalGameData.json");
-                File.WriteAllText(destinationPath, jsonText, Encoding.UTF8);
+                string outPath = Path.Combine(outFolder, "LocalGameData.json");
+                File.WriteAllText(outPath, jsonText, Encoding.UTF8);
 
                 AssetDatabase.Refresh();
-                Debug.Log($"[CSVParserToJSON] Successfully parsed CSV and wrote JSON to: {destinationPath}");
+                EditorUtility.DisplayDialog("Success", $"Successfully parsed CSV and wrote JSON to:\n{outPath}", "OK");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[CSVParserToJSON] Exception occurred during parsing: {ex.Message}\n{ex.StackTrace}");
+                EditorUtility.DisplayDialog("Exception", $"Exception occurred during parsing: {ex.Message}", "OK");
             }
         }
 
