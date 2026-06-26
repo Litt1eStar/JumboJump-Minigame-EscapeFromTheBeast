@@ -28,10 +28,10 @@ namespace JumboJumps.EFTB.State.Player
                 DebugLogHelper.LogError($"[{GetType().Name}] {nameof(PlayerStateController)}| Failed to get {typeof(Input2DManager).AssemblyQualifiedName} from SceneObjectContext");
             }
 
-            GILevelGenerator levelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
-            if(levelGenerator != null && levelGenerator.configSo != null)
+            LevelGeneratorManager levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
+            if(levelGeneratorManager != null)
             {
-                LaneXPositions = levelGenerator.configSo.laneXPositions;
+                LaneXPositions = levelGeneratorManager.LaneXPositions;
             }
             else
             {
