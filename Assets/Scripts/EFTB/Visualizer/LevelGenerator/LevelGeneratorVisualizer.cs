@@ -43,21 +43,28 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             /// yPosition : y position to spawn the segment
             /// </summary>
 
-            if(gILevelGenerator == null || poolManager == null || template == null || template.segmentPrefab == null)
+            if (gILevelGenerator == null || poolManager == null || template == null || template.segmentPrefab == null)
             {
                 return null;
             }
 
             Vector3 position = new Vector3(0, yPosition, 0);
             GameObject segment = poolManager.Spawn(template.segmentPrefab, position, Quaternion.identity, gILevelGenerator.transform);
-            
+
             GISegment giSegment = segment.GetComponent<GISegment>();
             if (giSegment == null)
             {
                 giSegment = segment.AddComponent<GISegment>();
             }
 
-            // Spawn pre-placed objects (collectibles, hidableObjects)
+            SpawnPrePlacedObject(template, yPosition, segment, giSegment);
+            activeSegments.Enqueue(segment);
+
+            return segment;
+        }
+
+        private void SpawnPrePlacedObject(LevelSegmentSO template, float yPosition, GameObject segment, GISegment giSegment)
+        {
             if (template.prePlacedObjectsData != null)
             {
                 float[] lanePositions = gILevelGenerator.configSo.laneXPositions;
@@ -75,9 +82,6 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                     giSegment.RegisterSpawnedObject(spawnedObj);
                 }
             }
-
-            activeSegments.Enqueue(segment);
-            return segment;
         }
 
         public void RecycleOldestSegment()

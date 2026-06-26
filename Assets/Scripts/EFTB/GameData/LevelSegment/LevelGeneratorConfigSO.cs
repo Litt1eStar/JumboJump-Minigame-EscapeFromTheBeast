@@ -15,7 +15,7 @@ namespace JumboJumps.EFTB.GameData.LevelSegment
         public float segmentHeight = 20f;
         public float segmentRecycleTriggerOffset = 5f;
 
-        [Header("Progression Setting")] //Adjust and implement it later
+        [Header("Progression Setting")]
         public float mediumDifficultyDistance = 500f;
         public float hardDifficultyDistance = 1500f;
     }

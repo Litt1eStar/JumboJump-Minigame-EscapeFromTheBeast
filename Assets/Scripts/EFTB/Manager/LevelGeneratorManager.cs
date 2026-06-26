@@ -98,6 +98,14 @@ namespace JumboJumps.EFTB.Manager
             SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty(playerY);
 
             List<LevelSegmentSO> matchedTemplates = configSo.segmentTemplates.FindAll(t => t.difficulty == currentDifficulty);
+            LevelSegmentSO selectedTemplate = SelectTemplateFromMatchedTemplate(matchedTemplates);
+            GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);
+           
+            return segmentInstance;
+        }
+
+        private LevelSegmentSO SelectTemplateFromMatchedTemplate(List<LevelSegmentSO> matchedTemplates)
+        {
             LevelSegmentSO selectedTemplate = null;
 
             if (matchedTemplates.Count > 0)
@@ -111,8 +119,7 @@ namespace JumboJumps.EFTB.Manager
                 selectedTemplate = configSo.segmentTemplates[randomIndex];
             }
 
-            GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);
-            return segmentInstance;
+            return selectedTemplate;
         }
     }
 }
