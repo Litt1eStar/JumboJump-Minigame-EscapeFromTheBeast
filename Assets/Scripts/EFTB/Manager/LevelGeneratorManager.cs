@@ -115,6 +115,7 @@ namespace JumboJumps.EFTB.Manager
             }
             else
             {
+                DebugLogHelper.LogError($"[{GetType().Name}] No level segment templates found matching the current difficulty. Falling back to a random template.");
                 int randomIndex = Random.Range(0, configSo.segmentTemplates.Count);
                 selectedTemplate = configSo.segmentTemplates[randomIndex];
             }
