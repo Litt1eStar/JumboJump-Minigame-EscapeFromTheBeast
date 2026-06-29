@@ -12,6 +12,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         private GILevelGenerator gILevelGenerator;
         private ObjectPoolManager poolManager;
         private Queue<GameObject> activeSegments = new();
+        private float[] lanePositions;
 
         public void Initialize()
         {
@@ -28,11 +29,17 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
                 return;
             }
+
+            if (gILevelGenerator.configSo != null)
+            {
+                lanePositions = gILevelGenerator.configSo.laneXPositions;
+            }
         }
 
         public void Dispose() 
         {
             gILevelGenerator = null;
+            lanePositions = null;
             activeSegments.Clear();
         }
 
@@ -45,6 +52,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (gILevelGenerator == null || poolManager == null || template == null || template.segmentPrefab == null)
             {
+                DebugLogHelper.LogError($"[{GetType().Name}] SpawnSegment failed : Missing Instance");
                 return null;
             }
 
@@ -65,9 +73,8 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         private void SpawnPrePlacedObject(LevelSegmentSO template, float yPosition, GameObject segment, GISegment giSegment)
         {
-            if (template.prePlacedObjectsData != null)
+            if (template.prePlacedObjectsData != null && lanePositions != null)
             {
-                float[] lanePositions = gILevelGenerator.configSo.laneXPositions;
                 foreach (var objectData in template.prePlacedObjectsData)
                 {
                     if (objectData.prefab == null) continue;

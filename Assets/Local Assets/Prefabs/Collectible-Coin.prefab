@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 786428710196829131}
   - component: {fileID: 1987195773393031441}
   - component: {fileID: 4158658831259873234}
-  - component: {fileID: 836209669496383490}
   m_Layer: 0
   m_Name: Collectible-Coin
   m_TagString: Untagged
@@ -153,15 +152,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.EFTB.GI.GICollectible
   collectibleData: {fileID: 11400000, guid: f91f82113f5bf244d899566af346611a, type: 2}
---- !u!114 &836209669496383490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5023208134108911182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 227a98ac4df9a604c9521c4cf3a278b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.GI.GISegment
