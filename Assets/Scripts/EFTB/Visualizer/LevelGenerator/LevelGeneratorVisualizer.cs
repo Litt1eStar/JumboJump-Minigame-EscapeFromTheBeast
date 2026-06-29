@@ -14,22 +14,22 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         public void Initialize()
         {
-            gILevelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>(); 
-            if(gILevelGenerator == null)
+            gILevelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
+            if (gILevelGenerator == null)
             {
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find GILevelGenerator in SceneObjectContext");
                 return;
             }
 
             poolManager = GameContext.Instance.Get<ObjectPoolManager>();
-            if(poolManager == null)
+            if (poolManager == null)
             {
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
                 return;
             }
         }
 
-        public void Dispose() 
+        public void Dispose()
         {
             gILevelGenerator = null;
             activeSegments.Clear();
@@ -42,7 +42,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             /// yPosition : y position to spawn an object, note -> we set x, z position to 0 for segment spawn
             /// </summary>
 
-            if(gILevelGenerator == null || poolManager == null)
+            if (gILevelGenerator == null || poolManager == null)
             {
                 return null;
             }

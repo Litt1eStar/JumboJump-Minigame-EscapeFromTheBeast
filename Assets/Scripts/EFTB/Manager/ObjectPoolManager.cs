@@ -20,7 +20,7 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            if(poolContainer != null)
+            if (poolContainer != null)
             {
                 GameObject.Destroy(poolContainer.gameObject);
             }
@@ -38,7 +38,7 @@ namespace JumboJumps.EFTB.Manager
             string key = prefab.name;
             PoolableObject poolableObject = null;
 
-            if(pools.TryGetValue(key, out var queue) && queue.Count > 0)
+            if (pools.TryGetValue(key, out var queue) && queue.Count > 0)
             {
                 poolableObject = queue.Dequeue();
                 poolableObject.transform.position = position;
@@ -49,7 +49,7 @@ namespace JumboJumps.EFTB.Manager
             {
                 var instance = GameObject.Instantiate(prefab, position, rotation, parent);
                 poolableObject = instance.GetComponent<PoolableObject>();
-                if(poolableObject == null)
+                if (poolableObject == null)
                 {
                     poolableObject = instance.AddComponent<PoolableObject>();
                 }
@@ -66,7 +66,7 @@ namespace JumboJumps.EFTB.Manager
 
             var poolableObject = instance.GetComponent<PoolableObject>();
 
-            if(poolableObject == null || string.IsNullOrEmpty(poolableObject.PoolKey))
+            if (poolableObject == null || string.IsNullOrEmpty(poolableObject.PoolKey))
             {
                 GameObject.Destroy(instance);
                 return;
@@ -75,7 +75,7 @@ namespace JumboJumps.EFTB.Manager
             poolableObject.OnRecycle();
             poolableObject.transform.SetParent(poolContainer);
 
-            if(!pools.TryGetValue(poolableObject.PoolKey, out var queue))
+            if (!pools.TryGetValue(poolableObject.PoolKey, out var queue))
             {
                 queue = new Queue<PoolableObject>();
                 pools.Add(poolableObject.PoolKey, queue);

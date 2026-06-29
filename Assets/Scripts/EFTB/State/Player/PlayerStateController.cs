@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
@@ -23,19 +23,19 @@ namespace JumboJumps.EFTB.State.Player
             Visualizer.Initialize();
 
             Input2DManager = SceneObjectContext.Instance.Get<Input2DManager>(); 
-            if(Input2DManager == null)
+            if (Input2DManager == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] {nameof(PlayerStateController)}| Failed to get {typeof(Input2DManager).AssemblyQualifiedName} from SceneObjectContext");
             }
 
             GILevelGenerator levelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
-            if(levelGenerator != null && levelGenerator.configSo != null)
+            if (levelGenerator != null && levelGenerator.configSo != null)
             {
                 LaneXPositions = levelGenerator.configSo.laneXPositions;
             }
             else
             {
-                LaneXPositions = new float[] { -2f, -1f, 0f, 1f, 2f };
+                DebugLogHelper.LogError($"[{GetType().Name}] GILevelGenerator or its config is missing! Falling back to default LaneXPositions.");
             }
 
 

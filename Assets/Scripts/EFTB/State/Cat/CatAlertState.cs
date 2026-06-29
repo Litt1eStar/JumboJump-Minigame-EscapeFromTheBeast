@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.State.Cat.SleepyCat;
+using JumboJumps.EFTB.State.Cat.SleepyCat;
 
 namespace JumboJumps.EFTB.State.Cat
 {
@@ -36,7 +36,7 @@ namespace JumboJumps.EFTB.State.Cat
             countdownTimer -= deltaTime;
             StateController.InvokeEventTimerChanged(countdownTimer);
 
-            if(countdownTimer <= 0f)
+            if (countdownTimer <= 0f)
             {
                 if (stateController.visualizer.IsTargetInSght())
                 {

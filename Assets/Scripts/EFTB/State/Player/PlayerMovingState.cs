@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Visualizer;
 
 namespace JumboJumps.EFTB.State.Player
 {
@@ -6,6 +7,7 @@ namespace JumboJumps.EFTB.State.Player
     {
         private PlayerStateController playerStateController => (PlayerStateController)StateController;
 
+        private PlayerVisualizer playerVisualizer => playerStateController.Visualizer;
         private bool isMovingForward;
 
         public PlayerMovingState(BaseStateController stateController) : base(stateController)
@@ -42,7 +44,7 @@ namespace JumboJumps.EFTB.State.Player
         {
             if (!isMovingForward) return;
 
-            playerStateController.Visualizer.MoveForward(deltaTime);
+            playerVisualizer.MoveForward(deltaTime);
         }
 
         public void OnHoldEnded()

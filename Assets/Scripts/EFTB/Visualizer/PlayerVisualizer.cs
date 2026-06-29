@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
@@ -13,21 +13,19 @@ namespace JumboJumps.EFTB.Visualizer
         public void Initialize()
         {
             giPlayer = SceneObjectContext.Instance.Get<GIPlayer>();
-            if(giPlayer == null)
+            if (giPlayer == null)
             {
                 DebugLogHelper.LogError("GIPlayer not found in SceneObjectContext. PlayerVisualizer initialization failed.");
             }
 
             giCamera = SceneObjectContext.Instance.Get<GICamera>(); 
-            if(giCamera == null)
+            if (giCamera == null)
             {
                 DebugLogHelper.LogError("GICamera not found in SceneObjectContext. PlayerVisualizer initialization failed.");
             }
-
-            OnInitialize();
         }
 
-        public void OnInitialize()
+        public void SetPlayerOnMiddleLane()
         {
             giPlayer.SetPlayerOnMiddleLane();
         }

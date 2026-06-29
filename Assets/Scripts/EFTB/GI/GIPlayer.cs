@@ -17,6 +17,7 @@ namespace JumboJumps.EFTB.GI
         private float playerMovementSpeed = 5f;
 
         public Vector3 PlayerPosition => playerTransform.position;
+
         public void Initialize()
         {
 
@@ -34,7 +35,7 @@ namespace JumboJumps.EFTB.GI
 
         public void SetPlayerOnMiddleLane()
         {
-            transform.position = new Vector3(0, 0, 0);
+            playerTransform.position = Vector3.zero;
         }
 
         public void MoveForward(float deltaTime)
