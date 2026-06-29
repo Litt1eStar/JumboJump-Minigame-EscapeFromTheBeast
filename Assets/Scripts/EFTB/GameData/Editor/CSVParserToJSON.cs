@@ -98,37 +98,32 @@ namespace JumboJumps.EFTB.GameData
 
                     if (!segmentsDict.TryGetValue(id, out var segment))
                     {
-                        segment = new LevelGeneratorData.LevelSegmentData
-                        {
-                            id = id,
-                            segmentPrefabName = segmentPrefabIdx != -1 && cols.Length > segmentPrefabIdx ? cols[segmentPrefabIdx] : "",
-                            segmentHeight = segmentHeightIdx != -1 && cols.Length > segmentHeightIdx && float.TryParse(cols[segmentHeightIdx], out float h) ? h : 20f,
-                            difficulty = difficultyIdx != -1 && cols.Length > difficultyIdx ? cols[difficultyIdx] : "Easy",
-                            prePlacedObjectDatas = new List<LevelGeneratorData.LaneObjectData>(),
-                            laneEventDatas = new List<LevelGeneratorData.LaneEventData>()
-                        };
+                        segment = new LevelGeneratorData.LevelSegmentData(
+                            id,
+                            segmentPrefabIdx != -1 && cols.Length > segmentPrefabIdx ? cols[segmentPrefabIdx] : "",
+                            segmentHeightIdx != -1 && cols.Length > segmentHeightIdx && float.TryParse(cols[segmentHeightIdx], out float h) ? h : 20f,
+                            difficultyIdx != -1 && cols.Length > difficultyIdx && Enum.TryParse<SegmentDifficultyEnum>(cols[difficultyIdx], true, out var diff) ? diff : SegmentDifficultyEnum.Easy
+                        );
                         segmentsDict.Add(id, segment);
                     }
 
                     string type = cols[segmentTypeIdx];
                     if (type.Equals("Object", StringComparison.OrdinalIgnoreCase))
                     {
-                        segment.prePlacedObjectDatas.Add(new LevelGeneratorData.LaneObjectData
-                        {
-                            laneIndex = laneIdx != -1 && cols.Length > laneIdx && int.TryParse(cols[laneIdx], out int l) ? l : 0,
-                            yOffset = yOffsetIdx != -1 && cols.Length > yOffsetIdx && float.TryParse(cols[yOffsetIdx], out float y) ? y : 0f,
-                            prefabName = cols[prefabIdx]
-                        });
+                        segment.PrePlacedObject.Add(new LevelGeneratorData.LaneObjectData(
+                            laneIdx != -1 && cols.Length > laneIdx && int.TryParse(cols[laneIdx], out int l) ? l : 0,
+                            yOffsetIdx != -1 && cols.Length > yOffsetIdx && float.TryParse(cols[yOffsetIdx], out float y) ? y : 0f,
+                            cols[prefabIdx]
+                        ));
                     }
                     else if (type.Equals("Event", StringComparison.OrdinalIgnoreCase))
                     {
-                        segment.laneEventDatas.Add(new LevelGeneratorData.LaneEventData
-                        {
-                            targetLaneIndex = laneIdx != -1 && cols.Length > laneIdx && int.TryParse(cols[laneIdx], out int l) ? l : 0,
-                            triggerYOffset = yOffsetIdx != -1 && cols.Length > yOffsetIdx && float.TryParse(cols[yOffsetIdx], out float y) ? y : 0f,
-                            prefabName = cols[prefabIdx],
-                            speed = speedIdx != -1 && cols.Length > speedIdx && float.TryParse(cols[speedIdx], out float s) ? s : 0f
-                        });
+                        segment.LaneEventData.Add(new LevelGeneratorData.LaneEventData(
+                            laneIdx != -1 && cols.Length > laneIdx && int.TryParse(cols[laneIdx], out int l) ? l : 0,
+                            yOffsetIdx != -1 && cols.Length > yOffsetIdx && float.TryParse(cols[yOffsetIdx], out float y) ? y : 0f,
+                            speedIdx != -1 && cols.Length > speedIdx && float.TryParse(cols[speedIdx], out float s) ? s : 0f,
+                            cols[prefabIdx]
+                        ));
                     }
                 }
 

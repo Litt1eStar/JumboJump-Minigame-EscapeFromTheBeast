@@ -14,7 +14,7 @@ namespace JumboJumps.EFTB.Manager
     public class LevelGeneratorManager
     {
         private GameDataManager gameDataManager;
-        private LevelGeneratorConfig configSo;
+        private LevelGeneratorConfig config;
         private LevelGeneratorVisualizer visualizer;
 
         private Transform playerTransform;
@@ -37,23 +37,24 @@ namespace JumboJumps.EFTB.Manager
 
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
 
-            visualizer = new LevelGeneratorVisualizer(this, gameDataManager);
-            visualizer.Initialize();
-
             segments = gameDataManager.LevelSegmentData.Values.ToList();
             LaneXPositions = new float[5] { -2, -1, 0, 1, 2 };
             MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
             SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
             SegmentRecycleTriggerOffset  =ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
-            MediumDifficultyDistance = ConstGameplay.LevelGenerator.mediumDifficultyDistance;
-            HardDifficultyDistance = ConstGameplay.LevelGenerator.hardDifficultyDistance;
+            MediumDifficultyDistance = ConstGameplay.LevelGenerator.MediumDifficultyDistance;
+            HardDifficultyDistance = ConstGameplay.LevelGenerator.HardDifficultyDistance;
 
-            configSo = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyDistance, HardDifficultyDistance);
 
-            nextTriggerPosition = SegmentHeight + configSo.segmentRecycleTriggerOffset;
-            nextYSpawnPosition = SegmentHeight * configSo.maxSegmentAmount;
+            visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions);
+            visualizer.Initialize();
 
-            for (int i = 0; i < configSo.maxSegmentAmount; i++)
+            config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyDistance, HardDifficultyDistance);
+
+            nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
+            nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
+
+            for (int i = 0; i < config.MaxSegmentAmount; i++)
             {
                 float spawnYPosition = i * SegmentHeight;
                 GameObject segment = SpawnSegmentAt(spawnYPosition);
@@ -94,11 +95,11 @@ namespace JumboJumps.EFTB.Manager
 
         private SegmentDifficultyEnum GetCurrentDifficulty(float playerY)
         {
-            if (playerY < configSo.mediumDifficultyDistance)
+            if (playerY < config.MediumDifficultyDistance)
             {
                 return SegmentDifficultyEnum.Easy;
             }
-            else if (playerY < configSo.hardDifficultyDistance)
+            else if (playerY < config.HardDifficultyDistance)
             {
                 return SegmentDifficultyEnum.Normal;
             }
@@ -120,7 +121,7 @@ namespace JumboJumps.EFTB.Manager
             SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty(playerY);
 
             List<LevelSegmentData> allSegments = segments;
-            List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.difficulty != null && t.difficulty.Equals(currentDifficulty.ToString(), StringComparison.OrdinalIgnoreCase));
+             List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
             
             LevelSegmentData selectedTemplate = SelectTemplateFromMatchedTemplate(matchedTemplates, allSegments);
             GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);

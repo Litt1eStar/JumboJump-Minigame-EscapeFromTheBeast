@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using JumboJumps.EFTB.Model;
@@ -11,7 +11,7 @@ namespace JumboJumps.EFTB.Manager
     {
         [Header("Assets")]
         [SerializeField] private PrefabRegistrySO prefabRegistry;
-        [SerializeField] private TextAsset localGameData;
+        [SerializeField] private bool loadLocalGameData = true;
 
         private Dictionary<int, LevelGeneratorData.LevelSegmentData> levelSegmentData = new();
         public Dictionary<int, LevelGeneratorData.LevelSegmentData> LevelSegmentData => levelSegmentData;
@@ -33,15 +33,19 @@ namespace JumboJumps.EFTB.Manager
 
         private void LoadGameData()
         {
-            if (localGameData != null)
+            if (loadLocalGameData)
             {
-                ParseAndApplyGameDataFromJson(localGameData.text);
-                IsDataLoaded = true;
-                DebugLogHelper.Log($"[{GetType().Name}] Game data loaded successfully.");
-            }
-            else
-            {
-                DebugLogHelper.LogError($"[{GetType().Name}] LocalGameData TextAsset is not assigned!");
+                TextAsset localGameData = Resources.Load<TextAsset>("LevelData/LocalGameData");
+                if (localGameData != null)
+                {
+                    ParseAndApplyGameDataFromJson(localGameData.text);
+                    IsDataLoaded = true;
+                    DebugLogHelper.Log($"[{GetType().Name}] Game data loaded successfully.");
+                }
+                else
+                {
+                    DebugLogHelper.LogError($"[{GetType().Name}] LocalGameData TextAsset is not found in Resources/LevelData/ !");
+                }
             }
         }
 
@@ -63,7 +67,7 @@ namespace JumboJumps.EFTB.Manager
                     {
                         if (segment != null)
                         {
-                            levelSegmentData[segment.id] = segment;
+                            levelSegmentData[segment.Id] = segment;
                         }
                     }
                 }

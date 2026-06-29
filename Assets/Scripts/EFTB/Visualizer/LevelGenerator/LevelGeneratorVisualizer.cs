@@ -12,13 +12,13 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         private ObjectPoolManager poolManager;
         private Queue<GameObject> activeSegments = new();
 
-        private LevelGeneratorManager levelGeneratorManager;
         private GameDataManager gameDataManager;
+        private float[] laneXPosition;
 
-        public LevelGeneratorVisualizer(LevelGeneratorManager levelGeneratorManager, GameDataManager gameDataManager)
+        public LevelGeneratorVisualizer(GameDataManager gameDataManager, float[] laneXPosition)
         {
-            this.levelGeneratorManager = levelGeneratorManager;
             this.gameDataManager = gameDataManager;
+            this.laneXPosition = laneXPosition;
         }
 
         public void Initialize()
@@ -43,14 +43,14 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             /// yPosition : y position to spawn the segment
             /// </summary>
 
-            if (poolManager == null || template == null || template.segmentPrefabName == null)
+            if (poolManager == null || template == null || template.SegmentPrefabName == null)
             {
                 return null;
             }
 
             Vector3 position = new Vector3(0, yPosition, 0);
 
-            GameObject segmentPrefab = gameDataManager.GetPrefab(template.segmentPrefabName);
+            GameObject segmentPrefab = gameDataManager.GetPrefab(template.SegmentPrefabName);
             
             GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity);
 
@@ -68,16 +68,15 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         private void SpawnPrePlacedObject(LevelGeneratorData.LevelSegmentData template, float yPosition, GameObject segment, GISegment giSegment)
         {
-            if (template.prePlacedObjectDatas != null)
+            if (template.PrePlacedObject != null)
             {
-                float[] lanePositions = levelGeneratorManager.LaneXPositions;
-                foreach (LevelGeneratorData.LaneObjectData objectData in template.prePlacedObjectDatas)
+                foreach (LevelGeneratorData.LaneObjectData objectData in template.PrePlacedObject)
                 {
-                    int laneIdx = Mathf.Clamp(objectData.laneIndex, 0, lanePositions.Length - 1);
-                    float targetX = lanePositions[laneIdx];
+                    int laneIdx = Mathf.Clamp(objectData.LaneIndex, 0, laneXPosition.Length - 1);
+                    float targetX = laneXPosition[laneIdx];
 
-                    Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.yOffset, 0f);
-                    GameObject prefab = gameDataManager.GetPrefab(objectData.prefabName);
+                    Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.YOffset, 0f);
+                    GameObject prefab = gameDataManager.GetPrefab(objectData.PrefabName);
 
                     if (prefab == null) continue;
 

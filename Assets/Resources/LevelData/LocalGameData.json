@@ -4,8 +4,8 @@
             "id": 1,
             "segmentPrefabName": "Prefab_Segment_Easy_01",
             "segmentHeight": 20.0,
-            "difficulty": "Easy",
-            "prePlacedObjectDatas": [
+            "difficulty": 1,
+            "prePlacedObject": [
                 {
                     "laneIndex": 1,
                     "yOffset": 5.0,
@@ -32,14 +32,14 @@
                     "prefabName": "Prefab_HidableObject_Bush"
                 }
             ],
-            "laneEventDatas": []
+            "laneEventData": []
         },
         {
             "id": 2,
             "segmentPrefabName": "Prefab_Segment_Easy_02",
             "segmentHeight": 20.0,
-            "difficulty": "Easy",
-            "prePlacedObjectDatas": [
+            "difficulty": 1,
+            "prePlacedObject": [
                 {
                     "laneIndex": 2,
                     "yOffset": 4.0,
@@ -66,7 +66,7 @@
                     "prefabName": "Prefab_HidableObject_Bush"
                 }
             ],
-            "laneEventDatas": [
+            "laneEventData": [
                 {
                     "targetLaneIndex": 1,
                     "triggerYOffset": 10.0,
@@ -79,8 +79,8 @@
             "id": 3,
             "segmentPrefabName": "Segment-Prefab-03",
             "segmentHeight": 20.0,
-            "difficulty": "Normal",
-            "prePlacedObjectDatas": [
+            "difficulty": 2,
+            "prePlacedObject": [
                 {
                     "laneIndex": 2,
                     "yOffset": 4.0,
@@ -102,7 +102,7 @@
                     "prefabName": "Prefab_HidableObject_Bush"
                 }
             ],
-            "laneEventDatas": [
+            "laneEventData": [
                 {
                     "targetLaneIndex": 2,
                     "triggerYOffset": 10.0,
@@ -115,8 +115,8 @@
             "id": 4,
             "segmentPrefabName": "Segment-Prefab-04",
             "segmentHeight": 20.0,
-            "difficulty": "Normal",
-            "prePlacedObjectDatas": [
+            "difficulty": 2,
+            "prePlacedObject": [
                 {
                     "laneIndex": 0,
                     "yOffset": 5.0,
@@ -143,7 +143,7 @@
                     "prefabName": "Prefab_HidableObject_Bush"
                 }
             ],
-            "laneEventDatas": [
+            "laneEventData": [
                 {
                     "targetLaneIndex": 1,
                     "triggerYOffset": 12.0,
@@ -156,8 +156,8 @@
             "id": 5,
             "segmentPrefabName": "Segment-Prefab-05",
             "segmentHeight": 20.0,
-            "difficulty": "Hard",
-            "prePlacedObjectDatas": [
+            "difficulty": 3,
+            "prePlacedObject": [
                 {
                     "laneIndex": 1,
                     "yOffset": 4.0,
@@ -189,7 +189,7 @@
                     "prefabName": "Prefab_HidableObject_Bush"
                 }
             ],
-            "laneEventDatas": [
+            "laneEventData": [
                 {
                     "targetLaneIndex": 1,
                     "triggerYOffset": 5.0,
