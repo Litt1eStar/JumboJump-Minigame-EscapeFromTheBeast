@@ -11,7 +11,6 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
     {
         private ObjectPoolManager poolManager;
         private Queue<GameObject> activeSegments = new();
-        private float[] lanePositions;
 
         private GameDataManager gameDataManager;
         private float[] laneXPosition;

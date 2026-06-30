@@ -3,7 +3,6 @@ using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.LevelGenerator;
 using LevelSegmentData = JumboJumps.EFTB.Model.LevelGeneratorData.LevelSegmentData;
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,9 +31,12 @@ namespace JumboJumps.EFTB.Manager
                 SpawnY = spawnY;
                 SegmentGo = segmentGo;
                 GiSegment = giSegment;
-                PendingEvents = template.LaneEventData != null 
-                    ? new List<LevelGeneratorData.LaneEventData>(template.LaneEventData) 
+                PendingEvents = template.LaneEventData != null
+                    ? new List<LevelGeneratorData.LaneEventData>(template.LaneEventData)
                     : new List<LevelGeneratorData.LaneEventData>();
+
+                // Sort events by TriggerYOffset in ascending order to optimize trigger checks
+                PendingEvents.Sort((a, b) => a.TriggerYOffset.CompareTo(b.TriggerYOffset));
             }
         }
 
@@ -43,9 +45,9 @@ namespace JumboJumps.EFTB.Manager
         private float nextYSpawnPosition;
         private Queue<ActiveSegment> activeSegmentQueue = new();
 
-        public float[] LaneXPositions { get; private set; } 
-        public int MaxSegmentAmount { get; private set; }   
-        public float SegmentHeight { get; private set; }    
+        public float[] LaneXPositions { get; private set; }
+        public int MaxSegmentAmount { get; private set; }
+        public float SegmentHeight { get; private set; }
         public float SegmentRecycleTriggerOffset { get; private set; }
         public float MediumDifficultyDistance { get; private set; }
         public float HardDifficultyDistance { get; private set; }
@@ -62,7 +64,7 @@ namespace JumboJumps.EFTB.Manager
             LaneXPositions = new float[5] { -2, -1, 0, 1, 2 };
             MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
             SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
-            SegmentRecycleTriggerOffset  =ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
+            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
             MediumDifficultyDistance = ConstGameplay.LevelGenerator.MediumDifficultyDistance;
             HardDifficultyDistance = ConstGameplay.LevelGenerator.HardDifficultyDistance;
 
@@ -108,17 +110,21 @@ namespace JumboJumps.EFTB.Manager
         {
             foreach (var activeSegment in activeSegmentQueue)
             {
-                if (activeSegment.PendingEvents.Count == 0) continue;
-
-                for (int i = activeSegment.PendingEvents.Count - 1; i >= 0; i--)
+                // Since the events are sorted by TriggerYOffset, we only check the next upcoming event
+                while (activeSegment.PendingEvents.Count > 0)
                 {
-                    var pendingEvent = activeSegment.PendingEvents[i];
+                    var pendingEvent = activeSegment.PendingEvents[0];
                     float triggerY = activeSegment.SpawnY + pendingEvent.TriggerYOffset;
 
                     if (playerY >= triggerY)
                     {
                         visualizer.SpawnEventObstacle(pendingEvent, activeSegment.SpawnY, activeSegment.SegmentGo, activeSegment.GiSegment);
-                        activeSegment.PendingEvents.RemoveAt(i);
+                        activeSegment.PendingEvents.RemoveAt(0);
+                    }
+                    else
+                    {
+                        // The player hasn't reached the next event, so skip checking the remaining events for this segment
+                        break;
                     }
                 }
             }
@@ -164,10 +170,10 @@ namespace JumboJumps.EFTB.Manager
 
             List<LevelSegmentData> allSegments = segments;
             List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
-            
+
             LevelSegmentData selectedTemplate = SelectTemplateFromMatchedTemplate(matchedTemplates, allSegments);
             GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);
-            
+
             if (segmentInstance == null) return null;
 
             GISegment giSegment = segmentInstance.GetComponent<GISegment>();
