@@ -10,25 +10,19 @@ namespace JumboJumps.EFTB.GI
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Player"))
+            var player = collision.GetComponent<GIPlayer>();
+            if (player != null)
             {
-                var player = collision.GetComponent<GIPlayer>();
-                if (player != null)
-                {
-                    EventPlayerEntered?.Invoke(player);
-                }
-            }
+                EventPlayerEntered?.Invoke(player);
+            }   
         }
 
         private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.CompareTag("Player"))
+        {    
+            var player = collision.GetComponent<GIPlayer>();
+            if (player != null)
             {
-                var player = collision.GetComponent<GIPlayer>();
-                if (player != null)
-                {
-                    EventPlayerExited?.Invoke(player);
-                }
+                EventPlayerExited?.Invoke(player);
             }
         }
     }

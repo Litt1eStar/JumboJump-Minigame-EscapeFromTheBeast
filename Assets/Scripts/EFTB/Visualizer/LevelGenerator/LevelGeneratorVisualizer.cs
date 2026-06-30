@@ -11,6 +11,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
     {
         private ObjectPoolManager poolManager;
         private Queue<GameObject> activeSegments = new();
+        private float[] lanePositions;
 
         private GameDataManager gameDataManager;
         private float[] laneXPosition;
@@ -45,6 +46,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (poolManager == null || template == null || template.SegmentPrefabName == null)
             {
+                DebugLogHelper.LogError($"[{GetType().Name}] SpawnSegment failed : Missing Instance");
                 return null;
             }
 
