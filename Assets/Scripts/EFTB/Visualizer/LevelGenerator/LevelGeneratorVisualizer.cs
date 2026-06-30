@@ -89,6 +89,47 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
         }
 
+        public void SpawnEventObstacle(LevelGeneratorData.LaneEventData eventData, float segmentYPosition, GameObject segment, GISegment giSegment)
+        {
+            if (poolManager == null || eventData == null || string.IsNullOrEmpty(eventData.PrefabName)) return;
+
+            int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
+            float targetX = laneXPosition[laneIdx];
+
+            Camera mainCam = Camera.main;
+            float spawnY;
+            if (mainCam != null)
+            {
+                float distanceFromCamera = Mathf.Abs(mainCam.transform.position.z);
+                // Spawn 10% above the top boundary of the viewport
+                spawnY = mainCam.ViewportToWorldPoint(new Vector3(0.5f, 1.1f, distanceFromCamera)).y;
+            }
+            else
+            {
+                spawnY = segmentYPosition + eventData.TriggerYOffset + 10f;
+            }
+
+            Vector3 spawnPosition = new Vector3(targetX, spawnY, 0f);
+            GameObject prefab = gameDataManager.GetPrefab(eventData.PrefabName);
+
+            if (prefab == null)
+            {
+                DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for event: {eventData.PrefabName}");
+                return;
+            }
+
+            GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
+
+            var movingObstacle = spawnedObj.GetComponent<GIMovingObstacle>();
+            if (movingObstacle == null)
+            {
+                movingObstacle = spawnedObj.AddComponent<GIMovingObstacle>();
+            }
+            movingObstacle.Initialize(eventData.Speed);
+
+            giSegment.RegisterSpawnedObject(spawnedObj);
+        }
+
         public void RecycleOldestSegment()
         {
             if (activeSegments.Count <= 0 || poolManager == null) return;
