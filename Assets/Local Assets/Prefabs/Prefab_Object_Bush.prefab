@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7377531531571300949}
   - component: {fileID: 4566165553144841422}
   m_Layer: 6
-  m_Name: HidableObject
+  m_Name: Prefab_Object_Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
