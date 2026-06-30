@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-
+using Unity.Plastic.Newtonsoft.Json;
 
 namespace JumboJumps.EFTB.GameData
 {
@@ -102,7 +102,9 @@ namespace JumboJumps.EFTB.GameData
                             id,
                             segmentPrefabIdx != -1 && cols.Length > segmentPrefabIdx ? cols[segmentPrefabIdx] : "",
                             segmentHeightIdx != -1 && cols.Length > segmentHeightIdx && float.TryParse(cols[segmentHeightIdx], out float h) ? h : 20f,
-                            difficultyIdx != -1 && cols.Length > difficultyIdx && Enum.TryParse<SegmentDifficultyEnum>(cols[difficultyIdx], true, out var diff) ? diff : SegmentDifficultyEnum.Easy
+                            difficultyIdx != -1 && cols.Length > difficultyIdx && Enum.TryParse<SegmentDifficultyEnum>(cols[difficultyIdx], true, out var diff) ? diff : SegmentDifficultyEnum.Easy,
+                            new List<LevelGeneratorData.LaneObjectData>(),
+                            new List<LevelGeneratorData.LaneEventData>()
                         );
                         segmentsDict.Add(id, segment);
                     }
@@ -132,7 +134,7 @@ namespace JumboJumps.EFTB.GameData
                     level_segments = segmentsDict.Values.ToList()
                 };
 
-                string jsonText = JsonUtility.ToJson(wrapper, true);
+                string jsonText = JsonConvert.SerializeObject(wrapper, Formatting.Indented);
 
                 string outFolder = Path.Combine(Application.dataPath, "Resources", "LevelData");
                 if (!Directory.Exists(outFolder))
@@ -152,10 +154,10 @@ namespace JumboJumps.EFTB.GameData
             }
         }
 
-        [Serializable]
         private class LevelSegmentListWrapper
         {
-            public List<LevelGeneratorData.LevelSegmentData> level_segments;
+            [JsonProperty("level_segments")]
+            public List<LevelGeneratorData.LevelSegmentData> level_segments { get; set; }
         }
     }
 }

@@ -1,117 +1,90 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace JumboJumps.EFTB.Model
 {
     public class LevelGeneratorData
     {
-        [Serializable]
         public class LevelGeneratorConfigData
         {
-            [SerializeField] private List<LevelSegmentData> segmentTemplate;
-            public List<LevelSegmentData> SegmentTemplate { get => segmentTemplate; private set => segmentTemplate = value; }
+            public List<LevelSegmentData> SegmentTemplate { get; private set; }
+            public float LaneXPositions { get; private set; }
+            public int MaxSegmentAmount { get; private set; }
+            public float SegmentHeight { get; private set; }
+            public float SegmentRecycleTriggerOffset { get; private set; }
+            public float MediumDifficultyDistance { get; private set; }
+            public float HardDifficultyDistance { get; private set; }
 
-            [SerializeField] private float laneXPositions;
-            public float LaneXPositions { get => laneXPositions; private set => laneXPositions = value; }
-
-            [SerializeField] private int maxSegmentAmount;
-            public int MaxSegmentAmount { get => maxSegmentAmount; private set => maxSegmentAmount = value; }
-
-            [SerializeField] private float segmentHeight;
-            public float SegmentHeight { get => segmentHeight; private set => segmentHeight = value; }
-
-            [SerializeField] private float segmentRecycleTriggerOffset;
-            public float SegmentRecycleTriggerOffset { get => segmentRecycleTriggerOffset; private set => segmentRecycleTriggerOffset = value; }
-
-            [SerializeField] private float mediumDifficultyDistance;
-            public float MediumDifficultyDistance { get => mediumDifficultyDistance; private set => mediumDifficultyDistance = value; }
-
-            [SerializeField] private float hardDifficultyDistance;
-            public float HardDifficultyDistance { get => hardDifficultyDistance; private set => hardDifficultyDistance = value; }
+            public LevelGeneratorConfigData(List<LevelSegmentData> segmentTemplate,
+                                            float laneXPositions,
+                                            int maxSegmentAmount,
+                                            float segmentHeight,
+                                            float segmentRecycleTriggerOffset,
+                                            float mediumDifficultyDistance,
+                                            float hardDifficultyDistance)
+            {
+                SegmentTemplate = segmentTemplate;
+                LaneXPositions = laneXPositions;
+                MaxSegmentAmount = maxSegmentAmount;
+                SegmentHeight = segmentHeight;
+                SegmentRecycleTriggerOffset = segmentRecycleTriggerOffset;
+                MediumDifficultyDistance = mediumDifficultyDistance;
+                HardDifficultyDistance = hardDifficultyDistance;
+            }
         }
 
-        [Serializable]
         public class LevelSegmentData
         {
-            [SerializeField] private int id;
-            public int Id { get => id; private set => id = value; }
+            public int Id { get; private set; }
+            public string SegmentPrefabName { get; private set; }
+            public float SegmentHeight { get; private set; }
+            public SegmentDifficultyEnum Difficulty { get; private set; }
+            public List<LaneObjectData> PrePlacedObject { get; private set; }
+            public List<LaneEventData> LaneEventData { get; private set; }
 
-            [SerializeField] private string segmentPrefabName;
-            public string SegmentPrefabName { get => segmentPrefabName; private set => segmentPrefabName = value; }
-
-            [SerializeField] private float segmentHeight;
-            public float SegmentHeight { get => segmentHeight; private set => segmentHeight = value; }
-
-            [SerializeField] private SegmentDifficultyEnum difficulty;
-            public SegmentDifficultyEnum Difficulty { get => difficulty; private set => difficulty = value; }
-
-            [SerializeField] private List<LaneObjectData> prePlacedObject;
-            public List<LaneObjectData> PrePlacedObject { get => prePlacedObject; private set => prePlacedObject = value; }
-
-            [SerializeField] private List<LaneEventData> laneEventData;
-            public List<LaneEventData> LaneEventData { get => laneEventData; private set => laneEventData = value; }
-
-            public LevelSegmentData()
+            public LevelSegmentData(int id,
+                                    string segmentPrefabName,
+                                    float segmentHeight,
+                                    SegmentDifficultyEnum difficulty,
+                                    List<LaneObjectData> prePlacedObject,
+                                    List<LaneEventData> laneEventData)
             {
-                prePlacedObject = new List<LaneObjectData>();
-                laneEventData = new List<LaneEventData>();
-            }
-
-            public LevelSegmentData(int id, string segmentPrefabName, float segmentHeight, SegmentDifficultyEnum difficulty) : this()
-            {
-                this.id = id;
-                this.segmentPrefabName = segmentPrefabName;
-                this.segmentHeight = segmentHeight;
-                this.difficulty = difficulty;
+                Id = id;
+                SegmentPrefabName = segmentPrefabName;
+                SegmentHeight = segmentHeight;
+                Difficulty = difficulty;
+                PrePlacedObject = prePlacedObject ?? new List<LaneObjectData>();
+                LaneEventData = laneEventData ?? new List<LaneEventData>();
             }
         }
 
-        [Serializable]
         public class LaneObjectData
         {
-            [SerializeField] private int laneIndex;
-            public int LaneIndex { get => laneIndex; private set => laneIndex = value; }
-
-            [SerializeField] private float yOffset;
-            public float YOffset { get => yOffset; private set => yOffset = value; }
-
-            [SerializeField] private string prefabName;
-            public string PrefabName { get => prefabName; private set => prefabName = value; }
-
-            public LaneObjectData() {}
+            public int LaneIndex { get; private set; }
+            public float YOffset { get; private set; }
+            public string PrefabName { get; private set; }
 
             public LaneObjectData(int laneIndex, float yOffset, string prefabName)
             {
-                this.laneIndex = laneIndex;
-                this.yOffset = yOffset;
-                this.prefabName = prefabName;
+                LaneIndex = laneIndex;
+                YOffset = yOffset;
+                PrefabName = prefabName;
             }
         }
 
-        [Serializable]
         public class LaneEventData
         {
-            [SerializeField] private int targetLaneIndex;
-            public int TargetLaneIndex { get => targetLaneIndex; private set => targetLaneIndex = value; }
-
-            [SerializeField] private float triggerYOffset;
-            public float TriggerYOffset { get => triggerYOffset; private set => triggerYOffset = value; }
-
-            [SerializeField] private float speed;
-            public float Speed { get => speed; private set => speed = value; }
-
-            [SerializeField] private string prefabName;
-            public string PrefabName { get => prefabName; private set => prefabName = value; }
-
-            public LaneEventData() {}
+            public int TargetLaneIndex { get; private set; }
+            public float TriggerYOffset { get; private set; }
+            public float Speed { get; private set; }
+            public string PrefabName { get; private set; }
 
             public LaneEventData(int targetLaneIndex, float triggerYOffset, float speed, string prefabName)
             {
-                this.targetLaneIndex = targetLaneIndex;
-                this.triggerYOffset = triggerYOffset;
-                this.speed = speed;
-                this.prefabName = prefabName;
+                TargetLaneIndex = targetLaneIndex;
+                TriggerYOffset = triggerYOffset;
+                Speed = speed;
+                PrefabName = prefabName;
             }
         }
     }
