@@ -17,6 +17,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private PlayerManager playerManager;
         private CatManager catManager;
         private CollectibleManager collectibleManager;
+        private GameplayTimeManager gameplayTimeManager;
 
         private GameplayController gameplayController;
         private GameStateController stateController;
@@ -37,6 +38,9 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             input2DManager = SceneObjectContext.Instance.Get<Input2DManager>();
             input2DManager.Initialize();
+
+            gameplayTimeManager = new GameplayTimeManager();
+            gameplayTimeManager.Initialize();
 
             playerManager = new PlayerManager();
             playerManager.Initialize();
@@ -75,6 +79,9 @@ namespace JumboJumps.EFTB.State.Gameplay
             gameplayStateManager?.Dispose();
             gameplayStateManager = null;
 
+            gameplayTimeManager?.Dispose();
+            gameplayTimeManager = null;
+
             playerManager?.Dispose();
             playerManager = null;
 
@@ -110,6 +117,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             if (!IsSceneLoaded) return;
 
+            gameplayTimeManager?.UpdateLogic(deltaTime);
             gameplayStateManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
             levelGeneratorManager?.UpdateLogic(deltaTime);
