@@ -4,7 +4,7 @@ ID,Name,Segment-Prefab,Segment-Height,Difficulty,Segment-Type,LaneIndex,YOffset,
 7,Seg-Stream-SleepyBlock,Prefab_Segment_Easy_01,20,Easy,Object,2,5,Prefab_Collectible_Coin,0
 7,Seg-Stream-SleepyBlock,Prefab_Segment_Easy_01,20,Easy,Object,1,10,Prefab_Collectible_Coin,0
 7,Seg-Stream-SleepyBlock,Prefab_Segment_Easy_01,20,Easy,Object,1,14,Prefab_Collectible_Coin,0
-8,Seg-Stream-CatNapTrap,Prefab_Segment_Medium_01,20,Medium,Event,1,10,Prefab_Event_SleepyCat,0
+8,Seg-Stream-CatNapTrap,Prefab_Segment_Medium_01,20,Medium,Event,1,5,Prefab_Event_SleepyCat,0
 8,Seg-Stream-CatNapTrap,Prefab_Segment_Medium_01,20,Medium,Event,3,10,Prefab_Event_SleepyCat,0
 8,Seg-Stream-CatNapTrap,Prefab_Segment_Medium_01,20,Medium,Object,2,4,Prefab_Object_Bush,0
 8,Seg-Stream-CatNapTrap,Prefab_Segment_Medium_01,20,Medium,Object,2,10,Prefab_Collectible_Coin,0
