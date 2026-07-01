@@ -18,6 +18,7 @@ namespace JumboJumps.EFTB.Manager
         private LevelGeneratorConfig config;
         private LevelGeneratorVisualizer visualizer;
 
+        public LevelGeneratorConfig Config => config;
         private class ActiveSegment
         {
             public LevelSegmentData Template { get; }
@@ -50,8 +51,8 @@ namespace JumboJumps.EFTB.Manager
         public int MaxSegmentAmount { get; private set; }
         public float SegmentHeight { get; private set; }
         public float SegmentRecycleTriggerOffset { get; private set; }
-        public float MediumDifficultyDistance { get; private set; }
-        public float HardDifficultyDistance { get; private set; }
+        public float MediumDifficultyTimePercentage { get; private set; }
+        public float HardDifficultyTimePercentage { get; private set; }
 
         private List<LevelSegmentData> segments;
 
@@ -67,13 +68,13 @@ namespace JumboJumps.EFTB.Manager
             MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
             SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
             SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
-            MediumDifficultyDistance = ConstGameplay.LevelGenerator.MediumDifficultyDistance;
-            HardDifficultyDistance = ConstGameplay.LevelGenerator.HardDifficultyDistance;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HardDifficultyTimePercentage;
 
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions);
             visualizer.Initialize();
 
-            config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyDistance, HardDifficultyDistance);
+            config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyTimePercentage, HardDifficultyTimePercentage);
 
             nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
             nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;

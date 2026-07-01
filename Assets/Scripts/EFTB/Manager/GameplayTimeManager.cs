@@ -61,18 +61,17 @@ namespace JumboJumps.EFTB.Manager
 
         private void HandleDifficultyAdjustment()
         {
-            float normalRemainingTime = limitPlayTime * (1 - ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage);
-            float hardRemainingTime = limitPlayTime * (1 - ConstGameplay.LevelGenerator.HardDifficultyTimePercentage);
+            LevelGeneratorManager levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
+            float normalRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.MediumDifficultyTimePercentage);
+            float hardRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.HardDifficultyTimePercentage);
 
             if (CurrentTimer <= normalRemainingTime && CurrentTimer > hardRemainingTime)
             {
                 currentDifficulty = GameplayDifficultyEnum.Normal;
-                DebugLogHelper.Log($"{currentDifficulty.ToString()}");
             }
             else if (CurrentTimer <= hardRemainingTime)
             {
                 currentDifficulty = GameplayDifficultyEnum.Hard;
-                DebugLogHelper.Log($"{currentDifficulty.ToString()}");
             }
         }
     }

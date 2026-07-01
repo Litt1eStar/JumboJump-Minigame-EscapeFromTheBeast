@@ -99,13 +99,18 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             float spawnY;
             if (mainCam != null)
             {
-                float distanceFromCamera = Mathf.Abs(mainCam.transform.position.z);
-                // Spawn 10% above the top boundary of the viewport
-                spawnY = mainCam.ViewportToWorldPoint(new Vector3(0.5f, 1.1f, distanceFromCamera)).y;
+                // Calculate the world-space height offset from camera center to top edge of screen
+                float verticalHalfSize = mainCam.orthographic 
+                    ? mainCam.orthographicSize 
+                    : Mathf.Abs(mainCam.transform.position.z) * Mathf.Tan(mainCam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+                
+                // Spawn with a safety margin (at least 5 units or 20% of screen height, whichever is larger) above the top edge
+                float safetyOffset = Mathf.Max(5f, verticalHalfSize * 0.4f);
+                spawnY = mainCam.transform.position.y + verticalHalfSize + safetyOffset;
             }
             else
             {
-                spawnY = segmentYPosition + eventData.TriggerYOffset + 10f;
+                spawnY = segmentYPosition + eventData.TriggerYOffset + 15f;
             }
 
             Vector3 spawnPosition = new Vector3(targetX, spawnY, 0f);
