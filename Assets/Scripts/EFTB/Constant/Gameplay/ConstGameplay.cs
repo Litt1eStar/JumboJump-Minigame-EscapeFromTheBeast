@@ -2,7 +2,7 @@
 {
     public static class ConstGameplay
     {
-        public const float LimitPlayTime = 10f;
+        public const float LimitPlayTime = 60f;
         public class LevelGenerator
         {
             public const int MaxSegmentAmount = 3;
@@ -10,6 +10,8 @@
             public const float SegmentRecycleTriggerOffset = 5f;
             public const float MediumDifficultyDistance = 200f; 
             public const float HardDifficultyDistance = 1000f; 
+            public const float MediumDifficultyTimePercentage = 0.5f;
+            public const float HardDifficultyTimePercentage = 0.7f;
         }
     }
 }

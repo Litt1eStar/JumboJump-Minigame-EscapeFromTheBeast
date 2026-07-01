@@ -1,4 +1,5 @@
-﻿using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.Gameplay;
 using System;
@@ -19,6 +20,8 @@ namespace JumboJumps.EFTB.Manager
         public event Action EventGameplayTimerFinished;
 
         private GameplayTimeVisualizer visualizer;
+        private GameplayDifficultyEnum currentDifficulty;
+        public GameplayDifficultyEnum CurrentDifficulty => currentDifficulty;
         public float CurrentTimer { get; private set; } = 0f;
         private float limitPlayTime;
 
@@ -27,6 +30,7 @@ namespace JumboJumps.EFTB.Manager
             visualizer = new GameplayTimeVisualizer();
             visualizer.Initialize(this);
 
+            currentDifficulty = GameplayDifficultyEnum.Easy;
             limitPlayTime = ConstGameplay.LimitPlayTime;
             CurrentTimer = limitPlayTime;
 
@@ -41,6 +45,7 @@ namespace JumboJumps.EFTB.Manager
             }
 
             CurrentTimer -= deltaTime;
+            HandleDifficultyAdjustment();
             EventGameplayTimerChanged?.Invoke(CurrentTimer);
         }
 
@@ -49,6 +54,23 @@ namespace JumboJumps.EFTB.Manager
             CurrentTimer = 0f;
 
             GameContext.Instance.Remove(this);
+        }
+
+        private void HandleDifficultyAdjustment()
+        {
+            float normalRemainingTime = limitPlayTime * (1 - ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage);
+            float hardRemainingTime = limitPlayTime * (1 - ConstGameplay.LevelGenerator.HardDifficultyTimePercentage);
+
+            if (CurrentTimer <= normalRemainingTime && CurrentTimer > hardRemainingTime)
+            {
+                currentDifficulty = GameplayDifficultyEnum.Normal;
+                DebugLogHelper.Log($"{currentDifficulty.ToString()}");
+            }
+            else if (CurrentTimer <= hardRemainingTime)
+            {
+                currentDifficulty = GameplayDifficultyEnum.Hard;
+                DebugLogHelper.Log($"{currentDifficulty.ToString()}");
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ namespace JumboJumps.EFTB.Manager
     public class LevelGeneratorManager
     {
         private GameDataManager gameDataManager;
+        private GameplayTimeManager gameplayTimeManager;
         private LevelGeneratorConfig config;
         private LevelGeneratorVisualizer visualizer;
 
@@ -59,6 +60,7 @@ namespace JumboJumps.EFTB.Manager
             this.playerTransform = playerTransform;
 
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
+            gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = gameDataManager.LevelSegmentData.Values.ToList();
             LaneXPositions = new float[5] { -2, -1, 0, 1, 2 };
@@ -141,19 +143,23 @@ namespace JumboJumps.EFTB.Manager
             nextYSpawnPosition += SegmentHeight;
         }
 
-        private SegmentDifficultyEnum GetCurrentDifficulty(float playerY)
+        private SegmentDifficultyEnum GetCurrentDifficulty()
         {
-            if (playerY < config.MediumDifficultyDistance)
+            if (gameplayTimeManager == null)
             {
                 return SegmentDifficultyEnum.Easy;
             }
-            else if (playerY < config.HardDifficultyDistance)
+
+            switch (gameplayTimeManager.CurrentDifficulty)
             {
-                return SegmentDifficultyEnum.Normal;
-            }
-            else
-            {
-                return SegmentDifficultyEnum.Hard;
+                case GameplayDifficultyEnum.Easy:
+                    return SegmentDifficultyEnum.Easy;
+                case GameplayDifficultyEnum.Normal:
+                    return SegmentDifficultyEnum.Normal;
+                case GameplayDifficultyEnum.Hard:
+                    return SegmentDifficultyEnum.Hard;
+                default:
+                    return SegmentDifficultyEnum.Easy;
             }
         }
 
@@ -165,8 +171,7 @@ namespace JumboJumps.EFTB.Manager
                 return null;
             }
 
-            float playerY = playerTransform != null ? playerTransform.position.y : 0f;
-            SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty(playerY);
+            SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty();
 
             List<LevelSegmentData> allSegments = segments;
             List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
