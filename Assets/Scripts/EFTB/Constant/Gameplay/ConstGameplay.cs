@@ -13,5 +13,11 @@
             public const float MediumDifficultyTimePercentage = 0.5f;
             public const float HardDifficultyTimePercentage = 0.7f;
         }
+
+        public class Cat
+        {
+            public const float SleepyCatLeftLaneSpawnPosition = -4.3f;
+            public const float SleepyCatRightLaneSpawnPosition = 3.3f;
+        }
     }
 }

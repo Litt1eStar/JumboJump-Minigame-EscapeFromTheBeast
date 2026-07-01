@@ -46,8 +46,10 @@ namespace JumboJumps.EFTB.State.Gameplay
             playerManager.Initialize();
 
             catManager = new CatManager();
-            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
-            catManager.Intialize(sceneCats, playerManager.PlayerTransform);
+            IEnumerable<GICat> sceneCats = null;
+            sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
+            
+            catManager.Intialize(sceneCats, playerManager.PlayerTransform);  
 
             collectibleManager = new CollectibleManager();  
             collectibleManager.Initialize();

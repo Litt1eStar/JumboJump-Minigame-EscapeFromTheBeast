@@ -4,6 +4,7 @@ using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Constant.Gameplay;
 
 namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 {
@@ -105,22 +106,15 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (isSleepyCat)
             {
-                // SleepyCat spawns on the side of the lane
-                if (eventData.TargetLaneIndex < 2)
+                if (eventData.TargetLaneIndex <= 2)
                 {
-                    targetX = -3f; // Left side of the lane
+                    targetX = ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition; 
                 }
                 else if (eventData.TargetLaneIndex > 2)
                 {
-                    targetX = 3f; // Right side of the lane
-                }
-                else
-                {
-                    // Center lane eventData defaults to Right side
-                    targetX = 3f;
+                    targetX = ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition; 
                 }
 
-                // Spawns at the event yOffset directly
                 spawnY = segmentYPosition + eventData.TriggerYOffset;
             }
             else
@@ -159,6 +153,8 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 var giCat = spawnedObj.GetComponent<GICat>();
                 if (giCat != null)
                 {
+                    SceneObjectContext.Instance.Register(giCat);
+
                     var catManager = GameContext.Instance.Get<CatManager>();
                     var playerManager = GameContext.Instance.Get<PlayerManager>();
                     if (catManager != null && playerManager != null)
@@ -196,7 +192,9 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                     {
                         var giCat = spawnedObjs[i].GetComponent<GICat>();
                         if (giCat != null)
-                        {
+                        { 
+                            SceneObjectContext.Instance.Deregister(giCat);
+                           
                             var catManager = GameContext.Instance.Get<CatManager>();
                             if (catManager != null)
                             {

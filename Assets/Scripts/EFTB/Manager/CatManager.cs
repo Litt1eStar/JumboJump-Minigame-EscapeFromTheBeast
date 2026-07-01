@@ -2,6 +2,7 @@ using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Interface;
 using JumboJumps.EFTB.State;
 using JumboJumps.EFTB.Utilities;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,22 +11,31 @@ namespace JumboJumps.EFTB.Manager
     public class CatManager
     {
         public List<ICatStateController> Cats {  get; private set; }
-        private Dictionary<GICat, ICatStateController> catControllers = new();
+        private Dictionary<GICat, ICatStateController> catControllers;
 
-        public void Intialize(IEnumerable<GICat> sceneCats, Transform playerTarget)
+        public CatManager()
         {
             Cats = new List<ICatStateController>();
             catControllers = new Dictionary<GICat, ICatStateController>();
-            
-            foreach(var giCat in sceneCats)
+        }
+
+        public void Intialize(IEnumerable<GICat> sceneCats, Transform playerTarget)
+        {
+            if (sceneCats != null)
             {
-                if (giCat == null) continue;
-                var controller = giCat.BuildStateController(playerTarget);
-                BaseStateController baseController = controller as BaseStateController;
-                baseController.Initialize();
-                baseController.StartStateController();
-                Cats.Add(controller);
-                catControllers.Add(giCat, controller);
+                foreach(var giCat in sceneCats)
+                {
+                    if (giCat == null) continue;
+                    var controller = giCat.BuildStateController(playerTarget);
+                    BaseStateController baseController = controller as BaseStateController;
+                    if (baseController != null)
+                    {
+                        baseController.Initialize();
+                        baseController.StartStateController();
+                        Cats.Add(controller);
+                        catControllers.Add(giCat, controller);
+                    }
+                }
             }
             GameContext.Instance.Add(this);
         }
@@ -37,17 +47,19 @@ namespace JumboJumps.EFTB.Manager
 
             var controller = giCat.BuildStateController(playerTarget);
             BaseStateController baseController = controller as BaseStateController;
-            baseController.Initialize();
-            baseController.StartStateController();
-            
-            Cats.Add(controller);
-            catControllers.Add(giCat, controller);
-            DebugLogHelper.Log($"[CatManager] Dynamically registered cat: {giCat.name}");
+            if (baseController != null)
+            {
+                baseController.Initialize();
+                baseController.StartStateController();
+                Cats.Add(controller);
+                catControllers.Add(giCat, controller);
+                DebugLogHelper.Log($"[CatManager] Dynamically registered cat: {giCat.name}");
+            }
         }
 
         public void DeregisterCat(GICat giCat)
         {
-            if (giCat == null) return;
+            if (giCat == null || catControllers == null) return;
             if (catControllers.TryGetValue(giCat, out var controller))
             {
                 controller.Dispose();
@@ -59,20 +71,28 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            foreach (var cat in Cats)
+            if (Cats != null)
             {
-                cat.Dispose();
+                foreach (var cat in Cats)
+                {
+                    cat?.Dispose();
+                }
+                Cats.Clear();
             }
-            Cats.Clear();
-            catControllers.Clear();
+            catControllers?.Clear();
             GameContext.Instance.Remove(this);
         }
 
         public void UpdateLogic(float deltaTime)
         {
-            foreach (var cat in Cats)
+            if (Cats == null) return;
+
+            for (int i = Cats.Count - 1; i >= 0; i--)
             {
-                cat.UpdateLogic(deltaTime);
+                if (i < Cats.Count && Cats[i] != null)
+                {
+                    Cats[i].UpdateLogic(deltaTime);
+                }
             }
         }
     }
