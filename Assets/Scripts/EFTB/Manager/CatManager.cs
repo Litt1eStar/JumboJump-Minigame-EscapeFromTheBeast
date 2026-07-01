@@ -26,6 +26,20 @@ namespace JumboJumps.EFTB.Manager
                 foreach(var giCat in sceneCats)
                 {
                     if (giCat == null) continue;
+
+                    float currentX = giCat.transform.position.x;
+                    if (currentX > -2.5f && currentX < 2.5f)
+                    {
+                        float targetX = (currentX <= 0f) 
+                            ? Constant.Gameplay.ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition 
+                            : Constant.Gameplay.ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
+                        
+                        giCat.transform.position = new Vector3(targetX, giCat.transform.position.y, giCat.transform.position.z);
+                        
+                        var lookDir = (targetX < 0f) ? CatSightDirection.Right : CatSightDirection.Left;
+                        giCat.SetDirection(lookDir);
+                    }
+
                     var controller = giCat.BuildStateController(playerTarget);
                     BaseStateController baseController = controller as BaseStateController;
                     if (baseController != null)
