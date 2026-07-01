@@ -15,7 +15,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             
             if (uiGameplayCanvas == null)
             {
-                DebugLogHelper.LogError("UIGameplayCanvas is not found in the scene. Please ensure it is present and properly initialized.")
+                DebugLogHelper.LogError("UIGameplayCanvas is not found in the scene. Please ensure it is present and properly initialized.");
             }
 
             this.gameplayTimeManager = gameplayTimeManager;
