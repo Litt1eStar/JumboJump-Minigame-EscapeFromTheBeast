@@ -15,6 +15,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         private GameDataManager gameDataManager;
         private float[] laneXPosition;
+        private CatSightDirection currentCatSightDirection;
 
         public LevelGeneratorVisualizer(GameDataManager gameDataManager, float[] laneXPosition)
         {
@@ -108,11 +109,15 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             {
                 if (eventData.TargetLaneIndex <= 2)
                 {
-                    targetX = ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition; 
+                    //Cat spawn on left, look to right
+                    targetX = ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition;
+                    currentCatSightDirection = CatSightDirection.Right; 
                 }
                 else if (eventData.TargetLaneIndex > 2)
                 {
-                    targetX = ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition; 
+                    //Cat spawn on right, look to left
+                    targetX = ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
+                    currentCatSightDirection = CatSightDirection.Left;
                 }
 
                 spawnY = segmentYPosition + eventData.TriggerYOffset;
@@ -151,6 +156,8 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             if (isSleepyCat)
             {
                 var giCat = spawnedObj.GetComponent<GICat>();
+                giCat.SetDirection(currentCatSightDirection);
+
                 if (giCat != null)
                 {
                     SceneObjectContext.Instance.Register(giCat);
