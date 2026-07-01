@@ -1,7 +1,7 @@
 ﻿{
   "level_segments": [
     {
-      "Id": 1,
+      "Id": 7,
       "SegmentPrefabName": "Prefab_Segment_Easy_01",
       "SegmentHeight": 20.0,
       "Difficulty": 1,
@@ -13,92 +13,11 @@
         },
         {
           "LaneIndex": 2,
-          "YOffset": 6.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 8.0,
-          "Speed": 4.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 8.0,
-          "Speed": 4.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 2,
-      "SegmentPrefabName": "Prefab_Segment_Easy_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 8.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 12.0,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 16.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": []
-    },
-    {
-      "Id": 3,
-      "SegmentPrefabName": "Prefab_Segment_Easy_EventTets",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 6.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
           "YOffset": 10.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
@@ -106,74 +25,93 @@
           "LaneIndex": 1,
           "YOffset": 14.0,
           "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": []
-    },
-    {
-      "Id": 4,
-      "SegmentPrefabName": "Prefab_Segment_Medium_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 6.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 16.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 18.0,
-          "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
           "TargetLaneIndex": 2,
-          "TriggerYOffset": 3.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
+          "TriggerYOffset": 8.0,
+          "Speed": 0.0,
+          "PrefabName": "Prefab_Event_SleepyCat"
         }
       ]
     },
     {
-      "Id": 5,
-      "SegmentPrefabName": "Prefab_Segment_Medium_02",
+      "Id": 8,
+      "SegmentPrefabName": "Prefab_Segment_Medium_01",
       "SegmentHeight": 20.0,
       "Difficulty": 1,
-      "PrePlacedObject": [],
+      "PrePlacedObject": [
+        {
+          "LaneIndex": 2,
+          "YOffset": 4.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
+          "LaneIndex": 2,
+          "YOffset": 10.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 2,
+          "YOffset": 14.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        }
+      ],
       "LaneEventData": [
         {
           "TargetLaneIndex": 1,
-          "TriggerYOffset": 2.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
+          "TriggerYOffset": 10.0,
+          "Speed": 0.0,
+          "PrefabName": "Prefab_Event_SleepyCat"
         },
         {
           "TargetLaneIndex": 3,
           "TriggerYOffset": 10.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
+          "Speed": 0.0,
+          "PrefabName": "Prefab_Event_SleepyCat"
+        }
+      ]
+    },
+    {
+      "Id": 9,
+      "SegmentPrefabName": "Prefab_Segment_Hard_01",
+      "SegmentHeight": 20.0,
+      "Difficulty": 3,
+      "PrePlacedObject": [
+        {
+          "LaneIndex": 3,
+          "YOffset": 4.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
+          "LaneIndex": 2,
+          "YOffset": 6.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 1,
+          "YOffset": 12.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 3,
+          "YOffset": 16.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        }
+      ],
+      "LaneEventData": [
+        {
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 6.0,
+          "Speed": 0.0,
+          "PrefabName": "Prefab_Event_SleepyCat"
+        },
+        {
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 12.0,
+          "Speed": 0.0,
+          "PrefabName": "Prefab_Event_SleepyCat"
         }
       ]
     }
