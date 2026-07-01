@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -79,6 +79,57 @@ namespace JumboJumps.EFTB.Utilities
                 }
             }
             return typed;
+        }
+
+        public void Register(MonoBehaviour obj)
+        {
+            if (obj == null) return;
+            Type key = obj.GetType();
+
+            if (objects == null) objects = new Dictionary<Type, MonoBehaviour>();
+            if (objectGroups == null) objectGroups = new Dictionary<Type, List<MonoBehaviour>>();
+
+            if (!objects.ContainsKey(key))
+            {
+                objects.Add(key, obj);
+            }
+
+            if (!objectGroups.TryGetValue(key, out var list))
+            {
+                list = new List<MonoBehaviour>();
+                objectGroups.Add(key, list);
+            }
+            if (!list.Contains(obj))
+            {
+                list.Add(obj);
+            }
+        }
+
+        public void Deregister(MonoBehaviour obj)
+        {
+            if (obj == null || objects == null || objectGroups == null) return;
+            Type key = obj.GetType();
+
+            if (objects.TryGetValue(key, out var stored) && stored == obj)
+            {
+                objects.Remove(key);
+                if (objectGroups.TryGetValue(key, out var list) && list.Count > 1)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item != obj)
+                        {
+                            objects.Add(key, item);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (objectGroups.TryGetValue(key, out var groupList))
+            {
+                groupList.Remove(obj);
+            }
         }
     }
 }
