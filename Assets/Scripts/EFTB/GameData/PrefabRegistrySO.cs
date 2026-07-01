@@ -1,31 +1,23 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
 namespace JumboJumps.EFTB.GameData
 {
     [CreateAssetMenu(fileName = "PrefabRegistry", menuName = "EFTB/PrefabRegistry")]
     public class PrefabRegistrySO : ScriptableObject
     {
-        [Serializable]
-        public struct PrefabEntry
+        public List<GameObject> registry = new();
+        public GameObject GetPrefab(string prefabName)
         {
-            public string key;
-            public GameObject prefab;
-        }
+            if (string.IsNullOrEmpty(prefabName)) return null;
 
-        public List<PrefabEntry> registry = new();
-        public GameObject GetPrefab(string key)
-        {
-            if (string.IsNullOrEmpty(key)) return null;
+            var prefab = registry.Find(e => e.name == prefabName);
 
-            var entry = registry.Find(e => e.key == key);
-
-            if (entry.prefab == null)
+            if (prefab == null)
             {
-                Debug.LogWarning($"[{GetType().Name}] Prefab not found for key: {key}");
+                Debug.LogWarning($"[{GetType().Name}] Prefab not found for name: {prefabName}");
             }
 
-            return entry.prefab;
+            return prefab;
         }
     }
 }
