@@ -22,6 +22,9 @@ namespace JumboJumps.EFTB.GI
         
         [SerializeField]
         private float range;
+
+        [SerializeField]
+        private Vector3 direction;
         
         [SerializeField]
         private LayerMask sightBlockerLayerMask;
@@ -52,6 +55,7 @@ namespace JumboJumps.EFTB.GI
         {
             this.target = target;
             var controller = config.BuildStateController(this, target, uiCatStateLabel);
+            direction = -sightOrigin.right;
             return controller;
         }
 
@@ -81,7 +85,7 @@ namespace JumboJumps.EFTB.GI
         private bool ComputeVisible()
         {
             Vector2 origin = sightOrigin.position;
-            Vector2 facing = -sightOrigin.up;
+            Vector2 facing = direction;
             Vector2 toTarget = target.position - sightOrigin.position;
 
             if (toTarget.sqrMagnitude > range * range) return false;
@@ -91,13 +95,18 @@ namespace JumboJumps.EFTB.GI
             return hit.collider == null;
         }
 
+        public void SetDirection(Vector3 direction)
+        {
+            this.direction = direction;
+        }
+
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (!drawGizmo || sightOrigin == null) return;
 
             Vector2 origin = sightOrigin.position;
-            Vector2 facing = -sightOrigin.up; 
+            Vector2 facing = -sightOrigin.right; 
             if (facing.sqrMagnitude < 0.0001f) return;
 
             Gizmos.color = IsTargetInSight ? colorSpotted : colorClear;
