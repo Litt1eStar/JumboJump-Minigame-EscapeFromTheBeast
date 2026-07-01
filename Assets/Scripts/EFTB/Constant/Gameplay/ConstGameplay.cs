@@ -2,7 +2,7 @@
 {
     public static class ConstGameplay
     {
-        public const float LimitPlayTime = 60f;
+        public const float LimitPlayTime = 10f;
         public class LevelGenerator
         {
             public const int MaxSegmentAmount = 3;
