@@ -1,3 +1,4 @@
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.State.Player;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace JumboJumps.EFTB.Manager
             stateController.Initialize();
             stateController.StartStateController();
 
-            PlayerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+            PlayerTransform = SceneObjectContext.Instance.Get<GIPlayer>().transform;
 
             GameContext.Instance.Add(this);
         }
