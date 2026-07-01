@@ -52,6 +52,9 @@ namespace JumboJumps.EFTB.Manager
         public void Dispose()
         {
             CurrentTimer = 0f;
+            
+            visualizer?.Dispose();
+            visualizer = null;
 
             GameContext.Instance.Remove(this);
         }

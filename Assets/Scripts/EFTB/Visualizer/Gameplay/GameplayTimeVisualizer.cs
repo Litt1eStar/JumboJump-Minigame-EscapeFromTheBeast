@@ -12,6 +12,12 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         public void Initialize(GameplayTimeManager gameplayTimeManager)
         {
             uiGameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
+            
+            if (uiGameplayCanvas == null)
+            {
+                DebugLogHelper.LogError("UIGameplayCanvas is not found in the scene. Please ensure it is present and properly initialized.")
+            }
+
             this.gameplayTimeManager = gameplayTimeManager;
 
             Subscribe();
