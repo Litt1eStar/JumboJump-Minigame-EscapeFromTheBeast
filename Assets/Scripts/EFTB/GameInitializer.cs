@@ -1,3 +1,4 @@
+using JumboJumps.EFTB.GameData;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
@@ -8,6 +9,9 @@ namespace JumboJumps.EFTB
     {
         [SerializeField]
         private CoroutineHelper coroutineHelper;
+
+        [SerializeField]
+        private GameDataManager gameDataManager;
 
         private GameManager gameManager;
 
@@ -22,10 +26,6 @@ namespace JumboJumps.EFTB
             StartGame();
         }
 
-        private void Update()
-        {            
-            gameManager.UpdateLogic(Time.deltaTime);
-        }
 
         private void OnDestroy()
         {
@@ -38,6 +38,12 @@ namespace JumboJumps.EFTB
             gameManager.Initialize();
 
             coroutineHelper.Initialize();
+            gameDataManager.Initialize();
+        }
+
+        private void Update()
+        {
+            gameManager.UpdateLogic(Time.deltaTime);
         }
 
         private void Dispose()
@@ -45,6 +51,11 @@ namespace JumboJumps.EFTB
             if (coroutineHelper != null)
             {
                 coroutineHelper.Dispose();
+            }
+
+            if (gameDataManager != null)
+            {
+                gameDataManager.Dispose();
             }
 
             gameManager?.Dispose();

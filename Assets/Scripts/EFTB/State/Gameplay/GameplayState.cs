@@ -60,8 +60,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             poolManager.Initialize();
 
             levelGeneratorManager = new LevelGeneratorManager();
-            GILevelGenerator giLevelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
-            levelGeneratorManager.Initialize(giLevelGenerator.configSo, playerManager.PlayerTransform);
+            levelGeneratorManager.Initialize(playerManager.PlayerTransform);
         }
 
         public override void OnEnterState()

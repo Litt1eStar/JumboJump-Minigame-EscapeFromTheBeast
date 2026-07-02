@@ -14,7 +14,26 @@ namespace JumboJumps.EFTB.State.Player
         public PlayerVisualizer Visualizer { get; private set; }
         public Input2DManager Input2DManager { get; private set; }
         public int CurrentLaneIndex { get; set; } = 2;
-        public float[] LaneXPositions { get; private set; }
+        private float[] laneXPositions;
+        public float[] LaneXPositions
+        {
+            get
+            {
+                if (laneXPositions == null)
+                {
+                    LevelGeneratorManager levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
+                    if (levelGeneratorManager != null)
+                    {
+                        laneXPositions = levelGeneratorManager.LaneXPositions;
+                    }
+                    else
+                    {
+                        laneXPositions = new float[5] { -2f, -1f, 0f, 1f, 2f };
+                    }
+                }
+                return laneXPositions;
+            }
+        }
         public SwipeDirectionEnum LastSwipeDirection { get; set; }
 
         public PlayerStateController()
@@ -26,16 +45,6 @@ namespace JumboJumps.EFTB.State.Player
             if (Input2DManager == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] {nameof(PlayerStateController)}| Failed to get {typeof(Input2DManager).AssemblyQualifiedName} from SceneObjectContext");
-            }
-
-            GILevelGenerator levelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
-            if (levelGenerator != null && levelGenerator.configSo != null)
-            {
-                LaneXPositions = levelGenerator.configSo.laneXPositions;
-            }
-            else
-            {
-                DebugLogHelper.LogError($"[{GetType().Name}] GILevelGenerator or its config is missing! Falling back to default LaneXPositions.");
             }
 
 
@@ -50,7 +59,6 @@ namespace JumboJumps.EFTB.State.Player
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-            Visualizer.giCamera.UpdateLogic(deltaTime);
         }
     }
 }

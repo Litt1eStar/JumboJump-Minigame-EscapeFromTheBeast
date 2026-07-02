@@ -14,6 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumboJump.EFTB.GameData.LevelSegment.LevelSegmentSO
   segmentPrefab: {fileID: 6526298158145371105, guid: a619575fb03cd4142b0508ea47cebf4f, type: 3}
   segmentHeight: 20
-  prePlacedObjectsData: []
+  prePlacedObjectsData:
+  - laneIndex: 0
+    yOffset: 5
+    prefab: {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
+  - laneIndex: 1
+    yOffset: 8
+    prefab: {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
+  - laneIndex: 2
+    yOffset: 12
+    prefab: {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
+  - laneIndex: 3
+    yOffset: 15
+    prefab: {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
+  - laneIndex: 4
+    yOffset: 8
+    prefab: {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
+  - laneIndex: 0
+    yOffset: 9
+    prefab: {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
+  - laneIndex: 1
+    yOffset: 12
+    prefab: {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
   spawnEventData: []
   difficulty: 1
