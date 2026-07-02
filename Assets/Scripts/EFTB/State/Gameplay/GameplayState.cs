@@ -13,6 +13,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         protected override string SceneName => ConstScene.GAMEPLAY;
 
         private GameplayStateManager gameplayStateManager;
+        private LevelGeneratorManager levelGeneratorManager;
         private PlayerManager playerManager;
         private CatManager catManager;
         private CollectibleManager collectibleManager;
@@ -21,6 +22,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private GameStateController stateController;
 
         private Input2DManager input2DManager;
+        private ObjectPoolManager poolManager;
 
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
@@ -43,7 +45,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
             catManager.Intialize(sceneCats, playerManager.PlayerTransform);
 
-            collectibleManager = new CollectibleManager();
+            collectibleManager = new CollectibleManager();  
             collectibleManager.Initialize();
 
             gameplayController = new GameplayController();
@@ -53,6 +55,13 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayController.Initialize(gameplayStateManager.StateController);
             gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
+
+            poolManager = new ObjectPoolManager();
+            poolManager.Initialize();
+
+            levelGeneratorManager = new LevelGeneratorManager();
+            GILevelGenerator giLevelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
+            levelGeneratorManager.Initialize(giLevelGenerator.configSo, playerManager.PlayerTransform);
         }
 
         public override void OnEnterState()
@@ -70,13 +79,19 @@ namespace JumboJumps.EFTB.State.Gameplay
             playerManager?.Dispose();
             playerManager = null;
 
+            levelGeneratorManager?.Dispose();
+            levelGeneratorManager = null;
+
+            poolManager?.Dispose();
+            poolManager = null;
+
             catManager?.Dispose();
             catManager = null;
 
             collectibleManager?.Dispose();
             collectibleManager = null;
 
-            if(input2DManager != null)
+            if (input2DManager != null)
             {
                 input2DManager.Dispose();
                 input2DManager = null;
@@ -98,6 +113,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayStateManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
+            levelGeneratorManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
 
             input2DManager.UpdateLogic(deltaTime);

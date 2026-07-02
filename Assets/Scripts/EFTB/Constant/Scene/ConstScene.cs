@@ -3,6 +3,6 @@
     public static class ConstScene
     {
         public const string MAIN_MENU = "MainMenu";
-        public const string GAMEPLAY = "Gameplay";
+        public const string GAMEPLAY = "Gameplay-Vertical";
     }
 }

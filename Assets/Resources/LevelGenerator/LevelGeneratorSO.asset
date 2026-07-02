@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bca6ab448fdc51e41b7760c6bfdea9ba, type: 3}
+  m_Name: LevelGeneratorSO
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJump.EFTB.GameData.LevelSegment.LevelGeneratorConfigSO
+  segmentTemplates:
+  - {fileID: 11400000, guid: 8a3834708ea68b246bbd541984ff51c1, type: 2}
+  - {fileID: 11400000, guid: 3c5215765e63fe04e9f50e4e8fce316e, type: 2}
+  - {fileID: 11400000, guid: 0d4e2da118ea91240b49aab7c95af8b5, type: 2}
+  - {fileID: 11400000, guid: e1a84438c97b62f48a19eb249e2339a0, type: 2}
+  - {fileID: 11400000, guid: 0b52c0ae04cdd8d43b398fa974464d43, type: 2}
+  laneXPositions:
+  - -2
+  - -1
+  - 0
+  - 1
+  - 2
+  maxSegmentAmount: 3
+  segmentHeight: 20
+  mediumDifficultyDistance: 500
+  hardDifficultyDistance: 1500

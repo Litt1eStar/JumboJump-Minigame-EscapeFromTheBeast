@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.State;
 using JumboJumps.EFTB.UI;
 using JumboJumps.EFTB.Utilities;
@@ -20,7 +20,7 @@ namespace JumboJumps.EFTB.Visualizer
             this.label = label;
             this.controller = controller;
 
-            if(controller != null)
+            if (controller != null)
             {
                 this.controller.EventStateChanged += OnStateChange;
                 this.controller.EventTimerChanged += OnTransitionTimerCountdown;
@@ -55,7 +55,7 @@ namespace JumboJumps.EFTB.Visualizer
         /// </summary>
         public void Subscribe()
         {
-            if(giCat)
+            if (giCat)
             {
                 giCat.EventTargetSpotted += OnSpotted;
                 giCat.EventTargetLost += OnLost;
@@ -74,7 +74,7 @@ namespace JumboJumps.EFTB.Visualizer
 
         public void OnStateChange(BaseState prev, BaseState next)
         {
-            if(label == null || next == null) return;
+            if (label == null || next == null) return;
             label.SetText(next.GetType().Name);
             label.SetTimerCountdown("");
         }

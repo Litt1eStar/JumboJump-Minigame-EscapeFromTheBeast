@@ -16,6 +16,8 @@ namespace JumboJumps.EFTB.GI
         [SerializeField]
         private float playerMovementSpeed = 5f;
 
+        public Vector3 PlayerPosition => playerTransform.position;
+
         public void Initialize()
         {
 
@@ -26,10 +28,19 @@ namespace JumboJumps.EFTB.GI
 
         }
 
-        public void Move(float input)
+        public void SetXPosition(float x)
         {
-            FlipSpriteBasedFromInputDirection(input);
-            playerTransform.position += new Vector3(input * playerMovementSpeed * Time.deltaTime, 0, 0);
+            playerTransform.position = new Vector3(x, playerTransform.position.y, playerTransform.position.z);
+        }
+
+        public void SetPlayerOnMiddleLane()
+        {
+            playerTransform.position = Vector3.zero;
+        }
+
+        public void MoveForward(float deltaTime)
+        {
+            playerTransform.position += new Vector3(0, playerMovementSpeed * deltaTime, 0);
         }
 
         private void FlipSpriteBasedFromInputDirection(float input)

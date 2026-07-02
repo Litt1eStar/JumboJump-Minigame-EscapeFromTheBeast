@@ -1,5 +1,6 @@
-﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Utilities;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.Visualizer
 {
@@ -7,32 +8,40 @@ namespace JumboJumps.EFTB.Visualizer
     {
         private GIPlayer giPlayer;
         public GICamera giCamera { get; private set;}
+        public Vector3 PlayerPosition => giPlayer != null ? giPlayer.PlayerPosition : Vector3.zero;
 
         public void Initialize()
         {
             giPlayer = SceneObjectContext.Instance.Get<GIPlayer>();
-            if(giPlayer == null)
+            if (giPlayer == null)
             {
                 DebugLogHelper.LogError("GIPlayer not found in SceneObjectContext. PlayerVisualizer initialization failed.");
             }
 
             giCamera = SceneObjectContext.Instance.Get<GICamera>(); 
-            if(giCamera == null)
+            if (giCamera == null)
             {
                 DebugLogHelper.LogError("GICamera not found in SceneObjectContext. PlayerVisualizer initialization failed.");
             }
         }
+
+        public void SetPlayerOnMiddleLane()
+        {
+            giPlayer.SetPlayerOnMiddleLane();
+        }
+
         public void Dispose()
         {
             giPlayer = null;
         }
-        public void Move(float input)
+        public void MoveForward(float deltaTime)
         {
-            giPlayer.Move(input);
+            giPlayer.MoveForward(deltaTime);
         }
-        public void Idle()
+
+        public void SetXPosition(float x) 
         {
-            //Idle Logic
-        }   
+            giPlayer.SetXPosition(x);
+        }
     }
 }

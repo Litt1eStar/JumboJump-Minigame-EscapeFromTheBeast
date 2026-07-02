@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
@@ -43,7 +43,7 @@ namespace JumboJumps.EFTB.GI
 
         public void UpdateLogic(float deltaTime)
         {
-            if(target == null)
+            if (target == null)
             {
                 Debug.LogWarning("GICamera target is not assigned.");
                 return;
@@ -62,7 +62,7 @@ namespace JumboJumps.EFTB.GI
 
         private Vector3 ClampToBounds(Vector3 position)
         {
-            if(boundMin == null || boundMax == null)
+            if (boundMin == null || boundMax == null)
             {
                 Debug.LogWarning("GICamera bounds are not assigned.");
                 return position;
