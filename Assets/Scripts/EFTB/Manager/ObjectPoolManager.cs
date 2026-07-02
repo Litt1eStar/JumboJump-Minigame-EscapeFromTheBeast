@@ -35,7 +35,9 @@ namespace JumboJumps.EFTB.Manager
             Quaternion rotation, 
             Transform parent = null)
         {
-            string key = prefab.name;
+            if (prefab == null) return null;
+
+            string key = prefab.GetInstanceID().ToString();
             PoolableObject poolableObject = null;
 
             if (pools.TryGetValue(key, out var queue) && queue.Count > 0)

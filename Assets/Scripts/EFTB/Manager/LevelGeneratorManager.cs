@@ -66,8 +66,8 @@ namespace JumboJumps.EFTB.Manager
 
         private void RecycleSegment()
         {
-            visualizer.RecycleOldestSegment();
-            segmentQueue.Dequeue();
+            GameObject oldestSegment = segmentQueue.Dequeue();
+            visualizer.RecycleSegment(oldestSegment);
 
             GameObject newSegment = SpawnSegmentAt(nextYSpawnPosition);
             segmentQueue.Enqueue(newSegment);

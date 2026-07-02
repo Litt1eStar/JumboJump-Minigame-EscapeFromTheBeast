@@ -10,11 +10,11 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
     {
         private GILevelGenerator gILevelGenerator;
         private ObjectPoolManager poolManager;
-        private Queue<GameObject> activeSegments = new();
 
         public void Initialize()
         {
-            gILevelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
+            gILevelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>(); 
+
             if (gILevelGenerator == null)
             {
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find GILevelGenerator in SceneObjectContext");
@@ -22,9 +22,10 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
 
             poolManager = GameContext.Instance.Get<ObjectPoolManager>();
+            
             if (poolManager == null)
             {
-                DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
+                DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContext");
                 return;
             }
         }
@@ -32,7 +33,6 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         public void Dispose()
         {
             gILevelGenerator = null;
-            activeSegments.Clear();
         }
 
         public GameObject SpawnSegment(GameObject segmentPrefab, float yPosition)
@@ -49,16 +49,14 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             Vector3 position = new Vector3(0, yPosition, 0);
             GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity, gILevelGenerator.transform);
-            activeSegments.Enqueue(segment);
             return segment;
         }
 
-        public void RecycleOldestSegment()
+        public void RecycleSegment(GameObject segment)
         {
-            if (activeSegments.Count <= 0 || poolManager == null) return;
+            if (poolManager == null || segment == null) return;
 
-            GameObject oldestSegment = activeSegments.Dequeue();
-            poolManager.Recycle(oldestSegment);
+            poolManager.Recycle(segment);
         }
     }
 }
