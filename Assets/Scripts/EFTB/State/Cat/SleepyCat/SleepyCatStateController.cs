@@ -37,5 +37,11 @@ namespace JumboJumps.EFTB.State.Cat.SleepyCat
             base.UpdateLogic(deltaTime);
             visualizer.UpdateLogic(deltaTime);
         }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            visualizer?.Dispose();
+        }
     }
 }

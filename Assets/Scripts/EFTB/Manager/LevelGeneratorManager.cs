@@ -17,8 +17,8 @@ namespace JumboJumps.EFTB.Manager
         private GameplayTimeManager gameplayTimeManager;
         private LevelGeneratorConfig config;
         private LevelGeneratorVisualizer visualizer;
-
         public LevelGeneratorConfig Config => config;
+
         private class ActiveSegment
         {
             public LevelSegmentData Template { get; }

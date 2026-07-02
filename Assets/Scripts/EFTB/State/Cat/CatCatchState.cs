@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.Cat.SleepyCat;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
@@ -19,8 +19,14 @@ namespace JumboJumps.EFTB.State.Cat
         {
             base.OnEnterState();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-
-            gameplayStateManager.GameplayController.InvokeFinishLevel(GameStatus.Lose);
+            if (gameplayStateManager != null && gameplayStateManager.GameplayController != null)
+            {
+                gameplayStateManager.GameplayController.InvokeFinishLevel(GameStatus.Lose);
+            }
+            else
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] Failed to retrieve GameplayStateManager to trigger game over.");
+            }
         }
 
         public override void OnExitState()
