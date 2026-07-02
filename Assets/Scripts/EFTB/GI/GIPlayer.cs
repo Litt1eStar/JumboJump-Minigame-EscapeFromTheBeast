@@ -4,6 +4,7 @@ namespace JumboJumps.EFTB.GI
 {
     public class GIPlayer : MonoBehaviour
     {
+        [Header("Player Reference")]
         [SerializeField]
         private Transform playerTransform;
 
@@ -13,8 +14,12 @@ namespace JumboJumps.EFTB.GI
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
+        [Header("Player Configuration")]
         [SerializeField]
         private float playerMovementSpeed = 5f;
+
+        [SerializeField]
+        private Transform initialStartPosition;
 
         public Vector3 PlayerPosition => playerTransform.position;
 
@@ -33,9 +38,9 @@ namespace JumboJumps.EFTB.GI
             playerTransform.position = new Vector3(x, playerTransform.position.y, playerTransform.position.z);
         }
 
-        public void SetPlayerOnMiddleLane()
+        public void SetInitialStartPosition()
         {
-            playerTransform.position = Vector3.zero;
+            transform.position = initialStartPosition.position;
         }
 
         public void MoveForward(float deltaTime)

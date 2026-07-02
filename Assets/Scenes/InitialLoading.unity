@@ -1048,6 +1048,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameInitializer
       objectReference: {fileID: 0}
+    - target: {fileID: 8680373453304759209, guid: 9e5598831d0d5f44da5efce09fb23b88, type: 3}
+      propertyPath: localGameData
+      value: 
+      objectReference: {fileID: 4900000, guid: 61743feeda0e0da48b2cc1a88ce28a22, type: 3}
+    - target: {fileID: 8680373453304759209, guid: 9e5598831d0d5f44da5efce09fb23b88, type: 3}
+      propertyPath: prefabRegistry
+      value: 
+      objectReference: {fileID: 11400000, guid: 66904e17ae4e4f244be653186c8dd7a5, type: 2}
     - target: {fileID: 8684004947479730063, guid: 9e5598831d0d5f44da5efce09fb23b88, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.5033
