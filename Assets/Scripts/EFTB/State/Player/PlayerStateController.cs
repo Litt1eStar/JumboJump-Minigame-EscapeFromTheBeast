@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
@@ -14,7 +14,26 @@ namespace JumboJumps.EFTB.State.Player
         public PlayerVisualizer Visualizer { get; private set; }
         public Input2DManager Input2DManager { get; private set; }
         public int CurrentLaneIndex { get; set; } = 2;
-        public float[] LaneXPositions { get; private set; }
+        private float[] laneXPositions;
+        public float[] LaneXPositions
+        {
+            get
+            {
+                if (laneXPositions == null)
+                {
+                    LevelGeneratorManager levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
+                    if (levelGeneratorManager != null)
+                    {
+                        laneXPositions = levelGeneratorManager.LaneXPositions;
+                    }
+                    else
+                    {
+                        laneXPositions = new float[5] { -2f, -1f, 0f, 1f, 2f };
+                    }
+                }
+                return laneXPositions;
+            }
+        }
         public SwipeDirectionEnum LastSwipeDirection { get; set; }
 
         public PlayerStateController()
@@ -23,19 +42,9 @@ namespace JumboJumps.EFTB.State.Player
             Visualizer.Initialize();
 
             Input2DManager = SceneObjectContext.Instance.Get<Input2DManager>(); 
-            if(Input2DManager == null)
+            if (Input2DManager == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] {nameof(PlayerStateController)}| Failed to get {typeof(Input2DManager).AssemblyQualifiedName} from SceneObjectContext");
-            }
-
-            LevelGeneratorManager levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
-            if(levelGeneratorManager != null)
-            {
-                LaneXPositions = levelGeneratorManager.LaneXPositions;
-            }
-            else
-            {
-                LaneXPositions = new float[] { -2f, -1f, 0f, 1f, 2f };
             }
 
 

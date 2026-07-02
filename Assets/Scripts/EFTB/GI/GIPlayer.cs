@@ -22,6 +22,7 @@ namespace JumboJumps.EFTB.GI
         private Transform initialStartPosition;
 
         public Vector3 PlayerPosition => playerTransform.position;
+
         public void Initialize()
         {
 

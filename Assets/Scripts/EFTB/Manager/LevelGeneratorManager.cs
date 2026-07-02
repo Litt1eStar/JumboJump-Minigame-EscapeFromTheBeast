@@ -75,7 +75,7 @@ namespace JumboJumps.EFTB.Manager
 
         public void UpdateLogic(float deltaTime)
         {
-            if(playerTransform.position.y >= nextTriggerPosition)
+            if (playerTransform.position.y >= nextTriggerPosition)
             {
                 RecycleSegment();
             }

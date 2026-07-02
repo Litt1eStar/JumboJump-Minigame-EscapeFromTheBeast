@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.UI
@@ -21,7 +21,7 @@ namespace JumboJumps.EFTB.UI
 
         public void SetTimerCountdown(string text)
         {
-            if(timerCountdown != null)
+            if (timerCountdown != null)
             {
                 timerCountdown.text = text;
             }

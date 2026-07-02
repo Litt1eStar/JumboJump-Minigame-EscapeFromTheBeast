@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.UI.InitialLoading
 {
@@ -9,7 +9,7 @@ namespace JumboJumps.EFTB.UI.InitialLoading
 
         public void Show()
         {
-            if(uiLoadingPanel != null)
+            if (uiLoadingPanel != null)
             {
                 uiLoadingPanel.Show();
             }
@@ -17,7 +17,7 @@ namespace JumboJumps.EFTB.UI.InitialLoading
 
         public void Hide() 
         {
-            if(uiLoadingPanel != null)
+            if (uiLoadingPanel != null)
             {
                 uiLoadingPanel.Hide();
             }
@@ -25,7 +25,7 @@ namespace JumboJumps.EFTB.UI.InitialLoading
 
         public void SetProgress(float value)
         {
-            if(uiLoadingPanel != null)
+            if (uiLoadingPanel != null)
             {
                 uiLoadingPanel.SetProgress(value);
             }

@@ -25,14 +25,14 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         public void Initialize()
         {
             poolManager = GameContext.Instance.Get<ObjectPoolManager>();
-            if(poolManager == null)
+            if (poolManager == null)
             {
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
                 return;
             }
         }
 
-        public void Dispose() 
+        public void Dispose()
         {
             activeSegments.Clear();
         }
