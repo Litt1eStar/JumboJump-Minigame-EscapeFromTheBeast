@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.State.MainMenu;
+using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.InitialLoading;
 using System.Collections;
