@@ -20,7 +20,7 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            if(poolContainer != null)
+            if (poolContainer != null)
             {
                 GameObject.Destroy(poolContainer.gameObject);
             }
@@ -68,7 +68,7 @@ namespace JumboJumps.EFTB.Manager
 
             var poolableObject = instance.GetComponent<PoolableObject>();
 
-            if(poolableObject == null || string.IsNullOrEmpty(poolableObject.PoolKey))
+            if (poolableObject == null || string.IsNullOrEmpty(poolableObject.PoolKey))
             {
                 GameObject.Destroy(instance);
                 return;
@@ -77,7 +77,7 @@ namespace JumboJumps.EFTB.Manager
             poolableObject.OnRecycle();
             poolableObject.transform.SetParent(poolContainer);
 
-            if(!pools.TryGetValue(poolableObject.PoolKey, out var queue))
+            if (!pools.TryGetValue(poolableObject.PoolKey, out var queue))
             {
                 queue = new Queue<PoolableObject>();
                 pools.Add(poolableObject.PoolKey, queue);

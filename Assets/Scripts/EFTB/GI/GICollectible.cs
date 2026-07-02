@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.GameData;
+using JumboJumps.EFTB.GameData;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
@@ -24,7 +24,7 @@ namespace JumboJumps.EFTB.GI
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(collision.CompareTag("Player") && !isCollected)
+            if (collision.CompareTag("Player") && !isCollected)
             {
                 GameContext.Instance.Get<CollectibleManager>().AddValue(collectibleData.Value);
                 isCollected = true;

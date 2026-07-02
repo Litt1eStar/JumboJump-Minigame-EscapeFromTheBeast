@@ -58,14 +58,7 @@ namespace JumboJumps.EFTB.Manager
         /// </summary>
         public void UpdateLogic(float deltaTime)
         {
-            /*
-            if(playerTransform.position.y >= nextTriggerPosition)
-            {
-                RecycleSegment();
-            }
-            */
-
-            if (SceneObjectContext.Instance.Get<GILevelGenerator>().yTestPosition >= nextTriggerPosition)
+            if (playerTransform.position.y >= nextTriggerPosition)
             {
                 RecycleSegment();
             }

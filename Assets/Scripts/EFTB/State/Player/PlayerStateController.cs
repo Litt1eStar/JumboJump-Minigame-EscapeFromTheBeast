@@ -1,4 +1,5 @@
-﻿using JumboJump.EFTB.State.Player;
+using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
@@ -12,6 +13,9 @@ namespace JumboJumps.EFTB.State.Player
         protected override Type DefaultTypeState => typeof(PlayerIdleState);
         public PlayerVisualizer Visualizer { get; private set; }
         public Input2DManager Input2DManager { get; private set; }
+        public int CurrentLaneIndex { get; set; } = 2;
+        public float[] LaneXPositions { get; private set; }
+        public SwipeDirectionEnum LastSwipeDirection { get; set; }
 
         public PlayerStateController()
         {
@@ -19,10 +23,21 @@ namespace JumboJumps.EFTB.State.Player
             Visualizer.Initialize();
 
             Input2DManager = SceneObjectContext.Instance.Get<Input2DManager>(); 
-            if(Input2DManager == null)
+            if (Input2DManager == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] {nameof(PlayerStateController)}| Failed to get {typeof(Input2DManager).AssemblyQualifiedName} from SceneObjectContext");
             }
+
+            GILevelGenerator levelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>();
+            if (levelGenerator != null && levelGenerator.configSo != null)
+            {
+                LaneXPositions = levelGenerator.configSo.laneXPositions;
+            }
+            else
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] GILevelGenerator or its config is missing! Falling back to default LaneXPositions.");
+            }
+
 
             States = new Dictionary<Type, BaseState>
             {

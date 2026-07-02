@@ -91,7 +91,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager?.Dispose();
             collectibleManager = null;
 
-            if(input2DManager != null)
+            if (input2DManager != null)
             {
                 input2DManager.Dispose();
                 input2DManager = null;

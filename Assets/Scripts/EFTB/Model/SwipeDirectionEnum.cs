@@ -1,4 +1,4 @@
-﻿namespace JumboJump.EFTB.Model
+﻿namespace JumboJumps.EFTB.Model
 {
     public enum SwipeDirectionEnum
     {

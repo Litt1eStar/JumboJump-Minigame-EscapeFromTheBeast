@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Visualizer;
 
 namespace JumboJumps.EFTB.State.Player
 {
@@ -6,6 +7,7 @@ namespace JumboJumps.EFTB.State.Player
     {
         private PlayerStateController playerStateController => (PlayerStateController)StateController;
 
+        private PlayerVisualizer playerVisualizer => playerStateController.Visualizer;
         private bool isMovingForward;
 
         public PlayerMovingState(BaseStateController stateController) : base(stateController)
@@ -16,8 +18,6 @@ namespace JumboJumps.EFTB.State.Player
         public override void OnEnterState()
         {
             base.OnEnterState();
-
-            DebugLogHelper.Log("Enter PlayerMovingState");
 
             isMovingForward = true;
 
@@ -44,7 +44,7 @@ namespace JumboJumps.EFTB.State.Player
         {
             if (!isMovingForward) return;
 
-            DebugLogHelper.Log("Moving Forward");
+            playerVisualizer.MoveForward(deltaTime);
         }
 
         public void OnHoldEnded()

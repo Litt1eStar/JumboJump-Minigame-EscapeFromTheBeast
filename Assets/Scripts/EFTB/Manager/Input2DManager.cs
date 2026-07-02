@@ -1,5 +1,4 @@
-using JumboJump.EFTB.Model;
-using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Model;
 using System;
 using UnityEngine;
 

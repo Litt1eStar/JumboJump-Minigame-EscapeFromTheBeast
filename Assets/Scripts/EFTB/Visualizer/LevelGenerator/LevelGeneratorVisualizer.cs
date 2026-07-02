@@ -30,7 +30,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
         }
 
-        public void Dispose() 
+        public void Dispose()
         {
             gILevelGenerator = null;
         }

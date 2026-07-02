@@ -1,13 +1,14 @@
-using JumboJumps.EFTB.State;
-using JumboJumps.EFTB.State.Player;
+using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
 using System.Collections;
 using UnityEngine;
 
-namespace JumboJump.EFTB.State.Player
+namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerSwitchLaneState : BaseState
     {
+        private PlayerStateController playerStateController => (PlayerStateController)StateController;
+
         private CoroutineHelper coroutineHelper;
         private Coroutine switchLaneCoroutine;
 
@@ -19,20 +20,46 @@ namespace JumboJump.EFTB.State.Player
         public override void OnEnterState()
         {
             base.OnEnterState();
-            
-            DebugLogHelper.Log("Enter PlayerSwitchLaneState");
 
-            // Perform Switch Lane Logic then Switch back to Player Idle State
+            int targetLane = playerStateController.CurrentLaneIndex;
+            if (playerStateController.LastSwipeDirection == SwipeDirectionEnum.Left)
+            {
+                targetLane = Mathf.Max(0, targetLane - 1);
+            }
+            else if (playerStateController.LastSwipeDirection == SwipeDirectionEnum.Right)
+            {
+                targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
+            }
+
+            if (targetLane == playerStateController.CurrentLaneIndex)
+            {
+                OnFinishSwitchingLane();
+                return;
+            }
+
+            float targetX = playerStateController.LaneXPositions[targetLane];
+            playerStateController.CurrentLaneIndex = targetLane;
+
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
-            switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SimulatedSwitchLane());
+            switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SmoothSwitchLane(targetX));
         }
 
-        private IEnumerator SimulatedSwitchLane()
+        private IEnumerator SmoothSwitchLane(float target)
         {
-            #if UNITY_EDITOR
-                yield return new WaitForSeconds(3); //This is for testing purpose. I will replace it with real logic later
-            #endif
+            float startX = playerStateController.Visualizer.PlayerPosition.x;
+            float elapsed = 0f;
+            float duration = 0.2f;
 
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / duration;
+                float currentX = Mathf.Lerp(startX, target, t);
+                playerStateController.Visualizer.SetXPosition(currentX);
+                yield return null;
+            }
+
+            playerStateController.Visualizer.SetXPosition(target);
             OnFinishSwitchingLane();
         }
 
@@ -51,7 +78,6 @@ namespace JumboJump.EFTB.State.Player
 
         public void OnFinishSwitchingLane()
         {
-            // Call this method when Finish Switch Lane routine
             StateController.ChangeState(typeof(PlayerIdleState));
         }
     }
