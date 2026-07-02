@@ -15,7 +15,6 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         private GameDataManager gameDataManager;
         private float[] laneXPosition;
-        private CatSightDirection currentCatSightDirection;
 
         public LevelGeneratorVisualizer(GameDataManager gameDataManager, float[] laneXPosition)
         {
@@ -74,14 +73,48 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             return segment;
         }
 
+        private void SetupSleepyCat(GameObject catObj, float spawnX)
+        {
+            var giCat = catObj.GetComponent<GICat>();
+            if (giCat != null)
+            {
+                if (SceneObjectContext.Instance != null)
+                {
+                    SceneObjectContext.Instance.Register(giCat);
+                }
+
+                CatSightDirection direction = (spawnX < 0f) ? CatSightDirection.Right : CatSightDirection.Left;
+                giCat.SetDirection(direction);
+
+                var catManager = GameContext.Instance.Get<CatManager>();
+                var playerManager = GameContext.Instance.Get<PlayerManager>();
+                if (catManager != null && playerManager != null)
+                {
+                    catManager.RegisterDynamicCat(giCat, playerManager.PlayerTransform);
+                }
+            }
+        }
+
         private void SpawnPrePlacedObject(LevelGeneratorData.LevelSegmentData template, float yPosition, GameObject segment, GISegment giSegment)
         {
             if (template.PrePlacedObject != null)
             {
                 foreach (LevelGeneratorData.LaneObjectData objectData in template.PrePlacedObject)
                 {
-                    int laneIdx = Mathf.Clamp(objectData.LaneIndex, 0, laneXPosition.Length - 1);
-                    float targetX = laneXPosition[laneIdx];
+                    bool isSleepyCat = objectData.PrefabName == "Prefab_Event_SleepyCat";
+                    float targetX = 0f;
+
+                    if (isSleepyCat)
+                    {
+                        targetX = (objectData.LaneIndex <= 2)
+                            ? ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition
+                            : ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
+                    }
+                    else
+                    {
+                        int laneIdx = Mathf.Clamp(objectData.LaneIndex, 0, laneXPosition.Length - 1);
+                        targetX = laneXPosition[laneIdx];
+                    }
 
                     Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.YOffset, 0f);
                     GameObject prefab = gameDataManager.GetPrefab(objectData.PrefabName);
@@ -89,6 +122,11 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                     if (prefab == null) continue;
 
                     GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
+
+                    if (isSleepyCat)
+                    {
+                        SetupSleepyCat(spawnedObj, targetX);
+                    }
 
                     giSegment.RegisterSpawnedObject(spawnedObj);
                 }
@@ -99,31 +137,23 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         {
             if (poolManager == null || eventData == null || string.IsNullOrEmpty(eventData.PrefabName)) return;
 
-            int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
-            float targetX = laneXPosition[laneIdx];
-            float spawnY;
-
             bool isSleepyCat = eventData.PrefabName == "Prefab_Event_SleepyCat";
+            float targetX = 0f;
+            float spawnY = 0f;
 
             if (isSleepyCat)
             {
-                if (eventData.TargetLaneIndex <= 2)
-                {
-                    //Cat spawn on left, look to right
-                    targetX = ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition;
-                    currentCatSightDirection = CatSightDirection.Right; 
-                }
-                else if (eventData.TargetLaneIndex > 2)
-                {
-                    //Cat spawn on right, look to left
-                    targetX = ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
-                    currentCatSightDirection = CatSightDirection.Left;
-                }
+                targetX = (eventData.TargetLaneIndex <= 2)
+                    ? ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition
+                    : ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
 
                 spawnY = segmentYPosition + eventData.TriggerYOffset;
             }
             else
             {
+                int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
+                targetX = laneXPosition[laneIdx];
+
                 Camera mainCam = Camera.main;
                 if (mainCam != null)
                 {
@@ -155,20 +185,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (isSleepyCat)
             {
-                var giCat = spawnedObj.GetComponent<GICat>();
-                giCat.SetDirection(currentCatSightDirection);
-
-                if (giCat != null)
-                {
-                    SceneObjectContext.Instance.Register(giCat);
-
-                    var catManager = GameContext.Instance.Get<CatManager>();
-                    var playerManager = GameContext.Instance.Get<PlayerManager>();
-                    if (catManager != null && playerManager != null)
-                    {
-                        catManager.RegisterDynamicCat(giCat, playerManager.PlayerTransform);
-                    }
-                }
+                SetupSleepyCat(spawnedObj, targetX);
             }
             else
             {

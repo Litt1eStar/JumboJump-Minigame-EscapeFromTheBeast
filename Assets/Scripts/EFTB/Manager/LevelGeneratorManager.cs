@@ -179,6 +179,8 @@ namespace JumboJumps.EFTB.Manager
             }
 
             SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty();
+            
+            DebugLogHelper.Log(currentDifficulty.ToString());
 
             List<LevelSegmentData> allSegments = segments;
             List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
