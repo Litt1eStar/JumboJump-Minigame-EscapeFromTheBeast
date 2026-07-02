@@ -1,63 +1,60 @@
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
-using JumboJumps.EFTB.GameData.LevelSegment;
 using System.Collections.Generic;
 using UnityEngine;
+using JumboJumps.EFTB.Model;
 
 namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 {
     public class LevelGeneratorVisualizer
     {
-        private GILevelGenerator gILevelGenerator;
         private ObjectPoolManager poolManager;
         private Queue<GameObject> activeSegments = new();
         private float[] lanePositions;
 
+        private GameDataManager gameDataManager;
+        private float[] laneXPosition;
+
+        public LevelGeneratorVisualizer(GameDataManager gameDataManager, float[] laneXPosition)
+        {
+            this.gameDataManager = gameDataManager;
+            this.laneXPosition = laneXPosition;
+        }
+
         public void Initialize()
         {
-            gILevelGenerator = SceneObjectContext.Instance.Get<GILevelGenerator>(); 
-            if(gILevelGenerator == null)
-            {
-                DebugLogHelper.LogError($"{GetType().Name} Failed to find GILevelGenerator in SceneObjectContext");
-                return;
-            }
-
             poolManager = GameContext.Instance.Get<ObjectPoolManager>();
             if(poolManager == null)
             {
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
                 return;
             }
-
-            if (gILevelGenerator.configSo != null)
-            {
-                lanePositions = gILevelGenerator.configSo.laneXPositions;
-            }
         }
 
         public void Dispose() 
         {
-            gILevelGenerator = null;
-            lanePositions = null;
             activeSegments.Clear();
         }
 
-        public GameObject SpawnSegment(LevelSegmentSO template, float yPosition)
+        public GameObject SpawnSegment(LevelGeneratorData.LevelSegmentData template, float yPosition)
         {
             /// <summary>
             /// template : LevelSegmentSO template configuration containing prefab and layout data
             /// yPosition : y position to spawn the segment
             /// </summary>
 
-            if (gILevelGenerator == null || poolManager == null || template == null || template.segmentPrefab == null)
+            if (poolManager == null || template == null || template.SegmentPrefabName == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] SpawnSegment failed : Missing Instance");
                 return null;
             }
 
             Vector3 position = new Vector3(0, yPosition, 0);
-            GameObject segment = poolManager.Spawn(template.segmentPrefab, position, Quaternion.identity, gILevelGenerator.transform);
+
+            GameObject segmentPrefab = gameDataManager.GetPrefab(template.SegmentPrefabName);
+            
+            GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity);
 
             GISegment giSegment = segment.GetComponent<GISegment>();
             if (giSegment == null)
@@ -71,20 +68,21 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             return segment;
         }
 
-        private void SpawnPrePlacedObject(LevelSegmentSO template, float yPosition, GameObject segment, GISegment giSegment)
+        private void SpawnPrePlacedObject(LevelGeneratorData.LevelSegmentData template, float yPosition, GameObject segment, GISegment giSegment)
         {
-            if (template.prePlacedObjectsData != null && lanePositions != null)
+            if (template.PrePlacedObject != null)
             {
-                foreach (var objectData in template.prePlacedObjectsData)
+                foreach (LevelGeneratorData.LaneObjectData objectData in template.PrePlacedObject)
                 {
-                    if (objectData.prefab == null) continue;
+                    int laneIdx = Mathf.Clamp(objectData.LaneIndex, 0, laneXPosition.Length - 1);
+                    float targetX = laneXPosition[laneIdx];
 
-                    int laneIdx = Mathf.Clamp(objectData.laneIndex, 0, lanePositions.Length - 1);
-                    float targetX = lanePositions[laneIdx];
+                    Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.YOffset, 0f);
+                    GameObject prefab = gameDataManager.GetPrefab(objectData.PrefabName);
 
-                    Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.yOffset, 0f);
+                    if (prefab == null) continue;
 
-                    GameObject spawnedObj = poolManager.Spawn(objectData.prefab, spawnPosition, Quaternion.identity, segment.transform);
+                    GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
 
                     giSegment.RegisterSpawnedObject(spawnedObj);
                 }
