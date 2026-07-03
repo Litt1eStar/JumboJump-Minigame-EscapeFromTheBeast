@@ -15,7 +15,7 @@ namespace JumboJumps.EFTB.GameData
                 if (prefabCache == null)
                 {
                     prefabCache = new Dictionary<string, GameObject>();
-                    
+
                     foreach (var prefab in registry)
                     {
                         if (prefab != null && !prefabCache.ContainsKey(prefab.name))
@@ -32,7 +32,7 @@ namespace JumboJumps.EFTB.GameData
         {
             if (string.IsNullOrEmpty(prefabName)) return null;
 
-            if(PrefabCache.TryGetValue(prefabName, out GameObject prefab))
+            if (PrefabCache.TryGetValue(prefabName, out GameObject prefab))
             {
                 return prefab;
             }
