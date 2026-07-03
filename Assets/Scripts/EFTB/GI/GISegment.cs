@@ -20,6 +20,14 @@ namespace JumboJumps.EFTB.GI
             }
         }
 
+        public void DeregisterSpawnedObject(GameObject obj)
+        {
+            if (obj != null)
+            {
+                spawnedObjects.Remove(obj);
+            }
+        }
+
         public void ClearSpawnedObjects()
         {
             spawnedObjects.Clear();

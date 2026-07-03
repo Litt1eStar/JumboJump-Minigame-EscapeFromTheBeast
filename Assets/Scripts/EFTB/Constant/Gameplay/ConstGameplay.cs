@@ -16,9 +16,17 @@
 
         public class Cat
         {
-            public const float SleepyCatLeftLaneSpawnPosition = -4.3f;
-            public const float SleepyCatRightLaneSpawnPosition = 3.3f;
+            public const float CatLeftLaneSpawnPosition = -4.3f;
+            public const float CatRightLaneSpawnPosition = 3.3f;
             public const float CatSpawnThreshold = 2.5f;
+
+            public class AggressiveCat
+            {
+                public const string PrefabName = "Prefab_Event_AggressiveCat";
+                public const float InitialMinSpawnTime = 5f;
+                public const float InitialMaxSpawnTime = 10f;
+                public const float CatVerticalSpawnOffset = 15f;
+            }
         }
     }
 }

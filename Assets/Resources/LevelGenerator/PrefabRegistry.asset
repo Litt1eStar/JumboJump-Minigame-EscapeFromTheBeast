@@ -33,3 +33,5 @@ MonoBehaviour:
     prefab: {fileID: 8268142637678075190, guid: 6ecd4d3ed67d5ae4eacc432728670a86, type: 3}
   - key: Prefab_Event_SleepyCat
     prefab: {fileID: 1852779844534914162, guid: 7b275ad2cce0537488c48812ac53ebd6, type: 3}
+  - key: Prefab_Event_AggressiveCat
+    prefab: {fileID: 549407486970417964, guid: 511aa3902f1af1d439f55644926ebe18, type: 3}

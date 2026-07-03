@@ -133,6 +133,18 @@ namespace JumboJumps.EFTB.Manager
             }
         }
 
+        public GISegment GetGISegmentAtY(float y)
+        {
+            foreach (var activeSegment in activeSegmentQueue)
+            {
+                if (y >= activeSegment.SpawnY && y < activeSegment.SpawnY + SegmentHeight)
+                {
+                    return activeSegment.GiSegment;
+                }
+            }
+            return null;
+        }
+
         private void RecycleSegment()
         {
             if (activeSegmentQueue.Count == 0)
