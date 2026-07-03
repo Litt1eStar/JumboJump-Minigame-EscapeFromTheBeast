@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
 {
+
     public enum CatSightDirection
     {
         Left = 1,

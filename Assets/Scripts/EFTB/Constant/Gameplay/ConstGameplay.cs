@@ -18,6 +18,7 @@
         {
             public const float SleepyCatLeftLaneSpawnPosition = -4.3f;
             public const float SleepyCatRightLaneSpawnPosition = 3.3f;
+            public const float CatSpawnThreshold = 2.5f;
         }
     }
 }

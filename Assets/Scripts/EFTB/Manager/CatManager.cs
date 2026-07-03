@@ -1,3 +1,4 @@
+using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Interface;
 using JumboJumps.EFTB.State;
@@ -16,11 +17,12 @@ namespace JumboJumps.EFTB.Manager
         public CatManager()
         {
             Cats = new List<ICatStateController>();
-            catControllers = new Dictionary<GICat, ICatStateController>();
         }
 
         public void Intialize(IEnumerable<GICat> sceneCats, Transform playerTarget)
         {
+            catControllers = new Dictionary<GICat, ICatStateController>();
+
             if (sceneCats != null)
             {
                 foreach(var giCat in sceneCats)
@@ -28,11 +30,11 @@ namespace JumboJumps.EFTB.Manager
                     if (giCat == null) continue;
 
                     float currentX = giCat.transform.position.x;
-                    if (currentX > -2.5f && currentX < 2.5f)
+                    if (currentX > -ConstGameplay.Cat.CatSpawnThreshold && currentX < ConstGameplay.Cat.CatSpawnThreshold)
                     {
                         float targetX = (currentX <= 0f) 
-                            ? Constant.Gameplay.ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition 
-                            : Constant.Gameplay.ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
+                            ? ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition 
+                            : ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
                         
                         giCat.transform.position = new Vector3(targetX, giCat.transform.position.y, giCat.transform.position.z);
                         
