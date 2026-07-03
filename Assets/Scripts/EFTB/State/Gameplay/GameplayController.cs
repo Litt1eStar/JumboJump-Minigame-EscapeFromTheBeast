@@ -31,6 +31,8 @@ namespace JumboJumps.EFTB.State.Gameplay
                 DebugLogHelper.LogError("GameplayController: CollectibleManager not found in GameContext.");
                 return;
             }
+
+            GameContext.Instance.Add(this);
             
         }
 

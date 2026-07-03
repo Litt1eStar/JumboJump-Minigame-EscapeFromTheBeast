@@ -13,6 +13,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         private Queue<GameObject> activeSegments = new();
 
         private GameDataManager gameDataManager;
+        private Camera mainCamera;
         private float[] laneXPosition;
 
         public LevelGeneratorVisualizer(GameDataManager gameDataManager, float[] laneXPosition)
@@ -24,9 +25,16 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         public void Initialize()
         {
             poolManager = GameContext.Instance.Get<ObjectPoolManager>();
-            if(poolManager == null)
+            if (poolManager == null)
             {
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
+                return;
+            }
+
+            mainCamera = Camera.main;
+            if (mainCamera == null)
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] Failed to find Main Camera in the scene");
                 return;
             }
         }
@@ -95,13 +103,12 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
             float targetX = laneXPosition[laneIdx];
 
-            Camera mainCam = Camera.main;
             float spawnY;
-            if (mainCam != null)
+            if (mainCamera != null)
             {
-                float distanceFromCamera = Mathf.Abs(mainCam.transform.position.z);
+                float distanceFromCamera = Mathf.Abs(mainCamera.transform.position.z);
                 // Spawn 10% above the top boundary of the viewport
-                spawnY = mainCam.ViewportToWorldPoint(new Vector3(0.5f, 1.1f, distanceFromCamera)).y;
+                spawnY = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 1.1f, distanceFromCamera)).y;
             }
             else
             {
