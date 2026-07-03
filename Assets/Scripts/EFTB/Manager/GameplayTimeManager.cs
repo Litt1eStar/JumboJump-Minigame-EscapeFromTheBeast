@@ -1,5 +1,6 @@
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.Gameplay;
 using System;
@@ -14,37 +15,54 @@ namespace JumboJumps.EFTB.Manager
         /// </summary>
         public event Action<float> EventGameplayTimerChanged;
 
-        /// <summary>
-        /// Invoke when gameplay timer <= 0
-        /// </summary>
-        public event Action EventGameplayTimerFinished;
-
+        private LevelGeneratorManager levelGeneratorManager;
         private GameplayTimeVisualizer visualizer;
+        private GameplayController gameplayController;
+        private GameplayStateManager gameplayStateManager;
         private GameplayDifficultyEnum currentDifficulty;
         public GameplayDifficultyEnum CurrentDifficulty => currentDifficulty;
         public float CurrentTimer { get; private set; } = 0f;
         private float limitPlayTime;
+        private float normalRemainingTime;
+        private float hardRemainingTime;
+        private bool isTimerFinished = false;
 
         public void Initialize()
         {
             visualizer = new GameplayTimeVisualizer();
             visualizer.Initialize(this);
 
+            levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
+            gameplayController = GameContext.Instance.Get<GameplayController>();
+            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
             currentDifficulty = GameplayDifficultyEnum.Easy;
             limitPlayTime = ConstGameplay.LimitPlayTime;
             CurrentTimer = limitPlayTime;
+            isTimerFinished = false;
+
+            normalRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.MediumDifficultyTimePercentage);
+            hardRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.HardDifficultyTimePercentage);
 
             GameContext.Instance.Add(this);
         }
 
         public void UpdateLogic(float deltaTime)
         {
-            if(CurrentTimer <= 0)
+            if (isTimerFinished) return;
+
+            if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
             {
-                EventGameplayTimerFinished?.Invoke();
+                return;
             }
 
             CurrentTimer -= deltaTime;
+            if (CurrentTimer <= 0)
+            {
+                CurrentTimer = 0f;
+                isTimerFinished = true;
+                gameplayController?.InvokeFinishLevel(GameStatus.Win);
+            }
+
             HandleDifficultyAdjustment();
             EventGameplayTimerChanged?.Invoke(CurrentTimer);
         }
@@ -61,10 +79,6 @@ namespace JumboJumps.EFTB.Manager
 
         private void HandleDifficultyAdjustment()
         {
-            LevelGeneratorManager levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
-            float normalRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.MediumDifficultyTimePercentage);
-            float hardRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.HardDifficultyTimePercentage);
-
             if (CurrentTimer <= normalRemainingTime && CurrentTimer > hardRemainingTime)
             {
                 currentDifficulty = GameplayDifficultyEnum.Normal;

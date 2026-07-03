@@ -8,8 +8,6 @@
             public const int MaxSegmentAmount = 5;
             public const float SegmentHeight = 20f;
             public const float SegmentRecycleTriggerOffset = 5f;
-            public const float MediumDifficultyDistance = 200f; 
-            public const float HardDifficultyDistance = 1000f; 
             public const float MediumDifficultyTimePercentage = 0.5f;
             public const float HardDifficultyTimePercentage = 0.7f;
         }

@@ -1,5 +1,4 @@
-﻿using JumboJumps.EFTB.Manager;
-using JumboJumps.EFTB.State.Gameplay;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.UI.Gameplay;
 using JumboJumps.EFTB.Utilities;
 
@@ -33,24 +32,16 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         public void Subscribe()
         {
             gameplayTimeManager.EventGameplayTimerChanged += OnGameplayTimerChanged;
-            gameplayTimeManager.EventGameplayTimerFinished += OnGameplayTimerFinished;
         }
 
         public void UnSubscribe()
         {
             gameplayTimeManager.EventGameplayTimerChanged -= OnGameplayTimerChanged;
-            gameplayTimeManager.EventGameplayTimerFinished -= OnGameplayTimerFinished;
         }
 
         public void OnGameplayTimerChanged(float value)
         {
             uiGameplayCanvas?.SetGameplayTimer(value);
-        }
-
-        public void OnGameplayTimerFinished()
-        {
-            uiGameplayCanvas?.ShowFinishLevelPanel();
-            uiGameplayCanvas?.SetFinishLevelTextLabel(GameStatus.Win);
         }
     }
 }
