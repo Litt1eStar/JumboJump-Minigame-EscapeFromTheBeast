@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.03000021, y: 9.93331, z: 0}
-  m_LocalScale: {x: 5, y: 20, z: 1}
+  m_LocalScale: {x: 3.5, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5743154599098714814}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 7633356490005379310}
   - component: {fileID: 2240038565548713363}
   m_Layer: 0
-  m_Name: Prefab_Segment_Easy_EventTest
+  m_Name: Prefab_Segment_Easy_EventTets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

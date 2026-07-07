@@ -7,46 +7,41 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
+          "LaneIndex": 1,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 6.0,
+          "LaneIndex": 1,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
+          "LaneIndex": 0,
+          "YOffset": 14.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
           "LaneIndex": 2,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Collectible_Coin"
+          "YOffset": 14.0,
+          "PrefabName": "Prefab_Object_Bush"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 5.0,
           "Speed": 4.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         },
         {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 8.0,
           "Speed": 4.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -59,35 +54,35 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
-          "LaneIndex": 1,
+          "LaneIndex": 0,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
-          "YOffset": 6.0,
+          "LaneIndex": 2,
+          "YOffset": 8.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 1,
+          "YOffset": 14.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 16.0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 10.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 11.0,
           "Speed": 4.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -100,35 +95,35 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 4.0,
+          "LaneIndex": 0,
+          "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Object_Bush"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 12.0,
+          "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
-          "YOffset": 16.0,
+          "LaneIndex": 0,
+          "YOffset": 11.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
+          "LaneIndex": 1,
+          "YOffset": 14.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 2,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 5.0,
           "Speed": 5.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -141,27 +136,27 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
+          "LaneIndex": 0,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
+          "LaneIndex": 2,
           "YOffset": 8.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 12.0,
+          "LaneIndex": 1,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
-          "LaneIndex": 1,
+          "LaneIndex": 0,
           "YOffset": 14.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
@@ -175,27 +170,27 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 3,
+          "LaneIndex": 2,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 1,
+          "LaneIndex": 0,
           "YOffset": 8.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 12.0,
+          "LaneIndex": 1,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
-          "LaneIndex": 3,
+          "LaneIndex": 2,
           "YOffset": 14.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
@@ -209,33 +204,33 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 4.0,
+          "LaneIndex": 0,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Object_Bush"
+          "YOffset": 5.0,
+          "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
-          "YOffset": 10.0,
+          "LaneIndex": 2,
+          "YOffset": 5.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 0,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 14.0,
+          "YOffset": 11.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
+          "LaneIndex": 1,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
@@ -248,25 +243,25 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
+          "LaneIndex": 1,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 1,
-          "YOffset": 10.0,
+          "LaneIndex": 0,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
-          "YOffset": 14.0,
+          "LaneIndex": 2,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 6.0,
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 5.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         }
@@ -279,25 +274,25 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 6.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 10.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 14.0,
+          "YOffset": 11.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 1,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 6.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 5.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         }
@@ -310,25 +305,25 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 6.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 0,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 6.0,
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 5.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         }
@@ -341,30 +336,31 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 12.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 16.0,
+          "YOffset": 11.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 2.0,
+          "Speed": 6.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 8.0,
           "Speed": 6.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -377,30 +373,31 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 12.0,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
-          "YOffset": 16.0,
+          "LaneIndex": 2,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 2.0,
+          "Speed": 6.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 8.0,
           "Speed": 6.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -413,35 +410,31 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 4.0,
+          "LaneIndex": 2,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Object_Bush"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 16.0,
+          "YOffset": 11.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
+          "LaneIndex": 1,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 2.0,
+          "Speed": 7.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 8.0,
           "Speed": 7.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -454,31 +447,31 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 2.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 8.0,
+          "LaneIndex": 1,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
-          "LaneIndex": 1,
-          "YOffset": 14.0,
+          "LaneIndex": 0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 2.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         },
         {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 8.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         }
@@ -491,35 +484,31 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 4.0,
+          "LaneIndex": 2,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Object_Bush"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 14.0,
+          "YOffset": 11.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
+          "LaneIndex": 1,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 2.0,
+          "Speed": 0.0,
+          "PrefabName": "Prefab_Event_SleepyCat"
+        },
+        {
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 8.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         }
@@ -532,31 +521,31 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 3,
-          "YOffset": 4.0,
+          "LaneIndex": 0,
+          "YOffset": 5.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
+          "LaneIndex": 0,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 6.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 12.0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 6.0,
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 2.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         },
         {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 12.0,
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 8.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         }
@@ -569,31 +558,32 @@
       "Difficulty": 3,
       "PrePlacedObject": [
         {
-          "LaneIndex": 3,
-          "YOffset": 4.0,
+          "LaneIndex": 2,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 1,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 12.0,
+          "LaneIndex": 0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 2.0,
+          "Speed": 8.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
           "TargetLaneIndex": 1,
-          "TriggerYOffset": 4.0,
+          "TriggerYOffset": 8.0,
           "Speed": 8.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         },
         {
           "TargetLaneIndex": 2,
-          "TriggerYOffset": 4.0,
+          "TriggerYOffset": 14.0,
           "Speed": 8.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -606,31 +596,32 @@
       "Difficulty": 3,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 4.0,
+          "LaneIndex": 0,
+          "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 12.0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
           "TargetLaneIndex": 2,
-          "TriggerYOffset": 4.0,
+          "TriggerYOffset": 2.0,
           "Speed": 8.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         },
         {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 8.0,
+          "Speed": 8.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 14.0,
           "Speed": 8.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -643,31 +634,32 @@
       "Difficulty": 3,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 1,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 12.0,
+          "LaneIndex": 0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 2.0,
           "Speed": 9.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         },
         {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 8.0,
+          "Speed": 9.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 14.0,
           "Speed": 9.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -680,28 +672,28 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
+          "LaneIndex": 0,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
-          "LaneIndex": 3,
-          "YOffset": 6.0,
+          "LaneIndex": 2,
+          "YOffset": 8.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 1,
-          "YOffset": 12.0,
+          "LaneIndex": 0,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
+          "LaneIndex": 1,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
@@ -714,28 +706,28 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 3,
+          "LaneIndex": 2,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
+          "LaneIndex": 1,
+          "YOffset": 5.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
+          "LaneIndex": 0,
+          "YOffset": 8.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
           "LaneIndex": 2,
-          "YOffset": 4.0,
+          "YOffset": 11.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 6.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
+          "YOffset": 17.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
@@ -748,27 +740,27 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 4.0,
+          "LaneIndex": 0,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Object_Bush"
         },
         {
           "LaneIndex": 2,
+          "YOffset": 5.0,
+          "PrefabName": "Prefab_Object_Bush"
+        },
+        {
+          "LaneIndex": 1,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
+          "LaneIndex": 1,
           "YOffset": 8.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
+          "LaneIndex": 1,
           "YOffset": 14.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
@@ -783,24 +775,25 @@
       "PrePlacedObject": [
         {
           "LaneIndex": 2,
-          "YOffset": 4.0,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 10.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
         },
         {
           "LaneIndex": 2,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Collectible_Coin"
+          "YOffset": 14.0,
+          "PrefabName": "Prefab_Event_SleepyCat"
         }
       ],
       "LaneEventData": [
         {
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 2.0,
+          "Speed": 6.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
           "TargetLaneIndex": 1,
-          "TriggerYOffset": 4.0,
+          "TriggerYOffset": 8.0,
           "Speed": 6.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -813,25 +806,26 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 0,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 1,
-          "YOffset": 10.0,
+          "LaneIndex": 0,
+          "YOffset": 14.0,
           "PrefabName": "Prefab_Event_SleepyCat"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 2,
+          "TriggerYOffset": 2.0,
+          "Speed": 6.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 8.0,
           "Speed": 6.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -844,30 +838,26 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 4.0,
+          "LaneIndex": 2,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
-          "YOffset": 4.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 12.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 12.0,
+          "LaneIndex": 2,
+          "YOffset": 14.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 2.0,
+          "Speed": 6.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 8.0,
           "Speed": 6.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -880,27 +870,27 @@
       "Difficulty": 3,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 4.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 2.0,
           "Speed": 8.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         },
         {
           "TargetLaneIndex": 2,
-          "TriggerYOffset": 12.0,
+          "TriggerYOffset": 8.0,
+          "Speed": 8.0,
+          "PrefabName": "Prefab_Obstacle_MovingObject"
+        },
+        {
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 14.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         }
@@ -913,27 +903,27 @@
       "Difficulty": 3,
       "PrePlacedObject": [
         {
-          "LaneIndex": 2,
-          "YOffset": 4.0,
+          "LaneIndex": 1,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 4.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        },
-        {
-          "TargetLaneIndex": 3,
-          "TriggerYOffset": 4.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 2.0,
           "Speed": 0.0,
           "PrefabName": "Prefab_Event_SleepyCat"
         },
         {
           "TargetLaneIndex": 2,
-          "TriggerYOffset": 12.0,
+          "TriggerYOffset": 8.0,
+          "Speed": 0.0,
+          "PrefabName": "Prefab_Event_SleepyCat"
+        },
+        {
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 14.0,
           "Speed": 8.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -946,26 +936,26 @@
       "Difficulty": 3,
       "PrePlacedObject": [
         {
-          "LaneIndex": 3,
-          "YOffset": 6.0,
+          "LaneIndex": 2,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
-          "YOffset": 12.0,
+          "LaneIndex": 2,
+          "YOffset": 14.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 6.0,
+          "TargetLaneIndex": 0,
+          "TriggerYOffset": 2.0,
           "Speed": 9.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         },
         {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 6.0,
+          "TargetLaneIndex": 1,
+          "TriggerYOffset": 8.0,
           "Speed": 9.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
         }
@@ -978,34 +968,24 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
+          "LaneIndex": 0,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
+          "YOffset": 5.0,
+          "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 3,
+          "LaneIndex": 0,
           "YOffset": 14.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 2,
+          "TargetLaneIndex": 1,
           "TriggerYOffset": 8.0,
           "Speed": 6.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
@@ -1019,34 +999,24 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
+          "LaneIndex": 2,
+          "YOffset": 2.0,
+          "PrefabName": "Prefab_Collectible_Coin"
+        },
+        {
           "LaneIndex": 1,
-          "YOffset": 2.0,
+          "YOffset": 5.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 3,
+          "LaneIndex": 1,
           "YOffset": 14.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 1,
+          "TargetLaneIndex": 0,
           "TriggerYOffset": 8.0,
           "Speed": 6.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
@@ -1060,34 +1030,24 @@
       "Difficulty": 1,
       "PrePlacedObject": [
         {
-          "LaneIndex": 1,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 3,
+          "LaneIndex": 0,
           "YOffset": 2.0,
           "PrefabName": "Prefab_Collectible_Coin"
         },
         {
           "LaneIndex": 1,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
+          "YOffset": 5.0,
+          "PrefabName": "Prefab_Collectible_Coin"
         },
         {
-          "LaneIndex": 2,
+          "LaneIndex": 0,
           "YOffset": 14.0,
           "PrefabName": "Prefab_Object_Bush"
         }
       ],
       "LaneEventData": [
         {
-          "TargetLaneIndex": 3,
+          "TargetLaneIndex": 2,
           "TriggerYOffset": 8.0,
           "Speed": 6.0,
           "PrefabName": "Prefab_Obstacle_MovingObject"
