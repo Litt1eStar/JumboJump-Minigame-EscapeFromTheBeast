@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace JumboJumps.EFTB.Utilities
@@ -11,7 +11,7 @@ namespace JumboJumps.EFTB.Utilities
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = new GameContext();
                 }
@@ -25,7 +25,7 @@ namespace JumboJumps.EFTB.Utilities
         public void Add<T>(T obj) where T : class
         {
             Type key = typeof(T);
-            if(!objects.ContainsKey(key))
+            if (!objects.ContainsKey(key))
             {
                 objects.Add(key, obj);
             }

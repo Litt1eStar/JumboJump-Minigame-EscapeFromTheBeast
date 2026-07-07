@@ -39,7 +39,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
         }
 
-        public void Dispose() 
+        public void Dispose()
         {
             activeSegments.Clear();
         }
@@ -60,7 +60,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             Vector3 position = new Vector3(0, yPosition, 0);
 
             GameObject segmentPrefab = gameDataManager.GetPrefab(template.SegmentPrefabName);
-            
+
             GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity);
 
             GISegment giSegment = segment.GetComponent<GISegment>();
