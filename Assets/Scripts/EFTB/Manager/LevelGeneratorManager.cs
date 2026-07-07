@@ -64,7 +64,7 @@ namespace JumboJumps.EFTB.Manager
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = gameDataManager.LevelSegmentData.Values.ToList();
-            LaneXPositions = new float[5] { -2, -1, 0, 1, 2 };
+            LaneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
             MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
             SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
             SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;

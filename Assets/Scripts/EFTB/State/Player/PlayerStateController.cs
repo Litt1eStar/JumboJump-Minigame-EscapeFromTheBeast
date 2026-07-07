@@ -1,3 +1,4 @@
+using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
@@ -13,7 +14,7 @@ namespace JumboJumps.EFTB.State.Player
         protected override Type DefaultTypeState => typeof(PlayerIdleState);
         public PlayerVisualizer Visualizer { get; private set; }
         public Input2DManager Input2DManager { get; private set; }
-        public int CurrentLaneIndex { get; set; } = 2;
+        public int CurrentLaneIndex { get; set; }
         private float[] laneXPositions;
         public float[] LaneXPositions
         {
@@ -28,7 +29,7 @@ namespace JumboJumps.EFTB.State.Player
                     }
                     else
                     {
-                        laneXPositions = new float[5] { -2f, -1f, 0f, 1f, 2f };
+                        laneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
                     }
                 }
                 return laneXPositions;
@@ -40,6 +41,8 @@ namespace JumboJumps.EFTB.State.Player
         {
             Visualizer = new PlayerVisualizer();
             Visualizer.Initialize();
+
+            CurrentLaneIndex = ConstGameplay.LevelGenerator.InitialLaneIndex;
 
             Input2DManager = SceneObjectContext.Instance.Get<Input2DManager>(); 
             if (Input2DManager == null)

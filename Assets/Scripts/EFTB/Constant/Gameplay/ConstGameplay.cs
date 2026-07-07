@@ -10,6 +10,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public const float SegmentRecycleTriggerOffset = 5f;
             public const float MediumDifficultyTimePercentage = 0.5f;
             public const float HardDifficultyTimePercentage = 0.7f;
+            public const int InitialLaneIndex = 0;
+            public static readonly float[] LaneXPositions = new float[] { -1f, 1f };
         }
 
         public class Cat
