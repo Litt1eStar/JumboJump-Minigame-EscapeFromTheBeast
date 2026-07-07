@@ -22,7 +22,7 @@ namespace JumboJumps.EFTB.GameData.Cat
         private float timeToCatch = 0.5f;
 
         [SerializeField]
-        private float timeToDissappear = 1f;
+        private float timeToDisappear = 1f;
 
         [SerializeField]
         private float slideDistance = 5f;
@@ -31,7 +31,7 @@ namespace JumboJumps.EFTB.GameData.Cat
         public float TimeToAwake => timeToAwake;
         public float TimeToAlert => timeToAlert;
         public float TimeToCatch => timeToCatch;
-        public float TimeToDissappear => timeToDissappear;
+        public float TimeToDisappear => timeToDisappear;
         public float SlideDistance => slideDistance;
 
         public override ICatStateController BuildStateController(GICat giCat, Transform transform, UICatStateLabel label)

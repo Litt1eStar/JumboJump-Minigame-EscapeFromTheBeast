@@ -104,6 +104,10 @@ namespace JumboJumps.EFTB.Manager
             if (giCat != null)
             {
                 SceneObjectContext.Instance.Register(giCat);
+
+                CatSightDirection direction = (targetX < 0f) ? CatSightDirection.Right : CatSightDirection.Left;
+                giCat.SetDirection(direction);
+
                 catManager.RegisterDynamicCat(giCat, playerManager.PlayerTransform);
             }
             else

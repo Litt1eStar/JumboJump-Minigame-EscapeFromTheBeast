@@ -1,4 +1,4 @@
-﻿namespace JumboJumps.EFTB.Constant.Gameplay
+namespace JumboJumps.EFTB.Constant.Gameplay
 {
     public static class ConstGameplay
     {
@@ -26,6 +26,9 @@
                 public const float InitialMinSpawnTime = 5f;
                 public const float InitialMaxSpawnTime = 10f;
                 public const float CatVerticalSpawnOffset = 15f;
+                public const float SlideDirectionLeftMultiplier = -1f;
+                public const float SlideDirectionRightMultiplier = 1f;
+                public const float TransitionProgressComplete = 1f;
             }
         }
     }

@@ -1,3 +1,5 @@
+using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.GI;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.State.Cat.AggressiveCat
@@ -21,7 +23,9 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             timer = 0f;
 
             targetPosition = stateController.GiCat.transform.position;
-            float direction = targetPosition.x < 0 ? -1f : 1f;
+            float direction = (stateController.GiCat.CurrentSightDirection == CatSightDirection.Right)
+                ? ConstGameplay.Cat.AggressiveCat.SlideDirectionLeftMultiplier
+                : ConstGameplay.Cat.AggressiveCat.SlideDirectionRightMultiplier;
             startPosition = new Vector3(
                 targetPosition.x + direction * stateController.Config.SlideDistance,
                 targetPosition.y,
@@ -35,13 +39,13 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
         {
             timer += deltaTime;
             float duration = stateController.Config.TimeToAppear;
-            float t = duration > 0f ? Mathf.Clamp01(timer / duration) : 1f;
+            float t = duration > 0f ? Mathf.Clamp01(timer / duration) : ConstGameplay.Cat.AggressiveCat.TransitionProgressComplete;
 
             Vector3 currentPos = stateController.GiCat.transform.position;
             float newX = Mathf.Lerp(startPosition.x, targetPosition.x, t);
             stateController.GiCat.transform.position = new Vector3(newX, currentPos.y, currentPos.z);
 
-            if (t >= 1f)
+            if (t >= ConstGameplay.Cat.AggressiveCat.TransitionProgressComplete)
             {
                 stateController.ChangeState(typeof(AggressiveCatAwakeState));
             }

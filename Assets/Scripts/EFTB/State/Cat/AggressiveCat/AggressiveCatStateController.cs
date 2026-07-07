@@ -12,7 +12,7 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
     public class AggressiveCatStateController : BaseStateController, ICatStateController
     {
         protected override Type DefaultTypeState => typeof(AggressiveCatAppearState);
-        public CatVisualizer visualizer { get; private set; }
+        public CatVisualizer Visualizer { get; private set; }
         public AggressiveCatConfigSO Config { get; private set; }
         public GICat GiCat { get; private set; }
         public Transform Target { get; private set; }
@@ -27,8 +27,8 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             GiCat = giCat;
             Target = target;
 
-            visualizer = new CatVisualizer();
-            visualizer.Initialize(giCat, label, this);
+            Visualizer = new CatVisualizer();
+            Visualizer.Initialize(giCat, label, this);
 
             States = new Dictionary<Type, BaseState>()
             {
@@ -36,14 +36,14 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 { typeof(AggressiveCatAwakeState), new AggressiveCatAwakeState(this) },
                 { typeof(AggressiveCatAlertState), new AggressiveCatAlertState(this) },
                 { typeof(AggressiveCatCatchState), new AggressiveCatCatchState(this) },
-                { typeof(AggressiveCatDissappearState), new AggressiveCatDissappearState(this) }
+                { typeof(AggressiveCatDisappearState), new AggressiveCatDisappearState(this) }
             };
         }
 
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);
-            visualizer.UpdateLogic(deltaTime);
+            Visualizer.UpdateLogic(deltaTime);
         }
     }
 }

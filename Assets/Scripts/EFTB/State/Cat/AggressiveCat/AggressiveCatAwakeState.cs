@@ -10,7 +10,7 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
         public AggressiveCatAwakeState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(AggressiveCatAlertState), null);
-            StateTransitionMap.Add(typeof(AggressiveCatDissappearState), null);
+            StateTransitionMap.Add(typeof(AggressiveCatDisappearState), null);
             this.stateController = (AggressiveCatStateController)stateController;
         }
 
@@ -18,13 +18,13 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
         {
             base.OnEnterState();
             countdownTimer = stateController.Config.TimeToAwake;
-            stateController.visualizer.Subscribe();
+            stateController.Visualizer.Subscribe();
         }
 
         public override void OnExitState()
         {
             base.OnExitState();
-            stateController.visualizer.Unsubscribe();
+            stateController.Visualizer.Unsubscribe();
         }
 
         public override void UpdateLogic(float deltaTime)
@@ -32,7 +32,7 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             countdownTimer -= deltaTime;
             StateController.InvokeEventTimerChanged(countdownTimer);
 
-            bool isPlayerInSight = stateController.visualizer.IsTargetInSght();
+            bool isPlayerInSight = stateController.Visualizer.IsTargetInSight();
 
             if (isPlayerInSight && countdownTimer > 0)
             {
@@ -42,7 +42,7 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
 
             if (countdownTimer <= 0)
             {
-                StateController.ChangeState(typeof(AggressiveCatDissappearState));
+                StateController.ChangeState(typeof(AggressiveCatDisappearState));
                 return;
             }
         }

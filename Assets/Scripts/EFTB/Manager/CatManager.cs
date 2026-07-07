@@ -85,6 +85,22 @@ namespace JumboJumps.EFTB.Manager
             }
         }
 
+        public void ReturnCat(GICat giCat)
+        {
+            if (giCat == null) return;
+
+            GameObject giCatGo = giCat.gameObject;
+
+            GISegment giSegment = giCatGo.transform.parent?.GetComponent<GISegment>();
+            giSegment?.DeregisterSpawnedObject(giCatGo);
+
+            SceneObjectContext.Instance?.Deregister(giCat);
+            DeregisterCat(giCat);
+
+            ObjectPoolManager poolManager = GameContext.Instance.Get<ObjectPoolManager>();
+            poolManager?.Recycle(giCatGo);
+        }
+
         public void Dispose()
         {
             if (Cats != null)
