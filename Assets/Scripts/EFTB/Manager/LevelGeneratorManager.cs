@@ -14,8 +14,10 @@ namespace JumboJumps.EFTB.Manager
     public class LevelGeneratorManager
     {
         private GameDataManager gameDataManager;
+        private GameplayTimeManager gameplayTimeManager;
         private LevelGeneratorConfig config;
         private LevelGeneratorVisualizer visualizer;
+        public LevelGeneratorConfig Config => config;
 
         private class ActiveSegment
         {
@@ -49,8 +51,8 @@ namespace JumboJumps.EFTB.Manager
         public int MaxSegmentAmount { get; private set; }
         public float SegmentHeight { get; private set; }
         public float SegmentRecycleTriggerOffset { get; private set; }
-        public float MediumDifficultyDistance { get; private set; }
-        public float HardDifficultyDistance { get; private set; }
+        public float MediumDifficultyTimePercentage { get; private set; }
+        public float HardDifficultyTimePercentage { get; private set; }
 
         private List<LevelSegmentData> segments;
 
@@ -59,19 +61,20 @@ namespace JumboJumps.EFTB.Manager
             this.playerTransform = playerTransform;
 
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
+            gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = gameDataManager.LevelSegmentData.Values.ToList();
             LaneXPositions = new float[5] { -2, -1, 0, 1, 2 };
             MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
             SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
             SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
-            MediumDifficultyDistance = ConstGameplay.LevelGenerator.MediumDifficultyDistance;
-            HardDifficultyDistance = ConstGameplay.LevelGenerator.HardDifficultyDistance;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HardDifficultyTimePercentage;
 
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions);
             visualizer.Initialize();
 
-            config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyDistance, HardDifficultyDistance);
+            config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyTimePercentage, HardDifficultyTimePercentage);
 
             nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
             nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
@@ -108,30 +111,42 @@ namespace JumboJumps.EFTB.Manager
 
         private void EventSpawnerHandler(float playerY)
         {
-            foreach (var activeSegment in activeSegmentQueue)
-            {
-                // Since the events are sorted by TriggerYOffset, we only check the next upcoming event
-                while (activeSegment.PendingEvents.Count > 0)
-                {
-                    var pendingEvent = activeSegment.PendingEvents[0];
-                    float triggerY = activeSegment.SpawnY + pendingEvent.TriggerYOffset;
+            ActiveSegment currentSegment = activeSegmentQueue.Count > 0 ? activeSegmentQueue.Peek() : null;
 
-                    if (playerY >= triggerY)
-                    {
-                        visualizer.SpawnEventObstacle(pendingEvent, activeSegment.SpawnY, activeSegment.SegmentGo, activeSegment.GiSegment);
-                        activeSegment.PendingEvents.RemoveAt(0);
-                    }
-                    else
-                    {
-                        // The player hasn't reached the next event, so skip checking the remaining events for this segment
-                        break;
-                    }
+            while (currentSegment.PendingEvents.Count > 0)
+            {
+                var pendingEvent = currentSegment.PendingEvents[0];
+                float triggerY = currentSegment.SpawnY + pendingEvent.TriggerYOffset;
+
+                if (playerY >= triggerY)
+                {
+                    visualizer.SpawnEventObstacle(pendingEvent, currentSegment.SpawnY, currentSegment.SegmentGo, currentSegment.GiSegment);
+                    currentSegment.PendingEvents.RemoveAt(0);
                 }
+                else
+                {
+                    // The player hasn't reached the next event, so skip checking the remaining events for this segment
+                    break;
+                }
+
+                ReEnqeueu(currentSegment);
             }
+        }
+
+        private void ReEnqeueu(ActiveSegment currentSegment)
+        {
+            activeSegmentQueue.Dequeue();
+            activeSegmentQueue.Enqueue(currentSegment);
         }
 
         private void RecycleSegment()
         {
+            if (activeSegmentQueue.Count == 0)
+            {
+                DebugLogHelper.LogWarning("[LevelGeneratorManager] RecycleSegment called but activeSegmentQueue is empty!");
+                return;
+            }
+
             visualizer.RecycleOldestSegment();
             activeSegmentQueue.Dequeue();
 
@@ -141,19 +156,23 @@ namespace JumboJumps.EFTB.Manager
             nextYSpawnPosition += SegmentHeight;
         }
 
-        private SegmentDifficultyEnum GetCurrentDifficulty(float playerY)
+        private SegmentDifficultyEnum GetCurrentDifficulty()
         {
-            if (playerY < config.MediumDifficultyDistance)
+            if (gameplayTimeManager == null)
             {
                 return SegmentDifficultyEnum.Easy;
             }
-            else if (playerY < config.HardDifficultyDistance)
+
+            switch (gameplayTimeManager.CurrentDifficulty)
             {
-                return SegmentDifficultyEnum.Normal;
-            }
-            else
-            {
-                return SegmentDifficultyEnum.Hard;
+                case GameplayDifficultyEnum.Easy:
+                    return SegmentDifficultyEnum.Easy;
+                case GameplayDifficultyEnum.Normal:
+                    return SegmentDifficultyEnum.Normal;
+                case GameplayDifficultyEnum.Hard:
+                    return SegmentDifficultyEnum.Hard;
+                default:
+                    return SegmentDifficultyEnum.Easy;
             }
         }
 
@@ -165,8 +184,9 @@ namespace JumboJumps.EFTB.Manager
                 return null;
             }
 
-            float playerY = playerTransform != null ? playerTransform.position.y : 0f;
-            SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty(playerY);
+            SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty();
+            
+            DebugLogHelper.Log(currentDifficulty.ToString());
 
             List<LevelSegmentData> allSegments = segments;
             List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
@@ -179,10 +199,23 @@ namespace JumboJumps.EFTB.Manager
             GISegment giSegment = segmentInstance.GetComponent<GISegment>();
             if (giSegment == null)
             {
-                giSegment = segmentInstance.AddComponent<GISegment>();
+                DebugLogHelper.LogError($"GISegment component not found on the spawned segment instance for template Id : {selectedTemplate.Id}");
+                return null;
             }
 
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
+
+            // Pre-place SleepyCat events immediately at segment spawn time instead of waiting for player proximity
+            for (int i = instance.PendingEvents.Count - 1; i >= 0; i--)
+            {
+                var ev = instance.PendingEvents[i];
+                if (ev.PrefabName == "Prefab_Event_SleepyCat")
+                {
+                    visualizer.SpawnEventObstacle(ev, yPosition, segmentInstance, giSegment);
+                    instance.PendingEvents.RemoveAt(i);
+                }
+            }
+
             activeSegmentQueue.Enqueue(instance);
             return instance;
         }

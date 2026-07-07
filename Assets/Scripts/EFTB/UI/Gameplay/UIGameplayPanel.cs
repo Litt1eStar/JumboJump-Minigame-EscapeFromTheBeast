@@ -16,6 +16,9 @@ namespace JumboJumps.EFTB.UI.Gameplay
         [SerializeField]
         private TextMeshProUGUI coinCounterLabel;
 
+        [SerializeField]
+        private TextMeshProUGUI gameplayTimerLabel;
+
         public void Initialize()
         {
             if (coinCounterLabel != null)
@@ -39,6 +42,11 @@ namespace JumboJumps.EFTB.UI.Gameplay
         public void SetCoinCounterLabel(int value)
         {
             coinCounterLabel.text = $"{ConstUI.Gameplay.BASE_COIN_COUNTER_LABEL}{value}";
+        }
+
+        public void SetGameplayTimer(float value)
+        {
+            gameplayTimerLabel.text = $"{value.ToString("F2")}";
         }
     }
 }

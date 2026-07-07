@@ -22,16 +22,16 @@ namespace JumboJumps.EFTB.State.Player
             base.OnEnterState();
 
             int targetLane = playerStateController.CurrentLaneIndex;
-            if(playerStateController.LastSwipeDirection == SwipeDirectionEnum.Left)
+            if (playerStateController.LastSwipeDirection == SwipeDirectionEnum.Left)
             {
                 targetLane = Mathf.Max(0, targetLane - 1);
             }
-            else if(playerStateController.LastSwipeDirection == SwipeDirectionEnum.Right)
+            else if (playerStateController.LastSwipeDirection == SwipeDirectionEnum.Right)
             {
                 targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
             }
 
-            if(targetLane == playerStateController.CurrentLaneIndex)
+            if (targetLane == playerStateController.CurrentLaneIndex)
             {
                 OnFinishSwitchingLane();
                 return;

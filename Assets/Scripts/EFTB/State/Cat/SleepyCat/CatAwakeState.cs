@@ -1,4 +1,4 @@
-﻿namespace JumboJumps.EFTB.State.Cat.SleepyCat
+namespace JumboJumps.EFTB.State.Cat.SleepyCat
 {
     public class CatAwakeState : BaseState
     {
@@ -36,13 +36,13 @@
             StateController.InvokeEventTimerChanged(countdownTimer);
             bool isPlayerInSight = stateController.visualizer.IsTargetInSght();
             
-            if(isPlayerInSight && countdownTimer > 0)
+            if (isPlayerInSight && countdownTimer > 0)
             {
                 StateController.ChangeState(typeof(CatAlertState));
                 return;
             }
 
-            if(countdownTimer <= 0)
+            if (countdownTimer <= 0)
             {
                 StateController.ChangeState(typeof(CatSleepState));
                 return;

@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.UI.MainMenu;
+using JumboJumps.EFTB.UI.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using System;
 
@@ -17,7 +17,7 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
         {
             uiMainMenuCanvas = SceneObjectContext.Instance.Get<UIMainMenuCanvas>();
 
-            if(uiMainMenuCanvas == null)
+            if (uiMainMenuCanvas == null)
             {
                 DebugLogHelper.LogError("Failed to initialize MainMenuVisualizer: UIMainMenuCanvas not found in scene.");
             }

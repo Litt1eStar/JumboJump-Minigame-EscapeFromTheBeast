@@ -13,12 +13,23 @@ MonoBehaviour:
   m_Name: PrefabRegistry
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.GameData.PrefabRegistrySO
   registry:
-  - {fileID: 8854892706367020039, guid: fd4db9e2d9406394d863b6d4bbe96bac, type: 3}
-  - {fileID: 6526298158145371105, guid: bc77527c0432ea34a82791ecf0dce124, type: 3}
-  - {fileID: 6526298158145371105, guid: a619575fb03cd4142b0508ea47cebf4f, type: 3}
-  - {fileID: 8268142637678075190, guid: 6ecd4d3ed67d5ae4eacc432728670a86, type: 3}
-  - {fileID: 6526298158145371105, guid: 54e2afcbfe6c1464a838a85d42f830e2, type: 3}
-  - {fileID: 6526298158145371105, guid: 321e6b9ccda3b1d4b8a3628cad6a4a1e, type: 3}
-  - {fileID: 6526298158145371105, guid: 057fc7a752c4c9c4980c30a1f46a390b, type: 3}
-  - {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
-  - {fileID: 8270772875783003138, guid: 11cea393291ba514da12c4c5b53cb227, type: 3}
+  - key: Prefab_Collectible_Coin
+    prefab: {fileID: 5023208134108911182, guid: 11e8a971f91624f4e9657a8ea55fc94c, type: 3}
+  - key: Prefab_Object_Bush
+    prefab: {fileID: 8270772875783003138, guid: 11cea393291ba514da12c4c5b53cb227, type: 3}
+  - key: Prefab_Segment_Easy_01
+    prefab: {fileID: 6526298158145371105, guid: bc77527c0432ea34a82791ecf0dce124, type: 3}
+  - key: Prefab_Segment_Easy_02
+    prefab: {fileID: 6526298158145371105, guid: a619575fb03cd4142b0508ea47cebf4f, type: 3}
+  - key: Prefab_Segment_Medium_01
+    prefab: {fileID: 6526298158145371105, guid: 321e6b9ccda3b1d4b8a3628cad6a4a1e, type: 3}
+  - key: Prefab_Segment_Medium_02
+    prefab: {fileID: 6526298158145371105, guid: 057fc7a752c4c9c4980c30a1f46a390b, type: 3}
+  - key: Prefab_Segment_Hard_01
+    prefab: {fileID: 6526298158145371105, guid: 54e2afcbfe6c1464a838a85d42f830e2, type: 3}
+  - key: Prefab_Obstacle_MovingObject
+    prefab: {fileID: 8854892706367020039, guid: fd4db9e2d9406394d863b6d4bbe96bac, type: 3}
+  - key: Prefab_Segment_Easy_EventTets
+    prefab: {fileID: 8268142637678075190, guid: 06d0b74ce307a29409c9699370ec66ac, type: 3}
+  - key: Prefab_Event_SleepyCat
+    prefab: {fileID: 1852779844534914162, guid: 7b275ad2cce0537488c48812ac53ebd6, type: 3}
