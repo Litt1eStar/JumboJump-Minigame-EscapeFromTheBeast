@@ -1,31 +1,49 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
 namespace JumboJumps.EFTB.GameData
 {
     [CreateAssetMenu(fileName = "PrefabRegistry", menuName = "EFTB/PrefabRegistry")]
     public class PrefabRegistrySO : ScriptableObject
     {
-        [Serializable]
-        public struct PrefabEntry
+        public List<GameObject> registry = new();
+
+        private Dictionary<string, GameObject> prefabCache;
+        public Dictionary<string, GameObject> PrefabCache
         {
-            public string key;
-            public GameObject prefab;
+            get
+            {
+                if (prefabCache == null)
+                {
+                    prefabCache = new Dictionary<string, GameObject>();
+
+                    foreach (var prefab in registry)
+                    {
+                        if (prefab != null && !prefabCache.ContainsKey(prefab.name))
+                        {
+                            prefabCache.Add(prefab.name, prefab);
+                        }
+                    }
+                }
+                return prefabCache;
+            }
         }
 
-        public List<PrefabEntry> registry = new();
-        public GameObject GetPrefab(string key)
+        public GameObject GetPrefab(string prefabName)
         {
-            if (string.IsNullOrEmpty(key)) return null;
+            if (string.IsNullOrEmpty(prefabName)) return null;
 
-            var entry = registry.Find(e => e.key == key);
-
-            if (entry.prefab == null)
+            if (PrefabCache.TryGetValue(prefabName, out GameObject prefab))
             {
-                Debug.LogWarning($"[{GetType().Name}] Prefab not found for key: {key}");
+                return prefab;
             }
 
-            return entry.prefab;
+            Debug.LogWarning($"[{GetType().Name}] Prefab not found for name: {prefabName}");
+            return null;
+        }
+
+        private void OnValidate()
+        {
+            prefabCache = null;
         }
     }
 }
