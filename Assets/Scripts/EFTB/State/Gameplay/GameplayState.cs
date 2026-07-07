@@ -17,6 +17,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private PlayerManager playerManager;
         private CatManager catManager;
         private CollectibleManager collectibleManager;
+        private GameplayTimeManager gameplayTimeManager;
 
         private GameplayController gameplayController;
         private GameStateController stateController;
@@ -42,8 +43,10 @@ namespace JumboJumps.EFTB.State.Gameplay
             playerManager.Initialize();
 
             catManager = new CatManager();
-            IEnumerable<GICat> sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
-            catManager.Intialize(sceneCats, playerManager.PlayerTransform);
+            IEnumerable<GICat> sceneCats = null;
+            sceneCats = SceneObjectContext.Instance.GetAll<GICat>();
+            
+            catManager.Intialize(sceneCats, playerManager.PlayerTransform);  
 
             collectibleManager = new CollectibleManager();  
             collectibleManager.Initialize();
@@ -61,6 +64,9 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             levelGeneratorManager = new LevelGeneratorManager();
             levelGeneratorManager.Initialize(playerManager.PlayerTransform);
+
+            gameplayTimeManager = new GameplayTimeManager();
+            gameplayTimeManager.Initialize();
         }
 
         public override void OnEnterState()
@@ -74,6 +80,9 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayStateManager?.Dispose();
             gameplayStateManager = null;
+
+            gameplayTimeManager?.Dispose();
+            gameplayTimeManager = null;
 
             playerManager?.Dispose();
             playerManager = null;
@@ -110,6 +119,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             if (!IsSceneLoaded) return;
 
+            gameplayTimeManager?.UpdateLogic(deltaTime);
             gameplayStateManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
             levelGeneratorManager?.UpdateLogic(deltaTime);

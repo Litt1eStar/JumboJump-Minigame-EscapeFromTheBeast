@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.Visualizer;
+using JumboJumps.EFTB.Visualizer;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 
@@ -29,6 +29,11 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
+            if (gameplayController != null)
+            {
+                gameplayController.EventFinishLevel -= OnLevelFinished;
+            }
+
             stateController.Dispose();
             stateController = null;
 

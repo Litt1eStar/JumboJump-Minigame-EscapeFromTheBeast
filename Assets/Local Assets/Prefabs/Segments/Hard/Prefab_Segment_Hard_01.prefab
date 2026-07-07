@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 4242535455984555523}
   - component: {fileID: 1921118121478705149}
   m_Layer: 0
-  m_Name: Segment-Prefab-05
+  m_Name: Prefab_Segment_Hard_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

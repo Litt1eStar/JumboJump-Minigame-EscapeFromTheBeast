@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.GameData.Cat;
+using JumboJumps.EFTB.GameData.Cat;
 using JumboJumps.EFTB.Interface;
 using JumboJumps.EFTB.UI;
 using JumboJumps.EFTB.Utilities;
@@ -7,6 +7,13 @@ using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
 {
+
+    public enum CatSightDirection
+    {
+        Left = 1,
+        Right =2 
+    }
+
     public class GICat : MonoBehaviour
     {
         public event Action EventTargetSpotted;
@@ -22,6 +29,9 @@ namespace JumboJumps.EFTB.GI
         
         [SerializeField]
         private float range;
+
+        [SerializeField]
+        private Vector3 direction;
         
         [SerializeField]
         private LayerMask sightBlockerLayerMask;
@@ -81,7 +91,7 @@ namespace JumboJumps.EFTB.GI
         private bool ComputeVisible()
         {
             Vector2 origin = sightOrigin.position;
-            Vector2 facing = -sightOrigin.up;
+            Vector2 facing = direction;
             Vector2 toTarget = target.position - sightOrigin.position;
 
             if (toTarget.sqrMagnitude > range * range) return false;
@@ -91,14 +101,29 @@ namespace JumboJumps.EFTB.GI
             return hit.collider == null;
         }
 
+        public void SetDirection(CatSightDirection catSightDirection)
+        {
+            if (catSightDirection == CatSightDirection.Left)
+            {
+                direction = -sightOrigin.right;
+            }
+            else if (catSightDirection == CatSightDirection.Right)
+            {
+                direction = sightOrigin.right;
+            }
+        }
+
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (!drawGizmo || sightOrigin == null) return;
 
             Vector2 origin = sightOrigin.position;
-            Vector2 facing = -sightOrigin.up; 
-            if (facing.sqrMagnitude < 0.0001f) return;
+            Vector2 facing = direction;
+            if (facing.sqrMagnitude < 0.0001f)
+            {
+                facing = -sightOrigin.right;
+            }
 
             Gizmos.color = IsTargetInSight ? colorSpotted : colorClear;
 

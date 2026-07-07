@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 761501378782016969}
   - component: {fileID: 32316911502917167}
   m_Layer: 0
-  m_Name: SleepyCat
+  m_Name: Prefab_Event_SleepyCat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
