@@ -4,6 +4,7 @@ using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Constant.Gameplay;
 
 namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 {
@@ -52,6 +53,11 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             Vector3 position = new Vector3(0, yPosition, 0);
 
             GameObject segmentPrefab = gameDataManager.GetPrefab(template.SegmentPrefabName);
+            if (segmentPrefab == null)
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] SpawnSegment failed : Prefab '{template.SegmentPrefabName}' not found in registry.");
+                return null;
+            }
             
             GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity);
 
@@ -67,14 +73,48 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             return segment;
         }
 
+        private void SetupSleepyCat(GameObject catObj, float spawnX)
+        {
+            var giCat = catObj.GetComponent<GICat>();
+            if (giCat != null)
+            {
+                if (SceneObjectContext.Instance != null)
+                {
+                    SceneObjectContext.Instance.Register(giCat);
+                }
+
+                CatSightDirection direction = (spawnX < 0f) ? CatSightDirection.Right : CatSightDirection.Left;
+                giCat.SetDirection(direction);
+
+                var catManager = GameContext.Instance.Get<CatManager>();
+                var playerManager = GameContext.Instance.Get<PlayerManager>();
+                if (catManager != null && playerManager != null)
+                {
+                    catManager.RegisterDynamicCat(giCat, playerManager.PlayerTransform);
+                }
+            }
+        }
+
         private void SpawnPrePlacedObject(LevelGeneratorData.LevelSegmentData template, float yPosition, GameObject segment, GISegment giSegment)
         {
             if (template.PrePlacedObject != null)
             {
                 foreach (LevelGeneratorData.LaneObjectData objectData in template.PrePlacedObject)
                 {
-                    int laneIdx = Mathf.Clamp(objectData.LaneIndex, 0, laneXPosition.Length - 1);
-                    float targetX = laneXPosition[laneIdx];
+                    bool isSleepyCat = objectData.PrefabName == "Prefab_Event_SleepyCat";
+                    float targetX = 0f;
+
+                    if (isSleepyCat)
+                    {
+                        targetX = (objectData.LaneIndex <= 2)
+                            ? ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition
+                            : ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
+                    }
+                    else
+                    {
+                        int laneIdx = Mathf.Clamp(objectData.LaneIndex, 0, laneXPosition.Length - 1);
+                        targetX = laneXPosition[laneIdx];
+                    }
 
                     Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.YOffset, 0f);
                     GameObject prefab = gameDataManager.GetPrefab(objectData.PrefabName);
@@ -82,6 +122,11 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                     if (prefab == null) continue;
 
                     GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
+
+                    if (isSleepyCat)
+                    {
+                        SetupSleepyCat(spawnedObj, targetX);
+                    }
 
                     giSegment.RegisterSpawnedObject(spawnedObj);
                 }
@@ -92,25 +137,39 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         {
             if (poolManager == null || eventData == null || string.IsNullOrEmpty(eventData.PrefabName)) return;
 
-            int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
-            float targetX = laneXPosition[laneIdx];
+            bool isSleepyCat = eventData.PrefabName == "Prefab_Event_SleepyCat";
+            float targetX = 0f;
+            float spawnY = 0f;
 
-            Camera mainCam = Camera.main;
-            float spawnY;
-            if (mainCam != null)
+            if (isSleepyCat)
             {
-                // Calculate the world-space height offset from camera center to top edge of screen
-                float verticalHalfSize = mainCam.orthographic 
-                    ? mainCam.orthographicSize 
-                    : Mathf.Abs(mainCam.transform.position.z) * Mathf.Tan(mainCam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-                
-                // Spawn with a safety margin (at least 5 units or 20% of screen height, whichever is larger) above the top edge
-                float safetyOffset = Mathf.Max(5f, verticalHalfSize * 0.4f);
-                spawnY = mainCam.transform.position.y + verticalHalfSize + safetyOffset;
+                targetX = (eventData.TargetLaneIndex <= 2)
+                    ? ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition
+                    : ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
+
+                spawnY = segmentYPosition + eventData.TriggerYOffset;
             }
             else
             {
-                spawnY = segmentYPosition + eventData.TriggerYOffset + 15f;
+                int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
+                targetX = laneXPosition[laneIdx];
+
+                Camera mainCam = Camera.main;
+                if (mainCam != null)
+                {
+                    // Calculate the world-space height offset from camera center to top edge of screen
+                    float verticalHalfSize = mainCam.orthographic 
+                        ? mainCam.orthographicSize 
+                        : Mathf.Abs(mainCam.transform.position.z) * Mathf.Tan(mainCam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+                    
+                    // Spawn with a safety margin (at least 5 units or 20% of screen height, whichever is larger) above the top edge
+                    float safetyOffset = Mathf.Max(5f, verticalHalfSize * 0.4f);
+                    spawnY = mainCam.transform.position.y + verticalHalfSize + safetyOffset;
+                }
+                else
+                {
+                    spawnY = segmentYPosition + eventData.TriggerYOffset + 15f;
+                }
             }
 
             Vector3 spawnPosition = new Vector3(targetX, spawnY, 0f);
@@ -124,12 +183,19 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
 
-            var movingObstacle = spawnedObj.GetComponent<GIMovingObstacle>();
-            if (movingObstacle == null)
+            if (isSleepyCat)
             {
-                movingObstacle = spawnedObj.AddComponent<GIMovingObstacle>();
+                SetupSleepyCat(spawnedObj, targetX);
             }
-            movingObstacle.Initialize(eventData.Speed);
+            else
+            {
+                var movingObstacle = spawnedObj.GetComponent<GIMovingObstacle>();
+                if (movingObstacle == null)
+                {
+                    movingObstacle = spawnedObj.AddComponent<GIMovingObstacle>();
+                }
+                movingObstacle.Initialize(eventData.Speed);
+            }
 
             giSegment.RegisterSpawnedObject(spawnedObj);
         }
@@ -148,6 +214,17 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 {
                     if (spawnedObjs[i] != null)
                     {
+                        var giCat = spawnedObjs[i].GetComponent<GICat>();
+                        if (giCat != null)
+                        { 
+                            SceneObjectContext.Instance.Deregister(giCat);
+                           
+                            var catManager = GameContext.Instance.Get<CatManager>();
+                            if (catManager != null)
+                            {
+                                catManager.DeregisterCat(giCat);
+                            }
+                        }
                         poolManager.Recycle(spawnedObjs[i]);
                     }
                 }

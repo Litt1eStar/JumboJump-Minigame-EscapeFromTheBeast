@@ -17,8 +17,8 @@ namespace JumboJumps.EFTB.Manager
         private GameplayTimeManager gameplayTimeManager;
         private LevelGeneratorConfig config;
         private LevelGeneratorVisualizer visualizer;
-
         public LevelGeneratorConfig Config => config;
+
         private class ActiveSegment
         {
             public LevelSegmentData Template { get; }
@@ -116,7 +116,7 @@ namespace JumboJumps.EFTB.Manager
                 // Since the events are sorted by TriggerYOffset, we only check the next upcoming event
                 while (activeSegment.PendingEvents.Count > 0)
                 {
-                    var pendingEvent = activeSegment.PendingEvents[0];
+                    LevelGeneratorData.LaneEventData pendingEvent = activeSegment.PendingEvents[0];
                     float triggerY = activeSegment.SpawnY + pendingEvent.TriggerYOffset;
 
                     if (playerY >= triggerY)
@@ -135,6 +135,12 @@ namespace JumboJumps.EFTB.Manager
 
         private void RecycleSegment()
         {
+            if (activeSegmentQueue.Count == 0)
+            {
+                DebugLogHelper.LogWarning("[LevelGeneratorManager] RecycleSegment called but activeSegmentQueue is empty!");
+                return;
+            }
+
             visualizer.RecycleOldestSegment();
             activeSegmentQueue.Dequeue();
 
@@ -173,6 +179,8 @@ namespace JumboJumps.EFTB.Manager
             }
 
             SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty();
+            
+            DebugLogHelper.Log(currentDifficulty.ToString());
 
             List<LevelSegmentData> allSegments = segments;
             List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
@@ -189,6 +197,18 @@ namespace JumboJumps.EFTB.Manager
             }
 
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
+
+            // Pre-place SleepyCat events immediately at segment spawn time instead of waiting for player proximity
+            for (int i = instance.PendingEvents.Count - 1; i >= 0; i--)
+            {
+                var ev = instance.PendingEvents[i];
+                if (ev.PrefabName == "Prefab_Event_SleepyCat")
+                {
+                    visualizer.SpawnEventObstacle(ev, yPosition, segmentInstance, giSegment);
+                    instance.PendingEvents.RemoveAt(i);
+                }
+            }
+
             activeSegmentQueue.Enqueue(instance);
             return instance;
         }
