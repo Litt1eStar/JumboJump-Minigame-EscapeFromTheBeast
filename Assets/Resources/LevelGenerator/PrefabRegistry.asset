@@ -30,6 +30,6 @@ MonoBehaviour:
   - key: Prefab_Obstacle_MovingObject
     prefab: {fileID: 8854892706367020039, guid: fd4db9e2d9406394d863b6d4bbe96bac, type: 3}
   - key: Prefab_Segment_Easy_EventTets
-    prefab: {fileID: 8268142637678075190, guid: 6ecd4d3ed67d5ae4eacc432728670a86, type: 3}
+    prefab: {fileID: 8268142637678075190, guid: 06d0b74ce307a29409c9699370ec66ac, type: 3}
   - key: Prefab_Event_SleepyCat
     prefab: {fileID: 1852779844534914162, guid: 7b275ad2cce0537488c48812ac53ebd6, type: 3}

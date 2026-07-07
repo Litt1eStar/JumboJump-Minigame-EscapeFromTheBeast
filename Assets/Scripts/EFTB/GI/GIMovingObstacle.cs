@@ -7,15 +7,15 @@ namespace JumboJumps.EFTB.GI
 {
     public class GIMovingObstacle : MonoBehaviour
     {
-        private GameplayStateManager gameplayStateManager;
         private GameplayController gameplayController;
+        private GameplayStateManager gameplayStateManager;
         private float speed;
         private bool hasTriggered = false;
 
         public void Initialize(float speed)
         {
-            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();    
-            gameplayController = gameplayStateManager.GameplayController;
+            gameplayController = GameContext.Instance.Get<GameplayController>();    
+            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
 
             this.speed = speed;
             hasTriggered = false;
@@ -23,6 +23,11 @@ namespace JumboJumps.EFTB.GI
 
         private void Update()
         {
+            if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
+            {
+                return;
+            }
+
             transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
         }
 
@@ -34,9 +39,8 @@ namespace JumboJumps.EFTB.GI
             {
                 hasTriggered = true;
                 
-                if (gameplayStateManager != null && gameplayController != null)
+                if (gameplayController != null)
                 {
-                    DebugLogHelper.Log($"[{GetType().Name}] Player hit by moving obstacle -> Triggering Game Over.");
                     gameplayController.InvokeFinishLevel(GameStatus.Lose);
                 }
             }

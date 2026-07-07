@@ -111,26 +111,32 @@ namespace JumboJumps.EFTB.Manager
 
         private void EventSpawnerHandler(float playerY)
         {
-            foreach (var activeSegment in activeSegmentQueue)
-            {
-                // Since the events are sorted by TriggerYOffset, we only check the next upcoming event
-                while (activeSegment.PendingEvents.Count > 0)
-                {
-                    LevelGeneratorData.LaneEventData pendingEvent = activeSegment.PendingEvents[0];
-                    float triggerY = activeSegment.SpawnY + pendingEvent.TriggerYOffset;
+            ActiveSegment currentSegment = activeSegmentQueue.Count > 0 ? activeSegmentQueue.Peek() : null;
 
-                    if (playerY >= triggerY)
-                    {
-                        visualizer.SpawnEventObstacle(pendingEvent, activeSegment.SpawnY, activeSegment.SegmentGo, activeSegment.GiSegment);
-                        activeSegment.PendingEvents.RemoveAt(0);
-                    }
-                    else
-                    {
-                        // The player hasn't reached the next event, so skip checking the remaining events for this segment
-                        break;
-                    }
+            while (currentSegment.PendingEvents.Count > 0)
+            {
+                var pendingEvent = currentSegment.PendingEvents[0];
+                float triggerY = currentSegment.SpawnY + pendingEvent.TriggerYOffset;
+
+                if (playerY >= triggerY)
+                {
+                    visualizer.SpawnEventObstacle(pendingEvent, currentSegment.SpawnY, currentSegment.SegmentGo, currentSegment.GiSegment);
+                    currentSegment.PendingEvents.RemoveAt(0);
                 }
+                else
+                {
+                    // The player hasn't reached the next event, so skip checking the remaining events for this segment
+                    break;
+                }
+
+                ReEnqeueu(currentSegment);
             }
+        }
+
+        private void ReEnqeueu(ActiveSegment currentSegment)
+        {
+            activeSegmentQueue.Dequeue();
+            activeSegmentQueue.Enqueue(currentSegment);
         }
 
         private void RecycleSegment()
@@ -193,7 +199,8 @@ namespace JumboJumps.EFTB.Manager
             GISegment giSegment = segmentInstance.GetComponent<GISegment>();
             if (giSegment == null)
             {
-                giSegment = segmentInstance.AddComponent<GISegment>();
+                DebugLogHelper.LogError($"GISegment component not found on the spawned segment instance for template Id : {selectedTemplate.Id}");
+                return null;
             }
 
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
