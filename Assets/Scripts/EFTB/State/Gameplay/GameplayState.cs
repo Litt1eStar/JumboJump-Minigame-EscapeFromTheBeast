@@ -40,9 +40,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             input2DManager = SceneObjectContext.Instance.Get<Input2DManager>();
             input2DManager.Initialize();
 
-            gameplayTimeManager = new GameplayTimeManager();
-            gameplayTimeManager.Initialize();
-
             playerManager = new PlayerManager();
             playerManager.Initialize();
 
@@ -68,6 +65,9 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             levelGeneratorManager = new LevelGeneratorManager();
             levelGeneratorManager.Initialize(playerManager.PlayerTransform);
+
+            gameplayTimeManager = new GameplayTimeManager();
+            gameplayTimeManager.Initialize();
 
             aggressiveCatSpawner = new AggressiveCatSpawner();
             aggressiveCatSpawner.Initialize();
@@ -106,7 +106,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager?.Dispose();
             collectibleManager = null;
 
-            if(input2DManager != null)
+            if (input2DManager != null)
             {
                 input2DManager.Dispose();
                 input2DManager = null;

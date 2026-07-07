@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 7633356490005379310}
   - component: {fileID: 2240038565548713363}
   m_Layer: 0
-  m_Name: Prefab_Segment_Easy_EventTest
+  m_Name: Prefab_Segment_Easy_EventTets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

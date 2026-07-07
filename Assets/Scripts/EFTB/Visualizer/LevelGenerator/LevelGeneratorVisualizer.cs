@@ -14,6 +14,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         private Queue<GameObject> activeSegments = new();
 
         private GameDataManager gameDataManager;
+        private Camera mainCamera;
         private float[] laneXPosition;
 
         public LevelGeneratorVisualizer(GameDataManager gameDataManager, float[] laneXPosition)
@@ -25,14 +26,26 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         public void Initialize()
         {
             poolManager = GameContext.Instance.Get<ObjectPoolManager>();
-            if(poolManager == null)
+            if (poolManager == null)
             {
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
                 return;
             }
+
+            mainCamera = Camera.main;
+            if (mainCamera == null)
+            {
+                mainCamera = UnityEngine.Object.FindAnyObjectByType<Camera>();
+            }
+
+            if (mainCamera == null)
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] Failed to find Main Camera in the scene");
+                return;
+            }
         }
 
-        public void Dispose() 
+        public void Dispose()
         {
             activeSegments.Clear();
         }
@@ -154,7 +167,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
                 targetX = laneXPosition[laneIdx];
 
-                Camera mainCam = Camera.main;
+                Camera mainCam = mainCamera != null ? mainCamera : Camera.main;
                 if (mainCam != null)
                 {
                     // Calculate the world-space height offset from camera center to top edge of screen

@@ -18,16 +18,16 @@ namespace JumboJumps.EFTB.GameData.LevelSegment
                                     int maxSegmentAmount,
                                     float segmentHeight,
                                     float segmentRecycleTriggerOffset,
-                                    float mediumDifficultyDistance,
-                                    float hardDifficultyDistance)
+                                    float mediumDifficultyTimePercentage,
+                                    float hardDifficultyTimePercentage)
         {
             this.segmentTemplates = segmentTemplates;
-            this.LaneXPosition = laneXPositions;
-            this.MaxSegmentAmount = maxSegmentAmount;
-            this.SegmentHeight = segmentHeight;
-            this.SegmentRecycleTriggerOffset = segmentRecycleTriggerOffset;
-            this.MediumDifficultyTimePercentage = mediumDifficultyDistance;
-            this.HardDifficultyTimePercentage = hardDifficultyDistance;
+            LaneXPosition = laneXPositions;
+            MaxSegmentAmount = maxSegmentAmount;
+            SegmentHeight = segmentHeight;
+            SegmentRecycleTriggerOffset = segmentRecycleTriggerOffset;
+            MediumDifficultyTimePercentage = mediumDifficultyTimePercentage;
+            HardDifficultyTimePercentage = hardDifficultyTimePercentage;
         }
     }
 }
