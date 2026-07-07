@@ -2,6 +2,11 @@
 {
     public static class ConstUI
     {
+        public class Loading
+        {
+            public const float SimulatedLoadingDuration = 2f;
+        }
+
         public class Gameplay
         {
             public const string BASE_COIN_COUNTER_LABEL = "Coins : ";

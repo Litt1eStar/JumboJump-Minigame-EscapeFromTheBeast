@@ -33,7 +33,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             }
 
             GameContext.Instance.Add(this);
-            
         }
 
         public void Dispose()
