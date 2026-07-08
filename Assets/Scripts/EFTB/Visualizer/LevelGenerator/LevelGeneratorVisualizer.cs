@@ -11,6 +11,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 {
     public class LevelGeneratorVisualizer
     {
+        private LevelGeneratorManager levelGeneratorManager;
         private ObjectPoolManager poolManager;
         private Queue<GameObject> activeSegments = new();
 
@@ -180,7 +181,6 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 float originalSegmentY = segment != null ? segment.transform.position.y : 0f;
 
                 // Spawn warning indicator for 1.5s before spawning the actual lane obstacle
-                var warningIndicatorManager = GameContext.Instance.Get<WarningIndicatorManager>();
                 if (warningIndicatorManager != null)
                 {
                     warningIndicatorManager.ShowWarning(laneIdx, ConstUI.Gameplay.WarningIndicatorDuration, () =>
@@ -197,12 +197,6 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         private void HandleSpawnObstacle(LevelGeneratorData.LaneEventData eventData, GameObject segment, GISegment giSegment, bool isSleepyCat, float targetX, float originalSegmentY)
         {
-            if (segment == null || !segment.activeInHierarchy || Mathf.Abs(segment.transform.position.y - originalSegmentY) > ConstGameplay.LevelGenerator.SegmentYPositionTolerance)
-            {
-                DebugLogHelper.LogWarning($"[{GetType().Name}] Aborting obstacle spawn because the target segment was recycled or moved during the warning delay.");
-                return;
-            }
-
             float currentSpawnY = 0f;
             Camera mainCam = mainCamera;
             if (mainCam == null)
@@ -224,7 +218,30 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 return;
             }
 
-            SpawnObstacleInstance(eventData, targetX, currentSpawnY, segment, giSegment, isSleepyCat);
+            GISegment targetGiSegment = null;
+            GameObject targetSegmentGo = null;
+            if (levelGeneratorManager != null)
+            {
+                targetGiSegment = levelGeneratorManager.GetGISegmentAtY(currentSpawnY);
+                if (targetGiSegment != null)
+                {
+                    targetSegmentGo = targetGiSegment.gameObject;
+                }
+            }
+
+            // Fallback to the original segment if the far-ahead segment is not found
+            if (targetSegmentGo == null)
+            {
+                if (segment == null || !segment.activeInHierarchy)
+                {
+                    DebugLogHelper.LogWarning($"[{GetType().Name}] Aborting obstacle spawn because both target and original segments are inactive.");
+                    return;
+                }
+                targetSegmentGo = segment;
+                targetGiSegment = giSegment;
+            }
+
+            SpawnObstacleInstance(eventData, targetX, currentSpawnY, targetSegmentGo, targetGiSegment, isSleepyCat);
         }
 
         private void SpawnObstacleInstance(LevelGeneratorData.LaneEventData eventData, float targetX, float spawnY, GameObject segment, GISegment giSegment, bool isSleepyCat)
