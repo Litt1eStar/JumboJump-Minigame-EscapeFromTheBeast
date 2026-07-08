@@ -218,6 +218,11 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 return;
             }
 
+            if (levelGeneratorManager == null)
+            {
+                levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
+            }
+
             GISegment targetGiSegment = null;
             GameObject targetSegmentGo = null;
             if (levelGeneratorManager != null)

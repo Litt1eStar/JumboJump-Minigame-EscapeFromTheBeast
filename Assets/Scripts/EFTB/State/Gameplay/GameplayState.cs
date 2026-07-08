@@ -140,7 +140,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             levelGeneratorManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
             aggressiveCatSpawner?.UpdateLogic(deltaTime);
-            warningIndicatorManager?.UpdateLogic(deltaTime);
 
             input2DManager.UpdateLogic(deltaTime);
         }

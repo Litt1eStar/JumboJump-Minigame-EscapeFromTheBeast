@@ -1,27 +1,13 @@
 using JumboJumps.EFTB.UI.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using System;
-using System.Collections.Generic;
+using System.Collections;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.Manager
 {
     public class WarningIndicatorManager
     {
-        private class WarningTimer
-        {
-            public int LaneIndex { get; }
-            public float RemainingTime { get; set; }
-            public Action OnComplete { get; }
-
-            public WarningTimer(int laneIndex, float duration, Action onComplete)
-            {
-                LaneIndex = laneIndex;
-                RemainingTime = duration;
-                OnComplete = onComplete;
-            }
-        }
-
-        private List<WarningTimer> activeTimers = new();
         private UIGameplayCanvas gameplayCanvas;
 
         public void Initialize()
@@ -32,14 +18,12 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            activeTimers.Clear();
             GameContext.Instance.Remove(this);
         }
 
         public void ShowWarning(int laneIndex, float duration, Action onCompleteCallback)
         {
             DebugLogHelper.Log($"[WarningIndicatorManager] ShowWarning called for lane: {laneIndex}, duration: {duration}");
-            activeTimers.Add(new WarningTimer(laneIndex, duration, onCompleteCallback));
 
             if (gameplayCanvas == null)
             {
@@ -53,26 +37,20 @@ namespace JumboJumps.EFTB.Manager
             if (gameplayCanvas != null)
             {
                 gameplayCanvas.SetWarningIndicatorActive(laneIndex, true);
+                gameplayCanvas.StartCoroutine(WarningRoutine(laneIndex, duration, onCompleteCallback));
             }
         }
 
-        public void UpdateLogic(float deltaTime)
+        private IEnumerator WarningRoutine(int laneIndex, float duration, Action onCompleteCallback)
         {
-            for (int i = activeTimers.Count - 1; i >= 0; i--)
+            yield return new WaitForSeconds(duration);
+
+            DebugLogHelper.Log($"[WarningIndicatorManager] Timer expired for lane: {laneIndex}");
+            if (gameplayCanvas != null)
             {
-                WarningTimer timer = activeTimers[i];
-                timer.RemainingTime -= deltaTime;
-                if (timer.RemainingTime <= 0f)
-                {
-                    DebugLogHelper.Log($"[WarningIndicatorManager] Timer expired for lane: {timer.LaneIndex}");
-                    if (gameplayCanvas != null)
-                    {
-                        gameplayCanvas.SetWarningIndicatorActive(timer.LaneIndex, false);
-                    }
-                    timer.OnComplete?.Invoke();
-                    activeTimers.RemoveAt(i);
-                }
+                gameplayCanvas.SetWarningIndicatorActive(laneIndex, false);
             }
+            onCompleteCallback?.Invoke();
         }
     }
 }
