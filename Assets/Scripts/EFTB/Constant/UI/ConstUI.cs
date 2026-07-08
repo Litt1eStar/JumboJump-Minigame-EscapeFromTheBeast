@@ -12,6 +12,7 @@
             public const string BASE_COIN_COUNTER_LABEL = "Coins : ";
             public const string WIN_CONDITION_LABEL = "Level Complete!";
             public const string LOSE_CONDITION_LABEL = "Level Failed!";
+            public const float WarningIndicatorDuration = 1.5f;
         }
     }
 }

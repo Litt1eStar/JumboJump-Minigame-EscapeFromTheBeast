@@ -1,5 +1,7 @@
-﻿using JumboJump.EFTB.Constant.UI;
+using JumboJump.EFTB.Constant.UI;
+using JumboJumps.EFTB.Utilities;
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,11 +21,21 @@ namespace JumboJumps.EFTB.UI.Gameplay
         [SerializeField]
         private TextMeshProUGUI gameplayTimerLabel;
 
+        [SerializeField]
+        private GameObject[] laneWarningIndicators;
+
+        private Coroutine[] activeFadeCoroutines;
+
         public void Initialize()
         {
             if (coinCounterLabel != null)
             {
                 coinCounterLabel.text = $"{ConstUI.Gameplay.BASE_COIN_COUNTER_LABEL}{0}";
+            }
+
+            if (laneWarningIndicators != null)
+            {
+                activeFadeCoroutines = new Coroutine[laneWarningIndicators.Length];
             }
 
             Subscribe();
@@ -47,6 +59,77 @@ namespace JumboJumps.EFTB.UI.Gameplay
         public void SetGameplayTimer(float value)
         {
             gameplayTimerLabel.text = $"{value.ToString("F2")}";
+        }
+
+        public void SetWarningIndicatorActive(int laneIndex, bool active)
+        {
+            DebugLogHelper.Log($"[UIGameplayPanel] SetWarningIndicatorActive called: lane={laneIndex}, active={active}");
+            if (laneWarningIndicators != null && laneIndex >= 0 && laneIndex < laneWarningIndicators.Length)
+            {
+                var indicator = laneWarningIndicators[laneIndex];
+                if (indicator != null)
+                {
+                    // Cancel any active transitions for this lane to avoid conflicts
+                    if (activeFadeCoroutines != null && activeFadeCoroutines[laneIndex] != null)
+                    {
+                        DebugLogHelper.Log($"[UIGameplayPanel] Canceling active coroutine for lane {laneIndex}");
+                        StopCoroutine(activeFadeCoroutines[laneIndex]);
+                        activeFadeCoroutines[laneIndex] = null;
+                    }
+
+                    if (active)
+                    {
+                        DebugLogHelper.Log($"[UIGameplayPanel] Starting fade-in for lane {laneIndex}");
+                        indicator.SetActive(true);
+                        activeFadeCoroutines[laneIndex] = StartCoroutine(FadeCanvasGroup(indicator, 0f, 1f, 0.25f, () => {
+                            DebugLogHelper.Log($"[UIGameplayPanel] Fade-in complete callback for lane {laneIndex}");
+                            ClearCoroutineTracker(laneIndex);
+                        }));
+                    }
+                    else
+                    {
+                        DebugLogHelper.Log($"[UIGameplayPanel] Starting fade-out for lane {laneIndex}");
+                        activeFadeCoroutines[laneIndex] = StartCoroutine(FadeCanvasGroup(indicator, 1f, 0f, 0.25f, () => {
+                            DebugLogHelper.Log($"[UIGameplayPanel] Fade-out complete callback. Deactivating GameObject for lane {laneIndex}");
+                            indicator.SetActive(false);
+                            ClearCoroutineTracker(laneIndex);
+                        }));
+                    }
+                }
+                else
+                {
+                    DebugLogHelper.LogWarning($"[UIGameplayPanel] Indicator at index {laneIndex} is null!");
+                }
+            }
+            else
+            {
+                DebugLogHelper.LogWarning($"[UIGameplayPanel] laneWarningIndicators is null or index {laneIndex} out of bounds!");
+            }
+        }
+
+        private void ClearCoroutineTracker(int laneIndex)
+        {
+            if (activeFadeCoroutines != null && laneIndex >= 0 && laneIndex < activeFadeCoroutines.Length)
+            {
+                activeFadeCoroutines[laneIndex] = null;
+            }
+        }
+
+        private IEnumerator FadeCanvasGroup(GameObject target, float startAlpha, float endAlpha, float duration, Action onComplete = null)
+        {
+            var cg = target.GetComponent<CanvasGroup>() ?? target.AddComponent<CanvasGroup>();
+            float elapsed = 0f;
+            cg.alpha = startAlpha;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                cg.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsed / duration);
+                yield return null;
+            }
+
+            cg.alpha = endAlpha;
+            onComplete?.Invoke();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.State.Gameplay;
+using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.UI.Gameplay.FinishLevel;
 using JumboJumps.EFTB.UI.Gameplay.PauseMenu;
 using System;
@@ -68,6 +68,13 @@ namespace JumboJumps.EFTB.UI.Gameplay
             uiFinishLevelPanel?.SetFinishTextLavel(gameStatus);
         }
 
+        #endregion
+
+        #region Warning Indicators
+        public void SetWarningIndicatorActive(int laneIndex, bool active)
+        {
+            uiGameplayPanel?.SetWarningIndicatorActive(laneIndex, active);
+        }
         #endregion
     }
 }

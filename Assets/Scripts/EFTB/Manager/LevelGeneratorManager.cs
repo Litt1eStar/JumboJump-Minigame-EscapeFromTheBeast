@@ -217,7 +217,6 @@ namespace JumboJumps.EFTB.Manager
 
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
 
-            // Pre-place SleepyCat events immediately at segment spawn time instead of waiting for player proximity
             for (int i = instance.PendingEvents.Count - 1; i >= 0; i--)
             {
                 var ev = instance.PendingEvents[i];
