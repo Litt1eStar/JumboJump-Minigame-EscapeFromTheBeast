@@ -107,6 +107,12 @@ namespace JumboJumps.EFTB.Manager
 
         private void SpawnAggressiveCat(int sideIndex)
         {
+            if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
+            {
+                DebugLogHelper.LogWarning($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: Not in InGameState.");
+                return;
+            }
+
             float spawnY;
             if (!CanSpawnAggressiveCat(out spawnY))
             {
