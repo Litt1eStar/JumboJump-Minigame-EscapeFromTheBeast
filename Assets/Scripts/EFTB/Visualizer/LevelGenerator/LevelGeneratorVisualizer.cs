@@ -130,7 +130,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
                     if (isSleepyCat)
                     {
-                        targetX = (objectData.LaneIndex <= 2)
+                        targetX = (objectData.LaneIndex == 0)
                             ? ConstGameplay.Cat.CatLeftLaneSpawnPosition
                             : ConstGameplay.Cat.CatRightLaneSpawnPosition;
                     }
@@ -167,7 +167,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (isSleepyCat)
             {
-                targetX = (eventData.TargetLaneIndex <= 2)
+                targetX = (eventData.TargetLaneIndex == 0)
                     ? ConstGameplay.Cat.CatLeftLaneSpawnPosition
                     : ConstGameplay.Cat.CatRightLaneSpawnPosition;
 

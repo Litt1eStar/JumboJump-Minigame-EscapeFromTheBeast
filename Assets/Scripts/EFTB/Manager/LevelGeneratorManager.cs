@@ -111,32 +111,24 @@ namespace JumboJumps.EFTB.Manager
 
         private void EventSpawnerHandler(float playerY)
         {
-            ActiveSegment currentSegment = activeSegmentQueue.Count > 0 ? activeSegmentQueue.Peek() : null;
-
-            while (currentSegment.PendingEvents.Count > 0)
+            foreach (var segment in activeSegmentQueue)
             {
-                var pendingEvent = currentSegment.PendingEvents[0];
-                float triggerY = currentSegment.SpawnY + pendingEvent.TriggerYOffset;
-
-                if (playerY >= triggerY)
+                while (segment.PendingEvents.Count > 0)
                 {
-                    visualizer.SpawnEventObstacle(pendingEvent, currentSegment.SpawnY, currentSegment.SegmentGo, currentSegment.GiSegment);
-                    currentSegment.PendingEvents.RemoveAt(0);
-                }
-                else
-                {
-                    // The player hasn't reached the next event, so skip checking the remaining events for this segment
-                    break;
-                }
+                    var pendingEvent = segment.PendingEvents[0];
+                    float triggerY = segment.SpawnY + pendingEvent.TriggerYOffset;
 
-                ReEnqeueu(currentSegment);
+                    if (playerY >= triggerY)
+                    {
+                        visualizer.SpawnEventObstacle(pendingEvent, segment.SpawnY, segment.SegmentGo, segment.GiSegment);
+                        segment.PendingEvents.RemoveAt(0);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
-        }
-
-        private void ReEnqeueu(ActiveSegment currentSegment)
-        {
-            activeSegmentQueue.Dequeue();
-            activeSegmentQueue.Enqueue(currentSegment);
         }
 
         public GISegment GetGISegmentAtY(float y)
