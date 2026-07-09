@@ -2,6 +2,7 @@ using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Model;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.Manager
@@ -53,6 +54,8 @@ namespace JumboJumps.EFTB.Manager
                 return;
             }
 
+            UpdateSpawnTimes();
+
             nextSpawnTimer -= deltaTime;
             if (nextSpawnTimer <= 0f)
             {
@@ -82,6 +85,28 @@ namespace JumboJumps.EFTB.Manager
                 {
                     nextSpawnTimer = ConstGameplay.Cat.AggressiveCat.FallbackSpawnCheckInterval;
                 }
+            }
+        }
+
+        private void UpdateSpawnTimes()
+        {
+            var timeManager = GameContext.Instance.Get<GameplayTimeManager>();
+            if (timeManager == null) return;
+
+            switch (timeManager.CurrentDifficulty)
+            {
+                case GameplayDifficultyEnum.Easy:
+                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMinSpawnTime;
+                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMaxSpawnTime;
+                    break;
+                case GameplayDifficultyEnum.Normal:
+                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.NormalMinSpawnTime;
+                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.NormalMaxSpawnTime;
+                    break;
+                case GameplayDifficultyEnum.Hard:
+                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMinSpawnTime;
+                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMaxSpawnTime;
+                    break;
             }
         }
 

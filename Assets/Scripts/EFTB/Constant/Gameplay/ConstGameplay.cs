@@ -4,7 +4,7 @@ namespace JumboJumps.EFTB.Constant.Gameplay
 {
     public static class ConstGameplay
     {
-        public const float LimitPlayTime = 500f;
+        public const float LimitPlayTime = 60f;
         public class LevelGenerator
         {
             public const int MaxSegmentAmount = 5;
@@ -28,8 +28,12 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public class AggressiveCat
             {
                 public const string PrefabName = "Prefab_Event_AggressiveCat";
-                public const float InitialMinSpawnTime = 5f;
-                public const float InitialMaxSpawnTime = 10f;
+                public const float InitialMinSpawnTime = 7f;
+                public const float InitialMaxSpawnTime = 15f;
+                public const float NormalMinSpawnTime = 5f;
+                public const float NormalMaxSpawnTime = 10f;
+                public const float HardMinSpawnTime = 2f;
+                public const float HardMaxSpawnTime = 5f;
                 public const float CatVerticalSpawnOffset = 15f;
                 public const float SlideDirectionLeftMultiplier = -1f;
                 public const float SlideDirectionRightMultiplier = 1f;
