@@ -14,7 +14,9 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public const float HardDifficultyTimePercentage = 0.7f;
             public const int InitialLaneIndex = 0;
             public const float SegmentYPositionTolerance = 0.05f;
-            public static readonly float[] LaneXPositions = new float[] { -1.0f, 1.0f };
+            public const string DefaultInitialSegmentPrefab = "Prefab_Segment_Initial";
+            public const int InitialSegmentId = 0;
+            public static readonly float[] LaneXPositions = new float[] { -1.3f, 1.3f };
         }
 
         public class Cat

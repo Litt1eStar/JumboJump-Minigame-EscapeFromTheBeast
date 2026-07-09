@@ -196,14 +196,28 @@ namespace JumboJumps.EFTB.Manager
                 return null;
             }
 
-            SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty();
-            
-            DebugLogHelper.Log(currentDifficulty.ToString());
+            LevelSegmentData selectedTemplate;
+            if (yPosition == 0f)
+            {
+                selectedTemplate = new LevelSegmentData(
+                    ConstGameplay.LevelGenerator.InitialSegmentId,
+                    ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
+                    SegmentHeight,
+                    SegmentDifficultyEnum.Easy,
+                    new List<LevelGeneratorData.LaneObjectData>(),
+                    new List<LevelGeneratorData.LaneEventData>()
+                );
+            }
+            else
+            {
+                SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty();
+                DebugLogHelper.Log(currentDifficulty.ToString());
 
-            List<LevelSegmentData> allSegments = segments;
-            List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
+                List<LevelSegmentData> allSegments = segments;
+                List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
+                selectedTemplate = SelectTemplateFromMatchedTemplate(matchedTemplates, allSegments);
+            }
 
-            LevelSegmentData selectedTemplate = SelectTemplateFromMatchedTemplate(matchedTemplates, allSegments);
             GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);
 
             if (segmentInstance == null) return null;
