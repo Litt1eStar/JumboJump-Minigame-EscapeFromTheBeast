@@ -18,6 +18,7 @@ namespace JumboJumps.EFTB.Manager
         private CatManager catManager;
         private GameDataManager gameDataManager;
         private GameplayStateManager gameplayStateManager;
+        private WarningIndicatorManager warningIndicatorManager;
 
         private float nextSpawnTimer;
 
@@ -29,6 +30,7 @@ namespace JumboJumps.EFTB.Manager
             catManager = GameContext.Instance.Get<CatManager>();
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
+            warningIndicatorManager = GameContext.Instance.Get<WarningIndicatorManager>();  
 
             ResetSpawnTimer();
 
@@ -54,8 +56,32 @@ namespace JumboJumps.EFTB.Manager
             nextSpawnTimer -= deltaTime;
             if (nextSpawnTimer <= 0f)
             {
-                ResetSpawnTimer();
-                SpawnAggressiveCat();
+                float spawnY;
+                if (CanSpawnAggressiveCat(out spawnY))
+                {
+                    ResetSpawnTimer();
+                    
+                    int sideIndex = (Random.value < 0.5f) ? 0 : 1; 
+                    
+                    if (warningIndicatorManager != null)
+                    {
+                        warningIndicatorManager.ShowCatEventWarning(1.0f, () =>
+                        {
+                            warningIndicatorManager.ShowCatDirectionWarning(sideIndex, 1.5f, () =>
+                            {
+                                SpawnAggressiveCat(sideIndex);
+                            });
+                        });
+                    }
+                    else
+                    {
+                        SpawnAggressiveCat(sideIndex);
+                    }
+                }
+                else
+                {
+                    nextSpawnTimer = 0.5f;
+                }
             }
         }
 
@@ -64,24 +90,34 @@ namespace JumboJumps.EFTB.Manager
             nextSpawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
         }
 
-        private void SpawnAggressiveCat()
+        private bool CanSpawnAggressiveCat(out float spawnY)
         {
+            spawnY = 0f;
             if (playerManager?.PlayerTransform == null || levelGeneratorManager == null || poolManager == null || gameDataManager == null || catManager == null)
             {
-                return;
+                return false;
             }
 
             float playerY = playerManager.PlayerTransform.position.y;
-            float spawnY = playerY + verticalSpawnOffset;
+            spawnY = playerY + verticalSpawnOffset;
 
             var giSegment = levelGeneratorManager.GetGISegmentAtY(spawnY);
-            if (giSegment == null)
+            return giSegment != null;
+        }
+
+        private void SpawnAggressiveCat(int sideIndex)
+        {
+            float spawnY;
+            if (!CanSpawnAggressiveCat(out spawnY))
             {
-                DebugLogHelper.LogWarning($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: No active segment found at Y = {spawnY}");
+                DebugLogHelper.LogWarning($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: Environment state changed during the warning delay.");
                 return;
             }
 
-            float targetX = Random.value < 0.5f ? ConstGameplay.Cat.CatLeftLaneSpawnPosition : ConstGameplay.Cat.CatRightLaneSpawnPosition;
+            var giSegment = levelGeneratorManager.GetGISegmentAtY(spawnY);
+            if (giSegment == null) return;
+
+            float targetX = (sideIndex == 0) ? ConstGameplay.Cat.CatLeftLaneSpawnPosition : ConstGameplay.Cat.CatRightLaneSpawnPosition;
             Vector3 spawnPosition = new Vector3(targetX, spawnY, 0f);
 
             GameObject prefab = gameDataManager.GetPrefab(ConstGameplay.Cat.AggressiveCat.PrefabName);

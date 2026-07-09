@@ -24,7 +24,20 @@ namespace JumboJumps.EFTB.UI.Gameplay
         [SerializeField]
         private GameObject[] laneWarningIndicators;
 
+        [Header("Aggressive Cat Warnings")]
+        [SerializeField]
+        private GameObject aggressiveCatEventWarning;
+
+        [SerializeField]
+        private GameObject aggressiveCatLeftWarning;
+
+        [SerializeField]
+        private GameObject aggressiveCatRightWarning;
+
         private Coroutine[] activeFadeCoroutines;
+        private Coroutine catEventFadeCoroutine;
+        private Coroutine catLeftFadeCoroutine;
+        private Coroutine catRightFadeCoroutine;
 
         public void Initialize()
         {
@@ -130,6 +143,86 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
             cg.alpha = endAlpha;
             onComplete?.Invoke();
+        }
+
+        public void SetCatEventWarningActive(bool active)
+        {
+            if (aggressiveCatEventWarning != null)
+            {
+                if (catEventFadeCoroutine != null)
+                {
+                    StopCoroutine(catEventFadeCoroutine);
+                    catEventFadeCoroutine = null;
+                }
+
+                if (active)
+                {
+                    aggressiveCatEventWarning.SetActive(true);
+                    catEventFadeCoroutine = StartCoroutine(FadeCanvasGroup(aggressiveCatEventWarning, 0f, 1f, 0.25f, () => {
+                        catEventFadeCoroutine = null;
+                    }));
+                }
+                else
+                {
+                    catEventFadeCoroutine = StartCoroutine(FadeCanvasGroup(aggressiveCatEventWarning, 1f, 0f, 0.25f, () => {
+                        aggressiveCatEventWarning.SetActive(false);
+                        catEventFadeCoroutine = null;
+                    }));
+                }
+            }
+        }
+
+        public void SetCatDirectionWarningActive(int sideIndex, bool active)
+        {
+            GameObject indicator = (sideIndex == 0) ? aggressiveCatLeftWarning : aggressiveCatRightWarning;
+            if (indicator == null) return;
+
+            if (sideIndex == 0)
+            {
+                if (catLeftFadeCoroutine != null)
+                {
+                    StopCoroutine(catLeftFadeCoroutine);
+                    catLeftFadeCoroutine = null;
+                }
+
+                if (active)
+                {
+                    indicator.SetActive(true);
+                    catLeftFadeCoroutine = StartCoroutine(FadeCanvasGroup(indicator, 0f, 1f, 0.25f, () => {
+                        catLeftFadeCoroutine = null;
+                    }));
+                }
+                else
+                {
+                    catLeftFadeCoroutine = StartCoroutine(FadeCanvasGroup(indicator, 1f, 0f, 0.25f, () => {
+                        indicator.SetActive(false);
+                        catLeftFadeCoroutine = null;
+                    }));
+                }
+            }
+            else
+            {
+                if (catRightFadeCoroutine != null)
+                {
+                    StopCoroutine(catRightFadeCoroutine);
+                    catRightFadeCoroutine = null;
+                }
+
+                if (active)
+                {
+                    indicator.SetActive(true);
+                    catRightFadeCoroutine = StartCoroutine(FadeCanvasGroup(indicator, 0f, 1f, 0.25f, () => {
+                        catRightFadeCoroutine = null;
+                    }));
+                }
+                else
+                {
+                    catRightFadeCoroutine = StartCoroutine(FadeCanvasGroup(indicator, 1f, 0f, 0.25f, () => {
+                        indicator.SetActive(false);
+                        catRightFadeCoroutine = null;
+                    }));
+                }
+            }
         }
     }
 }

@@ -75,6 +75,16 @@ namespace JumboJumps.EFTB.UI.Gameplay
         {
             uiGameplayPanel?.SetWarningIndicatorActive(laneIndex, active);
         }
+
+        public void SetCatEventWarningActive(bool active)
+        {
+            uiGameplayPanel?.SetCatEventWarningActive(active);
+        }
+
+        public void SetCatDirectionWarningActive(int sideIndex, bool active)
+        {
+            uiGameplayPanel?.SetCatDirectionWarningActive(sideIndex, active);
+        }
         #endregion
     }
 }
