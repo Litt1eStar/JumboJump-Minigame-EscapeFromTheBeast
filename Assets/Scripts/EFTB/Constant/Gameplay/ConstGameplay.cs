@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace JumboJumps.EFTB.Constant.Gameplay
 {
     public static class ConstGameplay
@@ -30,6 +32,9 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float SlideDirectionLeftMultiplier = -1f;
                 public const float SlideDirectionRightMultiplier = 1f;
                 public const float TransitionProgressComplete = 1f;
+                public const float CatLeftHandYRotation = 0f;
+                public const float CatRightHandYRotation = 180f;
+                public const float CatAppearFirstSectionDurationPercentage = 0.5f;
             }
         }
     }
