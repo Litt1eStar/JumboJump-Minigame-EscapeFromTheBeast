@@ -65,9 +65,9 @@ namespace JumboJumps.EFTB.Manager
                     
                     if (warningIndicatorManager != null)
                     {
-                        warningIndicatorManager.ShowCatEventWarning(1.0f, () =>
+                        warningIndicatorManager.ShowCatEventWarning(ConstGameplay.Cat.AggressiveCat.EventWarningDuration, () =>
                         {
-                            warningIndicatorManager.ShowCatDirectionWarning(sideIndex, 1.5f, () =>
+                            warningIndicatorManager.ShowCatDirectionWarning(sideIndex, ConstGameplay.Cat.AggressiveCat.DirectionWarningDuration, () =>
                             {
                                 SpawnAggressiveCat(sideIndex);
                             });
@@ -80,7 +80,7 @@ namespace JumboJumps.EFTB.Manager
                 }
                 else
                 {
-                    nextSpawnTimer = 0.5f;
+                    nextSpawnTimer = ConstGameplay.Cat.AggressiveCat.FallbackSpawnCheckInterval;
                 }
             }
         }

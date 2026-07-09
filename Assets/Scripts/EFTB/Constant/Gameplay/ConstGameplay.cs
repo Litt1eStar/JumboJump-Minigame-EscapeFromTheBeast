@@ -34,7 +34,11 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float TransitionProgressComplete = 1f;
                 public const float CatLeftHandYRotation = 0f;
                 public const float CatRightHandYRotation = 180f;
-                public const float CatAppearFirstSectionDurationPercentage = 0.5f;
+                public const float CatAppearSneakInDurationPercentage = 0.2f;
+                public const float CatAppearStayDurationPercentage = 0.8f;
+                public const float EventWarningDuration = 1.0f;
+                public const float DirectionWarningDuration = 1.5f;
+                public const float FallbackSpawnCheckInterval = 0.5f;
             }
         }
     }

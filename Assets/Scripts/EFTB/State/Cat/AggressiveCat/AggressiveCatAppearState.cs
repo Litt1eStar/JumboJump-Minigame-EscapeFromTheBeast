@@ -48,14 +48,22 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             Vector3 currentPos = stateController.GiCat.transform.position;
             float newX;
 
-            if (t < ConstGameplay.Cat.AggressiveCat.CatAppearFirstSectionDurationPercentage)
+            if (t < ConstGameplay.Cat.AggressiveCat.CatAppearSneakInDurationPercentage)
             {
-                float progress = t * 2f;
+                // Sneak In (0% to SneakInDurationPercentage duration) - Fast
+                float progress = t / ConstGameplay.Cat.AggressiveCat.CatAppearSneakInDurationPercentage;
                 newX = Mathf.Lerp(startPosition.x, targetPosition.x, progress);
+            }
+            else if (t < ConstGameplay.Cat.AggressiveCat.CatAppearStayDurationPercentage)
+            {
+                // Stay (SneakInDurationPercentage to StayDurationPercentage duration) - Hold at target position
+                newX = targetPosition.x;
             }
             else
             {
-                float progress = (t - 0.5f) * 2f;
+                // Sneak Out (StayDurationPercentage to 100% duration)
+                float progress = (t - ConstGameplay.Cat.AggressiveCat.CatAppearStayDurationPercentage) 
+                    / (ConstGameplay.Cat.AggressiveCat.TransitionProgressComplete - ConstGameplay.Cat.AggressiveCat.CatAppearStayDurationPercentage);
                 newX = Mathf.Lerp(targetPosition.x, startPosition.x, progress);
             }
 
