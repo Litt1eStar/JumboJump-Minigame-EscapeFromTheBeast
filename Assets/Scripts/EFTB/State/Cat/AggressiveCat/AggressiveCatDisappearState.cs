@@ -32,8 +32,8 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
 
             startPosition = stateController.GiCat.transform.position;
             float direction = (stateController.GiCat.CurrentSightDirection == CatSightDirection.Right)
-                ? ConstGameplay.Cat.AggressiveCat.SlideDirectionLeftMultiplier
-                : ConstGameplay.Cat.AggressiveCat.SlideDirectionRightMultiplier;
+                ? ConstGameplay.Cat.AggressiveCat.SLIDE_DIRECTION_LEFT_MULTIPLIER
+                : ConstGameplay.Cat.AggressiveCat.SLIDE_DIRECTION_RIGHT_MULTIPLIER;
             targetPosition = new Vector3(
                 startPosition.x + direction * stateController.Config.SlideDistance,
                 startPosition.y,
@@ -45,13 +45,13 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
         {
             timer += deltaTime;
             float duration = stateController.Config.TimeToDisappear;
-            float t = duration > 0f ? Mathf.Clamp01(timer / duration) : ConstGameplay.Cat.AggressiveCat.TransitionProgressComplete;
+            float t = duration > 0f ? Mathf.Clamp01(timer / duration) : ConstGameplay.Cat.AggressiveCat.TRANSITION_PROGRESS_COMPLETE;
 
             Vector3 currentPos = stateController.GiCat.transform.position;
             float newX = Mathf.Lerp(startPosition.x, targetPosition.x, t);
             stateController.GiCat.transform.position = new Vector3(newX, currentPos.y, currentPos.z);
 
-            if (t >= ConstGameplay.Cat.AggressiveCat.TransitionProgressComplete)
+            if (t >= ConstGameplay.Cat.AggressiveCat.TRANSITION_PROGRESS_COMPLETE)
             {
                 catManager?.ReturnCat(stateController.GiCat);
                 return;

@@ -18,6 +18,7 @@ namespace JumboJumps.EFTB.Manager
         public void Dispose()
         {
             visualizer?.Dispose();
+            visualizer = null;
             GameContext.Instance.Remove(this);
         }
 

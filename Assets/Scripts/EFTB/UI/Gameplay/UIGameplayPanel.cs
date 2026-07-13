@@ -55,6 +55,12 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
 
+            if (coroutineHelper == null)
+            {
+                DebugLogHelper.LogError("CoroutineHelper is missing from GameContext!");
+                return;
+            }
+
             Subscribe();
         }
 
