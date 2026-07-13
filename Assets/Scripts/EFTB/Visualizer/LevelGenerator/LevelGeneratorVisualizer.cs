@@ -167,12 +167,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (isSleepyCat)
             {
-                targetX = (eventData.TargetLaneIndex <= 2)
-                    ? ConstGameplay.Cat.CatLeftLaneSpawnPosition
-                    : ConstGameplay.Cat.CatRightLaneSpawnPosition;
-
-                spawnY = segmentYPosition + eventData.TriggerYOffset;
-                SpawnObstacleInstance(eventData, targetX, spawnY, segment, giSegment, isSleepyCat);
+                HandleSpawnSleepyCatEvent(eventData, segmentYPosition, segment, giSegment, isSleepyCat);
             }
             else
             {
@@ -247,6 +242,16 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
 
             SpawnObstacleInstance(eventData, targetX, currentSpawnY, targetSegmentGo, targetGiSegment, isSleepyCat);
+        }
+
+        private void HandleSpawnSleepyCatEvent(LevelGeneratorData.LaneEventData eventData, float segmentYPosition, GameObject segment, GISegment giSegment, bool isSleepyCat)
+        {
+            float targetX = (eventData.TargetLaneIndex <= 2)
+                ? ConstGameplay.Cat.CatLeftLaneSpawnPosition
+                : ConstGameplay.Cat.CatRightLaneSpawnPosition;
+
+            float spawnY = segmentYPosition + eventData.TriggerYOffset;
+            SpawnObstacleInstance(eventData, targetX, spawnY, segment, giSegment, isSleepyCat);
         }
 
         private void SpawnObstacleInstance(LevelGeneratorData.LaneEventData eventData, float targetX, float spawnY, GameObject segment, GISegment giSegment, bool isSleepyCat)

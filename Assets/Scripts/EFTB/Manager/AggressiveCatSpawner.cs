@@ -57,32 +57,28 @@ namespace JumboJumps.EFTB.Manager
             if (nextSpawnTimer <= 0f)
             {
                 float spawnY;
-                if (CanSpawnAggressiveCat(out spawnY))
+                if (!CanSpawnAggressiveCat(out spawnY))
                 {
-                    ResetSpawnTimer();
-                    
-                    int sideIndex = (Random.value < 0.5f) ? 0 : 1; 
-                    
-                    if (warningIndicatorManager != null)
-                    {
-                        warningIndicatorManager.ShowCatEventWarning(1.0f, () =>
-                        {
-                            warningIndicatorManager.ShowCatDirectionWarning(sideIndex, 1.5f, () =>
-                            {
-                                SpawnAggressiveCat(sideIndex);
-                            });
-                        });
-                    }
-                    else
-                    {
-                        SpawnAggressiveCat(sideIndex);
-                    }
+                    nextSpawnTimer = ConstGameplay.Cat.AggressiveCat.NEXT_SPAWN_TIMER;
+                    return;
                 }
-                else
-                {
-                    nextSpawnTimer = 0.5f;
-                }
+
+                ResetSpawnTimer();
+                AggressiveCatSpawnSequence();
             }
+        }
+
+        private void AggressiveCatSpawnSequence()
+        {
+            int sideIndex = (Random.value < 0.5f) ? 0 : 1; 
+            
+            warningIndicatorManager?.ShowCatEventWarning(1.0f, () =>
+            {
+                warningIndicatorManager?.ShowCatDirectionWarning(sideIndex, 1.5f, () =>
+                {
+                    SpawnAggressiveCat(sideIndex);
+                });
+            });
         }
 
         private void ResetSpawnTimer()

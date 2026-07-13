@@ -39,6 +39,8 @@ namespace JumboJumps.EFTB.UI.Gameplay
         private Coroutine catLeftFadeCoroutine;
         private Coroutine catRightFadeCoroutine;
 
+        private CoroutineHelper coroutineHelper;
+
         public void Initialize()
         {
             if (coinCounterLabel != null)
@@ -50,6 +52,8 @@ namespace JumboJumps.EFTB.UI.Gameplay
             {
                 activeFadeCoroutines = new Coroutine[laneWarningIndicators.Length];
             }
+
+            coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
 
             Subscribe();
         }
@@ -77,46 +81,30 @@ namespace JumboJumps.EFTB.UI.Gameplay
         public void SetWarningIndicatorActive(int laneIndex, bool active)
         {
             DebugLogHelper.Log($"[UIGameplayPanel] SetWarningIndicatorActive called: lane={laneIndex}, active={active}");
-            if (laneWarningIndicators != null && laneIndex >= 0 && laneIndex < laneWarningIndicators.Length)
-            {
-                var indicator = laneWarningIndicators[laneIndex];
-                if (indicator != null)
-                {
-                    // Cancel any active transitions for this lane to avoid conflicts
-                    if (activeFadeCoroutines != null && activeFadeCoroutines[laneIndex] != null)
-                    {
-                        DebugLogHelper.Log($"[UIGameplayPanel] Canceling active coroutine for lane {laneIndex}");
-                        StopCoroutine(activeFadeCoroutines[laneIndex]);
-                        activeFadeCoroutines[laneIndex] = null;
-                    }
-
-                    if (active)
-                    {
-                        DebugLogHelper.Log($"[UIGameplayPanel] Starting fade-in for lane {laneIndex}");
-                        indicator.SetActive(true);
-                        activeFadeCoroutines[laneIndex] = StartCoroutine(FadeCanvasGroup(indicator, 0f, 1f, 0.25f, () => {
-                            DebugLogHelper.Log($"[UIGameplayPanel] Fade-in complete callback for lane {laneIndex}");
-                            ClearCoroutineTracker(laneIndex);
-                        }));
-                    }
-                    else
-                    {
-                        DebugLogHelper.Log($"[UIGameplayPanel] Starting fade-out for lane {laneIndex}");
-                        activeFadeCoroutines[laneIndex] = StartCoroutine(FadeCanvasGroup(indicator, 1f, 0f, 0.25f, () => {
-                            DebugLogHelper.Log($"[UIGameplayPanel] Fade-out complete callback. Deactivating GameObject for lane {laneIndex}");
-                            indicator.SetActive(false);
-                            ClearCoroutineTracker(laneIndex);
-                        }));
-                    }
-                }
-                else
-                {
-                    DebugLogHelper.LogWarning($"[UIGameplayPanel] Indicator at index {laneIndex} is null!");
-                }
-            }
-            else
+            if (laneWarningIndicators == null || laneIndex < 0 || laneIndex >= laneWarningIndicators.Length)
             {
                 DebugLogHelper.LogWarning($"[UIGameplayPanel] laneWarningIndicators is null or index {laneIndex} out of bounds!");
+                return;
+            }
+
+            var indicator = laneWarningIndicators[laneIndex];
+            if (indicator == null)
+            {
+                DebugLogHelper.LogWarning($"[UIGameplayPanel] Indicator at index {laneIndex} is null!");
+                return;
+            }
+
+            if (activeFadeCoroutines != null && coroutineHelper != null)
+            {
+                DebugLogHelper.Log($"[UIGameplayPanel] Starting fade-{(active ? "in" : "out")} for lane {laneIndex}");
+                activeFadeCoroutines[laneIndex] = coroutineHelper.Restart(
+                    activeFadeCoroutines[laneIndex],
+                    FadeCanvasGroup(indicator, active, 0.25f, () => {
+                        DebugLogHelper.Log($"[UIGameplayPanel] Fade-{(active ? "in" : "out")} complete callback for lane {laneIndex}");
+                        ClearCoroutineTracker(laneIndex);
+                    }),
+                    this
+                );
             }
         }
 
@@ -128,8 +116,16 @@ namespace JumboJumps.EFTB.UI.Gameplay
             }
         }
 
-        private IEnumerator FadeCanvasGroup(GameObject target, float startAlpha, float endAlpha, float duration, Action onComplete = null)
+        private IEnumerator FadeCanvasGroup(GameObject target, bool active, float duration, Action onComplete = null)
         {
+            float startAlpha = active ? 0f : 1f;
+            float endAlpha = active ? 1f : 0f;
+
+            if (active)
+            {
+                target.SetActive(true);
+            }
+
             var cg = target.GetComponent<CanvasGroup>() ?? target.AddComponent<CanvasGroup>();
             float elapsed = 0f;
             cg.alpha = startAlpha;
@@ -142,86 +138,54 @@ namespace JumboJumps.EFTB.UI.Gameplay
             }
 
             cg.alpha = endAlpha;
+
+            if (!active)
+            {
+                target.SetActive(false);
+            }
+
             onComplete?.Invoke();
         }
 
         public void SetCatEventWarningActive(bool active)
         {
-            if (aggressiveCatEventWarning != null)
-            {
-                if (catEventFadeCoroutine != null)
-                {
-                    StopCoroutine(catEventFadeCoroutine);
-                    catEventFadeCoroutine = null;
-                }
+            if (aggressiveCatEventWarning == null) return;
+            if (coroutineHelper == null) return;
 
-                if (active)
-                {
-                    aggressiveCatEventWarning.SetActive(true);
-                    catEventFadeCoroutine = StartCoroutine(FadeCanvasGroup(aggressiveCatEventWarning, 0f, 1f, 0.25f, () => {
-                        catEventFadeCoroutine = null;
-                    }));
-                }
-                else
-                {
-                    catEventFadeCoroutine = StartCoroutine(FadeCanvasGroup(aggressiveCatEventWarning, 1f, 0f, 0.25f, () => {
-                        aggressiveCatEventWarning.SetActive(false);
-                        catEventFadeCoroutine = null;
-                    }));
-                }
-            }
+            catEventFadeCoroutine = coroutineHelper.Restart(
+                catEventFadeCoroutine,
+                FadeCanvasGroup(aggressiveCatEventWarning, active, 0.25f, () => {
+                    catEventFadeCoroutine = null;
+                }),
+                this
+            );
         }
 
         public void SetCatDirectionWarningActive(int sideIndex, bool active)
         {
             GameObject indicator = (sideIndex == 0) ? aggressiveCatLeftWarning : aggressiveCatRightWarning;
             if (indicator == null) return;
+            if (coroutineHelper == null) return;
 
             if (sideIndex == 0)
             {
-                if (catLeftFadeCoroutine != null)
-                {
-                    StopCoroutine(catLeftFadeCoroutine);
-                    catLeftFadeCoroutine = null;
-                }
-
-                if (active)
-                {
-                    indicator.SetActive(true);
-                    catLeftFadeCoroutine = StartCoroutine(FadeCanvasGroup(indicator, 0f, 1f, 0.25f, () => {
+                catLeftFadeCoroutine = coroutineHelper.Restart(
+                    catLeftFadeCoroutine,
+                    FadeCanvasGroup(indicator, active, 0.25f, () => {
                         catLeftFadeCoroutine = null;
-                    }));
-                }
-                else
-                {
-                    catLeftFadeCoroutine = StartCoroutine(FadeCanvasGroup(indicator, 1f, 0f, 0.25f, () => {
-                        indicator.SetActive(false);
-                        catLeftFadeCoroutine = null;
-                    }));
-                }
+                    }),
+                    this
+                );
             }
             else
             {
-                if (catRightFadeCoroutine != null)
-                {
-                    StopCoroutine(catRightFadeCoroutine);
-                    catRightFadeCoroutine = null;
-                }
-
-                if (active)
-                {
-                    indicator.SetActive(true);
-                    catRightFadeCoroutine = StartCoroutine(FadeCanvasGroup(indicator, 0f, 1f, 0.25f, () => {
+                catRightFadeCoroutine = coroutineHelper.Restart(
+                    catRightFadeCoroutine,
+                    FadeCanvasGroup(indicator, active, 0.25f, () => {
                         catRightFadeCoroutine = null;
-                    }));
-                }
-                else
-                {
-                    catRightFadeCoroutine = StartCoroutine(FadeCanvasGroup(indicator, 1f, 0f, 0.25f, () => {
-                        indicator.SetActive(false);
-                        catRightFadeCoroutine = null;
-                    }));
-                }
+                    }),
+                    this
+                );
             }
         }
     }

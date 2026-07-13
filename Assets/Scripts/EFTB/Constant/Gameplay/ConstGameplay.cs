@@ -30,6 +30,7 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float SlideDirectionLeftMultiplier = -1f;
                 public const float SlideDirectionRightMultiplier = 1f;
                 public const float TransitionProgressComplete = 1f;
+                public const float NEXT_SPAWN_TIMER = 0.5f;
             }
         }
     }
