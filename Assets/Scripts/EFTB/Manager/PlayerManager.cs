@@ -22,7 +22,7 @@ namespace JumboJumps.EFTB.Manager
 
             SetPlayerToMiddleLane();
             
-            float startX = stateController.LaneXPositions[stateController.CurrentLaneIndex];
+            float startX = stateController.LANE_X_POSITIONS[stateController.CurrentLaneIndex];
             PlayerTransform.position = new Vector3(startX, PlayerTransform.position.y, PlayerTransform.position.z);
 
             GameContext.Instance.Add(this);

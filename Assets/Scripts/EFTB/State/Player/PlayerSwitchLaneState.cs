@@ -28,7 +28,7 @@ namespace JumboJumps.EFTB.State.Player
             }
             else if (playerStateController.LastSwipeDirection == SwipeDirectionEnum.Right)
             {
-                targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
+                targetLane = Mathf.Min(playerStateController.LANE_X_POSITIONS.Length - 1, targetLane + 1);
             }
 
             if (targetLane == playerStateController.CurrentLaneIndex)
@@ -37,7 +37,7 @@ namespace JumboJumps.EFTB.State.Player
                 return;
             }
 
-            float targetX = playerStateController.LaneXPositions[targetLane];
+            float targetX = playerStateController.LANE_X_POSITIONS[targetLane];
             playerStateController.CurrentLaneIndex = targetLane;
 
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
