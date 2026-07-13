@@ -31,28 +31,34 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             var giAggressive = stateController.GiAggressiveCat;
             if (giAggressive != null)
             {
-                giAggressive.SetHandActive(true);
-
-                // Start hand position at the cat body's position
-                startPosition = giAggressive.transform.position;
-                currentSightDirection = giAggressive.CurrentSightDirection;
-                // Determine target lane X based on the cat's side
-                // Left spawn (sight direction Right) targets the Left lane (-0.8f)
-                // Right spawn (sight direction Left) targets the Right lane (0.8f)
-                float targetX = (currentSightDirection == CatSightDirection.Right)
-                    ? ConstGameplay.LevelGenerator.LaneXPositions[0]
-                    : ConstGameplay.LevelGenerator.LaneXPositions[1];
-
-                float rotation = (currentSightDirection == CatSightDirection.Right) 
-                    ? ConstGameplay.Cat.AggressiveCat.CatLeftHandYRotation 
-                    : ConstGameplay.Cat.AggressiveCat.CatRightHandYRotation;
-
-                targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
-                
-                Quaternion catHandRotation = Quaternion.Euler(0f, rotation, 0f);
-                giAggressive.SetHandRotation(catHandRotation);
-                giAggressive.SetHandPosition(startPosition);
+                InitializeSmashParameters(giAggressive);
             }
+        }
+
+        private void InitializeSmashParameters(GIAggressiveCat giAggressive)
+        {
+            giAggressive.SetHandActive(true);
+
+            // Start hand position at the cat body's position
+            startPosition = giAggressive.transform.position;
+            currentSightDirection = giAggressive.CurrentSightDirection;
+            
+            // Determine target lane X based on the cat's side
+            // Left spawn (sight direction Right) targets the Left lane (-0.8f)
+            // Right spawn (sight direction Left) targets the Right lane (0.8f)
+            float targetX = (currentSightDirection == CatSightDirection.Right)
+                ? ConstGameplay.LevelGenerator.LaneXPositions[0]
+                : ConstGameplay.LevelGenerator.LaneXPositions[1];
+
+            float rotation = (currentSightDirection == CatSightDirection.Right) 
+                ? ConstGameplay.Cat.AggressiveCat.CatLeftHandYRotation 
+                : ConstGameplay.Cat.AggressiveCat.CatRightHandYRotation;
+
+            targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
+            
+            Quaternion catHandRotation = Quaternion.Euler(0f, rotation, 0f);
+            giAggressive.SetHandRotation(catHandRotation);
+            giAggressive.SetHandPosition(startPosition);
         }
 
         public override void UpdateLogic(float deltaTime)
