@@ -64,22 +64,22 @@ namespace JumboJumps.EFTB.Manager
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = gameDataManager.LevelSegmentData.Values.ToList();
-            LaneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
-            MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
-            SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
-            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
-            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage;
-            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HardDifficultyTimePercentage;
+            LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+            MaxSegmentAmount = ConstGameplay.LevelGenerator.MAX_SEGMENT_AMOUNT;
+            SegmentHeight = ConstGameplay.LevelGenerator.SEGMENT_HEIGHT;
+            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MEDIUM_DIFFICULTY_TIME_PERCENTAGE;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HARD_DIFFICULTY_TIME_PERCENTAGE;
 
-            visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions);
+            visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions, this);
             visualizer.Initialize();
 
             config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyTimePercentage, HardDifficultyTimePercentage);
 
-            nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
-            nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
+            nextTriggerPosition = SegmentHeight + config.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            nextYSpawnPosition = SegmentHeight * config.MAX_SEGMENT_AMOUNT;
 
-            for (int i = 0; i < config.MaxSegmentAmount; i++)
+            for (int i = 0; i < config.MAX_SEGMENT_AMOUNT; i++)
             {
                 float spawnYPosition = i * SegmentHeight;
                 SpawnSegmentAt(spawnYPosition);

@@ -34,9 +34,9 @@ namespace JumboJumps.EFTB.Manager
 
             ResetSpawnTimer();
 
-            minSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMinSpawnTime;
-            maxSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMaxSpawnTime;
-            verticalSpawnOffset = ConstGameplay.Cat.AggressiveCat.CatVerticalSpawnOffset;
+            minSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MIN_SPAWN_TIME;
+            maxSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MAX_SPAWN_TIME;
+            verticalSpawnOffset = ConstGameplay.Cat.AggressiveCat.CAT_VERTICAL_SPAWN_OFFSET;
 
             GameContext.Instance.Add(this);
         }
@@ -57,32 +57,28 @@ namespace JumboJumps.EFTB.Manager
             if (nextSpawnTimer <= 0f)
             {
                 float spawnY;
-                if (CanSpawnAggressiveCat(out spawnY))
+                if (!CanSpawnAggressiveCat(out spawnY))
                 {
-                    ResetSpawnTimer();
-                    
-                    int sideIndex = (Random.value < 0.5f) ? 0 : 1; 
-                    
-                    if (warningIndicatorManager != null)
-                    {
-                        warningIndicatorManager.ShowCatEventWarning(ConstGameplay.Cat.AggressiveCat.EventWarningDuration, () =>
-                        {
-                            warningIndicatorManager.ShowCatDirectionWarning(sideIndex, ConstGameplay.Cat.AggressiveCat.DirectionWarningDuration, () =>
-                            {
-                                SpawnAggressiveCat(sideIndex);
-                            });
-                        });
-                    }
-                    else
-                    {
-                        SpawnAggressiveCat(sideIndex);
-                    }
+                    nextSpawnTimer = ConstGameplay.Cat.AggressiveCat.NEXT_SPAWN_TIMER;
+                    return;
                 }
-                else
-                {
-                    nextSpawnTimer = ConstGameplay.Cat.AggressiveCat.FallbackSpawnCheckInterval;
-                }
+
+                ResetSpawnTimer();
+                AggressiveCatSpawnSequence();
             }
+        }
+
+        private void AggressiveCatSpawnSequence()
+        {
+            int sideIndex = (Random.value < 0.5f) ? 0 : 1; 
+            
+            warningIndicatorManager?.ShowCatEventWarning(1.0f, () =>
+            {
+                warningIndicatorManager?.ShowCatDirectionWarning(sideIndex, 1.5f, () =>
+                {
+                    SpawnAggressiveCat(sideIndex);
+                });
+            });
         }
 
         private void ResetSpawnTimer()
@@ -123,13 +119,12 @@ namespace JumboJumps.EFTB.Manager
             var giSegment = levelGeneratorManager.GetGISegmentAtY(spawnY);
             if (giSegment == null) return;
 
-            float targetX = (sideIndex == 0) ? ConstGameplay.Cat.CatLeftLaneSpawnPosition : ConstGameplay.Cat.CatRightLaneSpawnPosition;
+            float targetX = (sideIndex == 0) ? ConstGameplay.Cat.CAT_LEFT_LANE_SPAWN_POSITION : ConstGameplay.Cat.CAT_RIGHT_LANE_SPAWN_POSITION;
             Vector3 spawnPosition = new Vector3(targetX, spawnY, 0f);
 
-            GameObject prefab = gameDataManager.GetPrefab(ConstGameplay.Cat.AggressiveCat.PrefabName);
-            if (prefab == null)
+            if (!gameDataManager.TryGetPrefab(ConstGameplay.Cat.AggressiveCat.PREFAB_NAME, out GameObject prefab))
             {
-                DebugLogHelper.LogError($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: Prefab, '{ConstGameplay.Cat.AggressiveCat.PrefabName}' not found in registry.");
+                DebugLogHelper.LogError($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: Prefab, '{ConstGameplay.Cat.AggressiveCat.PREFAB_NAME}' not found in registry.");
                 return;
             }
 

@@ -48,7 +48,7 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
         {
             timer += deltaTime;
             float duration = stateController.Config.TimeToDisappear;
-            float t = duration > 0f ? Mathf.Clamp01(timer / duration) : ConstGameplay.Cat.AggressiveCat.TransitionProgressComplete;
+            float t = duration > 0f ? Mathf.Clamp01(timer / duration) : ConstGameplay.Cat.AggressiveCat.TRANSITION_PROGRESS_COMPLETE;
 
             var giAggressive = stateController.GiAggressiveCat;
             if (giAggressive != null && giAggressive.CatHand != null)
