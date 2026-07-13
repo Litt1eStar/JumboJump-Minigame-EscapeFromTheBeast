@@ -96,17 +96,23 @@ namespace JumboJumps.EFTB.Manager
             switch (timeManager.CurrentDifficulty)
             {
                 case GameplayDifficultyEnum.Easy:
+                {
                     minSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMinSpawnTime;
                     maxSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMaxSpawnTime;
                     break;
+                }
                 case GameplayDifficultyEnum.Normal:
+                {
                     minSpawnTime = ConstGameplay.Cat.AggressiveCat.NormalMinSpawnTime;
                     maxSpawnTime = ConstGameplay.Cat.AggressiveCat.NormalMaxSpawnTime;
                     break;
+                }
                 case GameplayDifficultyEnum.Hard:
+                {
                     minSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMinSpawnTime;
                     maxSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMaxSpawnTime;
                     break;
+                }
             }
         }
 
