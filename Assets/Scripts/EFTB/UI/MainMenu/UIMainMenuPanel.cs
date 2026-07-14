@@ -25,13 +25,13 @@ namespace JumboJumps.EFTB.UI.MainMenu
         {
             playButton.onClick.AddListener(OnPlayButtonClicked);
             exitButton.onClick.AddListener(OnExitButtonClicked);
-
-            DebugLogHelper.Log("Subscribe UIMainMenuPanel");
         }
 
         private void OnPlayButtonClicked()
         {
             EventPlayUIButtonClicked?.Invoke();
+
+            DebugLogHelper.Log("Play button clicked in UIMainMenuPanel");
         }
 
         private void OnExitButtonClicked()
