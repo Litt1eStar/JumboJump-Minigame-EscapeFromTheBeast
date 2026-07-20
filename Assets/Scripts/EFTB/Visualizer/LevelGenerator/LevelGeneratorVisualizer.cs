@@ -20,10 +20,11 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
         private Camera mainCamera;
         private float[] laneXPosition;
 
-        public LevelGeneratorVisualizer(GameDataManager gameDataManager, float[] laneXPosition)
+        public LevelGeneratorVisualizer(GameDataManager gameDataManager, float[] laneXPosition, LevelGeneratorManager levelGeneratorManager)
         {
             this.gameDataManager = gameDataManager;
             this.laneXPosition = laneXPosition;
+            this.levelGeneratorManager = levelGeneratorManager;
         }
 
         public void Initialize()
@@ -35,24 +36,19 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 return;
             }
 
-
             warningIndicatorManager = GameContext.Instance.Get<WarningIndicatorManager>();
-            if(warningIndicatorManager == null)
+
+            if (warningIndicatorManager == null)
             {
                 DebugLogHelper.LogError($"{GetType().Name} Failed to find WarningIndicatorManager in GameContex");
                 return;
             }
 
-            mainCamera = Camera.main;
-            if (mainCamera == null)
-            {
-                mainCamera = SceneObjectContext.Instance.Get<Camera>();
-            }
+            mainCamera = Camera.main ?? SceneObjectContext.Instance.Get<Camera>() ?? UnityEngine.Object.FindAnyObjectByType<Camera>();
 
             if (mainCamera == null)
             {
-                DebugLogHelper.LogError($"[{GetType().Name}] Failed to find Main Camera in the scene");
-                return;
+                DebugLogHelper.LogWarning($"[{GetType().Name}] Failed to find Main Camera during Initialize, will attempt to find later.");
             }
         }
 
@@ -76,13 +72,12 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             Vector3 position = new Vector3(0, yPosition, 0);
 
-            GameObject segmentPrefab = gameDataManager.GetPrefab(template.SegmentPrefabName);
-            if (segmentPrefab == null)
+            if (!gameDataManager.TryGetPrefab(template.SegmentPrefabName, out GameObject segmentPrefab))
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] SpawnSegment failed : Prefab '{template.SegmentPrefabName}' not found in registry.");
                 return null;
             }
-            
+
             GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity);
 
             GISegment giSegment = segment.GetComponent<GISegment>();
@@ -125,14 +120,14 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             {
                 foreach (LevelGeneratorData.LaneObjectData objectData in template.PrePlacedObject)
                 {
-                    bool isSleepyCat = objectData.PrefabName == "Prefab_Event_SleepyCat";
+                    if (!gameDataManager.TryGetPrefab(objectData.PrefabName, out GameObject prefab)) continue;
+
+                    bool isCat = prefab.GetComponent<GICat>() != null;
                     float targetX = 0f;
 
-                    if (isSleepyCat)
+                    if (isCat)
                     {
-                        targetX = (objectData.LaneIndex == 0)
-                            ? ConstGameplay.Cat.CatLeftLaneSpawnPosition
-                            : ConstGameplay.Cat.CatRightLaneSpawnPosition;
+                        targetX = GetCatSpawnX(objectData.LaneIndex);
                     }
                     else
                     {
@@ -141,13 +136,9 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                     }
 
                     Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.YOffset, 0f);
-                    GameObject prefab = gameDataManager.GetPrefab(objectData.PrefabName);
-
-                    if (prefab == null) continue;
-
                     GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
 
-                    if (isSleepyCat)
+                    if (isCat)
                     {
                         SetupSleepyCat(spawnedObj, targetX);
                     }
@@ -157,22 +148,29 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
         }
 
-        public void SpawnEventObstacle(LevelGeneratorData.LaneEventData eventData, float segmentYPosition, GameObject segment, GISegment giSegment)
+        public void SpawnEventObstacle(LevelGeneratorData.LaneEventData eventData,
+                                       float segmentYPosition,
+                                       GameObject segment,
+                                       GISegment giSegment)
         {
             if (poolManager == null || eventData == null || string.IsNullOrEmpty(eventData.PrefabName)) return;
 
-            bool isSleepyCat = eventData.PrefabName == "Prefab_Event_SleepyCat";
+            if (!gameDataManager.TryGetPrefab(eventData.PrefabName, out GameObject prefab))
+            {
+                DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for event: {eventData.PrefabName}");
+                return;
+            }
+
+            bool isCat = prefab.GetComponent<GICat>() != null;
             float targetX = 0f;
             float spawnY = 0f;
 
-            if (isSleepyCat)
+            if (isCat)
             {
-                targetX = (eventData.TargetLaneIndex == 0)
-                    ? ConstGameplay.Cat.CatLeftLaneSpawnPosition
-                    : ConstGameplay.Cat.CatRightLaneSpawnPosition;
+                targetX = GetCatSpawnX(eventData.TargetLaneIndex);
 
                 spawnY = segmentYPosition + eventData.TriggerYOffset;
-                SpawnObstacleInstance(eventData, targetX, spawnY, segment, giSegment, isSleepyCat);
+                SpawnObstacleInstance(eventData, targetX, spawnY, segment, giSegment, prefab);
             }
             else
             {
@@ -181,95 +179,69 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 float originalSegmentY = segment != null ? segment.transform.position.y : 0f;
 
                 // Spawn warning indicator for 1.5s before spawning the actual lane obstacle
-                if (warningIndicatorManager != null)
+                warningIndicatorManager.ShowWarning(laneIdx, ConstUI.Gameplay.WARNING_INDICATOR_DURATION, () =>
                 {
-                    warningIndicatorManager.ShowWarning(laneIdx, ConstUI.Gameplay.WarningIndicatorDuration, () =>
-                    {
-                        HandleSpawnObstacle(eventData, segment, giSegment, isSleepyCat, targetX, originalSegmentY);
-                    });
-                }
-                else
-                {
-                    HandleSpawnObstacle(eventData, segment, giSegment, isSleepyCat, targetX, originalSegmentY);
-                }
+                    HandleSpawnObstacle(eventData, segment, giSegment, targetX, originalSegmentY, prefab);
+                });
             }
         }
 
-        private void HandleSpawnObstacle(LevelGeneratorData.LaneEventData eventData, GameObject segment, GISegment giSegment, bool isSleepyCat, float targetX, float originalSegmentY)
+        private void HandleSpawnObstacle(LevelGeneratorData.LaneEventData eventData,
+                                         GameObject segment,
+                                         GISegment giSegment,
+                                         float targetX,
+                                         float originalSegmentY,
+                                         GameObject prefab)
         {
-            float currentSpawnY = 0f;
             Camera mainCam = mainCamera;
             if (mainCam == null)
             {
-                mainCam = Camera.main ?? UnityEngine.Object.FindAnyObjectByType<Camera>();
+                mainCam = Camera.main ?? SceneObjectContext.Instance.Get<Camera>() ?? UnityEngine.Object.FindAnyObjectByType<Camera>();
+                mainCamera = mainCam;
             }
 
-            if (mainCam != null)
+            if (mainCam == null)
             {
-                float verticalHalfSize = mainCam.orthographic
-                    ? mainCam.orthographicSize
-                    : Mathf.Abs(mainCam.transform.position.z) * Mathf.Tan(mainCam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-                float safetyOffset = Mathf.Max(5f, verticalHalfSize * 0.4f);
-                currentSpawnY = mainCam.transform.position.y + verticalHalfSize + safetyOffset;
-            }
-            else
-            {
-                DebugLogHelper.LogError($"[{GetType().Name}] Can't find Camera in this Scene");
+                DebugLogHelper.LogError($"[{GetType().Name}] Main Camera reference is null");
                 return;
             }
 
-            if (levelGeneratorManager == null)
+            float verticalHalfSize = mainCam.orthographic
+                ? mainCam.orthographicSize
+                : Mathf.Abs(mainCam.transform.position.z) * Mathf.Tan(mainCam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+            float safetyOffset = Mathf.Max(5f, verticalHalfSize * 0.4f);
+            float currentSpawnY = mainCam.transform.position.y + verticalHalfSize + safetyOffset;
+
+            if (segment == null || !segment.activeInHierarchy)
             {
-                levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
+                DebugLogHelper.LogWarning($"[{GetType().Name}] Aborting obstacle spawn because the segment is inactive.");
+                return;
             }
 
-            GISegment targetGiSegment = null;
-            GameObject targetSegmentGo = null;
-            if (levelGeneratorManager != null)
-            {
-                targetGiSegment = levelGeneratorManager.GetGISegmentAtY(currentSpawnY);
-                if (targetGiSegment != null)
-                {
-                    targetSegmentGo = targetGiSegment.gameObject;
-                }
-            }
-
-            // Fallback to the original segment if the far-ahead segment is not found
-            if (targetSegmentGo == null)
-            {
-                if (segment == null || !segment.activeInHierarchy)
-                {
-                    DebugLogHelper.LogWarning($"[{GetType().Name}] Aborting obstacle spawn because both target and original segments are inactive.");
-                    return;
-                }
-                targetSegmentGo = segment;
-                targetGiSegment = giSegment;
-            }
-
-            SpawnObstacleInstance(eventData, targetX, currentSpawnY, targetSegmentGo, targetGiSegment, isSleepyCat);
+            SpawnObstacleInstance(eventData, targetX, currentSpawnY, segment, giSegment, prefab);
         }
 
-        private void SpawnObstacleInstance(LevelGeneratorData.LaneEventData eventData, float targetX, float spawnY, GameObject segment, GISegment giSegment, bool isSleepyCat)
+        private void SpawnObstacleInstance(LevelGeneratorData.LaneEventData eventData,
+                                           float targetX,
+                                           float spawnY,
+                                           GameObject segment,
+                                           GISegment giSegment,
+                                           GameObject prefab)
         {
-            if (poolManager == null || eventData == null || string.IsNullOrEmpty(eventData.PrefabName)) return;
+            if (poolManager == null || eventData == null || prefab == null) return;
 
             Vector3 spawnPosition = new Vector3(targetX, spawnY, 0f);
-            GameObject prefab = gameDataManager.GetPrefab(eventData.PrefabName);
-
-            if (prefab == null)
-            {
-                DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for event: {eventData.PrefabName}");
-                return;
-            }
-
             GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
 
-            if (isSleepyCat)
+            var giCat = spawnedObj.GetComponent<GICat>();
+            if (giCat != null)
             {
+                // If the spawned object is a cat, set it up accordingly
                 SetupSleepyCat(spawnedObj, targetX);
             }
             else
             {
+                // If the spawned object is a moving obstacle, initialize its movement speed
                 var movingObstacle = spawnedObj.GetComponent<GIMovingObstacle>();
                 if (movingObstacle == null)
                 {
@@ -282,6 +254,13 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             {
                 giSegment.RegisterSpawnedObject(spawnedObj);
             }
+        }
+
+        private float GetCatSpawnX(int laneIndex)
+        {
+            return (laneIndex < laneXPosition.Length / ConstGameplay.LevelGenerator.LANE_SIZE)
+                ? ConstGameplay.Cat.CAT_LEFT_LANE_SPAWN_POSITION
+                : ConstGameplay.Cat.CAT_RIGHT_LANE_SPAWN_POSITION;
         }
 
         public void RecycleOldestSegment()
@@ -300,9 +279,9 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                     {
                         var giCat = spawnedObjs[i].GetComponent<GICat>();
                         if (giCat != null)
-                        { 
+                        {
                             SceneObjectContext.Instance.Deregister(giCat);
-                           
+
                             var catManager = GameContext.Instance.Get<CatManager>();
                             if (catManager != null)
                             {
