@@ -1,4 +1,5 @@
 using JumboJump.EFTB.Constant.UI;
+using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
@@ -16,10 +17,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
         private Button pauseButton;
 
         [SerializeField]
-        private TextMeshProUGUI coinCounterLabel;
-
-        [SerializeField]
-        private TextMeshProUGUI gameplayTimerLabel;
+        private TextMeshProUGUI scoreCounterLabel;
 
         [SerializeField]
         private GameObject[] laneWarningIndicators;
@@ -41,11 +39,6 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
         public void Initialize()
         {
-            if (coinCounterLabel != null)
-            {
-                coinCounterLabel.text = $"{ConstUI.Gameplay.BASE_COIN_COUNTER_LABEL}{0}";
-            }
-
             if (laneWarningIndicators != null)
             {
                 activeFadeCoroutines = new Coroutine[laneWarningIndicators.Length];
@@ -64,14 +57,12 @@ namespace JumboJumps.EFTB.UI.Gameplay
             EventPauseUIButtonClicked?.Invoke();
         }
 
-        public void SetCoinCounterLabel(int value)
+        public void SetScoreLabel(ScoreData scoreData)
         {
-            coinCounterLabel.text = $"{ConstUI.Gameplay.BASE_COIN_COUNTER_LABEL}{value}";
-        }
-
-        public void SetGameplayTimer(float value)
-        {
-            gameplayTimerLabel.text = $"{value.ToString("F2")}";
+            if (scoreCounterLabel != null)
+            {
+                scoreCounterLabel.text = ConstUI.Gameplay.BASE_SCORE_LABEL + scoreData.TotalScore.ToString();
+            }
         }
 
         public void SetWarningIndicatorActive(int laneIndex, bool active)

@@ -36,7 +36,7 @@ namespace JumboJumps.EFTB.State.Player
             playerStateController.CurrentLaneIndex = targetLane;
 
             Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
-            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Player.StepDistanceY : 0f;
+            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Player.STEP_DISTANCE_Y : 0f;
             Vector3 targetPos = new Vector3(targetX, startPos.y + stepY, startPos.z);
 
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
@@ -46,7 +46,7 @@ namespace JumboJumps.EFTB.State.Player
         private IEnumerator SmoothStepLane(Vector3 startPos, Vector3 targetPos)
         {
             float elapsed = 0f;
-            float duration = ConstGameplay.Player.StepDuration;
+            float duration = ConstGameplay.Player.STEP_DURATION;
 
             while (elapsed < duration)
             {

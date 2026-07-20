@@ -110,5 +110,16 @@ namespace JumboJumps.EFTB.Manager
         {
             return prefabRegistry != null && prefabRegistry.HasPrefab(key);
         }
+
+        public bool TryGetPrefab(string key, out GameObject prefab)
+        {
+            if (prefabRegistry != null && prefabRegistry.HasPrefab(key))
+            {
+                prefab = prefabRegistry.GetPrefab(key);
+                return prefab != null;
+            }
+            prefab = null;
+            return false;
+        }
     }
 }

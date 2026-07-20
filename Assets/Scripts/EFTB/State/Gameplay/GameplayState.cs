@@ -17,7 +17,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private PlayerManager playerManager;
         private CatManager catManager;
         private CollectibleManager collectibleManager;
-        private GameplayTimeManager gameplayTimeManager;
+        private ScoreManager scoreManager;
         private AggressiveCatSpawner aggressiveCatSpawner;
         private WarningIndicatorManager warningIndicatorManager;
 
@@ -53,6 +53,9 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager = new CollectibleManager();  
             collectibleManager.Initialize();
 
+            scoreManager = new ScoreManager();
+            scoreManager.Initialize(playerManager.PlayerTransform);
+
             gameplayController = new GameplayController();
 
             gameplayStateManager = new GameplayStateManager();
@@ -70,9 +73,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             levelGeneratorManager = new LevelGeneratorManager();
             levelGeneratorManager.Initialize(playerManager.PlayerTransform);
 
-            gameplayTimeManager = new GameplayTimeManager();
-            gameplayTimeManager.Initialize();
-
             aggressiveCatSpawner = new AggressiveCatSpawner();
             aggressiveCatSpawner.Initialize();
 
@@ -87,11 +87,11 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnExitState();
 
+            scoreManager?.Dispose();
+            scoreManager = null;
+
             gameplayStateManager?.Dispose();
             gameplayStateManager = null;
-
-            gameplayTimeManager?.Dispose();
-            gameplayTimeManager = null;
 
             aggressiveCatSpawner?.Dispose();
             aggressiveCatSpawner = null;
@@ -134,9 +134,9 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             if (!IsSceneLoaded) return;
 
-            gameplayTimeManager?.UpdateLogic(deltaTime);
             gameplayStateManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
+            scoreManager?.UpdateLogic(deltaTime);
             levelGeneratorManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
             aggressiveCatSpawner?.UpdateLogic(deltaTime);

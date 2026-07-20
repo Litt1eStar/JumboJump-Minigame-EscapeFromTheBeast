@@ -38,17 +38,11 @@ namespace JumboJumps.EFTB.UI.Gameplay
             uiFinishLevelPanel.Initialize();
         }
 
-        #region Gameplay Timer
-        public void SetGameplayTimer(float value)
-        {
-            uiGameplayPanel?.SetGameplayTimer(value);
-        }
-        #endregion
 
-        #region Coin Counter
-        public void SetCoinCounterLabel(int value)
+        #region Score Counter
+        public void SetScoreLabel(JumboJumps.EFTB.Model.ScoreData scoreData)
         {
-            uiGameplayPanel?.SetCoinCounterLabel(value);
+            uiGameplayPanel?.SetScoreLabel(scoreData);
         }
         #endregion
 

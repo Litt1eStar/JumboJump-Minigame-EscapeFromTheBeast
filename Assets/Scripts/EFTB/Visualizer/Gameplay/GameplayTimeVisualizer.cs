@@ -41,7 +41,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void OnGameplayTimerChanged(float value)
         {
-            uiGameplayCanvas?.SetGameplayTimer(value);
+            // Timer UI is disabled for endless gameplay
         }
     }
 }
