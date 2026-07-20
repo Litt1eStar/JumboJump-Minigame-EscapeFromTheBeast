@@ -7,27 +7,18 @@ namespace JumboJumps.EFTB.Manager
     public class Input2DManager : MonoBehaviour
     {
         public event Action EventTap;
-        public event Action EventHoldStarted;
-        public event Action EventHoldEnded;
-
-        /// <summary>
-        /// Parameter : Swipe Direction to told event that what direction player had swipe the screen
-        /// </summary>
         public event Action<SwipeDirectionEnum> EventSwipe;
+        public event Action<SwipeDirectionEnum> EventCombinedStep;
 
         [Header("Settings")]
         [SerializeField]
         private float swipeThreshold = 50f;
-
-        [SerializeField]
-        private float holdThreshold = 0.1f;
 
         private Vector2 startTouchPosition;
         private float swipeThresholdSquare;
         private float touchDuration;
         private bool isTouchingScreen;
         private bool isSwiping;
-        private bool isHoldTriggered;
 
         public bool IsTouchingScreen => isTouchingScreen;
 
@@ -78,6 +69,14 @@ namespace JumboJumps.EFTB.Manager
             }
         }
 
+        private void HandleTouchBegan(Touch touch)
+        {
+            isTouchingScreen = true;
+            isSwiping = false;
+            startTouchPosition = touch.position;
+            touchDuration = 0f;
+        }
+
         private void HandleTouchMoved(Touch touch)
         {
             if (isSwiping) return;
@@ -86,66 +85,38 @@ namespace JumboJumps.EFTB.Manager
             if (moveDelta.sqrMagnitude > swipeThresholdSquare)
             {
                 isSwiping = true;
-
-                if (isHoldTriggered)
-                {
-                    EventHoldEnded?.Invoke();
-                }
-
                 HandleSwipe(moveDelta);
-                return;
             }
-
-            if (!isHoldTriggered && !isSwiping && touchDuration > holdThreshold)
-            {
-                isHoldTriggered = true;
-                EventHoldStarted?.Invoke();
-            }
-        }
-
-        private void HandleTouchBegan(Touch touch)
-        {
-            isTouchingScreen = true;
-            isSwiping = false;
-            isHoldTriggered = false;
-            startTouchPosition = touch.position;
-            touchDuration = 0f;
         }
 
         public void HandleTouchEnded(Touch? touch = null)
         {
             if (!isTouchingScreen) return;
 
-            if (isHoldTriggered)
+            if (!isSwiping)
             {
-                EventHoldEnded?.Invoke();
-            }
-
-            if (!isSwiping && touch.HasValue)
-            {
-                Vector2 finalDelta = touch.Value.position - startTouchPosition;
-
-                if (finalDelta.sqrMagnitude < swipeThresholdSquare && touchDuration < holdThreshold)
-                {
-                    EventTap?.Invoke();
-                }
+                EventTap?.Invoke();
             }
 
             isTouchingScreen = false;
-            isHoldTriggered = false;
             isSwiping = false;
         }
+
         public void HandleSwipe(Vector2 swipedVector)
         {
-            if (Mathf.Abs(swipedVector.x) < Mathf.Abs(swipedVector.y)) return;
+            SwipeDirectionEnum dir = swipedVector.x > 0 ? SwipeDirectionEnum.Right : SwipeDirectionEnum.Left;
 
-            if (swipedVector.x > 0)
+            if (swipedVector.y > swipeThreshold * 0.4f)
             {
-                EventSwipe?.Invoke(SwipeDirectionEnum.Right);
+                EventCombinedStep?.Invoke(dir);
             }
-            else
+            else if (Mathf.Abs(swipedVector.x) >= Mathf.Abs(swipedVector.y))
             {
-                EventSwipe?.Invoke(SwipeDirectionEnum.Left);
+                EventSwipe?.Invoke(dir);
+            }
+            else if (swipedVector.y > 0)
+            {
+                EventTap?.Invoke();
             }
         }
     }
