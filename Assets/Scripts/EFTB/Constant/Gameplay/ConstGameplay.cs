@@ -17,18 +17,25 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public const string DefaultInitialSegmentPrefab = "Prefab_Segment_Initial";
             public const int InitialSegmentId = 0;
             public static readonly float[] LaneXPositions = new float[] { -1.0f, 1.0f };
+            public const float LANE_SIZE = 2.0f;
         }
 
         public class Player
         {
-            public const float StepDistanceY = 2.0f;
-            public const float StepDuration = 0.12f;
+            public const float STEP_DISTANCE_Y = 2.0f;
+            public const float STEP_DURATION = 0.12f;
+        }
+
+        public class Score
+        {
+            public const int DISTANCE_POINT_PER_CELL = 10;
+            public const int TREAT_POINT_VALUE = 100;
         }
 
         public class Cat
         {
-            public const float CatLeftLaneSpawnPosition = -4.3f;
-            public const float CatRightLaneSpawnPosition = 3.3f;
+            public const float CAT_LEFT_LANE_SPAWN_POSITION = -4.3f;
+            public const float CAT_RIGHT_LANE_SPAWN_POSITION = 3.3f;
             public const float CatSpawnThreshold = 2.5f;
 
             public class AggressiveCat
@@ -51,6 +58,12 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float EventWarningDuration = 1.0f;
                 public const float DirectionWarningDuration = 1.5f;
                 public const float FallbackSpawnCheckInterval = 0.5f;
+
+                public const float INITIAL_MIN_SPAWN_TIME = 7f;
+                public const float INITIAL_MAX_SPAWN_TIME = 15f;
+                public const float CAT_VERTICAL_SPAWN_OFFSET = 15f;
+                public const float NEXT_SPAWN_TIMER = 7f;
+                public const string PREFAB_NAME = "Prefab_Event_AggressiveCat";
             }
         }
     }
