@@ -1244,7 +1244,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0.5, y: 0.5}
+  Damping: {x: 0, y: 0}
   Lookahead:
     Enabled: 1
     Time: 0
@@ -2286,7 +2286,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Manager.Input2DManager
   swipeThreshold: 200
-  holdThreshold: 0.1
 --- !u!4 &1184252901
 Transform:
   m_ObjectHideFlags: 0

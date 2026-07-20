@@ -1,3 +1,4 @@
+using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
 using System.Collections;
@@ -31,38 +32,34 @@ namespace JumboJumps.EFTB.State.Player
                 targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
             }
 
-            if (targetLane == playerStateController.CurrentLaneIndex)
-            {
-                OnFinishSwitchingLane();
-                return;
-            }
-
             float targetX = playerStateController.LaneXPositions[targetLane];
             playerStateController.CurrentLaneIndex = targetLane;
 
+            Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
+            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Player.StepDistanceY : 0f;
+            Vector3 targetPos = new Vector3(targetX, startPos.y + stepY, startPos.z);
+
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
-            switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SmoothSwitchLane(targetX));
+            switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SmoothStepLane(startPos, targetPos));
         }
 
-        private IEnumerator SmoothSwitchLane(float target)
+        private IEnumerator SmoothStepLane(Vector3 startPos, Vector3 targetPos)
         {
-            float startX = playerStateController.Visualizer.PlayerPosition.x;
             float elapsed = 0f;
-            float duration = 0.2f;
+            float duration = ConstGameplay.Player.StepDuration;
 
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
-                float t = elapsed / duration;
-                float currentX = Mathf.Lerp(startX, target, t);
-                playerStateController.Visualizer.SetXPosition(currentX);
+                float t = Mathf.Clamp01(elapsed / duration);
+                Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
+                playerStateController.Visualizer.SetPosition(currentPos);
                 yield return null;
             }
 
-            playerStateController.Visualizer.SetXPosition(target);
+            playerStateController.Visualizer.SetPosition(targetPos);
             OnFinishSwitchingLane();
         }
-
 
         public override void OnExitState()
         {
@@ -76,7 +73,7 @@ namespace JumboJumps.EFTB.State.Player
             base.OnExitState();
         }
 
-        public void OnFinishSwitchingLane()
+        private void OnFinishSwitchingLane()
         {
             StateController.ChangeState(typeof(PlayerIdleState));
         }

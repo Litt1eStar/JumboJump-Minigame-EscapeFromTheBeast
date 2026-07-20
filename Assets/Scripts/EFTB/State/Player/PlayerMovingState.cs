@@ -1,14 +1,18 @@
+using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
+using System.Collections;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerMovingState : BaseState
     {
         private PlayerStateController playerStateController => (PlayerStateController)StateController;
-
         private PlayerVisualizer playerVisualizer => playerStateController.Visualizer;
-        private bool isMovingForward;
+
+        private CoroutineHelper coroutineHelper;
+        private Coroutine stepCoroutine;
 
         public PlayerMovingState(BaseStateController stateController) : base(stateController)
         {
@@ -19,38 +23,40 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
-            isMovingForward = true;
+            coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
+            stepCoroutine = coroutineHelper.Restart(stepCoroutine, DiscreteStepForwardRoutine());
+        }
 
-            Subscribe();
+        private IEnumerator DiscreteStepForwardRoutine()
+        {
+            Vector3 startPos = playerVisualizer.PlayerPosition;
+            Vector3 targetPos = startPos + new Vector3(0f, ConstGameplay.Player.StepDistanceY, 0f);
+            float elapsed = 0f;
+            float duration = ConstGameplay.Player.StepDuration;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
+                playerVisualizer.SetPosition(currentPos);
+                yield return null;
+            }
+
+            playerVisualizer.SetPosition(targetPos);
+            StateController.ChangeState(typeof(PlayerIdleState));
         }
 
         public override void OnExitState()
         {
-            Unsubscribe();
+            if (coroutineHelper != null)
+            {
+                coroutineHelper.Stop(stepCoroutine);
+                coroutineHelper = null;
+                stepCoroutine = null;
+            }
+
             base.OnExitState();
-        }
-
-        public void Subscribe()
-        {
-            playerStateController.Input2DManager.EventHoldEnded += OnHoldEnded;
-        }
-
-        public void Unsubscribe()
-        {
-            playerStateController.Input2DManager.EventHoldEnded -= OnHoldEnded;
-        }
-
-        public override void UpdateLogic(float deltaTime)
-        {
-            if (!isMovingForward) return;
-
-            playerVisualizer.MoveForward(deltaTime);
-        }
-
-        public void OnHoldEnded()
-        {
-            isMovingForward = false;
-            StateController.ChangeState(typeof(PlayerIdleState));
         }
     }
 }
