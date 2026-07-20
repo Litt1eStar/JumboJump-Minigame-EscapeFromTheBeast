@@ -79,16 +79,17 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 {
                     hasSmashed = true;
                     giAggressive.SetHandPosition(targetPosition);
-
-                    // Perform collision check immediately upon smash impact
-                    if (giAggressive.CheckPlayerCollision())
-                    {
-                        stateController.ChangeState(typeof(AggressiveCatCatchState));
-                    }
                 }
             }
-            else
+
+            if (hasSmashed)
             {
+                if (giAggressive.CheckPlayerCollision())
+                {
+                    stateController.ChangeState(typeof(AggressiveCatCatchState));
+                    return;
+                }
+
                 // Wait for the specified stay duration after the smash
                 stayTimer += deltaTime;
                 if (stayTimer >= stateController.Config.SmashStayDuration)
