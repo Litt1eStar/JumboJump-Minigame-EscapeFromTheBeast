@@ -19,6 +19,12 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public static readonly float[] LaneXPositions = new float[] { -1.0f, 1.0f };
         }
 
+        public class Player
+        {
+            public const float StepDistanceY = 2.0f;
+            public const float StepDuration = 0.12f;
+        }
+
         public class Cat
         {
             public const float CatLeftLaneSpawnPosition = -4.3f;
