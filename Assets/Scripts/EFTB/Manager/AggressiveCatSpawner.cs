@@ -109,6 +109,11 @@ namespace JumboJumps.EFTB.Manager
                     maxSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMaxSpawnTime;
                     break;
                 }
+                default:
+                {
+                    DebugLogHelper.LogError($"[AggressiveCatSpawner] Unsupported GameplayDifficultyEnum: {timeManager.CurrentDifficulty}");
+                    break;
+                }
             }
         }
 
