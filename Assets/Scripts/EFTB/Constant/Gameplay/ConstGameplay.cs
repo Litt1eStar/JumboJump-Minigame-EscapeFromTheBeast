@@ -9,20 +9,20 @@ namespace JumboJumps.EFTB.Constant.Gameplay
         {
             public const int MaxSegmentAmount = 5;
             public const float SegmentHeight = 20f;
-            public const float SegmentRecycleTriggerOffset = 5f;
+            public const float SegmentRecycleTriggerOffset = 8f;
             public const float MediumDifficultyTimePercentage = 0.5f;
             public const float HardDifficultyTimePercentage = 0.7f;
-            public const int InitialLaneIndex = 0;
+            public const int InitialLaneIndex = 1;
             public const float SegmentYPositionTolerance = 0.05f;
             public const string DefaultInitialSegmentPrefab = "Prefab_Segment_Initial";
             public const int InitialSegmentId = 0;
-            public static readonly float[] LaneXPositions = new float[] { -1.0f, 1.0f };
+            public static readonly float[] LaneXPositions = new float[] { -2.0f, 0.0f, 2.0f };
             public const float LANE_SIZE = 2.0f;
         }
 
         public class Player
         {
-            public const float STEP_DISTANCE_Y = 2.0f;
+            public const float STEP_DISTANCE_Y = 3.0f;
             public const float STEP_DURATION = 0.12f;
         }
 

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using static JumboJumps.EFTB.Model.LevelGeneratorData;
 
 namespace JumboJumps.EFTB.GameData.LevelSegment
@@ -6,7 +6,7 @@ namespace JumboJumps.EFTB.GameData.LevelSegment
     public class LevelGeneratorConfig
     {
         public List<LevelSegmentData> segmentTemplates {  get; private set; }
-        public float[] LaneXPosition { get; private set; } = new float[5] { -2f, -1f, 0f, 1f, 2f };
+        public float[] LaneXPosition { get; private set; } = new float[3] { -2f, 0f, 2f };
         public int MaxSegmentAmount { get; private set; } = 3;
         public float SegmentHeight { get; private set; } = 20f;
         public float SegmentRecycleTriggerOffset { get; private set; } = 5f;

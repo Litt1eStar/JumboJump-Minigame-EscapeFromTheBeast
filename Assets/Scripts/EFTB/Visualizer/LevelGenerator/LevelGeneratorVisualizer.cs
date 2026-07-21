@@ -123,28 +123,13 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                     if (!gameDataManager.TryGetPrefab(objectData.PrefabName, out GameObject prefab)) continue;
 
                     bool isCat = prefab.GetComponent<GICat>() != null;
-                    float targetX = 0f;
+                    if (isCat) continue;
 
-                    if (isCat)
-                    {
-                        targetX = (objectData.LaneIndex <= 2)
-                            ? ConstGameplay.Cat.CAT_LEFT_LANE_SPAWN_POSITION
-                            : ConstGameplay.Cat.CAT_RIGHT_LANE_SPAWN_POSITION;
-                    }
-                    else
-                    {
-                        int laneIdx = Mathf.Clamp(objectData.LaneIndex, 0, laneXPosition.Length - 1);
-                        targetX = laneXPosition[laneIdx];
-                    }
+                    int laneIdx = Mathf.Clamp(objectData.LaneIndex, 0, laneXPosition.Length - 1);
+                    float targetX = laneXPosition[laneIdx];
 
                     Vector3 spawnPosition = new Vector3(targetX, yPosition + objectData.YOffset, 0f);
                     GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
-
-                    if (isCat)
-                    {
-                        SetupSleepyCat(spawnedObj, targetX);
-                    }
-
                     giSegment.RegisterSpawnedObject(spawnedObj);
                 }
             }

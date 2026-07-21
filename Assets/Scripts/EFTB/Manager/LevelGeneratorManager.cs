@@ -63,7 +63,7 @@ namespace JumboJumps.EFTB.Manager
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
-            segments = gameDataManager.LevelSegmentData.Values.ToList();
+            segments = new List<LevelSegmentData>();
             LaneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
             MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
             SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
@@ -74,7 +74,13 @@ namespace JumboJumps.EFTB.Manager
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions, this);
             visualizer.Initialize();
 
-            config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyTimePercentage, HardDifficultyTimePercentage);
+            config = new LevelGeneratorConfig(segments,
+                                              LaneXPositions,
+                                              MaxSegmentAmount,
+                                              SegmentHeight,
+                                              SegmentRecycleTriggerOffset,
+                                              MediumDifficultyTimePercentage,
+                                              HardDifficultyTimePercentage);
 
             nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
             nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
@@ -105,30 +111,11 @@ namespace JumboJumps.EFTB.Manager
             {
                 RecycleSegment();
             }
-
-            EventSpawnerHandler(playerY);
         }
 
         private void EventSpawnerHandler(float playerY)
         {
-            foreach (var segment in activeSegmentQueue)
-            {
-                while (segment.PendingEvents.Count > 0)
-                {
-                    var pendingEvent = segment.PendingEvents[0];
-                    float triggerY = segment.SpawnY + pendingEvent.TriggerYOffset;
-
-                    if (playerY >= triggerY)
-                    {
-                        visualizer.SpawnEventObstacle(pendingEvent, segment.SpawnY, segment.SegmentGo, segment.GiSegment);
-                        segment.PendingEvents.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
+            // Dynamic hazard event spawning removed as requested.
         }
 
         public GISegment GetGISegmentAtY(float y)
@@ -160,55 +147,16 @@ namespace JumboJumps.EFTB.Manager
             nextYSpawnPosition += SegmentHeight;
         }
 
-        private SegmentDifficultyEnum GetCurrentDifficulty()
-        {
-            if (gameplayTimeManager == null)
-            {
-                return SegmentDifficultyEnum.Easy;
-            }
-
-            switch (gameplayTimeManager.CurrentDifficulty)
-            {
-                case GameplayDifficultyEnum.Easy:
-                    return SegmentDifficultyEnum.Easy;
-                case GameplayDifficultyEnum.Normal:
-                    return SegmentDifficultyEnum.Normal;
-                case GameplayDifficultyEnum.Hard:
-                    return SegmentDifficultyEnum.Hard;
-                default:
-                    return SegmentDifficultyEnum.Easy;
-            }
-        }
-
         private ActiveSegment SpawnSegmentAt(float yPosition)
         {
-            var gameDataManager = GameContext.Instance.Get<GameDataManager>();
-            if (gameDataManager == null || gameDataManager.LevelSegmentData == null || gameDataManager.LevelSegmentData.Count == 0)
-            {
-                return null;
-            }
-
-            LevelSegmentData selectedTemplate;
-            if (yPosition == 0f)
-            {
-                selectedTemplate = new LevelSegmentData(
-                    ConstGameplay.LevelGenerator.InitialSegmentId,
-                    ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
-                    SegmentHeight,
-                    SegmentDifficultyEnum.Easy,
-                    new List<LevelGeneratorData.LaneObjectData>(),
-                    new List<LevelGeneratorData.LaneEventData>()
-                );
-            }
-            else
-            {
-                SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty();
-                DebugLogHelper.Log(currentDifficulty.ToString());
-
-                List<LevelSegmentData> allSegments = segments;
-                List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
-                selectedTemplate = SelectTemplateFromMatchedTemplate(matchedTemplates, allSegments);
-            }
+            LevelSegmentData selectedTemplate = new LevelSegmentData(
+                ConstGameplay.LevelGenerator.InitialSegmentId,
+                ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
+                SegmentHeight,
+                SegmentDifficultyEnum.Easy,
+                new List<LevelGeneratorData.LaneObjectData>(),
+                new List<LevelGeneratorData.LaneEventData>()
+            );
 
             GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);
 
@@ -217,42 +165,14 @@ namespace JumboJumps.EFTB.Manager
             GISegment giSegment = segmentInstance.GetComponent<GISegment>();
             if (giSegment == null)
             {
-                DebugLogHelper.LogError($"GISegment component not found on the spawned segment instance for template Id : {selectedTemplate.Id}");
+                DebugLogHelper.LogError($"GISegment component not found on spawned segment instance at Y: {yPosition}");
                 return null;
             }
 
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
 
-            for (int i = instance.PendingEvents.Count - 1; i >= 0; i--)
-            {
-                var ev = instance.PendingEvents[i];
-                if (ev.PrefabName == "Prefab_Event_SleepyCat")
-                {
-                    visualizer.SpawnEventObstacle(ev, yPosition, segmentInstance, giSegment);
-                    instance.PendingEvents.RemoveAt(i);
-                }
-            }
-
             activeSegmentQueue.Enqueue(instance);
             return instance;
-        }
-
-        private LevelSegmentData SelectTemplateFromMatchedTemplate(List<LevelSegmentData> matchedTemplates, List<LevelSegmentData> allSegments)
-        {
-            LevelSegmentData selectedTemplate = null;
-
-            if (matchedTemplates.Count > 0)
-            {
-                int randomIndex = UnityEngine.Random.Range(0, matchedTemplates.Count);
-                selectedTemplate = matchedTemplates[randomIndex];
-            }
-            else
-            {
-                int randomIndex = UnityEngine.Random.Range(0, allSegments.Count);
-                selectedTemplate = allSegments[randomIndex];
-            }
-
-            return selectedTemplate;
         }
     }
 }
