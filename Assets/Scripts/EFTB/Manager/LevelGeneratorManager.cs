@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Model.Obstacle;
 
 namespace JumboJumps.EFTB.Manager
 {
@@ -54,6 +55,10 @@ namespace JumboJumps.EFTB.Manager
         public float MediumDifficultyTimePercentage { get; private set; }
         public float HardDifficultyTimePercentage { get; private set; }
 
+        private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
+        private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.InitialLaneIndex;
+        private float lastFurnitureWorldY = -999f;
+        private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
         private List<LevelSegmentData> segments;
 
         public void Initialize(Transform playerTransform)
@@ -113,11 +118,6 @@ namespace JumboJumps.EFTB.Manager
             }
         }
 
-        private void EventSpawnerHandler(float playerY)
-        {
-            // Dynamic hazard event spawning removed as requested.
-        }
-
         public GISegment GetGISegmentAtY(float y)
         {
             foreach (var activeSegment in activeSegmentQueue)
@@ -141,10 +141,26 @@ namespace JumboJumps.EFTB.Manager
             visualizer.RecycleOldestSegment();
             activeSegmentQueue.Dequeue();
 
+            // Purge recycled furniture references
+            activeFurnitureObstacles.RemoveAll(f => f == null || !f.gameObject.activeInHierarchy);
+
             SpawnSegmentAt(nextYSpawnPosition);
 
             nextTriggerPosition += SegmentHeight;
             nextYSpawnPosition += SegmentHeight;
+        }
+
+        public bool IsCellBlockedByFurniture(int targetLaneIndex, float targetWorldY)
+        {
+            for (int i = 0; i < activeFurnitureObstacles.Count; i++)
+            {
+                GIFurnitureObstacle furniture = activeFurnitureObstacles[i];
+                if (furniture != null && furniture.gameObject.activeInHierarchy && furniture.BlocksCell(targetLaneIndex, targetWorldY))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private ActiveSegment SpawnSegmentAt(float yPosition)
@@ -170,6 +186,24 @@ namespace JumboJumps.EFTB.Manager
             }
 
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
+
+            // Procedurally generate furniture blocks for this segment
+            var furnitureBlocks = furniturePlacementModel.GenerateSegmentFurniture(
+                yPosition,
+                SegmentHeight,
+                LaneXPositions.Length,
+                ref lastOpenLaneIndex,
+                ref lastFurnitureWorldY
+            );
+
+            foreach (var block in furnitureBlocks)
+            {
+                GIFurnitureObstacle giFurniture = visualizer.SpawnFurnitureObstacle(block, yPosition, segmentInstance, giSegment);
+                if (giFurniture != null)
+                {
+                    activeFurnitureObstacles.Add(giFurniture);
+                }
+            }
 
             activeSegmentQueue.Enqueue(instance);
             return instance;

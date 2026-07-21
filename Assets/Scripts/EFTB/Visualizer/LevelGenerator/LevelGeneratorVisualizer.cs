@@ -6,6 +6,7 @@ using UnityEngine;
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJump.EFTB.Constant.UI;
+using JumboJumps.EFTB.Model.Obstacle;
 
 namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 {
@@ -90,6 +91,44 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             activeSegments.Enqueue(segment);
 
             return segment;
+        }
+
+        public GIFurnitureObstacle SpawnFurnitureObstacle(FurnitureBlockData blockData,
+                                                          float segmentYPosition,
+                                                          GameObject segment,
+                                                          GISegment giSegment)
+        {
+            if (poolManager == null || blockData == null) return null;
+
+            if (!gameDataManager.TryGetPrefab(blockData.PrefabName, out GameObject prefab))
+            {
+                if (!gameDataManager.TryGetPrefab("Prefab_Obstacle_Chair", out prefab))
+                {
+                    DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for furniture: {blockData.PrefabName}");
+                    return null;
+                }
+            }
+
+            int laneIdx = Mathf.Clamp(blockData.LaneIndex, 0, laneXPosition.Length - 1);
+            float targetX = laneXPosition[laneIdx];
+            float worldY = segmentYPosition + blockData.YOffset;
+
+            Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
+            GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
+
+            GIFurnitureObstacle giFurniture = spawnedObj.GetComponent<GIFurnitureObstacle>();
+            if (giFurniture == null)
+            {
+                giFurniture = spawnedObj.AddComponent<GIFurnitureObstacle>();
+            }
+            giFurniture.Initialize(blockData.LaneIndex, worldY);
+
+            if (giSegment != null)
+            {
+                giSegment.RegisterSpawnedObject(spawnedObj);
+            }
+
+            return giFurniture;
         }
 
         private void SetupSleepyCat(GameObject catObj, float spawnX)

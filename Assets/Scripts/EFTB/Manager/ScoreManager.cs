@@ -57,7 +57,7 @@ namespace JumboJumps.EFTB.Manager
             if (playerTransform == null) return;
 
             float deltaY = playerTransform.position.y - initialPlayerY;
-            float stepDistance = ConstGameplay.Player.STEP_DISTANCE_Y;
+            float stepDistance = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             int currentCells = Mathf.Max(0, Mathf.FloorToInt((deltaY + (stepDistance * 0.5f)) / stepDistance));
 
             if (currentCells > MaxCellsClimbed)

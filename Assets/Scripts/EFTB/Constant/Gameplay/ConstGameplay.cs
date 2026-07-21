@@ -80,9 +80,10 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const int SINGLE_BLOCK_MAX_CELLS = 120;
                 public const int MAX_BLOCKS_PER_ROW = 2;
                 public const int MIN_ROW_SPACING_CELLS = 1;
+                public const string DEFAULT_FURNITURE_PREFAB = "Prefab_Obstacle_Chair";
                 public static readonly string[] FURNITURE_PREFAB_NAMES = new string[]
                 {
-                    "Prefab_Obstacle_Chair",
+                    DEFAULT_FURNITURE_PREFAB,
                     "Prefab_Obstacle_Box",
                     "Prefab_Obstacle_Plant"
                 };
