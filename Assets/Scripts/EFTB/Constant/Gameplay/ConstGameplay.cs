@@ -8,7 +8,7 @@ namespace JumboJumps.EFTB.Constant.Gameplay
         public class LevelGenerator
         {
             public const int MaxSegmentAmount = 5;
-            public const float SegmentHeight = 20f;
+            public const float SegmentHeight = 21f;
             public const float SegmentRecycleTriggerOffset = 8f;
             public const float MediumDifficultyTimePercentage = 0.5f;
             public const float HardDifficultyTimePercentage = 0.7f;
@@ -64,6 +64,28 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float CAT_VERTICAL_SPAWN_OFFSET = 15f;
                 public const float NEXT_SPAWN_TIMER = 7f;
                 public const string PREFAB_NAME = "Prefab_Event_AggressiveCat";
+            }
+        }
+        public class Obstacle
+        {
+            public class Furniture
+            {
+                public const float CELL_HEIGHT = 3.0f;
+                public const float BASE_FURNITURE_ROW_RATIO = 0.20f;
+                public const float DENSITY_STEP_RATIO = 0.05f;
+                public const float DENSITY_STEP_DISTANCE = 30.0f;
+                public const int DENSITY_STEP_CELLS = 30;
+                public const float MAX_FURNITURE_ROW_RATIO = 0.60f;
+                public const float SINGLE_BLOCK_MAX_HEIGHT = 120.0f;
+                public const int SINGLE_BLOCK_MAX_CELLS = 120;
+                public const int MAX_BLOCKS_PER_ROW = 2;
+                public const int MIN_ROW_SPACING_CELLS = 1;
+                public static readonly string[] FURNITURE_PREFAB_NAMES = new string[]
+                {
+                    "Prefab_Obstacle_Chair",
+                    "Prefab_Obstacle_Box",
+                    "Prefab_Obstacle_Plant"
+                };
             }
         }
     }
