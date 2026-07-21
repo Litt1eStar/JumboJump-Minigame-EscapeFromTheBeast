@@ -60,6 +60,12 @@ namespace JumboJumps.EFTB.State.Player
             };
         }
 
+        public bool IsTargetCellBlocked(int targetLaneIndex, float targetWorldY)
+        {
+            var levelGen = GameContext.Instance.Get<LevelGeneratorManager>();
+            return levelGen != null && levelGen.IsCellBlockedByFurniture(targetLaneIndex, targetWorldY);
+        }
+
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);

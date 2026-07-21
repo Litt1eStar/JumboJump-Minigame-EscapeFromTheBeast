@@ -8,7 +8,7 @@ namespace JumboJumps.EFTB.GameData.LevelSegment
         public List<LevelSegmentData> segmentTemplates {  get; private set; }
         public float[] LaneXPosition { get; private set; } = new float[3] { -2f, 0f, 2f };
         public int MaxSegmentAmount { get; private set; } = 3;
-        public float SegmentHeight { get; private set; } = 20f;
+        public float SegmentHeight { get; private set; } = 21f;
         public float SegmentRecycleTriggerOffset { get; private set; } = 5f;
         public float MediumDifficultyTimePercentage { get; private set; } = 500f;
         public float HardDifficultyTimePercentage { get; private set; } = 1500f;

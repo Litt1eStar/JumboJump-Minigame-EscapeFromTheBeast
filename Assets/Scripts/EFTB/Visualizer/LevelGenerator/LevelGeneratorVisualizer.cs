@@ -102,7 +102,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (!gameDataManager.TryGetPrefab(blockData.PrefabName, out GameObject prefab))
             {
-                if (!gameDataManager.TryGetPrefab("Prefab_Obstacle_Chair", out prefab))
+                if (!gameDataManager.TryGetPrefab(ConstGameplay.Obstacle.Furniture.DEFAULT_FURNITURE_PREFAB, out prefab))
                 {
                     DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for furniture: {blockData.PrefabName}");
                     return null;
