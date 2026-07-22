@@ -30,9 +30,9 @@ namespace JumboJumps.EFTB.State.Player
         private IEnumerator DiscreteStepForwardRoutine()
         {
             Vector3 startPos = playerVisualizer.PlayerPosition;
-            Vector3 targetPos = startPos + new Vector3(0f, ConstGameplay.Player.StepDistanceY, 0f);
+            Vector3 targetPos = startPos + new Vector3(0f, ConstGameplay.Player.Step_Distance_Y, 0f);
             float elapsed = 0f;
-            float duration = ConstGameplay.Player.StepDuration;
+            float duration = ConstGameplay.Player.Step_Duration;
 
             while (elapsed < duration)
             {
