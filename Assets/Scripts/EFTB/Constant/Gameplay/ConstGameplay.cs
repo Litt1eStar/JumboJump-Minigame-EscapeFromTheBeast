@@ -73,10 +73,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float CELL_HEIGHT = 3.0f;
                 public const float BASE_FURNITURE_ROW_RATIO = 0.20f;
                 public const float DENSITY_STEP_RATIO = 0.05f;
-                public const float DENSITY_STEP_DISTANCE = 30.0f;
                 public const int DENSITY_STEP_CELLS = 30;
                 public const float MAX_FURNITURE_ROW_RATIO = 0.60f;
-                public const float SINGLE_BLOCK_MAX_HEIGHT = 120.0f;
                 public const int SINGLE_BLOCK_MAX_CELLS = 120;
                 public const int MAX_BLOCKS_PER_ROW = 2;
                 public const int MIN_ROW_SPACING_CELLS = 1;
