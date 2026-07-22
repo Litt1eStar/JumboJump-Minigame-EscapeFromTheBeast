@@ -1,6 +1,4 @@
-using JumboJumps.EFTB.State.Player;
 using JumboJumps.EFTB.Model;
-using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Constant.Gameplay;
 using UnityEngine;
 
@@ -9,6 +7,7 @@ namespace JumboJumps.EFTB.State.Player
     public class PlayerIdleState : BaseState
     {
         private PlayerStateController playerStateController => (PlayerStateController)StateController;
+        private float idleTimer;
 
         public PlayerIdleState(BaseStateController stateController) : base(stateController)
         {
@@ -20,14 +19,34 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
+            idleTimer = 0f;
             Subscribe();
         }
 
         public override void OnExitState()
         {
             Unsubscribe();
-            
+
+            idleTimer = 0f;
+
             base.OnExitState();
+        }
+
+        public override void UpdateLogic(float deltaTime)
+        {
+            base.UpdateLogic(deltaTime);
+
+            IdleTimerTracking(deltaTime);
+        }
+
+        private void IdleTimerTracking(float deltaTime)
+        {
+            idleTimer += deltaTime;
+            if (idleTimer >= ConstGameplay.Cat.AggressiveCat.IDLE_LIMIT)
+            {
+                idleTimer = 0f;
+                playerStateController.InvokeIdleLimitExceeded();
+            }
         }
 
         public void Subscribe()
