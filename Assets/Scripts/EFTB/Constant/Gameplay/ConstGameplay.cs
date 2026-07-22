@@ -61,9 +61,11 @@ namespace JumboJumps.EFTB.Constant.Gameplay
 
                 public const float INITIAL_MIN_SPAWN_TIME = 7f;
                 public const float INITIAL_MAX_SPAWN_TIME = 15f;
-                public const float CAT_VERTICAL_SPAWN_OFFSET = 15f;
+                public const float CAT_VERTICAL_SPAWN_OFFSET = 5f;
                 public const float NEXT_SPAWN_TIMER = 7f;
                 public const string PREFAB_NAME = "Prefab_Event_AggressiveCat";
+                public const float IDLE_LIMIT = 4.5f;
+                public const float POUNCE_WARNING_DURATION = 1.5f;
             }
         }
         public class Obstacle

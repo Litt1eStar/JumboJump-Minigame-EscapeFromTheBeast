@@ -33,15 +33,14 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             {
                 giAggressive.SetHandActive(true);
 
-                // Start hand position at the cat body's position
                 startPosition = giAggressive.transform.position;
                 currentSightDirection = giAggressive.CurrentSightDirection;
-                // Determine target lane X based on the cat's side
-                // Left spawn (sight direction Right) targets the Left lane (-0.8f)
-                // Right spawn (sight direction Left) targets the Right lane (0.8f)
-                float targetX = (currentSightDirection == CatSightDirection.Right)
-                    ? ConstGameplay.LevelGenerator.LaneXPositions[0]
-                    : ConstGameplay.LevelGenerator.LaneXPositions[1];
+
+                // Always target the second lane (middle lane at index 1)
+                float[] lanePositions = ConstGameplay.LevelGenerator.LaneXPositions;
+                float targetX = (lanePositions != null && lanePositions.Length > 1)
+                    ? lanePositions[1]
+                    : 0f;
 
                 float rotation = (currentSightDirection == CatSightDirection.Right) 
                     ? ConstGameplay.Cat.AggressiveCat.CatLeftHandYRotation 
@@ -73,16 +72,17 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 {
                     hasSmashed = true;
                     giAggressive.SetHandPosition(targetPosition);
-
-                    // Perform collision check immediately upon smash impact
-                    if (giAggressive.CheckPlayerCollision())
-                    {
-                        stateController.ChangeState(typeof(AggressiveCatCatchState));
-                    }
                 }
             }
-            else
+
+            if (hasSmashed)
             {
+                if (giAggressive.CheckPlayerCollision())
+                {
+                    stateController.ChangeState(typeof(AggressiveCatCatchState));
+                    return;
+                }
+
                 // Wait for the specified stay duration after the smash
                 stayTimer += deltaTime;
                 if (stayTimer >= stateController.Config.SmashStayDuration)

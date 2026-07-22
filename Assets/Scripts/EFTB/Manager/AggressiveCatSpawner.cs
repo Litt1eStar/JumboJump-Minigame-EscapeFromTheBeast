@@ -9,8 +9,6 @@ namespace JumboJumps.EFTB.Manager
 {
     public class AggressiveCatSpawner
     {
-        private float minSpawnTime;
-        private float maxSpawnTime;
         private float verticalSpawnOffset;
 
         private ObjectPoolManager poolManager;
@@ -21,7 +19,7 @@ namespace JumboJumps.EFTB.Manager
         private GameplayStateManager gameplayStateManager;
         private WarningIndicatorManager warningIndicatorManager;
 
-        private float nextSpawnTimer;
+        private bool isAntiCampWarningActive;
 
         public void Initialize()
         {
@@ -33,10 +31,11 @@ namespace JumboJumps.EFTB.Manager
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
             warningIndicatorManager = GameContext.Instance.Get<WarningIndicatorManager>();  
 
-            ResetSpawnTimer();
+            if (playerManager != null)
+            {
+                playerManager.EventIdleLimitExceeded += OnPlayerIdleLimitExceeded;
+            }
 
-            minSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MIN_SPAWN_TIME;
-            maxSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MAX_SPAWN_TIME;
             verticalSpawnOffset = ConstGameplay.Cat.AggressiveCat.CAT_VERTICAL_SPAWN_OFFSET;
 
             GameContext.Instance.Add(this);
@@ -44,77 +43,37 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
+            if (playerManager != null)
+            {
+                playerManager.EventIdleLimitExceeded -= OnPlayerIdleLimitExceeded;
+            }
+
             GameContext.Instance.Remove(this);
         }
 
-        public void UpdateLogic(float deltaTime)
+        private void OnPlayerIdleLimitExceeded()
         {
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
             {
                 return;
             }
 
-            UpdateSpawnTimes();
+            if (isAntiCampWarningActive) return;
 
-            nextSpawnTimer -= deltaTime;
-            if (nextSpawnTimer <= 0f)
-            {
-                float spawnY;
-                if (!CanSpawnAggressiveCat(out spawnY))
-                {
-                    nextSpawnTimer = ConstGameplay.Cat.AggressiveCat.NEXT_SPAWN_TIMER;
-                    return;
-                }
-
-                ResetSpawnTimer();
-                AggressiveCatSpawnSequence();
-            }
+            TriggerAlphaCatPounceSequence();
         }
 
-        private void AggressiveCatSpawnSequence()
+        private void TriggerAlphaCatPounceSequence()
         {
-            int sideIndex = (Random.value < 0.5f) ? 0 : 1; 
-            
-            warningIndicatorManager?.ShowCatEventWarning(1.0f, () =>
+            isAntiCampWarningActive = true;
+            int sideIndex = (Random.value < 0.5f) ? 0 : 1;
+            float warningDuration = ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
+
+            warningIndicatorManager?.ShowCatEventWarning(warningDuration, () =>
             {
-                warningIndicatorManager?.ShowCatDirectionWarning(sideIndex, 1.5f, () =>
-                {
-                    SpawnAggressiveCat(sideIndex);
-                });
+                isAntiCampWarningActive = false;
+                SpawnAggressiveCat(sideIndex);
             });
-        }
-
-        private void UpdateSpawnTimes()
-        {
-            var timeManager = GameContext.Instance.Get<GameplayTimeManager>();
-            if (timeManager == null) return;
-
-            switch (timeManager.CurrentDifficulty)
-            {
-                case GameplayDifficultyEnum.Easy:
-                {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMinSpawnTime;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMaxSpawnTime;
-                    break;
-                }
-                case GameplayDifficultyEnum.Normal:
-                {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.NormalMinSpawnTime;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.NormalMaxSpawnTime;
-                    break;
-                }
-                case GameplayDifficultyEnum.Hard:
-                {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMinSpawnTime;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMaxSpawnTime;
-                    break;
-                }
-            }
-        }
-
-        private void ResetSpawnTimer()
-        {
-            nextSpawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
         }
 
         private bool CanSpawnAggressiveCat(out float spawnY)
