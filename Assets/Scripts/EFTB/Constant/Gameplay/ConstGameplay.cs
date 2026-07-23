@@ -58,18 +58,18 @@ namespace JumboJumps.EFTB.Constant.Gameplay
 
         public class Obstacle
         {
-            public const int SAFE_ZONE_CELLS = 5;
+            public const int SAFE_ZONE_CELLS = 5; // Number of cells at the start of the level where no obstacles are spawned (5)
 
             public class Furniture
             {
                 public const float CELL_HEIGHT = 3.0f;
-                public const float BASE_FURNITURE_ROW_RATIO = 0.20f;
-                public const float DENSITY_STEP_RATIO = 0.05f;
-                public const int DENSITY_STEP_CELLS = 30;
-                public const float MAX_FURNITURE_ROW_RATIO = 0.60f;
-                public const int SINGLE_BLOCK_MAX_CELLS = 120;
-                public const int MAX_BLOCKS_PER_ROW = 2;
-                public const int MIN_ROW_SPACING_CELLS = 1;
+                public const float BASE_FURNITURE_ROW_RATIO = 0.20f; // Base spawn ratio for furniture rows (20%)
+                public const float DENSITY_STEP_RATIO = 0.05f; // Incremental spawn ratio increase per density step (5%)
+                public const int DENSITY_STEP_CELLS = 30; // Number of cells after which the density step ratio is applied
+                public const float MAX_FURNITURE_ROW_RATIO = 0.60f; // Maximum spawn ratio for furniture rows (60%)
+                public const int SINGLE_BLOCK_MAX_CELLS = 120; // Maximum number of cells for a single furniture block (120)
+                public const int MAX_BLOCKS_PER_ROW = 2; // Maximum number of furniture blocks allowed per row (2)
+                public const int MIN_ROW_SPACING_CELLS = 1; // Minimum spacing between furniture rows in cells (1)
                 public const string DEFAULT_FURNITURE_PREFAB = "Prefab_Obstacle_Chair";
                 public static readonly string[] FURNITURE_PREFAB_NAMES = new string[]
                 {
@@ -82,9 +82,6 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public class Hazard
             {
                 public const string PREFAB_NAME = "Prefab_Hazard_Variant01";
-                public const float TELEGRAPH_DURATION = 0.3f;
-                public const float TELEGRAPH_MOVE_IN_DURATION_PERCENTAGE = 0.25f;
-                public const float TELEGRAPH_STAY_DURATION_PERCENTAGE = 0.75f;
                 public const float BASE_INTERVAL_LOW = 3.0f;        // Base spawn interval low (s) 1.5
                 public const float BASE_INTERVAL_HIGH = 6.0f;       // Base spawn interval high (s) 2.4
                 public const float STEP_INTERVAL_REDUCTION = 0.15f; // Spawn interval reduction per step (s)
@@ -95,7 +92,6 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float FLOOR_SPEED_DURATION_HIGH = 2.0f;// Hazard speed floor range high (0.9s / lane)
                 public const float SPAWN_OFFSCREEN_X_OFFSET = 7.5f;   // Offscreen initial spawn X coordinate offset (units)
                 public const float DESPAWN_OFFSCREEN_X_OFFSET = 7.5f; // Offscreen despawn X coordinate offset (units)
-                public const float TELEGRAPH_OFFSCREEN_X_OFFSET = 2.3f;
                 public const int SAFE_ZONE_CELLS = 5;
 
                 public const float HAZARD_PRESPAWN_OFFSET = 70f; // Offset from the player to pre-spawn hazards (in cells)
