@@ -19,6 +19,8 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void Dispose()
         {
+            coroutineHelper.StopAllCoroutines();
+
             gameplayCanvas = null;
             coroutineHelper = null;
         }
