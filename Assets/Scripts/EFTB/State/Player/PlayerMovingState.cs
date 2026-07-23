@@ -43,6 +43,8 @@ namespace JumboJumps.EFTB.State.Player
                 yield return null;
             }
 
+            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
+            targetPos.y = Mathf.RoundToInt(targetPos.y / cellHeight) * cellHeight;
             playerVisualizer.SetPosition(targetPos);
             StateController.ChangeState(typeof(PlayerIdleState));
         }

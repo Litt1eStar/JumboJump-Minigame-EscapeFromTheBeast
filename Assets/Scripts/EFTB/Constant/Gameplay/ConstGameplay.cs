@@ -18,7 +18,7 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public const string Default_Initial_Segment_Prefab = "Prefab_Segment_Initial";
             public const int Initial_Segment_Id = 0;
             public static readonly float[] Lane_X_Positions = new float[] { -2.0f, 0.0f, 2.0f };
-            public const float Lane_Size = 2.0f;
+            public const float Lane_Size = 3.0f;
         }
 
         public class Player
@@ -58,6 +58,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
 
         public class Obstacle
         {
+            public const int Safe_Zone_Cells = 5;
+
             public class Furniture
             {
                 public const float Cell_Height = 3.0f;
@@ -75,6 +77,27 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                     "Prefab_Obstacle_Box",
                     "Prefab_Obstacle_Plant"
                 };
+            }
+
+            public class Hazard
+            {
+                public const string Prefab_Name = "Prefab_Hazard_Variant01";
+                public const float Telegraph_Duration = 0.3f;
+                public const float Telegraph_Move_In_Duration_Percentage = 0.25f;
+                public const float Telegraph_Stay_Duration_Percentage = 0.75f;
+                public const float Base_Interval_Low = 3.0f;        // Base spawn interval low (s) 1.5
+                public const float Base_Interval_High = 6.0f;       // Base spawn interval high (s) 2.4
+                public const float Step_Interval_Reduction = 0.15f; // Spawn interval reduction per step (s)
+                public const int Step_Interval_Cells = 30;          // Step height in cells
+                public const float Min_Spawn_Interval = 0.5f;       // Minimum spawn interval limit (s)
+
+                public const float Floor_Speed_Duration_Low = 1.0f; // Hazard speed floor range low (0.5s / lane)
+                public const float Floor_Speed_Duration_High = 2.0f;// Hazard speed floor range high (0.9s / lane)
+                public const float Spawn_Offscreen_X_Offset = 4.5f;
+                public const float Telegraph_Offscreen_X_Offset = 2.3f;
+                public const int Safe_Zone_Cells = 10;
+
+                public const float Hazard_Prespawn_Offset = 70f; // Offset from the player to pre-spawn hazards (in cells)
             }
         }
     }
