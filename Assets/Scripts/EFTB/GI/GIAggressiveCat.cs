@@ -16,6 +16,13 @@ namespace JumboJumps.EFTB.GI
         public Transform CatHand => catHand;
         public Collider2D SmashCollider => smashCollider;
 
+        public Vector3? TargetSmashPosition { get; private set; }
+
+        public void SetTargetSmashPosition(Vector3 position)
+        {
+            TargetSmashPosition = position;
+        }
+
         public void SetHandActive(bool active)
         {
             if (catHand != null)

@@ -33,22 +33,30 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             {
                 giAggressive.SetHandActive(true);
 
-                startPosition = giAggressive.transform.position;
                 currentSightDirection = giAggressive.CurrentSightDirection;
 
-                // Always target the second lane (middle lane at index 1)
-                float[] lanePositions = ConstGameplay.LevelGenerator.LaneXPositions;
-                float targetX = (lanePositions != null && lanePositions.Length > 1)
-                    ? lanePositions[1]
-                    : 0f;
+                if (giAggressive.TargetSmashPosition.HasValue)
+                {
+                    Vector3 cachedPos = giAggressive.TargetSmashPosition.Value;
+                    startPosition = new Vector3(giAggressive.transform.position.x, cachedPos.y, giAggressive.transform.position.z);
+                    targetPosition = new Vector3(cachedPos.x, cachedPos.y, startPosition.z);
+                }
+                else
+                {
+                    startPosition = giAggressive.transform.position;
+                    float[] lanePositions = ConstGameplay.LevelGenerator.LaneXPositions;
+                    float targetX = (lanePositions != null && lanePositions.Length > 1)
+                        ? lanePositions[1]
+                        : 0f;
+                    targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
+                }
 
-                float rotation = (currentSightDirection == CatSightDirection.Right) 
+                float yRotation = (currentSightDirection == CatSightDirection.Right) 
                     ? ConstGameplay.Cat.AggressiveCat.CatLeftHandYRotation 
                     : ConstGameplay.Cat.AggressiveCat.CatRightHandYRotation;
 
-                targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
-                
-                Quaternion catHandRotation = Quaternion.Euler(0f, rotation, 0f);
+                Quaternion catHandRotation = Quaternion.Euler(0f, yRotation, 0f);
+
                 giAggressive.SetHandRotation(catHandRotation);
                 giAggressive.SetHandPosition(startPosition);
             }

@@ -58,10 +58,13 @@ namespace JumboJumps.EFTB.Manager
 
             if (isAntiCampWarningActive) return;
 
-            TriggerAlphaCatPounceSequence();
+            if (playerManager?.PlayerTransform == null) return;
+            Vector3 cachedTargetPos = playerManager.PlayerTransform.position;
+
+            TriggerAlphaCatPounceSequence(cachedTargetPos);
         }
 
-        private void TriggerAlphaCatPounceSequence()
+        private void TriggerAlphaCatPounceSequence(Vector3 cachedTargetPos)
         {
             isAntiCampWarningActive = true;
             int sideIndex = (Random.value < 0.5f) ? 0 : 1;
@@ -72,7 +75,7 @@ namespace JumboJumps.EFTB.Manager
                 playerManager.TriggerPounceWarning(warningDuration, () =>
                 {
                     isAntiCampWarningActive = false;
-                    SpawnAggressiveCat(sideIndex);
+                    SpawnAggressiveCat(sideIndex, cachedTargetPos);
                 });
             }
             else
@@ -81,22 +84,21 @@ namespace JumboJumps.EFTB.Manager
             }
         }
 
-        private bool CanSpawnAggressiveCat(out float spawnY)
+        private bool CanSpawnAggressiveCat(Vector3 cachedTargetPos, out float spawnY)
         {
             spawnY = 0f;
-            if (playerManager?.PlayerTransform == null || levelGeneratorManager == null || poolManager == null || gameDataManager == null || catManager == null)
+            if (levelGeneratorManager == null || poolManager == null || gameDataManager == null || catManager == null)
             {
                 return false;
             }
 
-            float playerY = playerManager.PlayerTransform.position.y;
-            spawnY = playerY + verticalSpawnOffset;
+            spawnY = cachedTargetPos.y;
 
             var giSegment = levelGeneratorManager.GetGISegmentAtY(spawnY);
             return giSegment != null;
         }
 
-        private void SpawnAggressiveCat(int sideIndex)
+        private void SpawnAggressiveCat(int sideIndex, Vector3 cachedTargetPos)
         {
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
             {
@@ -105,7 +107,7 @@ namespace JumboJumps.EFTB.Manager
             }
 
             float spawnY;
-            if (!CanSpawnAggressiveCat(out spawnY))
+            if (!CanSpawnAggressiveCat(cachedTargetPos, out spawnY))
             {
                 DebugLogHelper.LogWarning($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: Environment state changed during the warning delay.");
                 return;
@@ -132,19 +134,20 @@ namespace JumboJumps.EFTB.Manager
 
             giSegment.RegisterSpawnedObject(catGo);
 
-            var giCat = catGo.GetComponent<GICat>();
-            if (giCat != null)
+            var giAggressive = catGo.GetComponent<GIAggressiveCat>();
+            if (giAggressive != null)
             {
-                SceneObjectContext.Instance.Register(giCat);
+                giAggressive.SetTargetSmashPosition(cachedTargetPos);
+                SceneObjectContext.Instance.Register(giAggressive);
 
                 CatSightDirection direction = (targetX < 0f) ? CatSightDirection.Right : CatSightDirection.Left;
-                giCat.SetDirection(direction);
+                giAggressive.SetDirection(direction);
 
-                catManager.RegisterDynamicCat(giCat, playerManager.PlayerTransform);
+                catManager.RegisterDynamicCat(giAggressive, playerManager.PlayerTransform);
             }
             else
             {
-                DebugLogHelper.LogError("[AggressiveCatSpawner] Spawned cat GameObject is missing GICat component!");
+                DebugLogHelper.LogError("[AggressiveCatSpawner] Spawned cat GameObject is missing GIAggressiveCat component!");
             }
         }
     }
