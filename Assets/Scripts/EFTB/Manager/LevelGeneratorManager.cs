@@ -57,7 +57,7 @@ namespace JumboJumps.EFTB.Manager
         public float MaxGeneratedWorldY => nextYSpawnPosition;
 
         private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
-        private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.Initial_Lane_Index;
+        private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
         private float lastFurnitureWorldY = -999f;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
         private List<LevelSegmentData> segments;
@@ -70,12 +70,12 @@ namespace JumboJumps.EFTB.Manager
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = new List<LevelSegmentData>();
-            LaneXPositions = ConstGameplay.LevelGenerator.Lane_X_Positions;
-            MaxSegmentAmount = ConstGameplay.LevelGenerator.Max_Segment_Amount;
-            SegmentHeight = ConstGameplay.LevelGenerator.Segment_Height;
-            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.Segment_Recycle_Trigger_Offset;
-            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.Medium_Difficulty_Time_Percentage;
-            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.Hard_Difficulty_Time_Percentage;
+            LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+            MaxSegmentAmount = ConstGameplay.LevelGenerator.MAX_SEGMENT_AMOUNT;
+            SegmentHeight = ConstGameplay.LevelGenerator.SEGMENT_HEIGHT;
+            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MEDIUM_DIFFICULTY_TIME_PERCENTAGE;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HARD_DIFFICULTY_TIME_PERCENTAGE;
 
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions, this);
             visualizer.Initialize();
@@ -108,7 +108,7 @@ namespace JumboJumps.EFTB.Manager
             activeSegmentQueue.Clear();
             activeFurnitureObstacles.Clear();
             lastFurnitureWorldY = -999f;
-            lastOpenLaneIndex = ConstGameplay.LevelGenerator.Initial_Lane_Index;
+            lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
             GameContext.Instance.Remove(this);
         }
 
@@ -173,7 +173,7 @@ namespace JumboJumps.EFTB.Manager
         public bool IsValidFurnitureSpawn(int laneIndex, float worldY)
         {
             if (laneIndex < 0 || laneIndex >= LaneXPositions.Length) return false;
-            if (worldY <= ConstGameplay.Obstacle.Safe_Zone_Cells * ConstGameplay.Obstacle.Furniture.Cell_Height) return false;
+            if (worldY <= ConstGameplay.Obstacle.SAFE_ZONE_CELLS * ConstGameplay.Obstacle.Furniture.CELL_HEIGHT) return false;
 
             if (IsCellBlockedByFurniture(laneIndex, worldY)) return false;
 
@@ -216,8 +216,8 @@ namespace JumboJumps.EFTB.Manager
         private ActiveSegment SpawnSegmentAt(float yPosition)
         {
             LevelSegmentData selectedTemplate = new LevelSegmentData(
-                ConstGameplay.LevelGenerator.Initial_Segment_Id,
-                ConstGameplay.LevelGenerator.Default_Initial_Segment_Prefab,
+                ConstGameplay.LevelGenerator.INITIAL_SEGMENT_ID,
+                ConstGameplay.LevelGenerator.DEFAULT_INITIAL_SEGMENT_PREFAB,
                 SegmentHeight,
                 SegmentDifficultyEnum.Easy,
                 new List<LevelGeneratorData.LaneObjectData>(),

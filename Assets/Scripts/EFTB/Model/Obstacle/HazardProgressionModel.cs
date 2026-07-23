@@ -12,29 +12,29 @@ namespace JumboJumps.EFTB.Model.Obstacle
         /// </summary>
         public float GetRandomSpawnInterval(float worldY)
         {
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
-            float stepDistanceInUnits = ConstGameplay.Obstacle.Hazard.Step_Interval_Cells * cellHeight;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float stepDistanceInUnits = ConstGameplay.Obstacle.Hazard.STEP_INTERVAL_CELLS * cellHeight;
             float steps = Mathf.Max(0f, Mathf.Floor(worldY / stepDistanceInUnits));
-            float reduction = steps * ConstGameplay.Obstacle.Hazard.Step_Interval_Reduction;
+            float reduction = steps * ConstGameplay.Obstacle.Hazard.STEP_INTERVAL_REDUCTION;
 
-            float minLimit = ConstGameplay.Obstacle.Hazard.Min_Spawn_Interval;
-            float currentLow = Mathf.Max(minLimit, ConstGameplay.Obstacle.Hazard.Base_Interval_Low - reduction);
-            float currentHigh = Mathf.Max(minLimit + 0.2f, ConstGameplay.Obstacle.Hazard.Base_Interval_High - reduction);
+            float minLimit = ConstGameplay.Obstacle.Hazard.MIN_SPAWN_INTERVAL;
+            float currentLow = Mathf.Max(minLimit, ConstGameplay.Obstacle.Hazard.BASE_INTERVAL_LOW - reduction);
+            float currentHigh = Mathf.Max(minLimit + 0.2f, ConstGameplay.Obstacle.Hazard.BASE_INTERVAL_HIGH - reduction);
 
             return Random.Range(currentLow, currentHigh);
         }
 
         /// <summary>
         /// Calculates horizontal movement speed (units/sec) for objects on a row.
-        /// Picks a random duration per lane from Floor Range [Floor_Speed_Duration_Low, Floor_Speed_Duration_High] and converts to speed (units/sec).
+        /// Picks a random duration per lane from Floor Range [FLOOR_SPEED_DURATION_LOW, FLOOR_SPEED_DURATION_HIGH] and converts to speed (units/sec).
         /// </summary>
         public float GetRandomRowSpeed()
         {
             float durationPerLane = Random.Range(
-                ConstGameplay.Obstacle.Hazard.Floor_Speed_Duration_Low,
-                ConstGameplay.Obstacle.Hazard.Floor_Speed_Duration_High
+                ConstGameplay.Obstacle.Hazard.FLOOR_SPEED_DURATION_LOW,
+                ConstGameplay.Obstacle.Hazard.FLOOR_SPEED_DURATION_HIGH
             );
-            float laneSize = ConstGameplay.LevelGenerator.Lane_Size;
+            float laneSize = ConstGameplay.LevelGenerator.LANE_SIZE;
             return laneSize / Mathf.Max(0.01f, durationPerLane);
         }
     }

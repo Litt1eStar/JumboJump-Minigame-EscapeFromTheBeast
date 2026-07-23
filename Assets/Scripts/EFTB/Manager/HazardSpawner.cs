@@ -20,8 +20,8 @@ namespace JumboJumps.EFTB.Manager
         private readonly Dictionary<int, HazardRowData> activeHazardRows = new Dictionary<int, HazardRowData>();
         private readonly List<GIHazardObstacle> activeHazards = new List<GIHazardObstacle>();
 
-        public float SpawnOffscreenXOffset { get; set; } = ConstGameplay.Obstacle.Hazard.Spawn_Offscreen_X_Offset;
-        public float DespawnOffscreenXOffset { get; set; } = ConstGameplay.Obstacle.Hazard.Despawn_Offscreen_X_Offset;
+        public float SpawnOffscreenXOffset { get; set; } = ConstGameplay.Obstacle.Hazard.SPAWN_OFFSCREEN_X_OFFSET;
+        public float DespawnOffscreenXOffset { get; set; } = ConstGameplay.Obstacle.Hazard.DESPAWN_OFFSCREEN_X_OFFSET;
 
         public void Initialize()
         {
@@ -63,17 +63,17 @@ namespace JumboJumps.EFTB.Manager
             if (playerManager?.PlayerTransform == null || levelGeneratorManager == null) return;
 
             float playerY = playerManager.PlayerTransform.position.y;
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
 
-            int safeZoneMinRowIndex = ConstGameplay.Obstacle.Safe_Zone_Cells + 1;
+            int safeZoneMinRowIndex = ConstGameplay.Obstacle.SAFE_ZONE_CELLS + 1;
             int minRowIndex = Mathf.Max(safeZoneMinRowIndex, Mathf.FloorToInt((playerY - 3f) / cellHeight));
-            float maxAllowedY = Mathf.Min(playerY + ConstGameplay.Obstacle.Hazard.Hazard_Prespawn_Offset, levelGeneratorManager.MaxGeneratedWorldY - cellHeight);
+            float maxAllowedY = Mathf.Min(playerY + ConstGameplay.Obstacle.Hazard.HAZARD_PRESPAWN_OFFSET, levelGeneratorManager.MaxGeneratedWorldY - cellHeight);
             int maxRowIndex = Mathf.FloorToInt(maxAllowedY / cellHeight);
 
             // Update hazard spawning for active visible rows
             for (int r = minRowIndex; r <= maxRowIndex; r++)
             {
-                if (r <= ConstGameplay.Obstacle.Safe_Zone_Cells)
+                if (r <= ConstGameplay.Obstacle.SAFE_ZONE_CELLS)
                 {
                     continue;
                 }
@@ -128,17 +128,17 @@ namespace JumboJumps.EFTB.Manager
 
             if (IsRowBlockedByFurniture(rowData.RowWorldY))
             {
-                int rowIdx = Mathf.RoundToInt(rowData.RowWorldY / ConstGameplay.Obstacle.Furniture.Cell_Height);
+                int rowIdx = Mathf.RoundToInt(rowData.RowWorldY / ConstGameplay.Obstacle.Furniture.CELL_HEIGHT);
                 activeHazardRows.Remove(rowIdx);
                 return;
             }
 
-            if (!gameDataManager.TryGetPrefab(ConstGameplay.Obstacle.Hazard.Prefab_Name, out GameObject prefab))
+            if (!gameDataManager.TryGetPrefab(ConstGameplay.Obstacle.Hazard.PREFAB_NAME, out GameObject prefab))
             {
                 // Fallback to moving obstacle prefab if specific hazard prefab is not yet in registry
                 if (!gameDataManager.TryGetPrefab("Prefab_Obstacle_Car", out prefab))
                 {
-                    DebugLogHelper.LogWarning($"[HazardSpawner] Hazard prefab '{ConstGameplay.Obstacle.Hazard.Prefab_Name}' not found in GameDataManager.");
+                    DebugLogHelper.LogWarning($"[HazardSpawner] Hazard prefab '{ConstGameplay.Obstacle.Hazard.PREFAB_NAME}' not found in GameDataManager.");
                     return;
                 }
             }

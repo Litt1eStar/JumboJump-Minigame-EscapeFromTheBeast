@@ -20,7 +20,7 @@ namespace JumboJumps.EFTB.GI
         {
             levelGeneratorManager = GameContext.Instance?.Get<LevelGeneratorManager>();
 
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             LaneIndex = laneIndex;
             WorldY = Mathf.RoundToInt(worldY / cellHeight) * cellHeight;
             RegisterSelf();
@@ -39,7 +39,7 @@ namespace JumboJumps.EFTB.GI
 
         public void UpdateWorldPositionAndLane()
         {
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             WorldY = Mathf.RoundToInt(transform.position.y / cellHeight) * cellHeight;
             LaneIndex = GetClosestLaneIndex(transform.position.x);
         }
@@ -66,7 +66,7 @@ namespace JumboJumps.EFTB.GI
         /// </summary>
         public bool BlocksCell(int targetLaneIndex, float targetWorldY, float tolerance = 1.8f)
         {
-            float[] laneX = ConstGameplay.LevelGenerator.Lane_X_Positions;
+            float[] laneX = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
             float targetX = (laneX != null && targetLaneIndex >= 0 && targetLaneIndex < laneX.Length) 
                 ? laneX[targetLaneIndex] 
                 : 0f;
@@ -78,7 +78,7 @@ namespace JumboJumps.EFTB.GI
 
             if (!laneMatches) return false;
 
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             int furnitureRow = Mathf.RoundToInt(WorldY / cellHeight);
             int transformRow = Mathf.RoundToInt(transform.position.y / cellHeight);
             int targetRow = Mathf.RoundToInt(targetWorldY / cellHeight);
@@ -94,7 +94,7 @@ namespace JumboJumps.EFTB.GI
 
         private int GetClosestLaneIndex(float worldX)
         {
-            float[] laneX = ConstGameplay.LevelGenerator.Lane_X_Positions;
+            float[] laneX = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
             if (laneX == null || laneX.Length == 0) return LaneIndex;
 
             int closest = 0;
