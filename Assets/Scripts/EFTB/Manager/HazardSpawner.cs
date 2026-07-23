@@ -18,8 +18,10 @@ namespace JumboJumps.EFTB.Manager
 
         private readonly HazardProgressionModel progressionModel = new HazardProgressionModel();
         private readonly Dictionary<int, HazardRowData> activeHazardRows = new Dictionary<int, HazardRowData>();
-
         private readonly List<GIHazardObstacle> activeHazards = new List<GIHazardObstacle>();
+
+        public float SpawnOffscreenXOffset { get; set; } = ConstGameplay.Obstacle.Hazard.Spawn_Offscreen_X_Offset;
+        public float DespawnOffscreenXOffset { get; set; } = ConstGameplay.Obstacle.Hazard.Despawn_Offscreen_X_Offset;
 
         public void Initialize()
         {
@@ -141,9 +143,11 @@ namespace JumboJumps.EFTB.Manager
                 }
             }
 
-            float offset = ConstGameplay.Obstacle.Hazard.Spawn_Offscreen_X_Offset;
-            float spawnX = (rowData.Direction == HazardDirectionEnum.LeftToRight) ? -offset : offset;
-            float despawnX = (rowData.Direction == HazardDirectionEnum.LeftToRight) ? offset : -offset;
+            float spawnOffset = SpawnOffscreenXOffset;
+            float despawnOffset = DespawnOffscreenXOffset;
+
+            float spawnX = (rowData.Direction == HazardDirectionEnum.LeftToRight) ? -spawnOffset : spawnOffset;
+            float despawnX = (rowData.Direction == HazardDirectionEnum.LeftToRight) ? despawnOffset : -despawnOffset;
 
             Vector3 spawnPos = new Vector3(spawnX, rowData.RowWorldY, 0f);
 

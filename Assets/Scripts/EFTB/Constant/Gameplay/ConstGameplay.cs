@@ -93,7 +93,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
 
                 public const float Floor_Speed_Duration_Low = 1.0f; // Hazard speed floor range low (0.5s / lane)
                 public const float Floor_Speed_Duration_High = 2.0f;// Hazard speed floor range high (0.9s / lane)
-                public const float Spawn_Offscreen_X_Offset = 4.5f;
+                public const float Spawn_Offscreen_X_Offset = 7.5f;   // Offscreen initial spawn X coordinate offset (units)
+                public const float Despawn_Offscreen_X_Offset = 7.5f; // Offscreen despawn X coordinate offset (units)
                 public const float Telegraph_Offscreen_X_Offset = 2.3f;
                 public const int Safe_Zone_Cells = 10;
 
