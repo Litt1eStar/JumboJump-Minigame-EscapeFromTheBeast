@@ -44,7 +44,7 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 else
                 {
                     startPosition = giAggressive.transform.position;
-                    float[] lanePositions = ConstGameplay.LevelGenerator.LaneXPositions;
+                    float[] lanePositions = ConstGameplay.LevelGenerator.Lane_X_Positions;
                     float targetX = (lanePositions != null && lanePositions.Length > 1)
                         ? lanePositions[1]
                         : 0f;
@@ -52,8 +52,8 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 }
 
                 float yRotation = (currentSightDirection == CatSightDirection.Right) 
-                    ? ConstGameplay.Cat.AggressiveCat.CatLeftHandYRotation 
-                    : ConstGameplay.Cat.AggressiveCat.CatRightHandYRotation;
+                    ? ConstGameplay.Cat.AggressiveCat.Cat_Left_Hand_Y_Rotation 
+                    : ConstGameplay.Cat.AggressiveCat.Cat_Right_Hand_Y_Rotation;
 
                 Quaternion catHandRotation = Quaternion.Euler(0f, yRotation, 0f);
 

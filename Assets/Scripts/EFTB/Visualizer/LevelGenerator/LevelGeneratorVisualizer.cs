@@ -102,7 +102,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (!gameDataManager.TryGetPrefab(blockData.PrefabName, out GameObject prefab))
             {
-                if (!gameDataManager.TryGetPrefab(ConstGameplay.Obstacle.Furniture.DEFAULT_FURNITURE_PREFAB, out prefab))
+                if (!gameDataManager.TryGetPrefab(ConstGameplay.Obstacle.Furniture.Default_Furniture_Prefab, out prefab))
                 {
                     DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for furniture: {blockData.PrefabName}");
                     return null;
@@ -194,8 +194,8 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             if (isCat)
             {
                 targetX = (eventData.TargetLaneIndex <= 2)
-                    ? ConstGameplay.Cat.CAT_LEFT_LANE_SPAWN_POSITION
-                    : ConstGameplay.Cat.CAT_RIGHT_LANE_SPAWN_POSITION;
+                    ? ConstGameplay.Cat.Cat_Left_Lane_Spawn_Position
+                    : ConstGameplay.Cat.Cat_Right_Lane_Spawn_Position;
 
                 spawnY = segmentYPosition + eventData.TriggerYOffset;
                 SpawnObstacleInstance(eventData, targetX, spawnY, segment, giSegment, prefab);
@@ -286,9 +286,9 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         private float GetCatSpawnX(int laneIndex)
         {
-            return (laneIndex < laneXPosition.Length / ConstGameplay.LevelGenerator.LANE_SIZE)
-                ? ConstGameplay.Cat.CAT_LEFT_LANE_SPAWN_POSITION
-                : ConstGameplay.Cat.CAT_RIGHT_LANE_SPAWN_POSITION;
+            return (laneIndex < laneXPosition.Length / ConstGameplay.LevelGenerator.Lane_Size)
+                ? ConstGameplay.Cat.Cat_Left_Lane_Spawn_Position
+                : ConstGameplay.Cat.Cat_Right_Lane_Spawn_Position;
         }
 
         public void RecycleOldestSegment()

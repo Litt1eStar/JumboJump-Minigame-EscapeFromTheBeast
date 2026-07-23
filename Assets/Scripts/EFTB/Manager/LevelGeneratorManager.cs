@@ -56,7 +56,7 @@ namespace JumboJumps.EFTB.Manager
         public float HardDifficultyTimePercentage { get; private set; }
 
         private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
-        private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.InitialLaneIndex;
+        private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.Initial_Lane_Index;
         private float lastFurnitureWorldY = -999f;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
         private List<LevelSegmentData> segments;
@@ -69,12 +69,12 @@ namespace JumboJumps.EFTB.Manager
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = new List<LevelSegmentData>();
-            LaneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
-            MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
-            SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
-            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
-            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage;
-            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HardDifficultyTimePercentage;
+            LaneXPositions = ConstGameplay.LevelGenerator.Lane_X_Positions;
+            MaxSegmentAmount = ConstGameplay.LevelGenerator.Max_Segment_Amount;
+            SegmentHeight = ConstGameplay.LevelGenerator.Segment_Height;
+            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.Segment_Recycle_Trigger_Offset;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.Medium_Difficulty_Time_Percentage;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.Hard_Difficulty_Time_Percentage;
 
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions, this);
             visualizer.Initialize();
@@ -166,8 +166,8 @@ namespace JumboJumps.EFTB.Manager
         private ActiveSegment SpawnSegmentAt(float yPosition)
         {
             LevelSegmentData selectedTemplate = new LevelSegmentData(
-                ConstGameplay.LevelGenerator.InitialSegmentId,
-                ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
+                ConstGameplay.LevelGenerator.Initial_Segment_Id,
+                ConstGameplay.LevelGenerator.Default_Initial_Segment_Prefab,
                 SegmentHeight,
                 SegmentDifficultyEnum.Easy,
                 new List<LevelGeneratorData.LaneObjectData>(),

@@ -92,7 +92,7 @@ namespace JumboJumps.EFTB.GI
             }
 
             float elapsed = 0f;
-            float flashInterval = ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_INTERVAL;
+            float flashInterval = ConstGameplay.Cat.AggressiveCat.Pounce_Flash_Interval;
             bool isFlashColor = false;
 
             while (elapsed < duration)
@@ -101,7 +101,7 @@ namespace JumboJumps.EFTB.GI
                 {
                     isFlashColor = !isFlashColor;
                     spriteRenderer.color = isFlashColor 
-                        ? ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_COLOR 
+                        ? ConstGameplay.Cat.AggressiveCat.Pounce_Flash_Color 
                         : originalSpriteColor;
                 }
                 yield return new WaitForSeconds(flashInterval);
