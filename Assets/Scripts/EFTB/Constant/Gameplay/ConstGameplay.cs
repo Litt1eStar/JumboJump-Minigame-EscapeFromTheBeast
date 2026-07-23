@@ -1,4 +1,5 @@
 using System.Numerics;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.Constant.Gameplay
 {
@@ -66,6 +67,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const string PREFAB_NAME = "Prefab_Event_AggressiveCat";
                 public const float IDLE_LIMIT = 4.5f;
                 public const float POUNCE_WARNING_DURATION = 1.5f;
+                public const float POUNCE_FLASH_INTERVAL = 0.1f;
+                public static readonly Color POUNCE_FLASH_COLOR = Color.red;
             }
         }
         public class Obstacle

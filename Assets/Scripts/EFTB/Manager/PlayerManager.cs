@@ -57,5 +57,10 @@ namespace JumboJumps.EFTB.Manager
         {
             stateController.UpdateLogic(deltaTime);
         }
+
+        public void TriggerPounceWarning(float duration, System.Action onComplete)
+        {
+            visualizer?.ShowPounceWarning(duration, onComplete);
+        }
     }
 }

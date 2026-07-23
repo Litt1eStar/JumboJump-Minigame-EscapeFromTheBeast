@@ -234,6 +234,7 @@ MonoBehaviour:
   playerTransform: {fileID: 6501437418983504409}
   animator: {fileID: -5741562989491085062}
   spriteRenderer: {fileID: 7110773176635628562}
+  warningIndicatorObject: {fileID: 4779209158069966984}
   playerMovementSpeed: 5
   initialStartPosition: {fileID: 0}
 --- !u!61 &8507407373421456455

@@ -17,7 +17,6 @@ namespace JumboJumps.EFTB.Manager
         private CatManager catManager;
         private GameDataManager gameDataManager;
         private GameplayStateManager gameplayStateManager;
-        private WarningIndicatorManager warningIndicatorManager;
 
         private bool isAntiCampWarningActive;
 
@@ -29,7 +28,6 @@ namespace JumboJumps.EFTB.Manager
             catManager = GameContext.Instance.Get<CatManager>();
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-            warningIndicatorManager = GameContext.Instance.Get<WarningIndicatorManager>();  
 
             if (playerManager != null)
             {
@@ -69,11 +67,18 @@ namespace JumboJumps.EFTB.Manager
             int sideIndex = (Random.value < 0.5f) ? 0 : 1;
             float warningDuration = ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
 
-            warningIndicatorManager?.ShowCatEventWarning(warningDuration, () =>
+            if (playerManager != null)
+            {
+                playerManager.TriggerPounceWarning(warningDuration, () =>
+                {
+                    isAntiCampWarningActive = false;
+                    SpawnAggressiveCat(sideIndex);
+                });
+            }
+            else
             {
                 isAntiCampWarningActive = false;
-                SpawnAggressiveCat(sideIndex);
-            });
+            }
         }
 
         private bool CanSpawnAggressiveCat(out float spawnY)
