@@ -1,14 +1,15 @@
+using JumboJumps.EFTB.Config;
+using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.GameData.LevelSegment;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Model.Obstacle;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.LevelGenerator;
-using LevelSegmentData = JumboJumps.EFTB.Model.LevelGeneratorData.LevelSegmentData;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using JumboJumps.EFTB.Constant.Gameplay;
-using JumboJumps.EFTB.GI;
-using JumboJumps.EFTB.Model.Obstacle;
+using LevelSegmentData = JumboJumps.EFTB.Model.LevelGeneratorData.LevelSegmentData;
 
 namespace JumboJumps.EFTB.Manager
 {
@@ -57,6 +58,24 @@ namespace JumboJumps.EFTB.Manager
         public float MaxGeneratedWorldY => nextYSpawnPosition;
 
         private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
+        private FurnitureConfigSO furnitureConfig;
+        public FurnitureConfigSO FurnitureConfig
+        {
+            get
+            {
+                if (furnitureConfig == null && SceneObjectContext.Instance != null)
+                {
+                    var container = SceneObjectContext.Instance.Get<GI.GIGameplayConfigContainer>();
+                    if (container != null && container.FurnitureConfig != null)
+                    {
+                        furnitureConfig = container.FurnitureConfig;
+                        furniturePlacementModel.Config = furnitureConfig;
+                    }
+                }
+                return furnitureConfig;
+            }
+        }
+
         private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
         private float lastFurnitureWorldY = -999f;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
@@ -68,6 +87,9 @@ namespace JumboJumps.EFTB.Manager
 
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
+
+            // Ensure FurnitureConfig property initializes placement model config
+            var _ = FurnitureConfig;
 
             segments = new List<LevelSegmentData>();
             LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
@@ -173,7 +195,11 @@ namespace JumboJumps.EFTB.Manager
         public bool IsValidFurnitureSpawn(int laneIndex, float worldY)
         {
             if (laneIndex < 0 || laneIndex >= LaneXPositions.Length) return false;
-            if (worldY <= ConstGameplay.Obstacle.SAFE_ZONE_CELLS * ConstGameplay.Obstacle.Furniture.CELL_HEIGHT) return false;
+
+            int safeZone = FurnitureConfig != null ? FurnitureConfig.SafeZoneCells : ConstGameplay.Obstacle.SAFE_ZONE_CELLS;
+            float cellHeight = FurnitureConfig != null ? FurnitureConfig.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+
+            if (worldY <= safeZone * cellHeight) return false;
 
             if (IsCellBlockedByFurniture(laneIndex, worldY)) return false;
 

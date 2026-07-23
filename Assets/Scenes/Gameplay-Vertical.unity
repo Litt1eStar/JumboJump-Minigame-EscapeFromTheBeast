@@ -588,7 +588,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 94.83418
+  field of view: 85
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1600,6 +1600,7 @@ Transform:
   - {fileID: 1169006538}
   - {fileID: 167339468}
   - {fileID: 1236677532}
+  - {fileID: 942182364}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &852938825
@@ -1739,6 +1740,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852938825}
   m_CullTransparentMesh: 1
+--- !u!1 &942182363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 942182364}
+  - component: {fileID: 942182365}
+  m_Layer: 0
+  m_Name: GameplayConfigContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &942182364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942182363}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 780380737}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &942182365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942182363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81593d6346089d64e82538b9f1fdaf2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.GI.GIGameplayConfigContainer
+  furnitureConfig: {fileID: 11400000, guid: dcedb4301e9a71b48ac09da61b971c33, type: 2}
+  hazardConfig: {fileID: 11400000, guid: 205ba2a3cc815a549bad98c642f4a0ae, type: 2}
 --- !u!1 &983315426
 GameObject:
   m_ObjectHideFlags: 0
@@ -3237,6 +3284,7 @@ MonoBehaviour:
   - {fileID: 749846551}
   - {fileID: 1184252900}
   - {fileID: 387496522}
+  - {fileID: 942182365}
 --- !u!4 &2007805841
 Transform:
   m_ObjectHideFlags: 0

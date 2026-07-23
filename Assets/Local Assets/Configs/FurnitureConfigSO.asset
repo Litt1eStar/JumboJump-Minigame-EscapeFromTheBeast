@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3f35b079df29e4e91062561c66a9ab, type: 3}
+  m_Name: FurnitureConfigSO
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Config.FurnitureConfigSO
+  safeZoneCells: 5
+  cellHeight: 3
+  baseRowRatio: 0.2
+  densityStepRatio: 0.05
+  densityStepCells: 30
+  maxRowRatio: 0.6
+  minRowSpacingCells: 1
+  singleBlockMaxCells: 120
+  maxBlocksPerRow: 2

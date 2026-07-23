@@ -88,8 +88,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const int STEP_INTERVAL_CELLS = 30;          // Step height in cells
                 public const float MIN_SPAWN_INTERVAL = 0.5f;       // Minimum spawn interval limit (s)
 
-                public const float FLOOR_SPEED_DURATION_LOW = 1.0f; // Hazard speed floor range low (0.5s / lane)
-                public const float FLOOR_SPEED_DURATION_HIGH = 2.0f;// Hazard speed floor range high (0.9s / lane)
+                public const float FLOOR_SPEED_DURATION_LOW = 0.1f; // Hazard speed floor range low (0.5s / lane)
+                public const float FLOOR_SPEED_DURATION_HIGH = 0.3f;// Hazard speed floor range high (0.9s / lane)
                 public const float SPAWN_OFFSCREEN_X_OFFSET = 7.5f;   // Offscreen initial spawn X coordinate offset (units)
                 public const float DESPAWN_OFFSCREEN_X_OFFSET = 7.5f; // Offscreen despawn X coordinate offset (units)
                 public const int SAFE_ZONE_CELLS = 5;

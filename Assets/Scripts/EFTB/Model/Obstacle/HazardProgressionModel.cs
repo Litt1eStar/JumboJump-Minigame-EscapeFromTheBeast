@@ -1,10 +1,28 @@
+using JumboJumps.EFTB.Config;
 using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
+using static UnityEngine.Rendering.STP;
 
 namespace JumboJumps.EFTB.Model.Obstacle
 {
     public class HazardProgressionModel
     {
+        private HazardConfigSO config;
+        public HazardConfigSO Config
+        {
+            get
+            {
+                if (config == null && SceneObjectContext.Instance != null)
+                {
+                    var container = SceneObjectContext.Instance.Get<GI.GIGameplayConfigContainer>();
+                    if (container != null) config = container.HazardConfig;
+                }
+                return config;
+            }
+            set => config = value;
+        }
+
         /// <summary>
         /// Calculates the spawn interval (cooldown between objects on the same row) based on row height Y.
         /// Starts at Base Range [Base_Interval_Low, Base_Interval_High] and reduces by Step_Interval_Reduction every 30 cells,
@@ -13,13 +31,19 @@ namespace JumboJumps.EFTB.Model.Obstacle
         public float GetRandomSpawnInterval(float worldY)
         {
             float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
-            float stepDistanceInUnits = ConstGameplay.Obstacle.Hazard.STEP_INTERVAL_CELLS * cellHeight;
+            int stepCells = Config != null ? Config.StepIntervalCells : ConstGameplay.Obstacle.Hazard.STEP_INTERVAL_CELLS;
+            float stepDistanceInUnits = stepCells * cellHeight;
             float steps = Mathf.Max(0f, Mathf.Floor(worldY / stepDistanceInUnits));
-            float reduction = steps * ConstGameplay.Obstacle.Hazard.STEP_INTERVAL_REDUCTION;
 
-            float minLimit = ConstGameplay.Obstacle.Hazard.MIN_SPAWN_INTERVAL;
-            float currentLow = Mathf.Max(minLimit, ConstGameplay.Obstacle.Hazard.BASE_INTERVAL_LOW - reduction);
-            float currentHigh = Mathf.Max(minLimit + 0.2f, ConstGameplay.Obstacle.Hazard.BASE_INTERVAL_HIGH - reduction);
+            float stepReduction = Config != null ? Config.StepIntervalReduction : ConstGameplay.Obstacle.Hazard.STEP_INTERVAL_REDUCTION;
+            float reduction = steps * stepReduction;
+
+            float minLimit = Config != null ? Config.MinSpawnInterval : ConstGameplay.Obstacle.Hazard.MIN_SPAWN_INTERVAL;
+            float baseLow = Config != null ? Config.BaseIntervalLow : ConstGameplay.Obstacle.Hazard.BASE_INTERVAL_LOW;
+            float baseHigh = Config != null ? Config.BaseIntervalHigh : ConstGameplay.Obstacle.Hazard.BASE_INTERVAL_HIGH;
+
+            float currentLow = Mathf.Max(minLimit, baseLow - reduction);
+            float currentHigh = Mathf.Max(minLimit + 0.2f, baseHigh - reduction);
 
             return Random.Range(currentLow, currentHigh);
         }
@@ -30,10 +54,10 @@ namespace JumboJumps.EFTB.Model.Obstacle
         /// </summary>
         public float GetRandomRowSpeed()
         {
-            float durationPerLane = Random.Range(
-                ConstGameplay.Obstacle.Hazard.FLOOR_SPEED_DURATION_LOW,
-                ConstGameplay.Obstacle.Hazard.FLOOR_SPEED_DURATION_HIGH
-            );
+            float speedLow = Config.FloorSpeedDurationLow;
+            float speedHigh = Config.FloorSpeedDurationHigh;
+
+            float durationPerLane = Random.Range(speedLow, speedHigh);
             float laneSize = ConstGameplay.LevelGenerator.LANE_SIZE;
             return laneSize / Mathf.Max(0.01f, durationPerLane);
         }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JumboJumps.EFTB.Config;
 using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Model.Obstacle;
@@ -20,8 +21,26 @@ namespace JumboJumps.EFTB.Manager
         private readonly Dictionary<int, HazardRowData> activeHazardRows = new Dictionary<int, HazardRowData>();
         private readonly List<GIHazardObstacle> activeHazards = new List<GIHazardObstacle>();
 
-        public float SpawnOffscreenXOffset { get; set; } = ConstGameplay.Obstacle.Hazard.SPAWN_OFFSCREEN_X_OFFSET;
-        public float DespawnOffscreenXOffset { get; set; } = ConstGameplay.Obstacle.Hazard.DESPAWN_OFFSCREEN_X_OFFSET;
+        private HazardConfigSO hazardConfig;
+        public HazardConfigSO HazardConfig
+        {
+            get
+            {
+                if (hazardConfig == null && SceneObjectContext.Instance != null)
+                {
+                    var container = SceneObjectContext.Instance.Get<GI.GIGameplayConfigContainer>();
+                    if (container != null && container.HazardConfig != null)
+                    {
+                        hazardConfig = container.HazardConfig;
+                        progressionModel.Config = hazardConfig;
+                    }
+                }
+                return hazardConfig;
+            }
+        }
+
+        public float SpawnOffscreenXOffset => HazardConfig != null ? HazardConfig.SpawnOffscreenXOffset : ConstGameplay.Obstacle.Hazard.SPAWN_OFFSCREEN_X_OFFSET;
+        public float DespawnOffscreenXOffset => HazardConfig != null ? HazardConfig.DespawnOffscreenXOffset : ConstGameplay.Obstacle.Hazard.DESPAWN_OFFSCREEN_X_OFFSET;
 
         public void Initialize()
         {
@@ -30,6 +49,8 @@ namespace JumboJumps.EFTB.Manager
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
             playerManager = GameContext.Instance.Get<PlayerManager>();
+
+            var _ = HazardConfig;
 
             GameContext.Instance.Add(this);
         }
@@ -65,15 +86,18 @@ namespace JumboJumps.EFTB.Manager
             float playerY = playerManager.PlayerTransform.position.y;
             float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
 
-            int safeZoneMinRowIndex = ConstGameplay.Obstacle.SAFE_ZONE_CELLS + 1;
+            int safeZoneCells = HazardConfig != null ? HazardConfig.SafeZoneCells : ConstGameplay.Obstacle.SAFE_ZONE_CELLS;
+            int safeZoneMinRowIndex = safeZoneCells + 1;
             int minRowIndex = Mathf.Max(safeZoneMinRowIndex, Mathf.FloorToInt((playerY - 3f) / cellHeight));
-            float maxAllowedY = Mathf.Min(playerY + ConstGameplay.Obstacle.Hazard.HAZARD_PRESPAWN_OFFSET, levelGeneratorManager.MaxGeneratedWorldY - cellHeight);
+
+            float prespawnOffset = HazardConfig != null ? HazardConfig.HazardPrespawnOffset : ConstGameplay.Obstacle.Hazard.HAZARD_PRESPAWN_OFFSET;
+            float maxAllowedY = Mathf.Min(playerY + prespawnOffset, levelGeneratorManager.MaxGeneratedWorldY - cellHeight);
             int maxRowIndex = Mathf.FloorToInt(maxAllowedY / cellHeight);
 
             // Update hazard spawning for active visible rows
             for (int r = minRowIndex; r <= maxRowIndex; r++)
             {
-                if (r <= ConstGameplay.Obstacle.SAFE_ZONE_CELLS)
+                if (r <= safeZoneCells)
                 {
                     continue;
                 }
