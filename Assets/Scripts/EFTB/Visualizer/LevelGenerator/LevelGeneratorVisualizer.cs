@@ -298,33 +298,54 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             if (activeSegments.Count <= 0 || poolManager == null) return;
 
             GameObject oldestSegment = activeSegments.Dequeue();
+            if (oldestSegment == null) return;
 
-            GISegment giSegment = oldestSegment.GetComponent<GISegment>();
+            GISegment giSegment = null;
+            try
+            {
+                giSegment = oldestSegment.GetComponent<GISegment>();
+            }
+            catch (MissingReferenceException)
+            {
+                return;
+            }
+
             if (giSegment != null)
             {
                 IReadOnlyList<GameObject> spawnedObjs = giSegment.SpawnedObjects;
-                for (int i = 0; i < spawnedObjs.Count; i++)
+                if (spawnedObjs != null)
                 {
-                    if (spawnedObjs[i] != null)
+                    for (int i = 0; i < spawnedObjs.Count; i++)
                     {
-                        var giCat = spawnedObjs[i].GetComponent<GICat>();
-                        if (giCat != null)
+                        GameObject spawnedObj = spawnedObjs[i];
+                        if (spawnedObj != null)
                         {
-                            SceneObjectContext.Instance.Deregister(giCat);
-
-                            var catManager = GameContext.Instance.Get<CatManager>();
-                            if (catManager != null)
+                            var giCat = spawnedObj.GetComponent<GICat>();
+                            if (giCat != null)
                             {
-                                catManager.DeregisterCat(giCat);
+                                SceneObjectContext.Instance?.Deregister(giCat);
+
+                                var catManager = GameContext.Instance?.Get<CatManager>();
+                                if (catManager != null)
+                                {
+                                    catManager.DeregisterCat(giCat);
+                                }
                             }
+                            poolManager.Recycle(spawnedObj);
                         }
-                        poolManager.Recycle(spawnedObjs[i]);
                     }
                 }
                 giSegment.ClearSpawnedObjects();
             }
 
-            poolManager.Recycle(oldestSegment);
+            try
+            {
+                poolManager.Recycle(oldestSegment);
+            }
+            catch (MissingReferenceException)
+            {
+                // Object destroyed by Unity engine during scene teardown
+            }
         }
     }
 }

@@ -96,7 +96,7 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float Spawn_Offscreen_X_Offset = 7.5f;   // Offscreen initial spawn X coordinate offset (units)
                 public const float Despawn_Offscreen_X_Offset = 7.5f; // Offscreen despawn X coordinate offset (units)
                 public const float Telegraph_Offscreen_X_Offset = 2.3f;
-                public const int Safe_Zone_Cells = 10;
+                public const int Safe_Zone_Cells = 5;
 
                 public const float Hazard_Prespawn_Offset = 70f; // Offset from the player to pre-spawn hazards (in cells)
             }

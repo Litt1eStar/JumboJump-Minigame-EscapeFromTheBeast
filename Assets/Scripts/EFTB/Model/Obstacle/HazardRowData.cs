@@ -16,13 +16,13 @@ namespace JumboJumps.EFTB.Model.Obstacle
         public float SpawnInterval { get; set; }
         public float NextSpawnTimer { get; set; }
 
-        public HazardRowData(float rowWorldY, HazardDirectionEnum direction, float speed, float spawnInterval)
+        public HazardRowData(float rowWorldY, HazardDirectionEnum direction, float speed, float spawnInterval, bool immediateFirstSpawn = true)
         {
             RowWorldY = rowWorldY;
             Direction = direction;
             Speed = speed;
             SpawnInterval = spawnInterval;
-            NextSpawnTimer = 0f;
+            NextSpawnTimer = immediateFirstSpawn ? spawnInterval : 0f;
         }
     }
 }
