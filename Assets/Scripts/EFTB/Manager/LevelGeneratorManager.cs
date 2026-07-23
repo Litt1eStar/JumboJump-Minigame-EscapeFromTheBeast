@@ -54,6 +54,7 @@ namespace JumboJumps.EFTB.Manager
         public float SegmentRecycleTriggerOffset { get; private set; }
         public float MediumDifficultyTimePercentage { get; private set; }
         public float HardDifficultyTimePercentage { get; private set; }
+        public float MaxGeneratedWorldY => nextYSpawnPosition;
 
         private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
         private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.Initial_Lane_Index;
@@ -90,13 +91,13 @@ namespace JumboJumps.EFTB.Manager
             nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
             nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
 
+            GameContext.Instance.Add(this);
+
             for (int i = 0; i < config.MaxSegmentAmount; i++)
             {
                 float spawnYPosition = i * SegmentHeight;
                 SpawnSegmentAt(spawnYPosition);
             }
-
-            GameContext.Instance.Add(this);
         }
 
         public void Dispose()
@@ -105,6 +106,9 @@ namespace JumboJumps.EFTB.Manager
             visualizer = null;
 
             activeSegmentQueue.Clear();
+            activeFurnitureObstacles.Clear();
+            lastFurnitureWorldY = -999f;
+            lastOpenLaneIndex = ConstGameplay.LevelGenerator.Initial_Lane_Index;
             GameContext.Instance.Remove(this);
         }
 
@@ -150,16 +154,62 @@ namespace JumboJumps.EFTB.Manager
             nextYSpawnPosition += SegmentHeight;
         }
 
+        public void RegisterFurnitureObstacle(GIFurnitureObstacle furniture)
+        {
+            if (furniture != null && !activeFurnitureObstacles.Contains(furniture))
+            {
+                activeFurnitureObstacles.Add(furniture);
+            }
+        }
+
+        public void UnregisterFurnitureObstacle(GIFurnitureObstacle furniture)
+        {
+            if (furniture != null)
+            {
+                activeFurnitureObstacles.Remove(furniture);
+            }
+        }
+
+        public bool IsValidFurnitureSpawn(int laneIndex, float worldY)
+        {
+            if (laneIndex < 0 || laneIndex >= LaneXPositions.Length) return false;
+            if (worldY <= ConstGameplay.Obstacle.Safe_Zone_Cells * ConstGameplay.Obstacle.Furniture.Cell_Height) return false;
+
+            if (IsCellBlockedByFurniture(laneIndex, worldY)) return false;
+
+            return true;
+        }
+
         public bool IsCellBlockedByFurniture(int targetLaneIndex, float targetWorldY)
         {
-            for (int i = 0; i < activeFurnitureObstacles.Count; i++)
+            for (int i = activeFurnitureObstacles.Count - 1; i >= 0; i--)
             {
+                if (i >= activeFurnitureObstacles.Count) continue;
                 GIFurnitureObstacle furniture = activeFurnitureObstacles[i];
                 if (furniture != null && furniture.gameObject.activeInHierarchy && furniture.BlocksCell(targetLaneIndex, targetWorldY))
                 {
                     return true;
                 }
             }
+
+            // Self-healing fallback: Query the active GISegment at targetWorldY for active furniture
+            GISegment segment = GetGISegmentAtY(targetWorldY);
+            if (segment != null)
+            {
+                var furnitureList = segment.GetComponentsInChildren<GIFurnitureObstacle>(false);
+                foreach (var furniture in furnitureList)
+                {
+                    if (furniture != null && furniture.gameObject.activeInHierarchy)
+                    {
+                        RegisterFurnitureObstacle(furniture);
+                        if (furniture.BlocksCell(targetLaneIndex, targetWorldY))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
             return false;
         }
 
@@ -187,6 +237,17 @@ namespace JumboJumps.EFTB.Manager
 
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
 
+            // Scan and register any pre-baked or static GIFurnitureObstacle instances in the segment hierarchy
+            GIFurnitureObstacle[] prefabFurniture = segmentInstance.GetComponentsInChildren<GIFurnitureObstacle>(true);
+            foreach (var furniture in prefabFurniture)
+            {
+                if (furniture != null)
+                {
+                    furniture.UpdateWorldPositionAndLane();
+                    RegisterFurnitureObstacle(furniture);
+                }
+            }
+
             // Procedurally generate furniture blocks for this segment
             var furnitureBlocks = furniturePlacementModel.GenerateSegmentFurniture(
                 yPosition,
@@ -198,10 +259,16 @@ namespace JumboJumps.EFTB.Manager
 
             foreach (var block in furnitureBlocks)
             {
+                float worldY = yPosition + block.YOffset;
+                if (!IsValidFurnitureSpawn(block.LaneIndex, worldY))
+                {
+                    continue;
+                }
+
                 GIFurnitureObstacle giFurniture = visualizer.SpawnFurnitureObstacle(block, yPosition, segmentInstance, giSegment);
                 if (giFurniture != null)
                 {
-                    activeFurnitureObstacles.Add(giFurniture);
+                    RegisterFurnitureObstacle(giFurniture);
                 }
             }
 

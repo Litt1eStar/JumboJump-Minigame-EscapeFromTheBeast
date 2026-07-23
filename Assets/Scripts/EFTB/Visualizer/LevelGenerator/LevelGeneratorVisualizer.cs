@@ -55,16 +55,18 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         public void Dispose()
         {
+            while (activeSegments.Count > 0)
+            {
+                RecycleOldestSegment();
+            }
             activeSegments.Clear();
         }
 
+        /// <summary>
+        /// Spawns a level segment prefab from ObjectPoolManager at the specified world Y position.
+        /// </summary>
         public GameObject SpawnSegment(LevelGeneratorData.LevelSegmentData template, float yPosition)
         {
-            /// <summary>
-            /// template : LevelSegmentSO template configuration containing prefab and layout data
-            /// yPosition : y position to spawn the segment
-            /// </summary>
-
             if (poolManager == null || template == null || template.SegmentPrefabName == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] SpawnSegment failed : Missing Instance");

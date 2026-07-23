@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.Model.Obstacle
@@ -61,13 +63,16 @@ namespace JumboJumps.EFTB.Model.Obstacle
 
         private bool ShouldSpawnFurnitureOnRow(float worldY, float lastFurnitureWorldY)
         {
-            // Initial row (Y <= 0) is always kept safe/empty for player start
-            if (worldY <= 0f) return false;
-
-            // Check minimum 1-cell spacing constraint
             float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
-            float minSpacing = (ConstGameplay.Obstacle.Furniture.Min_Row_Spacing_Cells + 1) * cellHeight - 0.1f;
-            if (lastFurnitureWorldY >= 0f && (worldY - lastFurnitureWorldY) < minSpacing)
+            int currentCellIndex = Mathf.RoundToInt(worldY / cellHeight);
+
+            if (currentCellIndex <= ConstGameplay.Obstacle.Safe_Zone_Cells) return false;
+
+            // Check minimum 1-cell spacing constraint in cell-index space to prevent float precision drift at high Y
+            int lastFurnitureCellIndex = lastFurnitureWorldY >= 0f ? Mathf.RoundToInt(lastFurnitureWorldY / cellHeight) : -999;
+            int minSpacingCells = ConstGameplay.Obstacle.Furniture.Min_Row_Spacing_Cells + 1;
+
+            if (lastFurnitureCellIndex >= 0 && (currentCellIndex - lastFurnitureCellIndex) < minSpacingCells)
             {
                 return false;
             }
