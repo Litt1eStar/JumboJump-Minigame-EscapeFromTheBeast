@@ -19,7 +19,7 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
-            idleTimer = 0f;
+            idleTimer = playerStateController.IdleTimer;
             Subscribe();
         }
 
@@ -27,7 +27,7 @@ namespace JumboJumps.EFTB.State.Player
         {
             Unsubscribe();
 
-            idleTimer = 0f;
+            playerStateController.IdleTimer = idleTimer;
 
             base.OnExitState();
         }
@@ -42,9 +42,12 @@ namespace JumboJumps.EFTB.State.Player
         private void IdleTimerTracking(float deltaTime)
         {
             idleTimer += deltaTime;
+            playerStateController.IdleTimer = idleTimer;
+
             if (idleTimer >= ConstGameplay.Cat.AggressiveCat.IDLE_LIMIT)
             {
                 idleTimer = 0f;
+                playerStateController.ResetIdleTimer();
                 playerStateController.InvokeIdleLimitExceeded();
             }
         }
@@ -55,7 +58,6 @@ namespace JumboJumps.EFTB.State.Player
 
             playerStateController.Input2DManager.EventTap += OnTap;
             playerStateController.Input2DManager.EventSwipe += OnSwipe;
-            playerStateController.Input2DManager.EventCombinedStep += OnCombinedStep;
         }
 
         public void Unsubscribe() 
@@ -64,7 +66,6 @@ namespace JumboJumps.EFTB.State.Player
             
             playerStateController.Input2DManager.EventTap -= OnTap;
             playerStateController.Input2DManager.EventSwipe -= OnSwipe;
-            playerStateController.Input2DManager.EventCombinedStep -= OnCombinedStep;
         }
 
         public void OnTap()
@@ -104,33 +105,6 @@ namespace JumboJumps.EFTB.State.Player
             }
 
             playerStateController.IsStepUpRequested = false;
-            playerStateController.LastSwipeDirection = swipeDirection;
-            
-            StateController.ChangeState(typeof(PlayerSwitchLaneState));
-        }
-
-        public void OnCombinedStep(SwipeDirectionEnum swipeDirection)
-        {
-            int targetLane = playerStateController.CurrentLaneIndex;
-
-            if (swipeDirection == SwipeDirectionEnum.Left)
-            {
-                targetLane = Mathf.Max(0, targetLane - 1);
-            }
-            else if (swipeDirection == SwipeDirectionEnum.Right)
-            {
-                targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
-            }
-
-            float targetY = playerStateController.Visualizer.PlayerPosition.y + ConstGameplay.Player.STEP_DISTANCE_Y;
-
-            if (playerStateController.IsTargetCellBlocked(targetLane, targetY))
-            {
-                // Target cell is blocked by furniture so combined step cannot execute
-                return;
-            }
-
-            playerStateController.IsStepUpRequested = true;
             playerStateController.LastSwipeDirection = swipeDirection;
             
             StateController.ChangeState(typeof(PlayerSwitchLaneState));

@@ -34,8 +34,7 @@ namespace JumboJumps.EFTB.State.Player
             }
 
             Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
-            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Obstacle.Furniture.CELL_HEIGHT : 0f;
-            float targetY = startPos.y + stepY;
+            float targetY = startPos.y;
 
             if (playerStateController.IsTargetCellBlocked(targetLane, targetY))
             {
@@ -65,7 +64,7 @@ namespace JumboJumps.EFTB.State.Player
                 yield return null;
             }
 
-            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float cellHeight = ConstGameplay.Player.STEP_DISTANCE_Y;
             targetPos.y = Mathf.RoundToInt(targetPos.y / cellHeight) * cellHeight;
             playerStateController.Visualizer.SetPosition(targetPos);
             OnFinishSwitchingLane();
