@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: HazardConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Config.HazardConfigSO
   safeZoneCells: 5
-  baseIntervalLow: 1.6
-  baseIntervalHigh: 2.4
+  baseIntervalLow: 5
+  baseIntervalHigh: 6
   stepIntervalReduction: 0.15
   stepIntervalCells: 30
   minSpawnInterval: 0.5
