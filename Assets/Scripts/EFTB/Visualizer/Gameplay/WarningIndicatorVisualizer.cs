@@ -11,6 +11,10 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         private UIGameplayCanvas gameplayCanvas;
         private CoroutineHelper coroutineHelper;
 
+        private Coroutine warningRoutine;
+        private Coroutine catEventRoutine;
+        private Coroutine catDirectionRoutine;
+
         public void Initialize()
         {
             gameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
@@ -19,7 +23,16 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void Dispose()
         {
-            coroutineHelper.StopAllCoroutines();
+            if (coroutineHelper != null)
+            {
+                coroutineHelper.Stop(warningRoutine);
+                coroutineHelper.Stop(catEventRoutine);
+                coroutineHelper.Stop(catDirectionRoutine);
+            }
+
+            warningRoutine = null;
+            catEventRoutine = null;
+            catDirectionRoutine = null;
 
             gameplayCanvas = null;
             coroutineHelper = null;
@@ -44,7 +57,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             if (gameplayCanvas != null && coroutineHelper != null)
             {
                 gameplayCanvas.SetWarningIndicatorActive(laneIndex, true);
-                coroutineHelper.Play(HideWarningRoutine(laneIndex, duration, onCompleteCallback));
+                warningRoutine = coroutineHelper.Restart(warningRoutine, HideWarningRoutine(laneIndex, duration, onCompleteCallback));
             }
         }
 
@@ -66,7 +79,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             if (gameplayCanvas != null && coroutineHelper != null)
             {
                 gameplayCanvas.SetCatEventWarningActive(true);
-                coroutineHelper.Play(HideCatEventWarningRoutine(duration, onCompleteCallback));
+                catEventRoutine = coroutineHelper.Restart(catEventRoutine, HideCatEventWarningRoutine(duration, onCompleteCallback));
             }
             else
             {
@@ -92,7 +105,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             if (gameplayCanvas != null && coroutineHelper != null)
             {
                 gameplayCanvas.SetCatDirectionWarningActive(sideIndex, true);
-                coroutineHelper.Play(HideCatDirectionWarningRoutine(sideIndex, duration, onCompleteCallback));
+                catDirectionRoutine = coroutineHelper.Restart(catDirectionRoutine, HideCatDirectionWarningRoutine(sideIndex, duration, onCompleteCallback));
             }
             else
             {
