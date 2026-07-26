@@ -29,10 +29,15 @@ namespace JumboJumps.EFTB.Model.Obstacle
         {
             get
             {
-                if (config == null && SceneObjectContext.Instance != null)
+                var container = SceneObjectContext.Instance?.Get<GI.GIGameplayConfigContainer>();
+                if (container != null && container.FurnitureConfig != null)
                 {
-                    var container = SceneObjectContext.Instance.Get<GI.GIGameplayConfigContainer>();
-                    if (container != null) config = container.FurnitureConfig;
+                    config = container.FurnitureConfig;
+                    return config;
+                }
+                if (config == null)
+                {
+                    DebugLogHelper.LogError($"[{GetType().Name}] FurnitureConfigSO reference is missing.");
                 }
                 return config;
             }
@@ -51,7 +56,7 @@ namespace JumboJumps.EFTB.Model.Obstacle
             ref float lastFurnitureWorldY)
         {
             List<FurnitureBlockData> generatedBlocks = new List<FurnitureBlockData>();
-            float cellHeight = Config != null ? Config.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float cellHeight = Config != null ? Config.CellHeight : 3.0f;
             int startRowIndex = Mathf.RoundToInt(segmentStartY / cellHeight);
             int totalRows = Mathf.RoundToInt(segmentHeight / cellHeight);
 

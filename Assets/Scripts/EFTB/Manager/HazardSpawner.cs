@@ -26,14 +26,10 @@ namespace JumboJumps.EFTB.Manager
         {
             get
             {
-                if (hazardConfig == null && SceneObjectContext.Instance != null)
+                var container = SceneObjectContext.Instance?.Get<GI.GIGameplayConfigContainer>();
+                if (container != null && container.HazardConfig != null)
                 {
-                    var container = SceneObjectContext.Instance.Get<GI.GIGameplayConfigContainer>();
-                    if (container != null && container.HazardConfig != null)
-                    {
-                        hazardConfig = container.HazardConfig;
-                        progressionModel.Config = hazardConfig;
-                    }
+                    return container.HazardConfig;
                 }
                 return hazardConfig;
             }
