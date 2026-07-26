@@ -133,6 +133,46 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             return giFurniture;
         }
 
+        public GICollectible SpawnCollectible(CollectiblePlacementData collectibleData,
+                                              float segmentYPosition,
+                                              GameObject segment,
+                                              GISegment giSegment,
+                                              string prefabName,
+                                              int pointValue)
+        {
+            if (poolManager == null || collectibleData == null) return null;
+
+            if (!gameDataManager.TryGetPrefab(prefabName, out GameObject prefab))
+            {
+                DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for collectible: {prefabName}");
+                return null;   
+            }
+
+            int laneIdx = Mathf.Clamp(collectibleData.LaneIndex, 0, laneXPosition.Length - 1);
+            float targetX = laneXPosition[laneIdx];
+            float worldY = segmentYPosition + collectibleData.YOffset;
+
+            Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
+            Transform parentTransform = segment != null ? segment.transform : null;
+            GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, parentTransform);
+            if (spawnedObj == null) return null;
+
+            GICollectible giCollectible = spawnedObj.GetComponent<GICollectible>();
+            if (giCollectible == null)
+            {
+                giCollectible = spawnedObj.AddComponent<GICollectible>();
+            }
+
+            giCollectible.Initialize(pointValue, laneIdx, worldY);
+
+            if (giSegment != null)
+            {
+                giSegment.RegisterSpawnedObject(spawnedObj);
+            }
+
+            return giCollectible;
+        }
+
         private void SetupSleepyCat(GameObject catObj, float spawnX)
         {
             var giCat = catObj.GetComponent<GICat>();
@@ -313,10 +353,10 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 IReadOnlyList<GameObject> spawnedObjs = giSegment.SpawnedObjects;
                 if (spawnedObjs != null)
                 {
-                    for (int i = 0; i < spawnedObjs.Count; i++)
+                    for (int i = spawnedObjs.Count - 1; i >= 0; i--)
                     {
                         GameObject spawnedObj = spawnedObjs[i];
-                        if (spawnedObj != null)
+                        if (spawnedObj != null && spawnedObj.activeInHierarchy && spawnedObj.transform.IsChildOf(oldestSegment.transform))
                         {
                             var giCat = spawnedObj.GetComponent<GICat>();
                             if (giCat != null)
@@ -336,14 +376,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 giSegment.ClearSpawnedObjects();
             }
 
-            try
-            {
-                poolManager.Recycle(oldestSegment);
-            }
-            catch (MissingReferenceException)
-            {
-                // Object destroyed by Unity engine during scene teardown
-            }
+            poolManager.Recycle(oldestSegment);
         }
     }
 }
