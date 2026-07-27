@@ -1,1058 +1,2355 @@
 ﻿{
-  "level_segments": [
-    {
-      "Id": 1,
-      "SegmentPrefabName": "Prefab_Segment_Easy_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 5.0,
-          "Speed": 4.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 8.0,
-          "Speed": 4.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 2,
-      "SegmentPrefabName": "Prefab_Segment_Easy_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 8.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 11.0,
-          "Speed": 4.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 3,
-      "SegmentPrefabName": "Prefab_Segment_Easy_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 5.0,
-          "Speed": 5.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 4,
-      "SegmentPrefabName": "Prefab_Segment_Easy_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 8.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": []
-    },
-    {
-      "Id": 5,
-      "SegmentPrefabName": "Prefab_Segment_Easy_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 8.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": []
-    },
-    {
-      "Id": 6,
-      "SegmentPrefabName": "Prefab_Segment_Easy_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": []
-    },
-    {
-      "Id": 7,
-      "SegmentPrefabName": "Prefab_Segment_Easy_EventTets",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 5.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ]
-    },
-    {
-      "Id": 8,
-      "SegmentPrefabName": "Prefab_Segment_Easy_EventTets",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 5.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ]
-    },
-    {
-      "Id": 9,
-      "SegmentPrefabName": "Prefab_Segment_Easy_EventTets",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 5.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ]
-    },
-    {
-      "Id": 10,
-      "SegmentPrefabName": "Prefab_Segment_Medium_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 2.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 8.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 11,
-      "SegmentPrefabName": "Prefab_Segment_Medium_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 2.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 8.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 12,
-      "SegmentPrefabName": "Prefab_Segment_Medium_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 2.0,
-          "Speed": 7.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 8.0,
-          "Speed": 7.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 13,
-      "SegmentPrefabName": "Prefab_Segment_Medium_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 2.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        },
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 8.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ]
-    },
-    {
-      "Id": 14,
-      "SegmentPrefabName": "Prefab_Segment_Medium_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 2.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        },
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 8.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ]
-    },
-    {
-      "Id": 15,
-      "SegmentPrefabName": "Prefab_Segment_Medium_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 2.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 8.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ]
-    },
-    {
-      "Id": 16,
-      "SegmentPrefabName": "Prefab_Segment_Hard_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 3,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 2.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 8.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 14.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 17,
-      "SegmentPrefabName": "Prefab_Segment_Hard_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 3,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 2.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 8.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 14.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 18,
-      "SegmentPrefabName": "Prefab_Segment_Hard_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 3,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 2.0,
-          "Speed": 9.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 8.0,
-          "Speed": 9.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 14.0,
-          "Speed": 9.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 19,
-      "SegmentPrefabName": "Prefab_Segment_Easy_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 8.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": []
-    },
-    {
-      "Id": 20,
-      "SegmentPrefabName": "Prefab_Segment_Easy_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 8.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 11.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 17.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": []
-    },
-    {
-      "Id": 21,
-      "SegmentPrefabName": "Prefab_Segment_Easy_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Object_Bush"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 8.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": []
-    },
-    {
-      "Id": 22,
-      "SegmentPrefabName": "Prefab_Segment_Medium_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 2.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 8.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 23,
-      "SegmentPrefabName": "Prefab_Segment_Medium_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 2.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 8.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 24,
-      "SegmentPrefabName": "Prefab_Segment_Medium_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 2.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 8.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 25,
-      "SegmentPrefabName": "Prefab_Segment_Hard_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 3,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 2.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 8.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 14.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        }
-      ]
-    },
-    {
-      "Id": 26,
-      "SegmentPrefabName": "Prefab_Segment_Hard_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 3,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 2.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        },
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 8.0,
-          "Speed": 0.0,
-          "PrefabName": "Prefab_Event_SleepyCat"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 14.0,
-          "Speed": 8.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 27,
-      "SegmentPrefabName": "Prefab_Segment_Hard_01",
-      "SegmentHeight": 20.0,
-      "Difficulty": 3,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 2,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 2.0,
-          "Speed": 9.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        },
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 8.0,
-          "Speed": 9.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 28,
-      "SegmentPrefabName": "Prefab_Segment_Medium_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 1,
-          "TriggerYOffset": 8.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 29,
-      "SegmentPrefabName": "Prefab_Segment_Medium_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 2,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 0,
-          "TriggerYOffset": 8.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    },
-    {
-      "Id": 30,
-      "SegmentPrefabName": "Prefab_Segment_Medium_02",
-      "SegmentHeight": 20.0,
-      "Difficulty": 1,
-      "PrePlacedObject": [
-        {
-          "LaneIndex": 0,
-          "YOffset": 2.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 1,
-          "YOffset": 5.0,
-          "PrefabName": "Prefab_Collectible_Coin"
-        },
-        {
-          "LaneIndex": 0,
-          "YOffset": 14.0,
-          "PrefabName": "Prefab_Object_Bush"
-        }
-      ],
-      "LaneEventData": [
-        {
-          "TargetLaneIndex": 2,
-          "TriggerYOffset": 8.0,
-          "Speed": 6.0,
-          "PrefabName": "Prefab_Obstacle_MovingObject"
-        }
-      ]
-    }
-  ]
+    "level_segments":  [
+                           {
+                               "Id":  1,
+                               "SegmentPrefabName":  "Prefab_Segment_Easy_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  8,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  2,
+                               "SegmentPrefabName":  "Prefab_Segment_Easy_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  3,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  13,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  19,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  3,
+                               "SegmentPrefabName":  "Prefab_Segment_Easy_02",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  7,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  4,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  4,
+                               "SegmentPrefabName":  "Prefab_Segment_Easy_02",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  8,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  10,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  5,
+                               "SegmentPrefabName":  "Prefab_Segment_Easy_EventTets",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  4,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  4,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  19,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  6,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  7,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  13,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  3,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  19,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  1,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  17,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  7,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  4,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  8,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_02",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  8,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  14,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  9,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_02",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  9,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  15,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  19,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  1,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  13,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  17,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  10,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_02",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  15,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  19,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  1,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  13,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  11,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  19,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  8,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  12,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  8,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  19,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  16,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  3,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  7,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  11,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  13,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  13,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  9,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  13,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  9,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  19,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  4.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  8.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  12.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  16.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  1,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  6.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  15.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  17.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  14,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  13,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  9,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  13,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  9,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  19,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  4.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  16.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  1,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  6.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  14.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  15,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  14,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  10,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  13,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  3,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  7,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  12,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  5.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  13.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17.5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  1,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  15.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  17,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  10,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  14,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  10,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  13.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  18,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  15.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  16,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  19,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9.5,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12.5,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  18.5,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  19,
+                               "SegmentPrefabName":  "Prefab_Segment_Easy_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  17,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  3,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  20,
+                               "SegmentPrefabName":  "Prefab_Segment_Easy_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  16,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  3,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  21,
+                               "SegmentPrefabName":  "Prefab_Segment_Easy_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  7,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  3,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  6.5,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17,
+                                                         "Speed":  4,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  22,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  11,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  17,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  5.5,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  16.5,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  23,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  7.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  18,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  13,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12.5,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  24,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  8.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  17.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  19,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  11,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  4.5,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  13,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  14.5,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  25,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  15.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  19.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  4,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  9,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  4.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  16.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  26,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  11.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  15.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  10,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  6,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  10,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  18,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  4,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  5.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  13.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  16,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17.5,
+                                                         "Speed":  8,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  27,
+                               "SegmentPrefabName":  "Prefab_Segment_Hard_01",
+                               "SegmentHeight":  20,
+                               "Difficulty":  3,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  15.5,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  16,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  1,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  6,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  12,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  3,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  7,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  11,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  15,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  19,
+                                                         "Speed":  0,
+                                                         "PrefabName":  "Prefab_Event_SleepyCat"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  2,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  5,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  9.5,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  12.5,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  14,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  17,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     },
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  18.5,
+                                                         "Speed":  9,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  28,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_02",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  14,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  29,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_02",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  14,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  0,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           },
+                           {
+                               "Id":  30,
+                               "SegmentPrefabName":  "Prefab_Segment_Medium_02",
+                               "SegmentHeight":  20,
+                               "Difficulty":  1,
+                               "PrePlacedObject":  [
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  2,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  1,
+                                                           "YOffset":  5,
+                                                           "PrefabName":  "Prefab_Collectible_Coin"
+                                                       },
+                                                       {
+                                                           "LaneIndex":  0,
+                                                           "YOffset":  14,
+                                                           "PrefabName":  "Prefab_Object_Bush"
+                                                       }
+                                                   ],
+                               "LaneEventData":  [
+                                                     {
+                                                         "TargetLaneIndex":  1,
+                                                         "TriggerYOffset":  8,
+                                                         "Speed":  6,
+                                                         "PrefabName":  "Prefab_Obstacle_MovingObject"
+                                                     }
+                                                 ]
+                           }
+                       ]
 }

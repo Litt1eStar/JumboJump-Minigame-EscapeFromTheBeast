@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.UI.Gameplay;
 using JumboJumps.EFTB.UI.Gameplay.FinishLevel;
@@ -74,6 +74,11 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
             uiFinishLevelPanel.EventMainMenuUIButtonClicked -= OnFinishMainMenuButtonClicked;
             collectibleManager.EventTotalCoinValueChanged -= SetCoinCounterLabel;
+
+            if (gameplayController != null)
+            {
+                gameplayController.EventFinishLevel -= OnLevelFinished;
+            }
         }
 
 

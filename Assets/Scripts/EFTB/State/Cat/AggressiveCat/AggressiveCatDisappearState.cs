@@ -30,15 +30,18 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             base.OnEnterState();
             timer = 0f;
 
-            startPosition = stateController.GiCat.transform.position;
-            float direction = (stateController.GiCat.CurrentSightDirection == CatSightDirection.Right)
-                ? ConstGameplay.Cat.AggressiveCat.SLIDE_DIRECTION_LEFT_MULTIPLIER
-                : ConstGameplay.Cat.AggressiveCat.SLIDE_DIRECTION_RIGHT_MULTIPLIER;
-            targetPosition = new Vector3(
-                startPosition.x + direction * stateController.Config.SlideDistance,
-                startPosition.y,
-                startPosition.z
-            );
+            var giAggressive = stateController.GiAggressiveCat;
+            if (giAggressive != null)
+            {
+                // Slide hand from its current lane position back to the body position
+                startPosition = giAggressive.CatHand != null ? giAggressive.CatHand.position : giAggressive.transform.position;
+                targetPosition = giAggressive.transform.position;
+            }
+            else
+            {
+                startPosition = stateController.GiCat.transform.position;
+                targetPosition = startPosition;
+            }
         }
 
         public override void UpdateLogic(float deltaTime)
@@ -47,12 +50,18 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             float duration = stateController.Config.TimeToDisappear;
             float t = duration > 0f ? Mathf.Clamp01(timer / duration) : ConstGameplay.Cat.AggressiveCat.TRANSITION_PROGRESS_COMPLETE;
 
-            Vector3 currentPos = stateController.GiCat.transform.position;
-            float newX = Mathf.Lerp(startPosition.x, targetPosition.x, t);
-            stateController.GiCat.transform.position = new Vector3(newX, currentPos.y, currentPos.z);
-
-            if (t >= ConstGameplay.Cat.AggressiveCat.TRANSITION_PROGRESS_COMPLETE)
+            var giAggressive = stateController.GiAggressiveCat;
+            if (giAggressive != null && giAggressive.CatHand != null)
             {
+                giAggressive.SetHandPosition(Vector3.Lerp(startPosition, targetPosition, t));
+            }
+
+            if (t >= 1f)
+            {
+                if (giAggressive != null)
+                {
+                    giAggressive.SetHandActive(false);
+                }
                 catManager?.ReturnCat(stateController.GiCat);
                 return;
             }
