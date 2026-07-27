@@ -64,22 +64,22 @@ namespace JumboJumps.EFTB.Manager
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = gameDataManager.LevelSegmentData.Values.ToList();
-            LaneXPositions = ConstGameplay.LevelGenerator.Lane_X_Positions;
-            MaxSegmentAmount = ConstGameplay.LevelGenerator.Max_Segment_Amount;
-            SegmentHeight = ConstGameplay.LevelGenerator.Segment_Height;
-            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.Segment_Recycle_Trigger_Offset;
-            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.Medium_Difficulty_Time_Percentage;
-            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.Hard_Difficulty_Time_Percentage;
+            LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+            MaxSegmentAmount = ConstGameplay.LevelGenerator.MAX_SEGMENT_AMOUNT;
+            SegmentHeight = ConstGameplay.LevelGenerator.SEGMENT_HEIGHT;
+            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MEDIUM_DIFFICULTY_TIME_PERCENTAGE;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HARD_DIFFICULTY_TIME_PERCENTAGE;
 
-            visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions);
+            visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions, this);
             visualizer.Initialize();
 
             config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyTimePercentage, HardDifficultyTimePercentage);
 
-            nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
-            nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
+            nextTriggerPosition = SegmentHeight + config.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            nextYSpawnPosition = SegmentHeight * config.MAX_SEGMENT_AMOUNT;
 
-            for (int i = 0; i < config.MaxSegmentAmount; i++)
+            for (int i = 0; i < config.MAX_SEGMENT_AMOUNT; i++)
             {
                 float spawnYPosition = i * SegmentHeight;
                 SpawnSegmentAt(spawnYPosition);
@@ -192,8 +192,8 @@ namespace JumboJumps.EFTB.Manager
             if (yPosition == 0f)
             {
                 selectedTemplate = new LevelSegmentData(
-                    ConstGameplay.LevelGenerator.Initial_Segment_Id,
-                    ConstGameplay.LevelGenerator.Default_Initial_Segment_Prefab,
+                    ConstGameplay.LevelGenerator.InitialSegmentId,
+                    ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
                     SegmentHeight,
                     SegmentDifficultyEnum.Easy,
                     new List<LevelGeneratorData.LaneObjectData>(),

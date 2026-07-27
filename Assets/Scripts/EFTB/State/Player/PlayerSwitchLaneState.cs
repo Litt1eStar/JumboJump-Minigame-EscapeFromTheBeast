@@ -32,6 +32,12 @@ namespace JumboJumps.EFTB.State.Player
                 targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
             }
 
+            if (targetLane == playerStateController.CurrentLaneIndex)
+            {
+                OnFinishSwitchingLane();
+                return;
+            }
+
             float targetX = playerStateController.LaneXPositions[targetLane];
             playerStateController.CurrentLaneIndex = targetLane;
 

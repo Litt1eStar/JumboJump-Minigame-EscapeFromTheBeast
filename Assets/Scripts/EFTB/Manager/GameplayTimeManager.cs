@@ -36,12 +36,12 @@ namespace JumboJumps.EFTB.Manager
             gameplayController = GameContext.Instance.Get<GameplayController>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
             currentDifficulty = GameplayDifficultyEnum.Easy;
-            limitPlayTime = ConstGameplay.Limit_Play_Time;
+            limitPlayTime = ConstGameplay.LIMIT_PLAY_TIME;
             CurrentTimer = limitPlayTime;
             isTimerFinished = false;
 
-            normalRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.MediumDifficultyTimePercentage);
-            hardRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.HardDifficultyTimePercentage);
+            normalRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.MEDIUM_DIFFICULTY_TIME_PERCENTAGE);
+            hardRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.HARD_DIFFICULTY_TIME_PERCENTAGE);
 
             GameContext.Instance.Add(this);
         }
