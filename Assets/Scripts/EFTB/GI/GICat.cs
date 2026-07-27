@@ -101,8 +101,11 @@ namespace JumboJumps.EFTB.GI
             return hit.collider == null;
         }
 
+        public CatSightDirection CurrentSightDirection { get; private set; } = CatSightDirection.Left;
+
         public void SetDirection(CatSightDirection catSightDirection)
         {
+            CurrentSightDirection = catSightDirection;
             if (catSightDirection == CatSightDirection.Left)
             {
                 direction = -sightOrigin.right;

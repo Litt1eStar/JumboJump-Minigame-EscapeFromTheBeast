@@ -30,11 +30,11 @@ namespace JumboJumps.EFTB.Manager
                     if (giCat == null) continue;
 
                     float currentX = giCat.transform.position.x;
-                    if (currentX > -ConstGameplay.Cat.CatSpawnThreshold && currentX < ConstGameplay.Cat.CatSpawnThreshold)
+                    if (currentX > -ConstGameplay.Cat.CAT_SPAWN_THRESHOLD && currentX < ConstGameplay.Cat.CAT_SPAWN_THRESHOLD)
                     {
                         float targetX = (currentX <= 0f) 
-                            ? ConstGameplay.Cat.SleepyCatLeftLaneSpawnPosition 
-                            : ConstGameplay.Cat.SleepyCatRightLaneSpawnPosition;
+                            ? ConstGameplay.Cat.CAT_LEFT_LANE_SPAWN_POSITION 
+                            : ConstGameplay.Cat.CAT_RIGHT_LANE_SPAWN_POSITION;
                         
                         giCat.transform.position = new Vector3(targetX, giCat.transform.position.y, giCat.transform.position.z);
                         
@@ -83,6 +83,22 @@ namespace JumboJumps.EFTB.Manager
                 catControllers.Remove(giCat);
                 DebugLogHelper.Log($"[CatManager] Dynamically deregistered and disposed cat: {giCat.name}");
             }
+        }
+
+        public void ReturnCat(GICat giCat)
+        {
+            if (giCat == null) return;
+
+            GameObject giCatGo = giCat.gameObject;
+
+            GISegment giSegment = giCatGo.transform.parent?.GetComponent<GISegment>();
+            giSegment?.DeregisterSpawnedObject(giCatGo);
+
+            SceneObjectContext.Instance?.Deregister(giCat);
+            DeregisterCat(giCat);
+
+            ObjectPoolManager poolManager = GameContext.Instance.Get<ObjectPoolManager>();
+            poolManager?.Recycle(giCatGo);
         }
 
         public void Dispose()

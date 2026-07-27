@@ -38,7 +38,7 @@ namespace JumboJumps.EFTB.State.Cat
 
             if (countdownTimer <= 0f)
             {
-                if (stateController.visualizer.IsTargetInSght())
+                if (stateController.visualizer.IsTargetInSight())
                 {
                     stateController.ChangeState(typeof(CatCatchState));
                 }

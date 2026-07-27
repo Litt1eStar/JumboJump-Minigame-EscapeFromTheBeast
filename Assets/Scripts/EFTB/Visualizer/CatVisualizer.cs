@@ -93,7 +93,7 @@ namespace JumboJumps.EFTB.Visualizer
         }
 
         #endregion
-        public bool IsTargetInSght() => giCat != null && giCat.IsTargetInSight;
+        public bool IsTargetInSight() => giCat != null && giCat.IsTargetInSight;
         
     }
 }

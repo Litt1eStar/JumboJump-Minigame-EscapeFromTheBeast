@@ -34,7 +34,7 @@ namespace JumboJumps.EFTB.State.Cat.SleepyCat
         {
             countdownTimer -= deltaTime;
             StateController.InvokeEventTimerChanged(countdownTimer);
-            bool isPlayerInSight = stateController.visualizer.IsTargetInSght();
+            bool isPlayerInSight = stateController.visualizer.IsTargetInSight();
             
             if (isPlayerInSight && countdownTimer > 0)
             {
