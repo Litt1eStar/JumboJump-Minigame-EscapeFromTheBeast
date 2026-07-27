@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Config.CollectibleConfigSO
   safeZoneCells: 5
   spawnRowRatio: 0.15
-  treatPointValue: 50
+  treatPointValue: 100
   hazardLaneWeightMultiplier: 3
   prefabName: Prefab_Collectible_Coin
