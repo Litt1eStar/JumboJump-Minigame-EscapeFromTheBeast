@@ -19,6 +19,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private CollectibleManager collectibleManager;
         private GameplayTimeManager gameplayTimeManager;
         private AggressiveCatSpawner aggressiveCatSpawner;
+        private WarningIndicatorManager warningIndicatorManager;
 
         private GameplayController gameplayController;
         private GameStateController stateController;
@@ -63,6 +64,9 @@ namespace JumboJumps.EFTB.State.Gameplay
             poolManager = new ObjectPoolManager();
             poolManager.Initialize();
 
+            warningIndicatorManager = new WarningIndicatorManager();
+            warningIndicatorManager.Initialize();
+
             levelGeneratorManager = new LevelGeneratorManager();
             levelGeneratorManager.Initialize(playerManager.PlayerTransform);
 
@@ -71,6 +75,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             aggressiveCatSpawner = new AggressiveCatSpawner();
             aggressiveCatSpawner.Initialize();
+
         }
 
         public override void OnEnterState()
@@ -90,6 +95,9 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             aggressiveCatSpawner?.Dispose();
             aggressiveCatSpawner = null;
+
+            warningIndicatorManager?.Dispose();
+            warningIndicatorManager = null;
 
             playerManager?.Dispose();
             playerManager = null;

@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6c726fc42bc614b85752201333dcbb, type: 3}
   m_Name: Cat03_AggressiveCatConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.GameData.Cat.AggressiveCatConfigSO
-  timeToAppear: 1
+  timeToAppear: 3
   timeToAwake: 5
   timeToAlert: 3
   timeToCatch: 0.5
-  timeToDissappear: 1
+  timeToDisappear: 1
   slideDistance: 5
+  timeToSmash: 0.3
+  smashStayDuration: 1.5
+  smashThresholdY: 1.5

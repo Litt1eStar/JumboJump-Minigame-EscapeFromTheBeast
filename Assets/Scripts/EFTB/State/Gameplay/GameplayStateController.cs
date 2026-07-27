@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.Visualizer.Gameplay;
+using JumboJumps.EFTB.Visualizer.Gameplay;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +21,13 @@ namespace JumboJumps.EFTB.State.Gameplay
                 {typeof(PauseMenuState), new PauseMenuState(this, GameplayController)},
                 {typeof(FinishGameState), new FinishGameState(this, GameplayController)},
             };
+        }
+        
+        public override void Dispose()
+        {
+            GameplayVisualizer?.Dispose();
+            GameplayVisualizer = null;
+            base.Dispose();
         }
     }
 }
