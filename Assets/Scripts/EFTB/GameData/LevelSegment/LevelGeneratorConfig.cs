@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using static JumboJumps.EFTB.Model.LevelGeneratorData;
 
 namespace JumboJumps.EFTB.GameData.LevelSegment
@@ -7,11 +7,11 @@ namespace JumboJumps.EFTB.GameData.LevelSegment
     {
         public List<LevelSegmentData> segmentTemplates {  get; private set; }
         public float[] LaneXPosition { get; private set; } = new float[5] { -2f, -1f, 0f, 1f, 2f };
-        public int MaxSegmentAmount { get; private set; } = 3;
-        public float SegmentHeight { get; private set; } = 20f;
-        public float SegmentRecycleTriggerOffset { get; private set; } = 5f;
-        public float MediumDifficultyTimePercentage { get; private set; } = 500f;
-        public float HardDifficultyTimePercentage { get; private set; } = 1500f;
+        public int MAX_SEGMENT_AMOUNT { get; private set; } = 3;
+        public float SEGMENT_HEIGHT { get; private set; } = 20f;
+        public float SEGMENT_RECYCLE_TRIGGER_OFFSET { get; private set; } = 5f;
+        public float MEDIUM_DIFFICULTY_TIME_PERCENTAGE { get; private set; } = 500f;
+        public float HARD_DIFFICULTY_TIME_PERCENTAGE { get; private set; } = 1500f;
 
         public LevelGeneratorConfig(List<LevelSegmentData> segmentTemplates,
                                     float[] laneXPositions,
@@ -23,11 +23,11 @@ namespace JumboJumps.EFTB.GameData.LevelSegment
         {
             this.segmentTemplates = segmentTemplates;
             LaneXPosition = laneXPositions;
-            MaxSegmentAmount = maxSegmentAmount;
-            SegmentHeight = segmentHeight;
-            SegmentRecycleTriggerOffset = segmentRecycleTriggerOffset;
-            MediumDifficultyTimePercentage = mediumDifficultyTimePercentage;
-            HardDifficultyTimePercentage = hardDifficultyTimePercentage;
+            MAX_SEGMENT_AMOUNT = maxSegmentAmount;
+            SEGMENT_HEIGHT = segmentHeight;
+            SEGMENT_RECYCLE_TRIGGER_OFFSET = segmentRecycleTriggerOffset;
+            MEDIUM_DIFFICULTY_TIME_PERCENTAGE = mediumDifficultyTimePercentage;
+            HARD_DIFFICULTY_TIME_PERCENTAGE = hardDifficultyTimePercentage;
         }
     }
 }

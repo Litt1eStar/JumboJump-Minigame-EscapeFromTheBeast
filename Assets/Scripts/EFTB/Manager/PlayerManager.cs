@@ -21,6 +21,9 @@ namespace JumboJumps.EFTB.Manager
             PlayerTransform = SceneObjectContext.Instance.Get<GIPlayer>().transform;
 
             SetPlayerToMiddleLane();
+            
+            float startX = stateController.LANE_X_POSITIONS[stateController.CurrentLaneIndex];
+            PlayerTransform.position = new Vector3(startX, PlayerTransform.position.y, PlayerTransform.position.z);
 
             GameContext.Instance.Add(this);
         }

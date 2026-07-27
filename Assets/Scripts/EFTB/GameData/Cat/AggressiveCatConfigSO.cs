@@ -27,12 +27,24 @@ namespace JumboJumps.EFTB.GameData.Cat
         [SerializeField]
         private float slideDistance = 5f;
 
+        [SerializeField]
+        private float timeToSmash = 0.3f;
+
+        [SerializeField]
+        private float smashStayDuration = 3f;
+
+        [SerializeField]
+        private float smashThresholdY = 1.5f;
+
         public float TimeToAppear => timeToAppear;
         public float TimeToAwake => timeToAwake;
         public float TimeToAlert => timeToAlert;
         public float TimeToCatch => timeToCatch;
         public float TimeToDisappear => timeToDisappear;
         public float SlideDistance => slideDistance;
+        public float TimeToSmash => timeToSmash;
+        public float SmashStayDuration => smashStayDuration;
+        public float SmashThresholdY => smashThresholdY;
 
         public override ICatStateController BuildStateController(GICat giCat, Transform transform, UICatStateLabel label)
         {

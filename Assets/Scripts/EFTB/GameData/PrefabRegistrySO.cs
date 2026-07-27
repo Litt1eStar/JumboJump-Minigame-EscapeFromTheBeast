@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 namespace JumboJumps.EFTB.GameData
 {
@@ -28,17 +28,18 @@ namespace JumboJumps.EFTB.GameData
             }
         }
 
-        public GameObject GetPrefab(string prefabName)
+        public bool TryGetPrefab(string prefabName, out GameObject gameObject)
         {
-            if (string.IsNullOrEmpty(prefabName)) return null;
+            gameObject = null;
+            if (string.IsNullOrEmpty(prefabName)) return false;
 
-            if (PrefabCache.TryGetValue(prefabName, out GameObject prefab))
+            if (PrefabCache.TryGetValue(prefabName, out gameObject))
             {
-                return prefab;
+                return true;
             }
 
             Debug.LogWarning($"[{GetType().Name}] Prefab not found for name: {prefabName}");
-            return null;
+            return false;
         }
 
         private void OnValidate()
