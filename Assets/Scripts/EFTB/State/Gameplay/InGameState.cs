@@ -1,8 +1,12 @@
-﻿namespace JumboJumps.EFTB.State.Gameplay
+﻿using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Utilities;
+
+namespace JumboJumps.EFTB.State.Gameplay
 {
     public class InGameState : BaseState
     {
         private GameplayStateController stateController;
+
         public InGameState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(FinishGameState), null);
@@ -21,6 +25,11 @@
         {
             stateController.GameplayVisualizer.ShowPauseMenu();
             stateController.ChangeState(typeof(PauseMenuState));
+        }
+
+        public override void UpdateLogic(float deltaTime)
+        {
+            base.UpdateLogic(deltaTime);
         }
     }
 }

@@ -88,8 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1bffe44c9b1fac40a721cff0b545991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Manager.GameDataManager
-  prefabRegistry: {fileID: 0}
-  localGameData: {fileID: 0}
+  prefabRegistry: {fileID: 11400000, guid: 66904e17ae4e4f244be653186c8dd7a5, type: 2}
+  localGameData: {fileID: 4900000, guid: 61743feeda0e0da48b2cc1a88ce28a22, type: 3}
 --- !u!1 &3704901676317951813
 GameObject:
   m_ObjectHideFlags: 0

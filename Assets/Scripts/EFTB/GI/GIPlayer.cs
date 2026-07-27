@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
 {
@@ -31,6 +31,11 @@ namespace JumboJumps.EFTB.GI
         public void Dispose()
         {
 
+        }
+
+        public void SetPosition(Vector3 position)
+        {
+            playerTransform.position = position;
         }
 
         public void SetXPosition(float x)
