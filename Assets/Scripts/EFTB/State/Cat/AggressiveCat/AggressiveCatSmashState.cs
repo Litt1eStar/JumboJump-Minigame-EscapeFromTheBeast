@@ -40,12 +40,12 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 // Left spawn (sight direction Right) targets the Left lane (-0.8f)
                 // Right spawn (sight direction Left) targets the Right lane (0.8f)
                 float targetX = (currentSightDirection == CatSightDirection.Right)
-                    ? ConstGameplay.LevelGenerator.LaneXPositions[0]
-                    : ConstGameplay.LevelGenerator.LaneXPositions[1];
+                    ? ConstGameplay.LevelGenerator.Lane_X_Positions[0]
+                    : ConstGameplay.LevelGenerator.Lane_X_Positions[1];
 
                 float rotation = (currentSightDirection == CatSightDirection.Right) 
-                    ? ConstGameplay.Cat.AggressiveCat.CatLeftHandYRotation 
-                    : ConstGameplay.Cat.AggressiveCat.CatRightHandYRotation;
+                    ? ConstGameplay.Cat.AggressiveCat.Cat_Left_Hand_Y_Rotation 
+                    : ConstGameplay.Cat.AggressiveCat.Cat_Right_Hand_Y_Rotation;
 
                 targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
                 

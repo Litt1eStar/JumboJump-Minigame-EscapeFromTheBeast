@@ -64,12 +64,12 @@ namespace JumboJumps.EFTB.Manager
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = gameDataManager.LevelSegmentData.Values.ToList();
-            LaneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
-            MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
-            SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
-            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
-            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage;
-            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HardDifficultyTimePercentage;
+            LaneXPositions = ConstGameplay.LevelGenerator.Lane_X_Positions;
+            MaxSegmentAmount = ConstGameplay.LevelGenerator.Max_Segment_Amount;
+            SegmentHeight = ConstGameplay.LevelGenerator.Segment_Height;
+            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.Segment_Recycle_Trigger_Offset;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.Medium_Difficulty_Time_Percentage;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.Hard_Difficulty_Time_Percentage;
 
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions);
             visualizer.Initialize();
@@ -192,8 +192,8 @@ namespace JumboJumps.EFTB.Manager
             if (yPosition == 0f)
             {
                 selectedTemplate = new LevelSegmentData(
-                    ConstGameplay.LevelGenerator.InitialSegmentId,
-                    ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
+                    ConstGameplay.LevelGenerator.Initial_Segment_Id,
+                    ConstGameplay.LevelGenerator.Default_Initial_Segment_Prefab,
                     SegmentHeight,
                     SegmentDifficultyEnum.Easy,
                     new List<LevelGeneratorData.LaneObjectData>(),

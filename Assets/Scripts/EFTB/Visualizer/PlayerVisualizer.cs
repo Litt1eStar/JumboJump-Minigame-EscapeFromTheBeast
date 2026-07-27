@@ -33,9 +33,14 @@ namespace JumboJumps.EFTB.Visualizer
             giPlayer.MoveForward(deltaTime);
         }
 
+        public void SetPosition(Vector3 position)
+        {
+            giPlayer?.SetPosition(position);
+        }
+
         public void SetXPosition(float x) 
         {
-            giPlayer.SetXPosition(x);
+            giPlayer?.SetXPosition(x);
         }
     }
 }

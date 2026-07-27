@@ -36,7 +36,7 @@ namespace JumboJumps.EFTB.Manager
             gameplayController = GameContext.Instance.Get<GameplayController>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
             currentDifficulty = GameplayDifficultyEnum.Easy;
-            limitPlayTime = ConstGameplay.LimitPlayTime;
+            limitPlayTime = ConstGameplay.Limit_Play_Time;
             CurrentTimer = limitPlayTime;
             isTimerFinished = false;
 

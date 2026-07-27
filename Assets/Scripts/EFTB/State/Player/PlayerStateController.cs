@@ -29,20 +29,21 @@ namespace JumboJumps.EFTB.State.Player
                     }
                     else
                     {
-                        laneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
+                        laneXPositions = ConstGameplay.LevelGenerator.Lane_X_Positions;
                     }
                 }
                 return laneXPositions;
             }
         }
         public SwipeDirectionEnum LastSwipeDirection { get; set; }
+        public bool IsStepUpRequested { get; set; }
 
         public PlayerStateController()
         {
             Visualizer = new PlayerVisualizer();
             Visualizer.Initialize();
 
-            CurrentLaneIndex = ConstGameplay.LevelGenerator.InitialLaneIndex;
+            CurrentLaneIndex = ConstGameplay.LevelGenerator.Initial_Lane_Index;
 
             Input2DManager = SceneObjectContext.Instance.Get<Input2DManager>(); 
             if (Input2DManager == null)
