@@ -1,5 +1,5 @@
-using JumboJumps.EFTB.Visualizer.Gameplay;
 using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Visualizer.Gameplay;
 using System;
 
 namespace JumboJumps.EFTB.Manager
@@ -24,8 +24,17 @@ namespace JumboJumps.EFTB.Manager
 
         public void ShowWarning(int laneIndex, float duration, Action onCompleteCallback)
         {
-            DebugLogHelper.Log($"[WarningIndicatorManager] ShowWarning called for lane: {laneIndex}, duration: {duration}");
             visualizer?.ShowWarning(laneIndex, duration, onCompleteCallback);
+        }
+
+        public void ShowCatEventWarning(float duration, Action onCompleteCallback)
+        {
+            visualizer?.ShowCatEventWarning(duration, onCompleteCallback);
+        }
+
+        public void ShowCatDirectionWarning(int sideIndex, float duration, Action onCompleteCallback)
+        {
+            visualizer?.ShowCatDirectionWarning(sideIndex, duration, onCompleteCallback);
         }
     }
 }

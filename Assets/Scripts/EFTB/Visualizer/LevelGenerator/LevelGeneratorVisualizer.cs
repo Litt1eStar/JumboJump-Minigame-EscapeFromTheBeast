@@ -179,17 +179,10 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 float originalSegmentY = segment != null ? segment.transform.position.y : 0f;
 
                 // Spawn warning indicator for 1.5s before spawning the actual lane obstacle
-                if (warningIndicatorManager != null)
-                {
-                    warningIndicatorManager.ShowWarning(laneIdx, ConstUI.Gameplay.WARNING_INDICATOR_DURATION, () =>
-                    {
-                        HandleSpawnObstacle(eventData, segment, giSegment, targetX, originalSegmentY, prefab);
-                    });
-                }
-                else
+                warningIndicatorManager.ShowWarning(laneIdx, ConstUI.Gameplay.WARNING_INDICATOR_DURATION, () =>
                 {
                     HandleSpawnObstacle(eventData, segment, giSegment, targetX, originalSegmentY, prefab);
-                }
+                });
             }
         }
 

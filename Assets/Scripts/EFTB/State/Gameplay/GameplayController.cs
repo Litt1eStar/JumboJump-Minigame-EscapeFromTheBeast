@@ -1,4 +1,4 @@
-﻿using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using System;
 
@@ -39,6 +39,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             collectibleManager?.Dispose();
             collectibleManager = null;
+            GameContext.Instance.Remove(this);
         }
 
         #region Event Handler
