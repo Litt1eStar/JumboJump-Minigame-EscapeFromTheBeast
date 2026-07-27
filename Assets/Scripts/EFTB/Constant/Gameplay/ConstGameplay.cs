@@ -15,6 +15,9 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public const int INITIAL_LANE_INDEX = 0;
             public static readonly float[] LANE_X_POSITIONS = new float[] { -0.8f, 0.8f };
             public const float LANE_SIZE = 2.0f;
+            public const string DefaultInitialSegmentPrefab = "Prefab_Segment_Initial";
+            public const float SegmentYPositionTolerance = 0.05f;
+            public const int InitialSegmentId = 0;
         }
 
         public class Cat
@@ -25,6 +28,10 @@ namespace JumboJumps.EFTB.Constant.Gameplay
 
             public class AggressiveCat
             {
+                public const float NormalMinSpawnTime = 5f;
+                public const float NormalMaxSpawnTime = 10f;
+                public const float HardMinSpawnTime = 2f;
+                public const float HardMaxSpawnTime = 5f;
                 public const string PREFAB_NAME = "Prefab_Event_AggressiveCat";
                 public const float INITIAL_MIN_SPAWN_TIME = 5f;
                 public const float INITIAL_MAX_SPAWN_TIME = 10f;
