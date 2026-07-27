@@ -11,7 +11,7 @@ namespace JumboJumps.EFTB.Manager
         public event Action<ScoreData> EventScoreChanged;
 
         private CollectibleManager collectibleManager;
-        private Transform playerTransform;
+        private PlayerManager playerManager;
 
         private float initialPlayerY;
 
@@ -23,12 +23,16 @@ namespace JumboJumps.EFTB.Manager
 
         public ScoreData CurrentScoreData => new ScoreData(TotalScore, DistanceScore, TreatScore, MaxCellsClimbed, TreatsCollected);
 
-        public void Initialize(Transform playerTransform)
+        public void Initialize(PlayerManager playerManager)
         {
-            if (playerTransform != null)
+            this.playerManager = playerManager;
+            if (this.playerManager != null)
             {
-                this.playerTransform = playerTransform;
-                initialPlayerY = this.playerTransform.position.y;
+                if (this.playerManager.PlayerTransform != null)
+                {
+                    initialPlayerY = this.playerManager.PlayerTransform.position.y;
+                }
+                this.playerManager.EventPlayerMoved += OnPlayerMoved;
             }
 
             collectibleManager = GameContext.Instance.Get<CollectibleManager>();
@@ -42,21 +46,24 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
+            if (playerManager != null)
+            {
+                playerManager.EventPlayerMoved -= OnPlayerMoved;
+                playerManager = null;
+            }
+
             if (collectibleManager != null)
             {
                 collectibleManager.EventTotalCollectibleValueChanged -= OnTreatsCollectedChanged;
                 collectibleManager = null;
             }
 
-            playerTransform = null;
             GameContext.Instance.Remove(this);
         }
 
-        public void UpdateLogic(float deltaTime)
+        private void OnPlayerMoved(Vector3 position)
         {
-            if (playerTransform == null) return;
-
-            float deltaY = playerTransform.position.y - initialPlayerY;
+            float deltaY = position.y - initialPlayerY;
             float stepDistance = ConstGameplay.Player.STEP_DISTANCE_Y;
             int currentCells = Mathf.Max(0, Mathf.FloorToInt((deltaY + (stepDistance * 0.5f)) / stepDistance));
 

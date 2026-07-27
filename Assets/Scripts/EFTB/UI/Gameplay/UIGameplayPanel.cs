@@ -1,5 +1,4 @@
 using JumboJump.EFTB.Constant.UI;
-using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
@@ -57,11 +56,11 @@ namespace JumboJumps.EFTB.UI.Gameplay
             EventPauseUIButtonClicked?.Invoke();
         }
 
-        public void SetScoreLabel(ScoreData scoreData)
+        public void SetScoreLabel(int totalScore)
         {
             if (scoreCounterLabel != null)
             {
-                scoreCounterLabel.text = ConstUI.Gameplay.BASE_SCORE_LABEL + scoreData.TotalScore.ToString();
+                scoreCounterLabel.text = ConstUI.Gameplay.BASE_SCORE_LABEL + totalScore.ToString();
             }
         }
 

@@ -40,9 +40,9 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
 
         #region Score Counter
-        public void SetScoreLabel(JumboJumps.EFTB.Model.ScoreData scoreData)
+        public void SetScoreLabel(int totalScore)
         {
-            uiGameplayPanel?.SetScoreLabel(scoreData);
+            uiGameplayPanel?.SetScoreLabel(totalScore);
         }
         #endregion
 

@@ -54,7 +54,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager.Initialize();
 
             scoreManager = new ScoreManager();
-            scoreManager.Initialize(playerManager.PlayerTransform);
+            scoreManager.Initialize(playerManager);
 
             gameplayController = new GameplayController();
 
@@ -136,7 +136,6 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayStateManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
-            scoreManager?.UpdateLogic(deltaTime);
             levelGeneratorManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
             aggressiveCatSpawner?.UpdateLogic(deltaTime);
