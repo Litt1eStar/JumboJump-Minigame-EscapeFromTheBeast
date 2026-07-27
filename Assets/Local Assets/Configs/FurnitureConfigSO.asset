@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Config.FurnitureConfigSO
   safeZoneCells: 5
   cellHeight: 3
-  baseRowRatio: 0.2
-  densityStepRatio: 0.05
+  baseRowRatio: 0.45
+  densityStepRatio: 0.04
   densityStepCells: 30
-  maxRowRatio: 0.6
+  maxRowRatio: 0.65
   minRowSpacingCells: 1
-  singleBlockMaxCells: 120
+  singleBlockMaxCells: 60
   maxBlocksPerRow: 2
