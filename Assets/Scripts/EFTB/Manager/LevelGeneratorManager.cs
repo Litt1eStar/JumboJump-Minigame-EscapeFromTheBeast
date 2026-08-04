@@ -57,7 +57,6 @@ namespace JumboJumps.EFTB.Manager
         public float HardDifficultyTimePercentage { get; private set; }
         public float MaxGeneratedWorldY => nextYSpawnPosition;
 
-        private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
         private FurnitureConfigSO furnitureConfig;
         public FurnitureConfigSO FurnitureConfig
         {
@@ -65,11 +64,10 @@ namespace JumboJumps.EFTB.Manager
             {
                 if (furnitureConfig == null && SceneObjectContext.Instance != null)
                 {
-                    var container = SceneObjectContext.Instance.Get<GI.GIGameplayConfigContainer>();
+                    var container = SceneObjectContext.Instance.Get<GIGameplayConfigContainer>();
                     if (container != null && container.FurnitureConfig != null)
                     {
                         furnitureConfig = container.FurnitureConfig;
-                        furniturePlacementModel.Config = furnitureConfig;
                     }
                 }
                 return furnitureConfig;
@@ -77,7 +75,7 @@ namespace JumboJumps.EFTB.Manager
         }
 
         private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
-        private float lastFurnitureWorldY = -999f;
+        private float lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
         private List<LevelSegmentData> segments;
 
@@ -87,9 +85,6 @@ namespace JumboJumps.EFTB.Manager
 
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
-
-            // Ensure FurnitureConfig property initializes placement model config
-            var _ = FurnitureConfig;
 
             segments = new List<LevelSegmentData>();
             LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
@@ -275,12 +270,13 @@ namespace JumboJumps.EFTB.Manager
             }
 
             // Procedurally generate furniture blocks for this segment
-            var furnitureBlocks = furniturePlacementModel.GenerateSegmentFurniture(
+            var furnitureBlocks = FurniturePlacementHelper.GenerateSegmentFurniture(
                 yPosition,
                 SegmentHeight,
                 LaneXPositions.Length,
                 ref lastOpenLaneIndex,
-                ref lastFurnitureWorldY
+                ref lastFurnitureWorldY,
+                FurnitureConfig
             );
 
             foreach (var block in furnitureBlocks)

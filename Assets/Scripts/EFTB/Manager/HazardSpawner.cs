@@ -50,8 +50,6 @@ namespace JumboJumps.EFTB.Manager
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
             playerManager = GameContext.Instance.Get<PlayerManager>();
 
-            var _ = HazardConfig;
-
             GameContext.Instance.Add(this);
         }
 

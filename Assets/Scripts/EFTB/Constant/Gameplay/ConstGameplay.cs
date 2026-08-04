@@ -71,12 +71,14 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const int MAX_BLOCKS_PER_ROW = 2; // Maximum number of furniture blocks allowed per row (2)
                 public const int MIN_ROW_SPACING_CELLS = 1; // Minimum spacing between furniture rows in cells (1)
                 public const string DEFAULT_FURNITURE_PREFAB = "Prefab_Obstacle_Chair";
+                public const float UNINITIALIZED_LAST_FURNITURE_WORLD_Y = -1f;
                 public static readonly string[] FURNITURE_PREFAB_NAMES = new string[]
                 {
                     DEFAULT_FURNITURE_PREFAB,
                     "Prefab_Obstacle_Box",
                     "Prefab_Obstacle_Plant"
                 };
+
             }
 
             public class Hazard
