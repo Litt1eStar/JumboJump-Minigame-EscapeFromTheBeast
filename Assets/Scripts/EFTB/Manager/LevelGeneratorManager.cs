@@ -27,6 +27,7 @@ namespace JumboJumps.EFTB.Manager
             public GameObject SegmentGo { get; }
             public GISegment GiSegment { get; }
             public List<LevelGeneratorData.LaneEventData> PendingEvents { get; }
+            public List<(int laneIndex, int rowIndex)> BlockedCells { get; } = new List<(int, int)>();
 
             public ActiveSegment(LevelSegmentData template, float spawnY, GameObject segmentGo, GISegment giSegment)
             {
@@ -59,6 +60,7 @@ namespace JumboJumps.EFTB.Manager
         private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
         private float lastFurnitureWorldY = -999f;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
+        private readonly HashSet<(int laneIndex, int rowIndex)> blockedCells = new HashSet<(int laneIndex, int rowIndex)>();
         private List<LevelSegmentData> segments;
 
         public void Initialize(Transform playerTransform)
@@ -105,6 +107,8 @@ namespace JumboJumps.EFTB.Manager
             visualizer = null;
 
             activeSegmentQueue.Clear();
+            activeFurnitureObstacles.Clear();
+            blockedCells.Clear();
             GameContext.Instance.Remove(this);
         }
 
@@ -139,7 +143,12 @@ namespace JumboJumps.EFTB.Manager
             }
 
             visualizer.RecycleOldestSegment();
-            activeSegmentQueue.Dequeue();
+            ActiveSegment oldestSegment = activeSegmentQueue.Dequeue();
+
+            foreach (var cell in oldestSegment.BlockedCells)
+            {
+                blockedCells.Remove(cell);
+            }
 
             // Purge recycled furniture references
             activeFurnitureObstacles.RemoveAll(f => f == null || !f.gameObject.activeInHierarchy);
@@ -152,15 +161,8 @@ namespace JumboJumps.EFTB.Manager
 
         public bool IsCellBlockedByFurniture(int targetLaneIndex, float targetWorldY)
         {
-            for (int i = 0; i < activeFurnitureObstacles.Count; i++)
-            {
-                GIFurnitureObstacle furniture = activeFurnitureObstacles[i];
-                if (furniture != null && furniture.gameObject.activeInHierarchy && furniture.BlocksCell(targetLaneIndex, targetWorldY))
-                {
-                    return true;
-                }
-            }
-            return false;
+            int rowIndex = Mathf.RoundToInt(targetWorldY / ConstGameplay.Obstacle.Furniture.CELL_HEIGHT);
+            return blockedCells.Contains((targetLaneIndex, rowIndex));
         }
 
         private ActiveSegment SpawnSegmentAt(float yPosition)
@@ -198,6 +200,11 @@ namespace JumboJumps.EFTB.Manager
                 if (giFurniture != null)
                 {
                     activeFurnitureObstacles.Add(giFurniture);
+
+                    int rowIndex = Mathf.RoundToInt(giFurniture.WorldY / ConstGameplay.Obstacle.Furniture.CELL_HEIGHT);
+                    var cellKey = (giFurniture.LaneIndex, rowIndex);
+                    blockedCells.Add(cellKey);
+                    instance.BlockedCells.Add(cellKey);
                 }
             }
 
