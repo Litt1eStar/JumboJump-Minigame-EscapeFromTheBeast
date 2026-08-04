@@ -61,10 +61,6 @@ namespace JumboJumps.EFTB.GI
             {
                 warningCoroutine = coroutineHelper.Restart(warningCoroutine, PounceWarningRoutine(duration, onComplete), this);
             }
-            else
-            {
-                warningCoroutine = StartCoroutine(PounceWarningRoutine(duration, onComplete));
-            }
         }
 
         public void StopPounceWarning()
@@ -72,11 +68,6 @@ namespace JumboJumps.EFTB.GI
             if (coroutineHelper != null && warningCoroutine != null)
             {
                 coroutineHelper.Stop(warningCoroutine, this);
-                warningCoroutine = null;
-            }
-            else if (warningCoroutine != null)
-            {
-                StopCoroutine(warningCoroutine);
                 warningCoroutine = null;
             }
 
@@ -110,13 +101,12 @@ namespace JumboJumps.EFTB.GI
 
             while (elapsed < duration)
             {
-                if (spriteRenderer != null)
-                {
-                    isFlashColor = !isFlashColor;
-                    spriteRenderer.color = isFlashColor 
-                        ? ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_COLOR 
-                        : originalSpriteColor;
-                }
+                
+                isFlashColor = !isFlashColor;
+                spriteRenderer.color = isFlashColor 
+                    ? ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_COLOR 
+                    : originalSpriteColor;
+                
                 yield return new WaitForSeconds(flashInterval);
                 elapsed += flashInterval;
             }

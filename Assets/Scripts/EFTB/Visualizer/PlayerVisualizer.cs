@@ -18,6 +18,7 @@ namespace JumboJumps.EFTB.Visualizer
                 DebugLogHelper.LogError("GIPlayer not found in SceneObjectContext. PlayerVisualizer initialization failed.");
             }
 
+            giPlayer.Initialize();
         }
 
         public void SetPlayerOnMiddleLane()

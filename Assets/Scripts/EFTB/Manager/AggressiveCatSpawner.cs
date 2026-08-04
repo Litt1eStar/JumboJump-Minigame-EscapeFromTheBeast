@@ -45,29 +45,29 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            if (playerManager != null)
-            {
-                Unsubscribe();
-            }
+            if (playerManager == null || coroutineHelper == null && warningCoroutine == null) return;
 
-            if (coroutineHelper != null && warningCoroutine != null)
-            {
-                coroutineHelper.Stop(warningCoroutine);
-                warningCoroutine = null;
-            }
+            Unsubscribe();
+            coroutineHelper.Stop(warningCoroutine);
 
+            warningCoroutine = null;
             isAntiCampWarningActive = false;
             coroutineHelper = null;
+            
             GameContext.Instance.Remove(this);
         }
 
         public void Subscribe()
         {
+            if (playerManager == null) return;
+
             playerManager.EventIdleLimitExceeded += OnPlayerIdleLimitExceeded;
         }
 
         public void Unsubscribe()
         {
+            if (playerManager == null) return;
+
             playerManager.EventIdleLimitExceeded -= OnPlayerIdleLimitExceeded;
         }
 
@@ -78,9 +78,8 @@ namespace JumboJumps.EFTB.Manager
                 return;
             }
 
-            if (isAntiCampWarningActive) return;
+            if (isAntiCampWarningActive || playerManager?.PlayerTransform == null) return;
 
-            if (playerManager?.PlayerTransform == null) return;
             Vector3 cachedTargetPos = playerManager.PlayerTransform.position;
 
             TriggerAlphaCatPounceSequence(cachedTargetPos);
@@ -92,7 +91,7 @@ namespace JumboJumps.EFTB.Manager
             int sideIndex = (Random.value < 0.5f) ? 0 : 1;
             float warningDuration = ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
 
-            playerManager?.TriggerPounceWarning(warningDuration, null);
+            playerManager.TriggerPounceWarning(warningDuration, null);
 
             if (coroutineHelper != null)
             {
