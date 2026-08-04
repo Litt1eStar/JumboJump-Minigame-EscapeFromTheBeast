@@ -42,7 +42,7 @@ namespace JumboJumps.EFTB.State.Player
         private void IdleTimerTracking(float deltaTime)
         {
             idleTimer += deltaTime;
-            if (idleTimer >= ConstGameplay.Cat.AggressiveCat.Idle_Limit)
+            if (idleTimer >= ConstGameplay.Cat.AggressiveCat.IDLE_LIMIT)
             {
                 idleTimer = 0f;
                 playerStateController.InvokeIdleLimitExceeded();
@@ -69,7 +69,7 @@ namespace JumboJumps.EFTB.State.Player
 
         public void OnTap()
         {
-            float targetY = playerStateController.Visualizer.PlayerPosition.y + ConstGameplay.Player.Step_Distance_Y;
+            float targetY = playerStateController.Visualizer.PlayerPosition.y + ConstGameplay.Player.STEP_DISTANCE_Y;
 
             if (playerStateController.IsTargetCellBlocked(playerStateController.CurrentLaneIndex, targetY))
             {
@@ -122,7 +122,7 @@ namespace JumboJumps.EFTB.State.Player
                 targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
             }
 
-            float targetY = playerStateController.Visualizer.PlayerPosition.y + ConstGameplay.Player.Step_Distance_Y;
+            float targetY = playerStateController.Visualizer.PlayerPosition.y + ConstGameplay.Player.STEP_DISTANCE_Y;
 
             if (playerStateController.IsTargetCellBlocked(targetLane, targetY))
             {

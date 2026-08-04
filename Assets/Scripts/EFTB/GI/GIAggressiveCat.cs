@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.GI
 {
@@ -21,6 +20,16 @@ namespace JumboJumps.EFTB.GI
         public void SetTargetSmashPosition(Vector3 position)
         {
             TargetSmashPosition = position;
+        }
+
+        public void ClearTargetSmashPosition()
+        {
+            TargetSmashPosition = null;
+        }
+
+        private void OnDisable()
+        {
+            ClearTargetSmashPosition();
         }
 
         public void SetHandActive(bool active)

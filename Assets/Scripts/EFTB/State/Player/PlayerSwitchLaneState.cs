@@ -34,7 +34,7 @@ namespace JumboJumps.EFTB.State.Player
             }
 
             Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
-            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Obstacle.Furniture.Cell_Height : 0f;
+            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Obstacle.Furniture.CELL_HEIGHT : 0f;
             float targetY = startPos.y + stepY;
 
             if (playerStateController.IsTargetCellBlocked(targetLane, targetY))
@@ -54,7 +54,7 @@ namespace JumboJumps.EFTB.State.Player
         private IEnumerator SmoothStepLane(Vector3 startPos, Vector3 targetPos)
         {
             float elapsed = 0f;
-            float duration = ConstGameplay.Player.Step_Duration;
+            float duration = ConstGameplay.Player.STEP_DURATION;
 
             while (elapsed < duration)
             {

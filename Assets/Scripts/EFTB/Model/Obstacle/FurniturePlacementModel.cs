@@ -34,7 +34,7 @@ namespace JumboJumps.EFTB.Model.Obstacle
             ref float lastFurnitureWorldY)
         {
             List<FurnitureBlockData> generatedBlocks = new List<FurnitureBlockData>();
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             int startRowIndex = Mathf.RoundToInt(segmentStartY / cellHeight);
             int totalRows = Mathf.RoundToInt(segmentHeight / cellHeight);
 
@@ -65,8 +65,8 @@ namespace JumboJumps.EFTB.Model.Obstacle
             if (worldY <= 0f) return false;
 
             // Check minimum 1-cell spacing constraint
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
-            float minSpacing = (ConstGameplay.Obstacle.Furniture.Min_Row_Spacing_Cells + 1) * cellHeight - 0.1f;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float minSpacing = (ConstGameplay.Obstacle.Furniture.MIN_ROW_SPACING_CELLS + 1) * cellHeight - 0.1f;
             if (lastFurnitureWorldY >= 0f && (worldY - lastFurnitureWorldY) < minSpacing)
             {
                 return false;
@@ -79,12 +79,12 @@ namespace JumboJumps.EFTB.Model.Obstacle
 
         private float CalculateDensity(float worldY)
         {
-            float baseRatio = ConstGameplay.Obstacle.Furniture.Base_Furniture_Row_Ratio;
-            float stepRatio = ConstGameplay.Obstacle.Furniture.Density_Step_Ratio;
-            float maxRatio = ConstGameplay.Obstacle.Furniture.Max_Furniture_Row_Ratio;
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
+            float baseRatio = ConstGameplay.Obstacle.Furniture.BASE_FURNITURE_ROW_RATIO;
+            float stepRatio = ConstGameplay.Obstacle.Furniture.DENSITY_STEP_RATIO;
+            float maxRatio = ConstGameplay.Obstacle.Furniture.MAX_FURNITURE_ROW_RATIO;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
 
-            float stepDistanceInUnits = ConstGameplay.Obstacle.Furniture.Density_Step_Cells * cellHeight;
+            float stepDistanceInUnits = ConstGameplay.Obstacle.Furniture.DENSITY_STEP_CELLS * cellHeight;
             float steps = Mathf.Floor(worldY / stepDistanceInUnits);
             return Mathf.Min(maxRatio, baseRatio + (steps * stepRatio));
         }
@@ -133,13 +133,13 @@ namespace JumboJumps.EFTB.Model.Obstacle
 
         private int DetermineMaxAllowedBlocks(float worldY, int laneCount)
         {
-            float cellHeight = ConstGameplay.Obstacle.Furniture.Cell_Height;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             int cellIndex = Mathf.RoundToInt(worldY / cellHeight);
 
             // First 120 cells (cellIndex < 120): Strictly max 1 furniture block per row.
             // Past 120 cells (cellIndex >= 120): Up to MAX_BLOCKS_PER_ROW (2) furniture blocks per row.
-            int maxPerConfig = (cellIndex >= ConstGameplay.Obstacle.Furniture.Single_Block_Max_Cells)
-                ? ConstGameplay.Obstacle.Furniture.Max_Blocks_Per_Row
+            int maxPerConfig = (cellIndex >= ConstGameplay.Obstacle.Furniture.SINGLE_BLOCK_MAX_CELLS)
+                ? ConstGameplay.Obstacle.Furniture.MAX_BLOCKS_PER_ROW
                 : 1;
 
             // Ensure every row leaves at least 1 open lane
@@ -148,8 +148,8 @@ namespace JumboJumps.EFTB.Model.Obstacle
 
         private string SelectRandomFurniturePrefab()
         {
-            string[] prefabs = ConstGameplay.Obstacle.Furniture.Furniture_Prefab_Names;
-            if (prefabs == null || prefabs.Length == 0) return ConstGameplay.Obstacle.Furniture.Default_Furniture_Prefab;
+            string[] prefabs = ConstGameplay.Obstacle.Furniture.FURNITURE_PREFAB_NAMES;
+            if (prefabs == null || prefabs.Length == 0) return ConstGameplay.Obstacle.Furniture.DEFAULT_FURNITURE_PREFAB;
             return prefabs[Random.Range(0, prefabs.Length)];
         }
     }

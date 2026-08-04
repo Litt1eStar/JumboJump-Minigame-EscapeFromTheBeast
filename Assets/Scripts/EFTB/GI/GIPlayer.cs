@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
@@ -28,20 +29,19 @@ namespace JumboJumps.EFTB.GI
         private Transform initialStartPosition;
 
         private Coroutine warningCoroutine;
+        private CoroutineHelper coroutineHelper;
         private Color originalSpriteColor = Color.white;
 
         public Vector3 PlayerPosition => playerTransform.position;
 
-        private void Awake()
-        {
-            if (spriteRenderer != null)
-            {
-                originalSpriteColor = spriteRenderer.color;
-            }
-        }
-
         public void Initialize()
         {
+            coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
+            if (coroutineHelper == null)
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] {nameof(GIPlayer)}| Failed to get {typeof(CoroutineHelper).AssemblyQualifiedName} from GameContext");
+            }
+
             if (spriteRenderer != null)
             {
                 originalSpriteColor = spriteRenderer.color;
@@ -51,22 +51,30 @@ namespace JumboJumps.EFTB.GI
         public void Dispose()
         {
             StopPounceWarning();
-        }
-
-        private void OnDisable()
-        {
-            StopPounceWarning();
+            coroutineHelper = null;
         }
 
         public void ShowPounceWarning(float duration, Action onComplete)
         {
             StopPounceWarning();
-            warningCoroutine = StartCoroutine(PounceWarningRoutine(duration, onComplete));
+            if (coroutineHelper != null)
+            {
+                warningCoroutine = coroutineHelper.Restart(warningCoroutine, PounceWarningRoutine(duration, onComplete), this);
+            }
+            else
+            {
+                warningCoroutine = StartCoroutine(PounceWarningRoutine(duration, onComplete));
+            }
         }
 
         public void StopPounceWarning()
         {
-            if (warningCoroutine != null)
+            if (coroutineHelper != null && warningCoroutine != null)
+            {
+                coroutineHelper.Stop(warningCoroutine, this);
+                warningCoroutine = null;
+            }
+            else if (warningCoroutine != null)
             {
                 StopCoroutine(warningCoroutine);
                 warningCoroutine = null;
@@ -79,20 +87,25 @@ namespace JumboJumps.EFTB.GI
 
             if (spriteRenderer != null)
             {
-                spriteRenderer.enabled = true;
                 spriteRenderer.color = originalSpriteColor;
             }
         }
 
         private IEnumerator PounceWarningRoutine(float duration, Action onComplete)
         {
+            if (spriteRenderer == null)
+            {
+                DebugLogHelper.LogError("[GIPlayer] SpriteRender is missing in this component");
+                yield return null;
+            }
+            
             if (warningIndicatorObject != null)
             {
                 warningIndicatorObject.SetActive(true);
             }
 
             float elapsed = 0f;
-            float flashInterval = ConstGameplay.Cat.AggressiveCat.Pounce_Flash_Interval;
+            float flashInterval = ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_INTERVAL;
             bool isFlashColor = false;
 
             while (elapsed < duration)
@@ -101,7 +114,7 @@ namespace JumboJumps.EFTB.GI
                 {
                     isFlashColor = !isFlashColor;
                     spriteRenderer.color = isFlashColor 
-                        ? ConstGameplay.Cat.AggressiveCat.Pounce_Flash_Color 
+                        ? ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_COLOR 
                         : originalSpriteColor;
                 }
                 yield return new WaitForSeconds(flashInterval);

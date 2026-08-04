@@ -29,7 +29,7 @@ namespace JumboJumps.EFTB.Manager
 
             if (playerManager != null)
             {
-                playerManager.EventIdleLimitExceeded += OnPlayerIdleLimitExceeded;
+                Subscribe();
             }
 
             GameContext.Instance.Add(this);
@@ -39,10 +39,20 @@ namespace JumboJumps.EFTB.Manager
         {
             if (playerManager != null)
             {
-                playerManager.EventIdleLimitExceeded -= OnPlayerIdleLimitExceeded;
+                Unsubscribe();
             }
 
             GameContext.Instance.Remove(this);
+        }
+
+        public void Subscribe()
+        {
+            playerManager.EventIdleLimitExceeded += OnPlayerIdleLimitExceeded;
+        }
+
+        public void Unsubscribe()
+        {
+            playerManager.EventIdleLimitExceeded -= OnPlayerIdleLimitExceeded;
         }
 
         private void OnPlayerIdleLimitExceeded()
@@ -64,7 +74,7 @@ namespace JumboJumps.EFTB.Manager
         {
             isAntiCampWarningActive = true;
             int sideIndex = (Random.value < 0.5f) ? 0 : 1;
-            float warningDuration = ConstGameplay.Cat.AggressiveCat.Pounce_Warning_Duration;
+            float warningDuration = ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
 
             if (playerManager != null)
             {
@@ -112,12 +122,12 @@ namespace JumboJumps.EFTB.Manager
             var giSegment = levelGeneratorManager.GetGISegmentAtY(spawnY);
             if (giSegment == null) return;
 
-            float targetX = (sideIndex == 0) ? ConstGameplay.Cat.Cat_Left_Lane_Spawn_Position : ConstGameplay.Cat.Cat_Right_Lane_Spawn_Position;
+            float targetX = (sideIndex == 0) ? ConstGameplay.Cat.CAT_LEFT_LANE_SPAWN_POSITION : ConstGameplay.Cat.CAT_RIGHT_LANE_SPAWN_POSITION;
             Vector3 spawnPosition = new Vector3(targetX, spawnY, 0f);
 
-            if (!gameDataManager.TryGetPrefab(ConstGameplay.Cat.AggressiveCat.Prefab_Name, out GameObject prefab))
+            if (!gameDataManager.TryGetPrefab(ConstGameplay.Cat.AggressiveCat.PREFAB_NAME, out GameObject prefab))
             {
-                DebugLogHelper.LogError($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: Prefab, '{ConstGameplay.Cat.AggressiveCat.Prefab_Name}' not found in registry.");
+                DebugLogHelper.LogError($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: Prefab, '{ConstGameplay.Cat.AggressiveCat.PREFAB_NAME}' not found in registry.");
                 return;
             }
 
