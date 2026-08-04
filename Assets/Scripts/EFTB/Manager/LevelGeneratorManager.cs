@@ -64,12 +64,12 @@ namespace JumboJumps.EFTB.Manager
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = gameDataManager.LevelSegmentData.Values.ToList();
-            LaneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
-            MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
-            SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
-            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
-            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage;
-            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HardDifficultyTimePercentage;
+            LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+            MaxSegmentAmount = ConstGameplay.LevelGenerator.MAX_SEGMENT_AMOUNT;
+            SegmentHeight = ConstGameplay.LevelGenerator.SEGMENT_HEIGHT;
+            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MEDIUM_DIFFICULTY_TIME_PERCENTAGE;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HARD_DIFFICULTY_TIME_PERCENTAGE;
 
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions, this);
             visualizer.Initialize();
@@ -192,8 +192,8 @@ namespace JumboJumps.EFTB.Manager
             if (yPosition == 0f)
             {
                 selectedTemplate = new LevelSegmentData(
-                    ConstGameplay.LevelGenerator.InitialSegmentId,
-                    ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
+                    ConstGameplay.LevelGenerator.INITIAL_SEGMENT_ID,
+                    ConstGameplay.LevelGenerator.DEFAULT_INITIAL_SEGMENT_PREFAB,
                     SegmentHeight,
                     SegmentDifficultyEnum.Easy,
                     new List<LevelGeneratorData.LaneObjectData>(),

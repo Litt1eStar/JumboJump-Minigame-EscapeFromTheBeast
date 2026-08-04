@@ -31,7 +31,7 @@ namespace JumboJumps.EFTB.State.Player
                     }
                     else
                     {
-                        laneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
+                        laneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
                     }
                 }
                 return laneXPositions;
@@ -51,7 +51,7 @@ namespace JumboJumps.EFTB.State.Player
             Visualizer = new PlayerVisualizer();
             Visualizer.Initialize();
 
-            CurrentLaneIndex = ConstGameplay.LevelGenerator.InitialLaneIndex;
+            CurrentLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
 
             Input2DManager = SceneObjectContext.Instance.Get<Input2DManager>(); 
             if (Input2DManager == null)
