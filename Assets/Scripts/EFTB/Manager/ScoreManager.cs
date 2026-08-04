@@ -13,8 +13,6 @@ namespace JumboJumps.EFTB.Manager
         private CollectibleManager collectibleManager;
         private PlayerManager playerManager;
 
-        private float initialPlayerY;
-
         public int MaxCellsClimbed { get; private set; }
         public int TreatsCollected { get; private set; }
         public int DistanceScore => MaxCellsClimbed * ConstGameplay.Score.DISTANCE_POINT_PER_CELL;
@@ -28,10 +26,6 @@ namespace JumboJumps.EFTB.Manager
             this.playerManager = playerManager;
             if (this.playerManager != null)
             {
-                if (this.playerManager.PlayerTransform != null)
-                {
-                    initialPlayerY = this.playerManager.PlayerTransform.position.y;
-                }
                 this.playerManager.EventPlayerMoved += OnPlayerMoved;
             }
 
@@ -63,7 +57,8 @@ namespace JumboJumps.EFTB.Manager
 
         private void OnPlayerMoved(Vector3 position)
         {
-            float deltaY = position.y - initialPlayerY;
+            float initialY = playerManager != null ? playerManager.InitialPlayerY : 0f;
+            float deltaY = position.y - initialY;
             float stepDistance = ConstGameplay.Player.STEP_DISTANCE_Y;
             int currentCells = Mathf.Max(0, Mathf.FloorToInt((deltaY + (stepDistance * 0.5f)) / stepDistance));
 

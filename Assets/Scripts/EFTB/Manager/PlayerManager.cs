@@ -12,8 +12,10 @@ namespace JumboJumps.EFTB.Manager
         public event Action<Vector3> EventPlayerMoved;
 
         public Transform PlayerTransform { get; private set; }
+        public float InitialPlayerY { get; private set; }
         private PlayerStateController stateController;
         private PlayerVisualizer visualizer => stateController.Visualizer;
+        public float GetInitialPlayerY() => InitialPlayerY;
 
         public void Initialize()
         {
@@ -24,12 +26,24 @@ namespace JumboJumps.EFTB.Manager
 
             stateController.EventPlayerMoved += OnPlayerMoved;
 
-            PlayerTransform = SceneObjectContext.Instance.Get<GIPlayer>().transform;
+            GIPlayer giPlayer = SceneObjectContext.Instance.Get<GIPlayer>();
+            if (giPlayer != null)
+            {
+                PlayerTransform = giPlayer.transform;
+                InitialPlayerY = PlayerTransform.position.y;
+            }
+            else
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] GIPlayer not found in SceneObjectContext");
+            }
 
             SetPlayerToMiddleLane();
             
             float startX = stateController.LaneXPositions[stateController.CurrentLaneIndex];
-            PlayerTransform.position = new Vector3(startX, PlayerTransform.position.y, PlayerTransform.position.z);
+            if (PlayerTransform != null)
+            {
+                PlayerTransform.position = new Vector3(startX, PlayerTransform.position.y, PlayerTransform.position.z);
+            }
 
             GameContext.Instance.Add(this);
         }
