@@ -30,7 +30,7 @@ namespace JumboJumps.EFTB.Manager
                     if (giCat == null) continue;
 
                     float currentX = giCat.transform.position.x;
-                    if (currentX > -ConstGameplay.Cat.CatSpawnThreshold && currentX < ConstGameplay.Cat.CatSpawnThreshold)
+                    if (currentX > -ConstGameplay.Cat.CAT_SPAWN_THRESHOLD && currentX < ConstGameplay.Cat.CAT_SPAWN_THRESHOLD)
                     {
                         float targetX = (currentX <= 0f) 
                             ? ConstGameplay.Cat.CAT_LEFT_LANE_SPAWN_POSITION 

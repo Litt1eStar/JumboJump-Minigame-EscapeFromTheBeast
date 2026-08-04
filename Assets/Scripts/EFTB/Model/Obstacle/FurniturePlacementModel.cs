@@ -26,12 +26,11 @@ namespace JumboJumps.EFTB.Model.Obstacle
         /// Procedurally generates static furniture blocks for a level segment based on height progression,
         /// corridor connectivity rules, spacing constraints, and maximum block limits.
         /// </summary>
-        public List<FurnitureBlockData> GenerateSegmentFurniture(
-            float segmentStartY,
-            float segmentHeight,
-            int laneCount,
-            ref int lastOpenLaneIndex,
-            ref float lastFurnitureWorldY)
+        public List<FurnitureBlockData> GenerateSegmentFurniture(float segmentStartY,
+                                                                 float segmentHeight,
+                                                                 int laneCount,
+                                                                 ref int lastOpenLaneIndex,
+                                                                 ref float lastFurnitureWorldY)
         {
             List<FurnitureBlockData> generatedBlocks = new List<FurnitureBlockData>();
             float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;

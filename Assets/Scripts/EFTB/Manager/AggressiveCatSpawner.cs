@@ -93,20 +93,20 @@ namespace JumboJumps.EFTB.Manager
             {
                 case GameplayDifficultyEnum.Easy:
                 {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMinSpawnTime;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.InitialMaxSpawnTime;
+                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MIN_SPAWN_TIME;
+                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MAX_SPAWN_TIME;
                     break;
                 }
                 case GameplayDifficultyEnum.Normal:
                 {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.NormalMinSpawnTime;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.NormalMaxSpawnTime;
+                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.NORMAL_MIN_SPAWN_TIME;
+                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.NORMAL_MAX_SPAWN_TIME;
                     break;
                 }
                 case GameplayDifficultyEnum.Hard:
                 {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMinSpawnTime;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.HardMaxSpawnTime;
+                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.HARD_MIN_SPAWN_TIME;
+                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.HARD_MAX_SPAWN_TIME;
                     break;
                 }
             }

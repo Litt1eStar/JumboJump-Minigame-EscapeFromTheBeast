@@ -56,7 +56,7 @@ namespace JumboJumps.EFTB.Manager
         public float HardDifficultyTimePercentage { get; private set; }
 
         private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
-        private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.InitialLaneIndex;
+        private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
         private float lastFurnitureWorldY = -999f;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
         private List<LevelSegmentData> segments;
@@ -69,12 +69,12 @@ namespace JumboJumps.EFTB.Manager
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
             segments = new List<LevelSegmentData>();
-            LaneXPositions = ConstGameplay.LevelGenerator.LaneXPositions;
-            MaxSegmentAmount = ConstGameplay.LevelGenerator.MaxSegmentAmount;
-            SegmentHeight = ConstGameplay.LevelGenerator.SegmentHeight;
-            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SegmentRecycleTriggerOffset;
-            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MediumDifficultyTimePercentage;
-            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HardDifficultyTimePercentage;
+            LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+            MaxSegmentAmount = ConstGameplay.LevelGenerator.MAX_SEGMENT_AMOUNT;
+            SegmentHeight = ConstGameplay.LevelGenerator.SEGMENT_HEIGHT;
+            SegmentRecycleTriggerOffset = ConstGameplay.LevelGenerator.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            MediumDifficultyTimePercentage = ConstGameplay.LevelGenerator.MEDIUM_DIFFICULTY_TIME_PERCENTAGE;
+            HardDifficultyTimePercentage = ConstGameplay.LevelGenerator.HARD_DIFFICULTY_TIME_PERCENTAGE;
 
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions, this);
             visualizer.Initialize();
@@ -165,14 +165,12 @@ namespace JumboJumps.EFTB.Manager
 
         private ActiveSegment SpawnSegmentAt(float yPosition)
         {
-            LevelSegmentData selectedTemplate = new LevelSegmentData(
-                ConstGameplay.LevelGenerator.InitialSegmentId,
-                ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
-                SegmentHeight,
-                SegmentDifficultyEnum.Easy,
-                new List<LevelGeneratorData.LaneObjectData>(),
-                new List<LevelGeneratorData.LaneEventData>()
-            );
+            LevelSegmentData selectedTemplate = new LevelSegmentData(ConstGameplay.LevelGenerator.INITIAL_SEGMENT_ID,
+                                                                     ConstGameplay.LevelGenerator.DEFAULT_INITIAL_SEGMENT_PREFAB,
+                                                                     SegmentHeight,
+                                                                     SegmentDifficultyEnum.Easy,
+                                                                     new List<LevelGeneratorData.LaneObjectData>(),
+                                                                     new List<LevelGeneratorData.LaneEventData>());
 
             GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);
 
@@ -188,13 +186,11 @@ namespace JumboJumps.EFTB.Manager
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
 
             // Procedurally generate furniture blocks for this segment
-            var furnitureBlocks = furniturePlacementModel.GenerateSegmentFurniture(
-                yPosition,
-                SegmentHeight,
-                LaneXPositions.Length,
-                ref lastOpenLaneIndex,
-                ref lastFurnitureWorldY
-            );
+            var furnitureBlocks = furniturePlacementModel.GenerateSegmentFurniture(yPosition,
+                                                                                   SegmentHeight,
+                                                                                   LaneXPositions.Length,
+                                                                                   ref lastOpenLaneIndex,
+                                                                                   ref lastFurnitureWorldY);
 
             foreach (var block in furnitureBlocks)
             {
