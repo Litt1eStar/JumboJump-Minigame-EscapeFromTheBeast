@@ -1,61 +1,31 @@
+using System;
 using System.Collections.Generic;
 using JumboJumps.EFTB.Config;
-using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Model.Obstacle;
 using UnityEngine;
 
-namespace JumboJumps.EFTB.Model.Obstacle
+namespace JumboJumps.EFTB.Utilities
 {
-    public class CollectiblePlacementData
+    public static class CollectiblePlacementHelper
     {
-        public int LaneIndex { get; }
-        public float YOffset { get; }
-
-        public CollectiblePlacementData(int laneIndex, float yOffset)
-        {
-            LaneIndex = laneIndex;
-            YOffset = yOffset;
-        }
-    }
-
-    public class CollectiblePlacementModel
-    {
-        private CollectibleConfigSO config;
-        public CollectibleConfigSO Config
-        {
-            get
-            {
-                var container = SceneObjectContext.Instance?.Get<GI.GIGameplayConfigContainer>();
-                if (container != null && container.CollectibleConfig != null)
-                {
-                    config = container.CollectibleConfig;
-                    return config;
-                }
-                if (config == null)
-                {
-                    DebugLogHelper.LogError($"[{GetType().Name}] CollectibleConfigSO reference is missing.");
-                }
-                return config;
-            }
-            set => config = value;
-        }
-
-        private readonly List<int> validLanesBuffer = new List<int>(4);
-        private readonly List<float> laneWeightsBuffer = new List<float>(4);
+        private static readonly List<int> validLanesBuffer = new List<int>(4);
+        private static readonly List<float> laneWeightsBuffer = new List<float>(4);
 
         /// <summary>
         /// Procedurally calculates collectible placement per row.
         /// Enforces ~15% row spawn rate, safe zone threshold, strict furniture exclusion,
         /// and 3x weighted placement on hazard rows for risk-reward balancing.
         /// </summary>
-        public List<CollectiblePlacementData> GenerateSegmentCollectibles(
+        public static List<CollectiblePlacementData> GenerateSegmentCollectibles(
             float segmentStartY,
             float segmentHeight,
             int laneCount,
-            System.Func<int, float, bool> isFurnitureBlockedFunc,
-            System.Func<float, bool> isHazardRowFunc)
+            Func<int, float, bool> isFurnitureBlockedFunc,
+            Func<float, bool> isHazardRowFunc,
+            CollectibleConfigSO config = null)
         {
             List<CollectiblePlacementData> generatedCollectibles = new List<CollectiblePlacementData>();
-            if (Config == null) return generatedCollectibles;
+            if (config == null) return generatedCollectibles;
 
             float cellHeight = 3.0f;
             int startRowIndex = Mathf.RoundToInt(segmentStartY / cellHeight);
@@ -66,10 +36,10 @@ namespace JumboJumps.EFTB.Model.Obstacle
                 int globalRowIndex = startRowIndex + r;
                 float worldY = globalRowIndex * cellHeight;
 
-                if (globalRowIndex <= Config.SafeZoneCells) continue;
+                if (globalRowIndex <= config.SafeZoneCells) continue;
 
                 // 15% spawn ratio check per row
-                if (Random.value >= Config.SpawnRowRatio) continue;
+                if (UnityEngine.Random.value >= config.SpawnRowRatio) continue;
 
                 float rowYOffset = worldY - segmentStartY;
                 bool isHazardRow = isHazardRowFunc != null && isHazardRowFunc(worldY);
@@ -87,7 +57,7 @@ namespace JumboJumps.EFTB.Model.Obstacle
                     }
 
                     // Rule: 3x weight multiplier for open lanes on hazard rows (favor risk)
-                    float weight = isHazardRow ? Config.HazardLaneWeightMultiplier : 1.0f;
+                    float weight = isHazardRow ? config.HazardLaneWeightMultiplier : 1.0f;
                     validLanesBuffer.Add(l);
                     laneWeightsBuffer.Add(weight);
                     totalWeight += weight;
@@ -96,7 +66,7 @@ namespace JumboJumps.EFTB.Model.Obstacle
                 if (validLanesBuffer.Count == 0 || totalWeight <= 0f) continue;
 
                 // Weighted random lane selection
-                float randomValue = Random.value * totalWeight;
+                float randomValue = UnityEngine.Random.value * totalWeight;
                 float currentSum = 0f;
                 int selectedLane = validLanesBuffer[0];
 

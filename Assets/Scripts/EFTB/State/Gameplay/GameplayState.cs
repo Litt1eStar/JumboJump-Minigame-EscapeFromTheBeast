@@ -141,20 +141,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             if (!IsSceneLoaded) return;
 
             gameplayStateManager?.UpdateLogic(deltaTime);
-
-            bool isInGame = gameplayStateManager != null && 
-                            gameplayStateManager.StateController != null && 
-                            gameplayStateManager.StateController.CurrentState is InGameState;
-
-            if (isInGame)
-            {
-                playerManager?.UpdateLogic(deltaTime);
-                scoreManager?.UpdateLogic(deltaTime);
-                levelGeneratorManager?.UpdateLogic(deltaTime);
-                catManager?.UpdateLogic(deltaTime);
-                hazardSpawner?.UpdateLogic(deltaTime);
-                input2DManager?.UpdateLogic(deltaTime);
-            }
         }
 
         public void ReturnBackToMainMenu()

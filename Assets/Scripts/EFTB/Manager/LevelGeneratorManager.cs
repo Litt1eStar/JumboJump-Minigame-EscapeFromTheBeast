@@ -58,16 +58,35 @@ namespace JumboJumps.EFTB.Manager
         public float MaxGeneratedWorldY => nextYSpawnPosition;
 
         private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
-        private CollectiblePlacementModel collectiblePlacementModel = new CollectiblePlacementModel();
+        private CollectibleConfigSO collectibleConfig;
+        public CollectibleConfigSO CollectibleConfig
+        {
+            get
+            {
+                if (collectibleConfig == null && SceneObjectContext.Instance != null)
+                {
+                    var container = SceneObjectContext.Instance.Get<GIGameplayConfigContainer>();
+                    if (container != null && container.CollectibleConfig != null)
+                    {
+                        collectibleConfig = container.CollectibleConfig;
+                    }
+                }
+                return collectibleConfig;
+            }
+        }
         private FurnitureConfigSO furnitureConfig;
         public FurnitureConfigSO FurnitureConfig
         {
             get
             {
-                var container = SceneObjectContext.Instance?.Get<GIGameplayConfigContainer>();
-                if (container != null && container.FurnitureConfig != null)
+                if (furnitureConfig == null && SceneObjectContext.Instance != null)
                 {
-                    return container.FurnitureConfig;
+                    var container = SceneObjectContext.Instance.Get<GIGameplayConfigContainer>();
+                    if (container != null && container.FurnitureConfig != null)
+                    {
+                        furnitureConfig = container.FurnitureConfig;
+                        furniturePlacementModel.Config = furnitureConfig;
+                    }
                 }
                 return furnitureConfig;
             }
@@ -127,8 +146,17 @@ namespace JumboJumps.EFTB.Manager
 
             activeSegmentQueue.Clear();
             activeFurnitureObstacles.Clear();
+
+            for (int i = 0; i < activeTreats.Count; i++)
+            {
+                if (activeTreats[i] != null)
+                {
+                    activeTreats[i].EventCollected -= OnCollectibleCollected;
+                    activeTreats[i].EventRecycleRequested -= OnCollectibleRecycle;
+                }
+            }
             activeTreats.Clear();
-            lastFurnitureWorldY = -999f;
+            lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
             lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
             GameContext.Instance.Remove(this);
         }
@@ -280,26 +308,51 @@ namespace JumboJumps.EFTB.Manager
 
         private void ProcedurallyGenerateCollectible(float yPosition, GameObject segmentInstance, GISegment giSegment)
         {
-            if (segmentInstance == null || visualizer == null) return;
+            if (segmentInstance == null || visualizer == null || CollectibleConfig == null) return;
 
-            var collectibles = collectiblePlacementModel.GenerateSegmentCollectibles(
+            var collectibles = CollectiblePlacementHelper.GenerateSegmentCollectibles(
                 yPosition,
                 SegmentHeight,
                 LaneXPositions.Length,
                 IsCellBlockedByFurniture,
-                (rowY) => rowY > (collectiblePlacementModel.Config.SafeZoneCells * 3.0f)
+                (rowY) => rowY > (CollectibleConfig.SafeZoneCells * 3.0f),
+                CollectibleConfig
             );
 
-            string prefabName = collectiblePlacementModel.Config.PrefabName;
-            int pointValue = collectiblePlacementModel.Config.TreatPointValue;
+            string prefabName = CollectibleConfig.PrefabName;
+            int pointValue = CollectibleConfig.TreatPointValue;
 
             foreach (var collectibleData in collectibles)
             {
                 GICollectible giCollectible = visualizer.SpawnCollectible(collectibleData, yPosition, segmentInstance, giSegment, prefabName, pointValue);
                 if (giCollectible != null)
                 {
+                    giCollectible.EventCollected += OnCollectibleCollected;
+                    giCollectible.EventRecycleRequested += OnCollectibleRecycle;
                     activeTreats.Add(giCollectible);
                 }
+            }
+        }
+
+        private void OnCollectibleCollected(GICollectible giCollectible)
+        {
+            if (giCollectible != null)
+            {
+                var collectibleManager = GameContext.Instance?.Get<CollectibleManager>();
+                collectibleManager?.AddValue(giCollectible.PointValue);
+            }
+        }
+
+        private void OnCollectibleRecycle(GICollectible giCollectible)
+        {
+            if (giCollectible != null)
+            {
+                giCollectible.EventCollected -= OnCollectibleCollected;
+                giCollectible.EventRecycleRequested -= OnCollectibleRecycle;
+                activeTreats.Remove(giCollectible);
+
+                var poolManager = GameContext.Instance?.Get<ObjectPoolManager>();
+                poolManager?.Recycle(giCollectible.gameObject);
             }
         }
 
