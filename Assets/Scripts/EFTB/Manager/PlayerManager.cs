@@ -15,7 +15,6 @@ namespace JumboJumps.EFTB.Manager
         public float InitialPlayerY { get; private set; }
         private PlayerStateController stateController;
         private PlayerVisualizer visualizer => stateController.Visualizer;
-        public float GetInitialPlayerY() => InitialPlayerY;
 
         public void Initialize()
         {
