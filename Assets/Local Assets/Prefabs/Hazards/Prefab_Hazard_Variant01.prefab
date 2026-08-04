@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 5078860348711764539}
   m_Layer: 7
   m_Name: Prefab_Hazard_Variant01
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

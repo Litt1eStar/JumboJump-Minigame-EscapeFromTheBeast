@@ -16,7 +16,6 @@ namespace JumboJumps.EFTB.Manager
         private GameplayStateManager gameplayStateManager;
         private PlayerManager playerManager;
 
-        private readonly HazardProgressionModel progressionModel = new HazardProgressionModel();
         private readonly Dictionary<int, HazardRowData> activeHazardRows = new Dictionary<int, HazardRowData>();
         private readonly List<GIHazardObstacle> activeHazards = new List<GIHazardObstacle>();
 
@@ -38,11 +37,13 @@ namespace JumboJumps.EFTB.Manager
         {
             activeHazardRows.Clear();
 
-            if (poolManager != null)
+            for (int i = 0; i < activeHazards.Count; i++)
             {
-                for (int i = 0; i < activeHazards.Count; i++)
+                if (activeHazards[i] != null)
                 {
-                    if (activeHazards[i] != null && activeHazards[i].gameObject.activeInHierarchy)
+                    activeHazards[i].EventCollidedWithPlayer -= OnHazardCollidedWithPlayer;
+                    activeHazards[i].EventRecycleRequested -= OnHazardRecycleRequested;
+                    if (poolManager != null && activeHazards[i].gameObject.activeInHierarchy)
                     {
                         poolManager.Recycle(activeHazards[i].gameObject);
                     }
@@ -55,7 +56,7 @@ namespace JumboJumps.EFTB.Manager
 
         public void UpdateLogic(float deltaTime)
         {
-            if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
+            if (gameplayStateManager == null || gameplayStateManager.StateController == null)
             {
                 return;
             }
@@ -87,8 +88,8 @@ namespace JumboJumps.EFTB.Manager
                 if (!activeHazardRows.TryGetValue(r, out HazardRowData rowData))
                 {
                     HazardDirectionEnum direction = (Random.value < 0.5f) ? HazardDirectionEnum.LeftToRight : HazardDirectionEnum.RightToLeft;
-                    float speed = progressionModel.GetRandomRowSpeed();
-                    float initialInterval = progressionModel.GetRandomSpawnInterval(rowWorldY);
+                    float speed = HazardHelper.GetRandomRowSpeed();
+                    float initialInterval = HazardHelper.GetRandomSpawnInterval(rowWorldY);
 
                     rowData = new HazardRowData(rowWorldY, direction, speed, initialInterval);
                     activeHazardRows[r] = rowData;
@@ -98,8 +99,19 @@ namespace JumboJumps.EFTB.Manager
                 if (rowData.NextSpawnTimer >= rowData.SpawnInterval)
                 {
                     rowData.NextSpawnTimer = 0f;
-                    rowData.SpawnInterval = progressionModel.GetRandomSpawnInterval(rowWorldY);
+                    rowData.SpawnInterval = HazardHelper.GetRandomSpawnInterval(rowWorldY);
                     SpawnHazardOnRow(rowData);
+                }
+            }
+
+            // Update active hazard obstacles movement
+            for (int i = activeHazards.Count - 1; i >= 0; i--)
+            {
+                if (i >= activeHazards.Count) continue;
+                GIHazardObstacle hazard = activeHazards[i];
+                if (hazard != null && hazard.gameObject.activeInHierarchy)
+                {
+                    hazard.UpdateLogic(deltaTime);
                 }
             }
 
@@ -120,6 +132,14 @@ namespace JumboJumps.EFTB.Manager
                 }
             }
             return false;
+        }
+
+        public void UnregisterHazard(GIHazardObstacle hazard)
+        {
+            if (hazard != null)
+            {
+                activeHazards.Remove(hazard);
+            }
         }
 
         private void SpawnHazardOnRow(HazardRowData rowData)
@@ -161,9 +181,46 @@ namespace JumboJumps.EFTB.Manager
             }
 
             activeHazards.RemoveAll(h => h == null || !h.gameObject.activeInHierarchy);
-            activeHazards.Add(giHazard);
+            if (!activeHazards.Contains(giHazard))
+            {
+                activeHazards.Add(giHazard);
+            }
+
+            giHazard.EventCollidedWithPlayer -= OnHazardCollidedWithPlayer;
+            giHazard.EventCollidedWithPlayer += OnHazardCollidedWithPlayer;
+
+            giHazard.EventRecycleRequested -= OnHazardRecycleRequested;
+            giHazard.EventRecycleRequested += OnHazardRecycleRequested;
 
             giHazard.Initialize(rowData.Direction, rowData.Speed, rowData.RowWorldY, despawnX);
+        }
+
+        private void OnHazardCollidedWithPlayer(GIPlayer player)
+        {
+            GameplayController gameplayController = GameContext.Instance?.Get<GameplayController>();
+            if (gameplayController != null)
+            {
+                gameplayController.InvokeFinishLevel(GameStatus.Lose);
+            }
+        }
+
+        private void OnHazardRecycleRequested(GIHazardObstacle hazard)
+        {
+            if (hazard == null) return;
+            hazard.EventCollidedWithPlayer -= OnHazardCollidedWithPlayer;
+            hazard.EventRecycleRequested -= OnHazardRecycleRequested;
+
+            UnregisterHazard(hazard);
+
+            if (poolManager == null)
+            {
+                poolManager = GameContext.Instance?.Get<ObjectPoolManager>();
+            }
+
+            if (poolManager != null)
+            {
+                poolManager.Recycle(hazard.gameObject);
+            }
         }
 
         private void CleanupPassedRows(int cutoffRowIndex)

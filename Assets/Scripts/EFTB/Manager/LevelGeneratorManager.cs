@@ -58,7 +58,7 @@ namespace JumboJumps.EFTB.Manager
 
         private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
         private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
-        private float lastFurnitureWorldY = -999f;
+        private float lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
         private List<LevelSegmentData> segments;
 
@@ -107,7 +107,7 @@ namespace JumboJumps.EFTB.Manager
 
             activeSegmentQueue.Clear();
             activeFurnitureObstacles.Clear();
-            lastFurnitureWorldY = -999f;
+            lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
             lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
             GameContext.Instance.Remove(this);
         }
@@ -186,7 +186,7 @@ namespace JumboJumps.EFTB.Manager
             {
                 if (i >= activeFurnitureObstacles.Count) continue;
                 GIFurnitureObstacle furniture = activeFurnitureObstacles[i];
-                if (furniture != null && furniture.gameObject.activeInHierarchy && furniture.BlocksCell(targetLaneIndex, targetWorldY))
+                if (furniture != null && furniture.gameObject.activeInHierarchy && IsFurnitureBlockingCell(furniture, targetLaneIndex, targetWorldY))
                 {
                     return true;
                 }
@@ -202,7 +202,7 @@ namespace JumboJumps.EFTB.Manager
                     if (furniture != null && furniture.gameObject.activeInHierarchy)
                     {
                         RegisterFurnitureObstacle(furniture);
-                        if (furniture.BlocksCell(targetLaneIndex, targetWorldY))
+                        if (IsFurnitureBlockingCell(furniture, targetLaneIndex, targetWorldY))
                         {
                             return true;
                         }
@@ -211,6 +211,12 @@ namespace JumboJumps.EFTB.Manager
             }
 
             return false;
+        }
+
+        private bool IsFurnitureBlockingCell(GIFurnitureObstacle furniture, int targetLaneIndex, float targetWorldY, float tolerance = 1.8f)
+        {
+            if (furniture == null || targetLaneIndex != furniture.LaneIndex) return false;
+            return Mathf.Abs(targetWorldY - furniture.WorldY) < tolerance;
         }
 
         private ActiveSegment SpawnSegmentAt(float yPosition)
@@ -243,7 +249,7 @@ namespace JumboJumps.EFTB.Manager
             {
                 if (furniture != null)
                 {
-                    furniture.UpdateWorldPositionAndLane();
+                    visualizer.SetupPrefabFurniture(furniture);
                     RegisterFurnitureObstacle(furniture);
                 }
             }
