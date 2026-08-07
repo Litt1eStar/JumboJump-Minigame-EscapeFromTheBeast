@@ -9,10 +9,11 @@ namespace JumboJumps.EFTB.GI
 {
     public class GIHazardObstacle : MonoBehaviour
     {
-        private GameplayController gameplayController;
-        private GameplayStateManager gameplayStateManager;
+        private GameplayController gameplayController => GameContext.Instance?.Get<GameplayController>();
+        private GameplayStateManager gameplayStateManager => GameContext.Instance?.Get<GameplayStateManager>();
+        private ObjectPoolManager poolManager => GameContext.Instance?.Get<ObjectPoolManager>();
+
         private Collider2D hazardCollider;
-        private SpriteRenderer spriteRenderer;
 
         private HazardDirectionEnum direction;
         private float speed;
@@ -21,16 +22,9 @@ namespace JumboJumps.EFTB.GI
 
         public float RowWorldY { get; private set; }
 
-        private ObjectPoolManager poolManager;
-
         public void Initialize(HazardDirectionEnum direction, float speed, float rowWorldY, float despawnX)
         {
-            gameplayController = GameContext.Instance.Get<GameplayController>();
-            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-            poolManager = GameContext.Instance.Get<ObjectPoolManager>();
-
             hazardCollider = GetComponent<Collider2D>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
 
             this.direction = direction;
             this.speed = speed;
@@ -71,13 +65,11 @@ namespace JumboJumps.EFTB.GI
         {
             if (poolManager == null)
             {
-                poolManager = GameContext.Instance?.Get<ObjectPoolManager>();
+                DebugLogHelper.LogError("[GIHazardObstacle] : PoolManager is null, cannot recycle object.");
+                return;
             }
-
-            if (poolManager != null)
-            {
-                poolManager.Recycle(gameObject);
-            }
+            
+            poolManager.Recycle(gameObject);
         }
 
         private void HandlePlayerCollision(GameObject collidedObj)
@@ -90,11 +82,6 @@ namespace JumboJumps.EFTB.GI
                 if (player != null)
                 {
                     hasTriggered = true;
-
-                    if (gameplayController == null)
-                    {
-                        gameplayController = GameContext.Instance?.Get<GameplayController>();
-                    }
 
                     if (gameplayController != null)
                     {

@@ -57,14 +57,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             scoreManager = new ScoreManager();
             scoreManager.Initialize(playerManager.PlayerTransform);
 
-            gameplayController = new GameplayController();
-
-            gameplayStateManager = new GameplayStateManager();
-            gameplayStateManager.Initialize(gameplayController);
-
-            gameplayController.Initialize(gameplayStateManager.StateController);
-            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
-
             poolManager = new ObjectPoolManager();
             poolManager.Initialize();
 
@@ -79,6 +71,14 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             hazardSpawner = new HazardSpawner();
             hazardSpawner.Initialize();
+
+            gameplayController = new GameplayController();
+
+            gameplayStateManager = new GameplayStateManager();
+            gameplayStateManager.Initialize(gameplayController);
+
+            gameplayController.Initialize(gameplayStateManager.StateController);
+            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
         }
 
         public override void OnEnterState()

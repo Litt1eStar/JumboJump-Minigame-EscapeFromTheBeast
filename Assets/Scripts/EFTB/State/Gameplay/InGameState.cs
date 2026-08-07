@@ -8,12 +8,12 @@ namespace JumboJumps.EFTB.State.Gameplay
     {
         private GameplayStateController stateController;
 
-        private PlayerManager playerManager => GameContext.Instance.Get<PlayerManager>();
-        private ScoreManager scoreManager => GameContext.Instance.Get<ScoreManager>();
-        private LevelGeneratorManager levelGeneratorManager => GameContext.Instance.Get<LevelGeneratorManager>();
-        private CatManager catManager => GameContext.Instance.Get<CatManager>();
-        private HazardSpawner hazardSpawner => GameContext.Instance.Get<HazardSpawner>();
-        private Input2DManager input2DManager => SceneObjectContext.Instance.Get<Input2DManager>();
+        private PlayerManager playerManager;
+        private ScoreManager scoreManager;
+        private LevelGeneratorManager levelGeneratorManager;
+        private CatManager catManager;
+        private HazardSpawner hazardSpawner;
+        private Input2DManager input2DManager;
 
         public InGameState(BaseStateController stateController) : base(stateController)
         {
@@ -26,7 +26,28 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void OnEnterState()
         {
             base.OnEnterState();
-            stateController.GameplayVisualizer.EventPauseUIButtonClicked += OnClickPauseButton;
+
+            playerManager = GameContext.Instance?.Get<PlayerManager>();
+            scoreManager = GameContext.Instance?.Get<ScoreManager>();
+            levelGeneratorManager = GameContext.Instance?.Get<LevelGeneratorManager>();
+            catManager = GameContext.Instance?.Get<CatManager>();
+            hazardSpawner = GameContext.Instance?.Get<HazardSpawner>();
+            input2DManager = SceneObjectContext.Instance?.Get<Input2DManager>();
+
+            if (stateController?.GameplayVisualizer != null)
+            {
+                stateController.GameplayVisualizer.EventPauseUIButtonClicked += OnClickPauseButton;
+            }
+        }
+
+        public override void OnExitState()
+        {
+            base.OnExitState();
+
+            if (stateController?.GameplayVisualizer != null)
+            {
+                stateController.GameplayVisualizer.EventPauseUIButtonClicked -= OnClickPauseButton;
+            }
         }
 
         public void OnClickPauseButton()

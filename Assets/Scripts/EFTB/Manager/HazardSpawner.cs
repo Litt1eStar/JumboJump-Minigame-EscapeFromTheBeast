@@ -11,11 +11,11 @@ namespace JumboJumps.EFTB.Manager
 {
     public class HazardSpawner
     {
-        private ObjectPoolManager poolManager;
-        private LevelGeneratorManager levelGeneratorManager;
-        private GameDataManager gameDataManager;
-        private GameplayStateManager gameplayStateManager;
-        private PlayerManager playerManager;
+        private ObjectPoolManager poolManager => GameContext.Instance?.Get<ObjectPoolManager>();
+        private LevelGeneratorManager levelGeneratorManager => GameContext.Instance?.Get<LevelGeneratorManager>();
+        private GameDataManager gameDataManager => GameContext.Instance?.Get<GameDataManager>();
+        private GameplayStateManager gameplayStateManager => GameContext.Instance?.Get<GameplayStateManager>();
+        private PlayerManager playerManager => GameContext.Instance?.Get<PlayerManager>();
 
         private readonly HazardProgressionModel progressionModel = new HazardProgressionModel();
         private readonly Dictionary<int, HazardRowData> activeHazardRows = new Dictionary<int, HazardRowData>();
@@ -44,14 +44,6 @@ namespace JumboJumps.EFTB.Manager
 
         public void Initialize()
         {
-            poolManager = GameContext.Instance.Get<ObjectPoolManager>();
-            levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
-            gameDataManager = GameContext.Instance.Get<GameDataManager>();
-            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-            playerManager = GameContext.Instance.Get<PlayerManager>();
-
-            var _ = HazardConfig;
-
             GameContext.Instance.Add(this);
         }
 
@@ -159,12 +151,8 @@ namespace JumboJumps.EFTB.Manager
 
             if (!gameDataManager.TryGetPrefab(ConstGameplay.Obstacle.Hazard.PREFAB_NAME, out GameObject prefab))
             {
-                // Fallback to moving obstacle prefab if specific hazard prefab is not yet in registry
-                if (!gameDataManager.TryGetPrefab("Prefab_Obstacle_Car", out prefab))
-                {
-                    DebugLogHelper.LogWarning($"[HazardSpawner] Hazard prefab '{ConstGameplay.Obstacle.Hazard.PREFAB_NAME}' not found in GameDataManager.");
-                    return;
-                }
+                DebugLogHelper.LogWarning($"[HazardSpawner] Hazard prefab '{ConstGameplay.Obstacle.Hazard.PREFAB_NAME}' not found in GameDataManager.");
+                return;                
             }
 
             float spawnOffset = SpawnOffscreenXOffset;
