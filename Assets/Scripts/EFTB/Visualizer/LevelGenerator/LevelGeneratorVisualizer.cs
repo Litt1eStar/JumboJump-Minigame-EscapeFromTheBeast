@@ -60,10 +60,14 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 RecycleOldestSegment();
             }
             activeSegments.Clear();
+            lastSpawnedSegment = null;
         }
+
+        private GameObject lastSpawnedSegment;
 
         /// <summary>
         /// Spawns a level segment prefab from ObjectPoolManager at the specified world Y position.
+        /// Automatically aligns SpriteRenderer bounds to eliminate gaps or overlaps with adjacent segments.
         /// </summary>
         public GameObject SpawnSegment(LevelGeneratorData.LevelSegmentData template, float yPosition)
         {
@@ -83,13 +87,33 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity);
 
+            // Dynamic bounds auto-alignment to guarantee zero gap and zero overlap
+            if (lastSpawnedSegment != null && lastSpawnedSegment.activeInHierarchy)
+            {
+                SpriteRenderer prevSr = lastSpawnedSegment.GetComponentInChildren<SpriteRenderer>();
+                SpriteRenderer currentSr = segment.GetComponentInChildren<SpriteRenderer>();
+
+                if (prevSr != null && currentSr != null)
+                {
+                    float prevTopY = prevSr.bounds.max.y;
+                    float currentBottomY = currentSr.bounds.min.y;
+                    float shiftY = prevTopY - currentBottomY;
+
+                    if (Mathf.Abs(shiftY) > 0.001f)
+                    {
+                        segment.transform.position += new Vector3(0f, shiftY, 0f);
+                    }
+                }
+            }
+            lastSpawnedSegment = segment;
+
             GISegment giSegment = segment.GetComponent<GISegment>();
             if (giSegment == null)
             {
                 giSegment = segment.AddComponent<GISegment>();
             }
 
-            SpawnPrePlacedObject(template, yPosition, segment, giSegment);
+            SpawnPrePlacedObject(template, segment.transform.position.y, segment, giSegment);
             activeSegments.Enqueue(segment);
 
             return segment;

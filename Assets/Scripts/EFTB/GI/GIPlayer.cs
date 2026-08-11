@@ -124,7 +124,14 @@ namespace JumboJumps.EFTB.GI
 
         public void SetInitialStartPosition()
         {
-            transform.position = initialStartPosition.position;
+            if (playerTransform != null && initialStartPosition != null)
+            {
+                playerTransform.position = initialStartPosition.position;
+            }
+            else if (initialStartPosition != null)
+            {
+                transform.position = initialStartPosition.position;
+            }
         }
 
         public void MoveForward(float deltaTime)

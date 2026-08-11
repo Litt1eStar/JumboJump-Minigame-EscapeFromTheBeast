@@ -22,11 +22,10 @@ namespace JumboJumps.EFTB.Manager
             stateController.StartStateController();
 
             PlayerTransform = SceneObjectContext.Instance.Get<GIPlayer>().transform;
-
             SetPlayerToMiddleLane();
             
             float startX = stateController.LaneXPositions[stateController.CurrentLaneIndex];
-            PlayerTransform.position = new Vector3(startX, PlayerTransform.position.y, PlayerTransform.position.z);
+            visualizer.SetXPosition(startX);
 
             GameContext.Instance.Add(this);
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JumboJumps.EFTB.Config;
+using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.Model.Obstacle;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace JumboJumps.EFTB.Utilities
             List<CollectiblePlacementData> generatedCollectibles = new List<CollectiblePlacementData>();
             if (config == null) return generatedCollectibles;
 
-            float cellHeight = 3.0f;
+            float cellHeight = ConstGameplay.Player.STEP_DISTANCE_Y;
             int startRowIndex = Mathf.RoundToInt(segmentStartY / cellHeight);
             int totalRows = Mathf.RoundToInt(segmentHeight / cellHeight);
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FurnitureConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Config.FurnitureConfigSO
   safeZoneCells: 5
-  cellHeight: 3
+  cellHeight: 2.35
   baseRowRatio: 0.45
   densityStepRatio: 0.04
   densityStepCells: 30

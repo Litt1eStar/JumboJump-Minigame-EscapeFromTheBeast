@@ -39,6 +39,11 @@ namespace JumboJumps.EFTB.GI
 
         public void UpdateWorldPositionAndLane()
         {
+            if (levelGeneratorManager == null)
+            {
+                levelGeneratorManager = GameContext.Instance?.Get<LevelGeneratorManager>();
+            }
+
             float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             WorldY = Mathf.RoundToInt(transform.position.y / cellHeight) * cellHeight;
             LaneIndex = GetClosestLaneIndex(transform.position.x);
