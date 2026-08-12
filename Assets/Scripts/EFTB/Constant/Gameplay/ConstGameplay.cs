@@ -98,6 +98,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const int SAFE_ZONE_CELLS = 5;
 
                 public const float HAZARD_PRESPAWN_OFFSET = 70f; // Offset from the player to pre-spawn hazards (in cells)
+                public const float ROTATION_SPEED = 5.0f; // Hazard rotation speed scalar (default: 5.0)
+                public const float ROTATION_SPEED_MULTIPLIER = 72.0f; // Degrees/sec per rotation speed unit
             }
         }
     }

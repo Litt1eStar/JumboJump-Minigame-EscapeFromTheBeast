@@ -14,30 +14,34 @@ namespace JumboJumps.EFTB.GI
         private ObjectPoolManager poolManager => GameContext.Instance?.Get<ObjectPoolManager>();
 
         private Collider2D hazardCollider;
+        private SpriteRenderer spriteRenderer;
 
         private HazardDirectionEnum direction;
         private float speed;
         private float despawnX;
+        private float rotationSpeed;
         private bool hasTriggered;
 
         public float RowWorldY { get; private set; }
 
-        public void Initialize(HazardDirectionEnum direction, float speed, float rowWorldY, float despawnX)
+        public void Initialize(HazardDirectionEnum direction, float speed, float rowWorldY, float despawnX, float rotationSpeed = ConstGameplay.Obstacle.Hazard.ROTATION_SPEED)
         {
             hazardCollider = GetComponent<Collider2D>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
             this.direction = direction;
             this.speed = speed;
             this.RowWorldY = rowWorldY;
             this.despawnX = despawnX;
+            this.rotationSpeed = rotationSpeed;
             this.hasTriggered = false;
 
             float yRotation = (direction == HazardDirectionEnum.LeftToRight) ? 0f : 180f;
             transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
 
-            if (hazardCollider != null)
+            if (spriteRenderer != null)
             {
-                hazardCollider.enabled = true;
+                spriteRenderer.transform.localRotation = Quaternion.identity;
             }
         }
 
@@ -50,6 +54,13 @@ namespace JumboJumps.EFTB.GI
 
             float moveStep = (int)direction * speed * Time.deltaTime;
             transform.position += new Vector3(moveStep, 0f, 0f);
+
+            if (spriteRenderer != null)
+            {
+                float degPerSec = rotationSpeed * ConstGameplay.Obstacle.Hazard.ROTATION_SPEED_MULTIPLIER;
+                float zRotationStep = -(int)direction * degPerSec * Time.deltaTime;
+                spriteRenderer.transform.Rotate(0f, 0f, zRotationStep, Space.World);
+            }
 
             bool passedDespawn = (direction == HazardDirectionEnum.LeftToRight)
                 ? transform.position.x >= despawnX

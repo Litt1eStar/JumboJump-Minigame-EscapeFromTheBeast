@@ -47,6 +47,10 @@ namespace JumboJumps.EFTB.Config
         [Tooltip("Offset distance from the player to pre-spawn hazards in cells (default: 70)")]
         [SerializeField] private float hazardPrespawnOffset = ConstGameplay.Obstacle.Hazard.HAZARD_PRESPAWN_OFFSET;
 
+        [Header("Hazard Animation Balancing")]
+        [Tooltip("Rotation speed multiplier for basketball hazard animation (default: 5.0)")]
+        [SerializeField] private float rotationSpeed = ConstGameplay.Obstacle.Hazard.ROTATION_SPEED;
+
         // Properties
         public int SafeZoneCells => safeZoneCells;
         public float CellHeight => cellHeight;
@@ -60,5 +64,6 @@ namespace JumboJumps.EFTB.Config
         public float SpawnOffscreenXOffset => spawnOffscreenXOffset;
         public float DespawnOffscreenXOffset => despawnOffscreenXOffset;
         public float HazardPrespawnOffset => hazardPrespawnOffset;
+        public float RotationSpeed => rotationSpeed;
     }
 }

@@ -176,7 +176,8 @@ namespace JumboJumps.EFTB.Manager
             activeHazards.RemoveAll(h => h == null || !h.gameObject.activeInHierarchy);
             activeHazards.Add(giHazard);
 
-            giHazard.Initialize(rowData.Direction, rowData.Speed, rowData.RowWorldY, despawnX);
+            float rotationSpeed = HazardConfig != null ? HazardConfig.RotationSpeed : ConstGameplay.Obstacle.Hazard.ROTATION_SPEED;
+            giHazard.Initialize(rowData.Direction, rowData.Speed, rowData.RowWorldY, despawnX, rotationSpeed);
         }
 
         private void CleanupPassedRows(int cutoffRowIndex)

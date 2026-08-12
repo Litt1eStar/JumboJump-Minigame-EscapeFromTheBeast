@@ -23,4 +23,5 @@ MonoBehaviour:
   floorSpeedDurationHigh: 0.6
   spawnOffscreenXOffset: 7.5
   despawnOffscreenXOffset: 7.5
-  hazardPrespawnOffset: 70
+  hazardPrespawnOffset: 20
+  rotationSpeed: 5
