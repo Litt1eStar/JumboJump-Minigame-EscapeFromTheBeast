@@ -56,26 +56,24 @@ namespace JumboJumps.EFTB.Model.Obstacle
             ref float lastFurnitureWorldY)
         {
             List<FurnitureBlockData> generatedBlocks = new List<FurnitureBlockData>();
-            float cellHeight = Config != null ? Config.CellHeight : 3.0f;
+            float cellHeight = Config != null ? Config.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             int startRowIndex = Mathf.RoundToInt(segmentStartY / cellHeight);
             int totalRows = Mathf.RoundToInt(segmentHeight / cellHeight);
 
             for (int r = 0; r < totalRows; r++)
             {
                 int globalRowIndex = startRowIndex + r;
-                float worldY = globalRowIndex * cellHeight;
+                float worldY = (globalRowIndex * cellHeight) + 1.0f;
 
                 if (!ShouldSpawnFurnitureOnRow(worldY, lastFurnitureWorldY))
                 {
                     continue;
                 }
-
-                float rowYOffset = worldY - segmentStartY;
                 int chosenOpenLane = SelectCorridorOpenLane(laneCount, lastOpenLaneIndex);
                 lastOpenLaneIndex = chosenOpenLane;
                 lastFurnitureWorldY = worldY;
 
-                PopulateFurnitureBlocksForRow(generatedBlocks, laneCount, chosenOpenLane, worldY, rowYOffset);
+                PopulateFurnitureBlocksForRow(generatedBlocks, laneCount, chosenOpenLane, worldY, worldY);
             }
 
             return generatedBlocks;

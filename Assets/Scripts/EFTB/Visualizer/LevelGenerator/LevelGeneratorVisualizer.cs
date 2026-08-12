@@ -60,14 +60,10 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 RecycleOldestSegment();
             }
             activeSegments.Clear();
-            lastSpawnedSegment = null;
         }
-
-        private GameObject lastSpawnedSegment;
 
         /// <summary>
         /// Spawns a level segment prefab from ObjectPoolManager at the specified world Y position.
-        /// Automatically aligns SpriteRenderer bounds to eliminate gaps or overlaps with adjacent segments.
         /// </summary>
         public GameObject SpawnSegment(LevelGeneratorData.LevelSegmentData template, float yPosition)
         {
@@ -86,26 +82,6 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
 
             GameObject segment = poolManager.Spawn(segmentPrefab, position, Quaternion.identity);
-
-            // Dynamic bounds auto-alignment to guarantee zero gap and zero overlap
-            if (lastSpawnedSegment != null && lastSpawnedSegment.activeInHierarchy)
-            {
-                SpriteRenderer prevSr = lastSpawnedSegment.GetComponentInChildren<SpriteRenderer>();
-                SpriteRenderer currentSr = segment.GetComponentInChildren<SpriteRenderer>();
-
-                if (prevSr != null && currentSr != null)
-                {
-                    float prevTopY = prevSr.bounds.max.y;
-                    float currentBottomY = currentSr.bounds.min.y;
-                    float shiftY = prevTopY - currentBottomY;
-
-                    if (Mathf.Abs(shiftY) > 0.001f)
-                    {
-                        segment.transform.position += new Vector3(0f, shiftY, 0f);
-                    }
-                }
-            }
-            lastSpawnedSegment = segment;
 
             GISegment giSegment = segment.GetComponent<GISegment>();
             if (giSegment == null)
@@ -137,16 +113,15 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             int laneIdx = Mathf.Clamp(blockData.LaneIndex, 0, laneXPosition.Length - 1);
             float targetX = laneXPosition[laneIdx];
-            float worldY = segmentYPosition + blockData.YOffset;
+            float worldY = GIFurnitureObstacle.SnapToCellCenter(blockData.YOffset);
 
             Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
             GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
+            if (spawnedObj == null) return null;
+
+            spawnedObj.transform.position = spawnPosition;
 
             GIFurnitureObstacle giFurniture = spawnedObj.GetComponent<GIFurnitureObstacle>();
-            if (giFurniture == null)
-            {
-                giFurniture = spawnedObj.AddComponent<GIFurnitureObstacle>();
-            }
             giFurniture.Initialize(blockData.LaneIndex, worldY);
 
             if (giSegment != null)
@@ -174,7 +149,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             int laneIdx = Mathf.Clamp(collectibleData.LaneIndex, 0, laneXPosition.Length - 1);
             float targetX = laneXPosition[laneIdx];
-            float worldY = segmentYPosition + collectibleData.YOffset;
+            float worldY = GIFurnitureObstacle.SnapToCellCenter(segmentYPosition + collectibleData.YOffset);
 
             Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
             Transform parentTransform = segment != null ? segment.transform : null;

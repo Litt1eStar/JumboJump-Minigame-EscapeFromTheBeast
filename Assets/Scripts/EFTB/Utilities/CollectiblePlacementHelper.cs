@@ -28,14 +28,14 @@ namespace JumboJumps.EFTB.Utilities
             List<CollectiblePlacementData> generatedCollectibles = new List<CollectiblePlacementData>();
             if (config == null) return generatedCollectibles;
 
-            float cellHeight = ConstGameplay.Player.STEP_DISTANCE_Y;
+            float cellHeight = config != null ? config.CellHeight : ConstGameplay.Player.STEP_DISTANCE_Y;
             int startRowIndex = Mathf.RoundToInt(segmentStartY / cellHeight);
             int totalRows = Mathf.RoundToInt(segmentHeight / cellHeight);
 
             for (int r = 0; r < totalRows; r++)
             {
                 int globalRowIndex = startRowIndex + r;
-                float worldY = globalRowIndex * cellHeight;
+                float worldY = (globalRowIndex * cellHeight) + (cellHeight * 0.5f);
 
                 if (globalRowIndex <= config.SafeZoneCells) continue;
 

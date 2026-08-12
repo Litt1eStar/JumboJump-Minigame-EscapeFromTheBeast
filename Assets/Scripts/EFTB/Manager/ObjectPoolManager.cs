@@ -43,9 +43,9 @@ namespace JumboJumps.EFTB.Manager
             if (pools.TryGetValue(key, out var queue) && queue.Count > 0)
             {
                 poolableObject = queue.Dequeue();
+                poolableObject.transform.SetParent(parent);
                 poolableObject.transform.position = position;
                 poolableObject.transform.rotation = rotation;
-                poolableObject.transform.SetParent(parent);
             }
             else
             {

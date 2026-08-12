@@ -76,7 +76,7 @@ namespace JumboJumps.EFTB.Manager
             if (playerManager?.PlayerTransform == null || levelGeneratorManager == null) return;
 
             float playerY = playerManager.PlayerTransform.position.y;
-            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float cellHeight = HazardConfig != null ? HazardConfig.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
 
             int safeZoneCells = HazardConfig != null ? HazardConfig.SafeZoneCells : ConstGameplay.Obstacle.SAFE_ZONE_CELLS;
             int safeZoneMinRowIndex = safeZoneCells + 1;
@@ -93,7 +93,7 @@ namespace JumboJumps.EFTB.Manager
                 {
                     continue;
                 }
-                float rowWorldY = r * cellHeight;
+                float rowWorldY = (r * cellHeight) + (cellHeight * 0.5f);
 
                 if (IsRowBlockedByFurniture(rowWorldY))
                 {
@@ -144,7 +144,8 @@ namespace JumboJumps.EFTB.Manager
 
             if (IsRowBlockedByFurniture(rowData.RowWorldY))
             {
-                int rowIdx = Mathf.RoundToInt(rowData.RowWorldY / ConstGameplay.Obstacle.Furniture.CELL_HEIGHT);
+                float cellHeight = HazardConfig != null ? HazardConfig.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+                int rowIdx = Mathf.FloorToInt(rowData.RowWorldY / cellHeight);
                 activeHazardRows.Remove(rowIdx);
                 return;
             }
