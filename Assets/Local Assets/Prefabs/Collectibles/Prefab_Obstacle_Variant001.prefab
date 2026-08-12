@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1987195773393031441}
   - component: {fileID: 8109440260431586299}
   m_Layer: 0
-  m_Name: Prefab_Obstacle_Chair
+  m_Name: Prefab_Obstacle_Variant001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 5023208134108911182}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.88, y: -7.42, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.28005752}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.21, y: 0.21, z: 0.39208052}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,12 +83,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -4809049931728760073, guid: 27e45aff23b9f844f8202da30ab7c784, type: 3}
-  m_Color: {r: 1, g: 0.86386204, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b1806522ff525014ca40aaecf4578bf2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 4.84375, y: 4.59375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -131,8 +131,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.875, y: 9.625}
-    newSize: {x: 0.2, y: 0.2}
+    oldSize: {x: 9.6875, y: 9.1875}
+    newSize: {x: 4.84375, y: 4.59375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
