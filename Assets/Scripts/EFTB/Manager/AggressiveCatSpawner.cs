@@ -49,6 +49,7 @@ namespace JumboJumps.EFTB.Manager
         {
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
             {
+                DebugLogHelper.LogWarning("AggressiveCatSpawner: OnPlayerIdleLimitExceeded called but not in InGameState, ignoring.");
                 return;
             }
 
