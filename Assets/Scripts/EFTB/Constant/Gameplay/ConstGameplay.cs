@@ -10,14 +10,14 @@ namespace JumboJumps.EFTB.Constant.Gameplay
         public class LevelGenerator
         {
             public const int MAX_SEGMENT_AMOUNT = 5;
-            public const float SEGMENT_HEIGHT = 21f;
-            public const float SEGMENT_RECYCLE_TRIGGER_OFFSET = 8f;
+            public const float SEGMENT_HEIGHT = 18f;
+            public const float SEGMENT_RECYCLE_TRIGGER_OFFSET = 18f;
             public const float MEDIUM_DIFFICULTY_TIME_PERCENTAGE = 0.5f;
             public const float HARD_DIFFICULTY_TIME_PERCENTAGE = 0.7f;
             public const int INITIAL_LANE_INDEX = 1;
             public const string DEFAULT_INITIAL_SEGMENT_PREFAB = "Prefab_Segment_Initial";
             public const int INITIAL_SEGMENT_ID = 0;
-            public static readonly float[] LANE_X_POSITIONS = new float[] { -2.0f, 0.0f, 2.0f };
+            public static readonly float[] LANE_X_POSITIONS = new float[] { -2.3f, 0.0f, 2.3f };
             public const float LANE_SIZE = 3.0f;
         }
 
@@ -59,6 +59,7 @@ namespace JumboJumps.EFTB.Constant.Gameplay
         public class Obstacle
         {
             public const int SAFE_ZONE_CELLS = 5; // Number of cells at the start of the level where no obstacles are spawned (5)
+            public const float DEFAULT_SPAWN_Y_OFFSET = 0.0f;
 
             public class Furniture
             {

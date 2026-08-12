@@ -1,3 +1,4 @@
+using JumboJumps.EFTB.Constant.Gameplay;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.Config
@@ -8,6 +9,10 @@ namespace JumboJumps.EFTB.Config
         [Header("Safe Zone")]
         [Tooltip("Number of safe cells at level start where no treats spawn (default: 5)")]
         [SerializeField] private int safeZoneCells = 5;
+
+        [Header("Grid Metrics")]
+        [Tooltip("Height of each grid cell in world units/meters (default: 3.0)")]
+        [SerializeField] private float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
 
         [Header("Treat Spawn & Point Balancing")]
         [Tooltip("Spawn ratio for treats across level rows (default: 0.15 = 15%)")]
@@ -25,6 +30,7 @@ namespace JumboJumps.EFTB.Config
         [SerializeField] private string prefabName = "Prefab_Collectible_Coin";
 
         public int SafeZoneCells => safeZoneCells;
+        public float CellHeight => cellHeight;
         public float SpawnRowRatio => spawnRowRatio;
         public int TreatPointValue => treatPointValue;
         public float HazardLaneWeightMultiplier => hazardLaneWeightMultiplier;

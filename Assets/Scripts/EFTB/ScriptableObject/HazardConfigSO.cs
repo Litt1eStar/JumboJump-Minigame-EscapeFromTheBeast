@@ -10,6 +10,10 @@ namespace JumboJumps.EFTB.Config
         [Tooltip("Number of safe cells at level start where no hazards spawn (default: 5)")]
         [SerializeField] private int safeZoneCells = ConstGameplay.Obstacle.SAFE_ZONE_CELLS;
 
+        [Header("Grid Metrics")]
+        [Tooltip("Height of each grid cell in world units/meters (default: 3.0)")]
+        [SerializeField] private float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+
         [Header("Spawn Interval Balancing")]
         [Tooltip("Base spawn interval range low in seconds (default: 3.0s)")]
         [SerializeField] private float baseIntervalLow = ConstGameplay.Obstacle.Hazard.BASE_INTERVAL_LOW;
@@ -45,6 +49,7 @@ namespace JumboJumps.EFTB.Config
 
         // Properties
         public int SafeZoneCells => safeZoneCells;
+        public float CellHeight => cellHeight;
         public float BaseIntervalLow => baseIntervalLow;
         public float BaseIntervalHigh => baseIntervalHigh;
         public float StepIntervalReduction => stepIntervalReduction;
