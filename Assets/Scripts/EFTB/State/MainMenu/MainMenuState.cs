@@ -37,7 +37,7 @@ namespace JumboJumps.EFTB.State.MainMenu
 
         private static void ResetGameplay()
         {
-            GameContext.Instance?.Get<PlayerManager>()?.Visualizer?.SetPlayerOnMiddleLane();
+            GameContext.Instance?.Get<PlayerManager>()?.ResetPlayer();
             GameContext.Instance?.Get<CollectibleManager>()?.ResetValue();
             GameContext.Instance?.Get<ScoreManager>()?.ResetScore();
             GameContext.Instance?.Get<LevelGeneratorManager>()?.ResetLevel();

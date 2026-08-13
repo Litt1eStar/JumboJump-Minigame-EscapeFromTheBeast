@@ -35,6 +35,25 @@ namespace JumboJumps.EFTB.Manager
             Visualizer.SetPlayerOnMiddleLane();
         }
 
+        public void ResetPlayer()
+        {
+            if (stateController != null)
+            {
+                stateController.CurrentLaneIndex = JumboJumps.EFTB.Constant.Gameplay.ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
+                stateController.IsStepUpRequested = false;
+                stateController.ResetIdleTimer();
+                stateController.StartStateController(typeof(PlayerIdleState));
+            }
+
+            SetPlayerToMiddleLane();
+
+            if (stateController != null)
+            {
+                float startX = stateController.LaneXPositions[stateController.CurrentLaneIndex];
+                Visualizer?.SetXPosition(startX);
+            }
+        }
+
         public void Dispose()
         {
             if (stateController != null)
