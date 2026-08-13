@@ -1,12 +1,14 @@
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Constant.Gameplay;
 using UnityEngine;
+using JumboJumps.EFTB.Visualizer;
 
 namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerIdleState : BaseState
     {
         private PlayerStateController playerStateController => (PlayerStateController)StateController;
+        private PlayerVisualizer playerVisualizer => playerStateController.Visualizer;
         private float idleTimer;
 
         public PlayerIdleState(BaseStateController stateController) : base(stateController)
@@ -19,6 +21,7 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
+            playerVisualizer?.SetMovingAnimation(false);
             idleTimer = playerStateController.IdleTimer;
             Subscribe();
         }

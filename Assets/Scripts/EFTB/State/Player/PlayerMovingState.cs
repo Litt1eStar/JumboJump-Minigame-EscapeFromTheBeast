@@ -23,6 +23,7 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
+            playerVisualizer?.SetMovingAnimation(true);
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
             stepCoroutine = coroutineHelper.Restart(stepCoroutine, DiscreteStepForwardRoutine());
         }
@@ -51,6 +52,8 @@ namespace JumboJumps.EFTB.State.Player
 
         public override void OnExitState()
         {
+            playerVisualizer?.SetMovingAnimation(false);
+
             if (coroutineHelper != null)
             {
                 coroutineHelper.Stop(stepCoroutine);

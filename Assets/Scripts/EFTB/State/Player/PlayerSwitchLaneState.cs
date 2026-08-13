@@ -1,6 +1,7 @@
 using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Visualizer;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace JumboJumps.EFTB.State.Player
     public class PlayerSwitchLaneState : BaseState
     {
         private PlayerStateController playerStateController => (PlayerStateController)StateController;
+        private PlayerVisualizer playerVisualizer => playerStateController.Visualizer;
 
         private CoroutineHelper coroutineHelper;
         private Coroutine switchLaneCoroutine;
@@ -21,6 +23,8 @@ namespace JumboJumps.EFTB.State.Player
         public override void OnEnterState()
         {
             base.OnEnterState();
+
+            playerVisualizer?.SetMovingAnimation(true);
 
             int targetLane = playerStateController.CurrentLaneIndex;
 
@@ -70,6 +74,8 @@ namespace JumboJumps.EFTB.State.Player
 
         public override void OnExitState()
         {
+            playerStateController.Visualizer?.SetMovingAnimation(false);
+
             if (coroutineHelper != null) 
             {
                 coroutineHelper.Stop(switchLaneCoroutine);

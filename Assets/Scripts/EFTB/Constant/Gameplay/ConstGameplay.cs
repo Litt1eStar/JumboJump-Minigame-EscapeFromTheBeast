@@ -25,6 +25,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
         {
             public const float STEP_DISTANCE_Y = 3.0f;
             public const float STEP_DURATION = 0.12f;
+            public const float MIN_MOVE_ANIM_DURATION = 0.2f;
+            public const string MOVING_ANIM_PARAM = "isMoving";
         }
 
         public class Score

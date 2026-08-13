@@ -52,5 +52,10 @@ namespace JumboJumps.EFTB.Visualizer
         {
             giPlayer?.StopPounceWarning();
         }
+
+        public void SetMovingAnimation(bool isMoving)
+        {
+            giPlayer?.SetMovingAnimation(isMoving);
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
@@ -27,21 +28,17 @@ namespace JumboJumps.EFTB.GI
         [SerializeField]
         private Transform initialStartPosition;
 
+        private CoroutineHelper coroutineHelper;
         private Coroutine warningCoroutine;
+        private Coroutine moveAnimCoroutine;
         private Color originalSpriteColor = Color.white;
 
         public Vector3 PlayerPosition => playerTransform.position;
 
-        private void Awake()
-        {
-            if (spriteRenderer != null)
-            {
-                originalSpriteColor = spriteRenderer.color;
-            }
-        }
-
         public void Initialize()
         {
+            coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
+            
             if (spriteRenderer != null)
             {
                 originalSpriteColor = spriteRenderer.color;
@@ -51,24 +48,68 @@ namespace JumboJumps.EFTB.GI
         public void Dispose()
         {
             StopPounceWarning();
+            StopMoveAnimRoutine();
         }
 
-        private void OnDisable()
+        public void SetMovingAnimation(bool isMoving)
         {
-            StopPounceWarning();
+            if (animator == null) return;
+
+            if (isMoving)
+            {
+                StopMoveAnimRoutine();
+                animator.SetBool(ConstGameplay.Player.MOVING_ANIM_PARAM, true);
+            }
+            else
+            {
+                if (moveAnimCoroutine == null && coroutineHelper != null)
+                {    
+                    moveAnimCoroutine = coroutineHelper.Play(ResetMovingAnimRoutine(), this);  
+                }
+            }
+        }
+
+        private IEnumerator ResetMovingAnimRoutine()
+        {
+            if (animator == null) yield break;
+
+            yield return new WaitForSeconds(ConstGameplay.Player.MIN_MOVE_ANIM_DURATION);
+            
+            animator.SetBool(ConstGameplay.Player.MOVING_ANIM_PARAM, false);
+            moveAnimCoroutine = null;
+        }
+
+        private void StopMoveAnimRoutine()
+        {
+            if (moveAnimCoroutine != null)
+            {
+                if (coroutineHelper != null)
+                {
+                    coroutineHelper.Stop(moveAnimCoroutine, this);
+                }
+
+                moveAnimCoroutine = null;
+            }
         }
 
         public void ShowPounceWarning(float duration, Action onComplete)
         {
             StopPounceWarning();
-            warningCoroutine = StartCoroutine(PounceWarningRoutine(duration, onComplete));
+            if (coroutineHelper != null)
+            {
+                warningCoroutine = coroutineHelper.Play(PounceWarningRoutine(duration, onComplete), this);
+            }
+            else
+            {
+                warningCoroutine = StartCoroutine(PounceWarningRoutine(duration, onComplete));
+            }
         }
 
         public void StopPounceWarning()
         {
-            if (warningCoroutine != null)
+            if (coroutineHelper != null && warningCoroutine != null)
             {
-                StopCoroutine(warningCoroutine);
+                coroutineHelper.Stop(warningCoroutine, this);
                 warningCoroutine = null;
             }
 
@@ -137,20 +178,6 @@ namespace JumboJumps.EFTB.GI
         public void MoveForward(float deltaTime)
         {
             playerTransform.position += new Vector3(0, playerMovementSpeed * deltaTime, 0);
-        }
-
-        private void FlipSpriteBasedFromInputDirection(float input)
-        {
-            if (input > 0)
-            {
-                //face right
-                spriteRenderer.flipX = false;
-            }
-            else if (input < 0)
-            {
-                //face left
-                spriteRenderer.flipX = true;
-            }
         }
     }
 }
