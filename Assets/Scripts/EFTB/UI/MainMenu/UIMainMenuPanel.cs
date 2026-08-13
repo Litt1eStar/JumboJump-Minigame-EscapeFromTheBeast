@@ -73,6 +73,8 @@ namespace JumboJumps.EFTB.UI.MainMenu
 
         private void ResetUIVisibility()
         {
+            if (playButton != null) playButton.interactable = true;
+
             if (logoCanvasGroup != null) logoCanvasGroup.alpha = 1f;
             if (playButtonCanvasGroup != null) playButtonCanvasGroup.alpha = 1f;
             if (exitButtonCanvasGroup != null) exitButtonCanvasGroup.alpha = 1f;
@@ -293,6 +295,7 @@ namespace JumboJumps.EFTB.UI.MainMenu
 
         private void OnPlayButtonClicked()
         {
+            if (playButton != null) playButton.interactable = false;
             EventPlayUIButtonClicked?.Invoke();
         }
 
