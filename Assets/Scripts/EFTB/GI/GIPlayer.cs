@@ -62,9 +62,14 @@ namespace JumboJumps.EFTB.GI
             }
             else
             {
-                if (moveAnimCoroutine == null && coroutineHelper != null)
-                {    
-                    moveAnimCoroutine = coroutineHelper.Play(ResetMovingAnimRoutine(), this);  
+                StopMoveAnimRoutine();
+                if (coroutineHelper != null)
+                {
+                    moveAnimCoroutine = coroutineHelper.Play(ResetMovingAnimRoutine(), this);
+                }
+                else
+                {
+                    moveAnimCoroutine = StartCoroutine(ResetMovingAnimRoutine());
                 }
             }
         }
@@ -87,6 +92,10 @@ namespace JumboJumps.EFTB.GI
                 {
                     coroutineHelper.Stop(moveAnimCoroutine, this);
                 }
+                else
+                {
+                    StopCoroutine(moveAnimCoroutine);
+                }
 
                 moveAnimCoroutine = null;
             }
@@ -94,25 +103,18 @@ namespace JumboJumps.EFTB.GI
 
         public void ShowPounceWarning(float duration, Action onComplete)
         {
-            ShowPounceWarning(
-                duration,
-                ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_SHAKE_SPEED,
-                ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_MAX_Z_ROTATION,
-                onComplete
-            );
+            ShowPounceWarning(duration,
+                              ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_SHAKE_SPEED,
+                              ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_MAX_Z_ROTATION,
+                              onComplete);
         }
 
         public void ShowPounceWarning(float duration, float shakeSpeed, float maxZAngle, Action onComplete)
         {
             StopPounceWarning();
-            if (coroutineHelper != null)
-            {
-                warningCoroutine = coroutineHelper.Play(PounceWarningRoutine(duration, shakeSpeed, maxZAngle, onComplete), this);
-            }
-            else
-            {
-                warningCoroutine = StartCoroutine(PounceWarningRoutine(duration, shakeSpeed, maxZAngle, onComplete));
-            }
+            
+            warningCoroutine = coroutineHelper.Play(PounceWarningRoutine(duration, shakeSpeed, maxZAngle, onComplete), this);
+            
         }
 
         private Quaternion originalWarningLocalRotation;
