@@ -51,6 +51,15 @@ namespace JumboJumps.EFTB.GameData.Cat
         [SerializeField]
         private float smashCollisionProgressThreshold = 0.8f;
 
+        [SerializeField]
+        private float pounceWarningDuration = 1.5f;
+
+        [SerializeField]
+        private float pounceWarningShakeSpeed = 25f;
+
+        [SerializeField]
+        private float pounceWarningMaxZRotation = 12f;
+
         public float TimeToAppear => timeToAppear;
         public float TimeToAwake => timeToAwake;
         public float TimeToAlert => timeToAlert;
@@ -65,6 +74,9 @@ namespace JumboJumps.EFTB.GameData.Cat
         public float SmashMoveInPercentage => smashMoveInPercentage;
         public float SmashWaitPercentage => smashWaitPercentage;
         public float SmashCollisionProgressThreshold => smashCollisionProgressThreshold;
+        public float PounceWarningDuration => pounceWarningDuration;
+        public float PounceWarningShakeSpeed => pounceWarningShakeSpeed;
+        public float PounceWarningMaxZRotation => pounceWarningMaxZRotation;
 
         public override ICatStateController BuildStateController(GICat giCat, Transform transform, UICatStateLabel label)
         {

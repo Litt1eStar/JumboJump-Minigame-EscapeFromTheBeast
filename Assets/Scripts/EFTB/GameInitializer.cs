@@ -26,7 +26,6 @@ namespace JumboJumps.EFTB
             StartGame();
         }
 
-
         private void OnDestroy()
         {
             Dispose();

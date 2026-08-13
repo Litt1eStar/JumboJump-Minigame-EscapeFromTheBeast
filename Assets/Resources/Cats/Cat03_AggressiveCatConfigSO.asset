@@ -72,3 +72,6 @@ MonoBehaviour:
   smashMoveInPercentage: 0.4
   smashWaitPercentage: 0.7
   smashCollisionProgressThreshold: 0.95
+  pounceWarningDuration: 1.5
+  pounceWarningShakeSpeed: 40
+  pounceWarningMaxZRotation: 12

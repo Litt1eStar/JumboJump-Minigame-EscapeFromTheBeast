@@ -48,6 +48,11 @@ namespace JumboJumps.EFTB.Visualizer
             giPlayer?.ShowPounceWarning(duration, onComplete);
         }
 
+        public void ShowPounceWarning(float duration, float shakeSpeed, float maxZAngle, System.Action onComplete)
+        {
+            giPlayer?.ShowPounceWarning(duration, shakeSpeed, maxZAngle, onComplete);
+        }
+
         public void StopPounceWarning()
         {
             giPlayer?.StopPounceWarning();

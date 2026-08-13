@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.GameData.Cat;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
@@ -15,6 +16,22 @@ namespace JumboJumps.EFTB.Manager
         private CatManager catManager;
         private GameDataManager gameDataManager;
         private GameplayStateManager gameplayStateManager;
+        private AggressiveCatConfigSO aggressiveCatConfig;
+        public AggressiveCatConfigSO AggressiveCatConfig
+        {
+            get
+            {
+                if (aggressiveCatConfig == null && SceneObjectContext.Instance != null)
+                {
+                    var container = SceneObjectContext.Instance.Get<GIGameplayConfigContainer>();
+                    if (container != null && container.AggressiveCatConfig != null)
+                    {
+                        aggressiveCatConfig = container.AggressiveCatConfig;
+                    }
+                }
+                return aggressiveCatConfig;
+            }
+        }
 
         private bool isAntiCampWarningActive;
 
@@ -80,11 +97,14 @@ namespace JumboJumps.EFTB.Manager
                 sideIndex = (Random.value < 0.5f) ? 0 : 1; // Lane 2 -> 50% random
             }
 
-            float warningDuration = ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
+            var config = AggressiveCatConfig;
+            float warningDuration = (config != null) ? config.PounceWarningDuration : ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
+            float shakeSpeed = (config != null) ? config.PounceWarningShakeSpeed : ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_SHAKE_SPEED;
+            float maxZAngle = (config != null) ? config.PounceWarningMaxZRotation : ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_MAX_Z_ROTATION;
 
             if (playerManager != null)
             {
-                playerManager.TriggerPounceWarning(warningDuration, () =>
+                playerManager.TriggerPounceWarning(warningDuration, shakeSpeed, maxZAngle, () =>
                 {
                     isAntiCampWarningActive = false;
                     SpawnAggressiveCat(sideIndex, cachedTargetPos);

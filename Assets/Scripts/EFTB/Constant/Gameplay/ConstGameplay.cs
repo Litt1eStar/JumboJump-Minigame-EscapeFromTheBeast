@@ -54,6 +54,9 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float IDLE_LIMIT = 4.5f;
                 public const float POUNCE_WARNING_DURATION = 1.5f;
                 public const float POUNCE_FLASH_INTERVAL = 0.1f;
+                public const float POUNCE_WARNING_SHAKE_AMOUNT = 0.08f;
+                public const float POUNCE_WARNING_SHAKE_SPEED = 25f;
+                public const float POUNCE_WARNING_MAX_Z_ROTATION = 12f;
                 public static readonly Color POUNCE_FLASH_COLOR = Color.red;
                 public static readonly float[] SPAWN_X_LEFT_POSITION = new float[] { -8.5f, -6.0f };
                 public static readonly float[] SPAWN_X_RIGHT_POSITION = new float[] { 6.0f, 8.5f };

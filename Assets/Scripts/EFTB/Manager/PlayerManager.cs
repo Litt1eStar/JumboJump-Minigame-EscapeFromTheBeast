@@ -61,5 +61,10 @@ namespace JumboJumps.EFTB.Manager
         {
             visualizer?.ShowPounceWarning(duration, onComplete);
         }
+
+        public void TriggerPounceWarning(float duration, float shakeSpeed, float maxZAngle, System.Action onComplete)
+        {
+            visualizer?.ShowPounceWarning(duration, shakeSpeed, maxZAngle, onComplete);
+        }
     }
 }
