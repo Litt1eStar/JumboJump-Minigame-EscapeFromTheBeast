@@ -64,7 +64,22 @@ namespace JumboJumps.EFTB.Manager
         private void TriggerAlphaCatPounceSequence(Vector3 cachedTargetPos)
         {
             isAntiCampWarningActive = true;
-            int sideIndex = (Random.value < 0.5f) ? 0 : 1;
+            
+            int playerLaneIndex = GetPlayerLaneIndex(cachedTargetPos.x);
+            int sideIndex;
+            if (playerLaneIndex <= 0)
+            {
+                sideIndex = 0; // Lane 1 -> Left side
+            }
+            else if (playerLaneIndex >= 2)
+            {
+                sideIndex = 1; // Lane 3 -> Right side
+            }
+            else
+            {
+                sideIndex = (Random.value < 0.5f) ? 0 : 1; // Lane 2 -> 50% random
+            }
+
             float warningDuration = ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
 
             if (playerManager != null)
@@ -79,6 +94,26 @@ namespace JumboJumps.EFTB.Manager
             {
                 isAntiCampWarningActive = false;
             }
+        }
+
+        private int GetPlayerLaneIndex(float playerX)
+        {
+            float[] lanePositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+            if (lanePositions == null || lanePositions.Length == 0) return 1;
+
+            int closestLane = 0;
+            float minDistance = Mathf.Abs(playerX - lanePositions[0]);
+
+            for (int i = 1; i < lanePositions.Length; i++)
+            {
+                float distance = Mathf.Abs(playerX - lanePositions[i]);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestLane = i;
+                }
+            }
+            return closestLane;
         }
 
         private bool CanSpawnAggressiveCat(Vector3 cachedTargetPos, out float spawnY)

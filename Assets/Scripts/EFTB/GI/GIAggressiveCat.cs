@@ -33,10 +33,7 @@ namespace JumboJumps.EFTB.GI
 
         public void SetHandPosition(Vector3 position)
         {
-            if (catHand != null)
-            {
-                catHand.position = position;
-            }
+            transform.position = position;
         }
 
         public void SetHandRotation(Quaternion rotation) 
@@ -47,8 +44,23 @@ namespace JumboJumps.EFTB.GI
             }
         }
 
+        public void SetRotation(Quaternion rotation)
+        {
+            transform.rotation = rotation;
+        }
+
+        public void SetSmashColliderActive(bool active)
+        {
+            if (smashCollider != null)
+            {
+                smashCollider.enabled = active;
+            }
+        }
+
         public bool CheckPlayerCollision()
         {
+            if (smashCollider == null || !smashCollider.enabled) return false;
+
             ContactFilter2D filter = ContactFilter2D.noFilter;
             List<Collider2D> results = new List<Collider2D>();
             smashCollider.Overlap(filter, results);

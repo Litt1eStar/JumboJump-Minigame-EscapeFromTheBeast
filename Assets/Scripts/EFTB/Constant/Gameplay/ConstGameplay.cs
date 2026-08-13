@@ -53,6 +53,14 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float POUNCE_WARNING_DURATION = 1.5f;
                 public const float POUNCE_FLASH_INTERVAL = 0.1f;
                 public static readonly Color POUNCE_FLASH_COLOR = Color.red;
+                public static readonly float[] SPAWN_X_LEFT_POSITION = new float[] { -8.5f, -6.0f };
+                public static readonly float[] SPAWN_X_RIGHT_POSITION = new float[] { 6.0f, 8.5f };
+                public const float OFFSCREEN_X_LEFT_POSITION = -15.0f;
+                public const float OFFSCREEN_X_RIGHT_POSITION = 15.0f;
+                public const float INITIAL_Z_ROTATION = 15f;
+                public const float FINAL_Z_ROTATION = -25f;
+                public const float CAT_SMASH_MOVE_IN_PERCENTAGE = 0.4f;
+                public const float CAT_SMASH_WAIT_PERCENTAGE = 0.7f;
             }
         }
 
