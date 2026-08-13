@@ -15,17 +15,20 @@ namespace JumboJumps.EFTB.Visualizer
             if (giPlayer == null)
             {
                 DebugLogHelper.LogError("GIPlayer not found in SceneObjectContext. PlayerVisualizer initialization failed.");
+                return;
             }
 
+            giPlayer.Initialize();
         }
 
         public void SetPlayerOnMiddleLane()
         {
-            giPlayer.SetInitialStartPosition();
+            giPlayer?.SetInitialStartPosition();
         }
 
         public void Dispose()
         {
+            giPlayer?.Dispose();
             giPlayer = null;
         }
         public void MoveForward(float deltaTime)
@@ -61,6 +64,11 @@ namespace JumboJumps.EFTB.Visualizer
         public void SetMovingAnimation(bool isMoving)
         {
             giPlayer?.SetMovingAnimation(isMoving);
+        }
+
+        public void SetAlpha(float alpha)
+        {
+            giPlayer?.SetAlpha(alpha);
         }
     }
 }

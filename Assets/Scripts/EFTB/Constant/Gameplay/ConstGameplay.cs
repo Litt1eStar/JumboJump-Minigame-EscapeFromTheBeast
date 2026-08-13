@@ -29,6 +29,23 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public const string MOVING_ANIM_PARAM = "isMoving";
         }
 
+        public class UI
+        {
+            public class MainMenu
+            {
+                public const float LOGO_IDLE_SCALE_SPEED = 3f;
+                public const float LOGO_IDLE_SCALE_MIN = 0.95f;
+                public const float LOGO_IDLE_SCALE_MAX = 1.05f;
+                public const float FADE_DURATION = 0.3f;
+                public const float READY_GO_HOLD_DURATION = 0.4f;
+                public const float READY_GO_SCALE_START = 0.5f;
+                public const float READY_GO_SCALE_TARGET = 1.1f;
+                public const float READY_SWING_MAX_Z_ANGLE = 20f;
+                public const float READY_SWING_SPEED = 15f;
+                public const float GO_SCALE_OUT_TARGET = 2.2f;
+            }
+        }
+
         public class Score
         {
             public const int DISTANCE_POINT_PER_CELL = 10;

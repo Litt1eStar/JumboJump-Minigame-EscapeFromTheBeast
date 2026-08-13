@@ -1,5 +1,6 @@
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Gameplay
@@ -19,6 +20,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             StateTransitionMap.Add(typeof(FinishGameState), null);
             StateTransitionMap.Add(typeof(PauseMenuState), null);
+            StateTransitionMap.Add(typeof(MainMenuState), null);
 
             this.stateController = (GameplayStateController)stateController;
         }

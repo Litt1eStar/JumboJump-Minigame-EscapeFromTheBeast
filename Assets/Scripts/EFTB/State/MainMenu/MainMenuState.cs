@@ -1,49 +1,55 @@
-﻿using JumboJumps.EFTB.Constant.Scene;
-using JumboJumps.EFTB.State.Base;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Visualizer.MainMenu;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.State.MainMenu
 {
-    public class MainMenuState : BaseLoadSceneState
+    public class MainMenuState : BaseState
     {
-        protected override string SceneName => ConstScene.MAIN_MENU;
-
         private MainMenuVisualizer visualizer;
 
         public MainMenuState(BaseStateController stateController) : base(stateController)
         {
-            StateTransitionMap.Add(typeof(GameplayState), null);
-        }
-
-        protected override void OnSceneLoadSucceeded()
-        {
-            base.OnSceneLoadSucceeded();
-
-            visualizer = new MainMenuVisualizer();
-            visualizer.Initialize();
-
-            visualizer.EventPlayUIButtonClicked += OnPlayButtonClicked;
-            visualizer.EventExitUIButtonClicked += OnExitButtonClicked;
+            StateTransitionMap.Add(typeof(InGameState), null);
         }
 
         public override void OnEnterState()
         {
             base.OnEnterState();
+
+            visualizer = new MainMenuVisualizer();
+            visualizer.Initialize();
+            visualizer.Show();
+
+            visualizer.EventPlayUIButtonClicked += OnPlayButtonClicked;
+            visualizer.EventExitUIButtonClicked += OnExitButtonClicked;
+
+            visualizer.SetWorldObjectsAlpha(0f);
+            visualizer.StartLogoIdleAnimation();
         }
 
         public override void OnExitState()
         {
-            visualizer?.Dispose();
-            visualizer = null;
+            if (visualizer != null)
+            {
+                visualizer.EventPlayUIButtonClicked -= OnPlayButtonClicked;
+                visualizer.EventExitUIButtonClicked -= OnExitButtonClicked;
+                visualizer.Dispose();
+                visualizer = null;
+            }
 
             base.OnExitState();
         }
 
         public void OnPlayButtonClicked()
         {
-            StateController.ChangeState(typeof(GameplayState));
+            visualizer?.PlayStartSequence(() =>
+            {
+                visualizer?.FadeInWorldObjects(0.3f, () =>
+                {
+                    StateController.ChangeState(typeof(InGameState));
+                });
+            });
         }
 
         public void OnExitButtonClicked()

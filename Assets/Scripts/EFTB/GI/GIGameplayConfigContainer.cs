@@ -19,9 +19,13 @@ namespace JumboJumps.EFTB.GI
         [Tooltip("Aggressive cat balancing settings configured by game designers")]
         [SerializeField] private AggressiveCatConfigSO aggressiveCatConfig;
 
+        [Tooltip("UI balancing settings configured by game designers")]
+        [SerializeField] private UIConfigSO uiConfig;
+
         public FurnitureConfigSO FurnitureConfig => furnitureConfig;
         public HazardConfigSO HazardConfig => hazardConfig;
         public CollectibleConfigSO CollectibleConfig => collectibleConfig;
         public AggressiveCatConfigSO AggressiveCatConfig => aggressiveCatConfig;
+        public UIConfigSO UIConfig => uiConfig;
     }
 }

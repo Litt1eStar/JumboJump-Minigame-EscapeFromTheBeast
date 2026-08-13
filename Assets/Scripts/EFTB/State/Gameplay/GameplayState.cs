@@ -146,7 +146,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
         public void ReturnBackToMainMenu()
         {
-            stateController.ChangeState(typeof(MainMenuState));
+            gameplayStateManager?.StateController?.ChangeState(typeof(MainMenuState));
         }
     }
 }

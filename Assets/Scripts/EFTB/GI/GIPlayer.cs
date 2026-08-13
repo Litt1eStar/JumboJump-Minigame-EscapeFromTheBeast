@@ -187,6 +187,27 @@ namespace JumboJumps.EFTB.GI
             onComplete?.Invoke();
         }
 
+        public void SetAlpha(float alpha)
+        {
+            if (spriteRenderer != null)
+            {
+                Color c = spriteRenderer.color;
+                c.a = alpha;
+                spriteRenderer.color = c;
+            }
+
+            SpriteRenderer[] childRenderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var r in childRenderers)
+            {
+                if (r != null)
+                {
+                    Color c = r.color;
+                    c.a = alpha;
+                    r.color = c;
+                }
+            }
+        }
+
         public void SetPosition(Vector3 position)
         {
             playerTransform.position = position;

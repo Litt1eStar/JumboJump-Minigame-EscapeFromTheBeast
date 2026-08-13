@@ -17,8 +17,7 @@ namespace JumboJumps.EFTB.State
             States = new Dictionary<Type, BaseState>()
             {
                 {typeof(InitialLoadingState), new InitialLoadingState(this) },
-                {typeof(GameplayState), new GameplayState(this) },
-                {typeof(MainMenuState), new MainMenuState(this) }
+                {typeof(GameplayState), new GameplayState(this) }
             };
         }
 

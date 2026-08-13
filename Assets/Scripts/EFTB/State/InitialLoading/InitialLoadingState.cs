@@ -1,5 +1,5 @@
 using JumboJump.EFTB.Constant.UI;
-using JumboJumps.EFTB.State.MainMenu;
+using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.InitialLoading;
 using System.Collections;
@@ -18,7 +18,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
 
         public InitialLoadingState(BaseStateController stateController) : base(stateController)
         {
-            StateTransitionMap.Add(typeof(MainMenuState), null);
+            StateTransitionMap.Add(typeof(GameplayState), null);
 
             this.stateController = (GameStateController)stateController;
         }
@@ -37,7 +37,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
                 loadingProgressCoroutine = coroutineHelper.Play(SimulatedLoadingRoutine());
             #else 
                 // In Real game, do real loading pre-load assets
-                StateController.ChangeState(typeof(MainMenuState));
+                StateController.ChangeState(typeof(GameplayState));
             #endif
         }
 
@@ -58,7 +58,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
 
             yield return new WaitForSeconds(0.5f);
 
-            StateController.ChangeState(typeof(MainMenuState));
+            StateController.ChangeState(typeof(GameplayState));
         }
 
         public override void OnExitState()
