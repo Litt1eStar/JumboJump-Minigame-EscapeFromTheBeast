@@ -1,4 +1,4 @@
-namespace JumboJump.EFTB.Constant.UI
+namespace JumboJumps.EFTB.Constant.UI
 {
     public static class ConstUI
     {

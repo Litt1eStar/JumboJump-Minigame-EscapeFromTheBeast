@@ -1,4 +1,4 @@
-using JumboJump.EFTB.Constant.UI;
+using JumboJumps.EFTB.Constant.UI;
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;

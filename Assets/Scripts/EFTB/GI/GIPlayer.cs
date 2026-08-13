@@ -33,6 +33,8 @@ namespace JumboJumps.EFTB.GI
         private Coroutine moveAnimCoroutine;
         private Color originalSpriteColor = Color.white;
 
+        private SpriteRenderer[] childSpriteRenderers;
+
         public Vector3 PlayerPosition => playerTransform.position;
 
         public void Initialize()
@@ -43,6 +45,8 @@ namespace JumboJumps.EFTB.GI
             {
                 originalSpriteColor = spriteRenderer.color;
             }
+
+            childSpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         }
 
         public void Dispose()
@@ -196,14 +200,16 @@ namespace JumboJumps.EFTB.GI
                 spriteRenderer.color = c;
             }
 
-            SpriteRenderer[] childRenderers = GetComponentsInChildren<SpriteRenderer>();
-            foreach (var r in childRenderers)
+            if (childSpriteRenderers != null)
             {
-                if (r != null)
+                foreach (var r in childSpriteRenderers)
                 {
-                    Color c = r.color;
-                    c.a = alpha;
-                    r.color = c;
+                    if (r != null)
+                    {
+                        Color c = r.color;
+                        c.a = alpha;
+                        r.color = c;
+                    }
                 }
             }
         }
