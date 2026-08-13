@@ -66,6 +66,22 @@ namespace JumboJumps.EFTB.Manager
             GameContext.Instance.Remove(this);
         }
 
+        public void ResetLevel()
+        {
+            if (poolManager != null)
+            {
+                for (int i = 0; i < activeHazards.Count; i++)
+                {
+                    if (activeHazards[i] != null && activeHazards[i].gameObject.activeInHierarchy)
+                    {
+                        poolManager.Recycle(activeHazards[i].gameObject);
+                    }
+                }
+            }
+            activeHazards.Clear();
+            activeHazardRows.Clear();
+        }
+
         public void UpdateLogic(float deltaTime)
         {
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))

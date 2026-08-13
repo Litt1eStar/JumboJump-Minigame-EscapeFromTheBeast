@@ -12,7 +12,7 @@ namespace JumboJumps.EFTB.Manager
         public PlayerStateController StateController => stateController;
         public event System.Action EventIdleLimitExceeded;
         private PlayerStateController stateController;
-        private PlayerVisualizer visualizer => stateController.Visualizer;
+        public PlayerVisualizer Visualizer => stateController.Visualizer;
         public void Initialize()
         {
             Debug.Log($"{this.GetType().Name} was Initialize");
@@ -25,14 +25,14 @@ namespace JumboJumps.EFTB.Manager
             SetPlayerToMiddleLane();
             
             float startX = stateController.LaneXPositions[stateController.CurrentLaneIndex];
-            visualizer.SetXPosition(startX);
+            Visualizer.SetXPosition(startX);
 
             GameContext.Instance.Add(this);
         }
 
         private void SetPlayerToMiddleLane()
         {
-            visualizer.SetPlayerOnMiddleLane();
+            Visualizer.SetPlayerOnMiddleLane();
         }
 
         public void Dispose()
@@ -59,12 +59,12 @@ namespace JumboJumps.EFTB.Manager
 
         public void TriggerPounceWarning(float duration, System.Action onComplete)
         {
-            visualizer?.ShowPounceWarning(duration, onComplete);
+            Visualizer?.ShowPounceWarning(duration, onComplete);
         }
 
         public void TriggerPounceWarning(float duration, float shakeSpeed, float maxZAngle, System.Action onComplete)
         {
-            visualizer?.ShowPounceWarning(duration, shakeSpeed, maxZAngle, onComplete);
+            Visualizer?.ShowPounceWarning(duration, shakeSpeed, maxZAngle, onComplete);
         }
     }
 }

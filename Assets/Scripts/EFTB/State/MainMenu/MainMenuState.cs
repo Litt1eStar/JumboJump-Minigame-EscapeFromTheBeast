@@ -1,4 +1,6 @@
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.Gameplay;
+using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.MainMenu;
 using UnityEngine;
 
@@ -21,11 +23,25 @@ namespace JumboJumps.EFTB.State.MainMenu
             visualizer.Initialize();
             visualizer.Show();
 
+            GameplayStateController gameplayStateController = StateController as GameplayStateController;
+            gameplayStateController?.GameplayVisualizer?.HidePanel();
+
             visualizer.EventPlayUIButtonClicked += OnPlayButtonClicked;
             visualizer.EventExitUIButtonClicked += OnExitButtonClicked;
 
+            ResetGameplay();
+
             visualizer.SetWorldObjectsAlpha(0f);
             visualizer.StartLogoIdleAnimation();
+        }
+
+        private static void ResetGameplay()
+        {
+            GameContext.Instance?.Get<PlayerManager>()?.Visualizer?.SetPlayerOnMiddleLane();
+            GameContext.Instance?.Get<CollectibleManager>()?.ResetValue();
+            GameContext.Instance?.Get<ScoreManager>()?.ResetScore();
+            GameContext.Instance?.Get<LevelGeneratorManager>()?.ResetLevel();
+            GameContext.Instance?.Get<HazardSpawner>()?.ResetLevel();
         }
 
         public override void OnExitState()

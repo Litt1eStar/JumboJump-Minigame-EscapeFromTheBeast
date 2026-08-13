@@ -69,6 +69,16 @@ namespace JumboJumps.EFTB.Manager
             }
         }
 
+        public void ResetScore()
+        {
+            MaxCellsClimbed = 0;
+            if (playerTransform != null)
+            {
+                initialPlayerY = playerTransform.position.y;
+            }
+            EventScoreChanged?.Invoke(CurrentScoreData);
+        }
+
         private void OnTreatsCollectedChanged(int totalValue)
         {
             EventScoreChanged?.Invoke(CurrentScoreData);

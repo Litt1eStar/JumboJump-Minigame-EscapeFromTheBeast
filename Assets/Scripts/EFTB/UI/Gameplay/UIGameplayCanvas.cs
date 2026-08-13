@@ -57,9 +57,9 @@ namespace JumboJumps.EFTB.UI.Gameplay
             uiFinishLevelPanel?.Hide();
         }
 
-        public void SetFinishLevelTextLabel(GameStatus gameStatus)
+        public void SetFinishLevelScore(int score)
         {
-            uiFinishLevelPanel?.SetFinishTextLavel(gameStatus);
+            uiFinishLevelPanel?.SetScore(score);
         }
 
         #endregion

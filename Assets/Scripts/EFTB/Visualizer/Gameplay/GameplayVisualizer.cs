@@ -58,24 +58,42 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void Subscribe()
         {
-            uiGameplayPanel.EventPauseUIButtonClicked += OnPauseButtonClicked;
-            uiPauseMenuPanel.EventResumeUIButtonClicked += OnResumeButtonClicked;
-            uiPauseMenuPanel.EventMainMenuUIButtonClicked += OnMainMenuButtonClicked;
-            uiFinishLevelPanel.EventMainMenuUIButtonClicked += OnFinishMainMenuButtonClicked;
+            if (uiGameplayPanel != null) uiGameplayPanel.EventPauseUIButtonClicked += OnPauseButtonClicked;
+
+            if (uiPauseMenuPanel != null)
+            {
+                uiPauseMenuPanel.EventResumeUIButtonClicked += OnResumeButtonClicked;
+                uiPauseMenuPanel.EventMainMenuUIButtonClicked += OnMainMenuButtonClicked;
+            }
+
+            if (uiFinishLevelPanel != null)
+            {
+                uiFinishLevelPanel.EventMainMenuUIButtonClicked += OnFinishMainMenuButtonClicked;
+                uiFinishLevelPanel.EventReplayUIButtonClicked += OnFinishMainMenuButtonClicked;
+            }
+
+            if (scoreManager != null) scoreManager.EventScoreChanged += SetScoreLabel;
             
-            scoreManager.EventScoreChanged += SetScoreLabel;
-            gameplayController.EventFinishLevel += OnLevelFinished;
+            if (gameplayController != null) gameplayController.EventFinishLevel += OnLevelFinished;
+            
         }
 
         public void UnSubscribe()
         {
-            uiGameplayPanel.EventPauseUIButtonClicked -= OnPauseButtonClicked;
-            uiPauseMenuPanel.EventResumeUIButtonClicked -= OnResumeButtonClicked;
-            uiPauseMenuPanel.EventMainMenuUIButtonClicked -= OnMainMenuButtonClicked;
-            uiFinishLevelPanel.EventMainMenuUIButtonClicked -= OnFinishMainMenuButtonClicked;
+            if (uiGameplayPanel != null) uiGameplayPanel.EventPauseUIButtonClicked -= OnPauseButtonClicked;
+            if (uiPauseMenuPanel != null)
+            {
+                uiPauseMenuPanel.EventResumeUIButtonClicked -= OnResumeButtonClicked;
+                uiPauseMenuPanel.EventMainMenuUIButtonClicked -= OnMainMenuButtonClicked;
+            }
+            if (uiFinishLevelPanel != null)
+            {
+                uiFinishLevelPanel.EventMainMenuUIButtonClicked -= OnFinishMainMenuButtonClicked;
+                uiFinishLevelPanel.EventReplayUIButtonClicked -= OnFinishMainMenuButtonClicked;
+            }
             
-            scoreManager.EventScoreChanged -= SetScoreLabel;
-            gameplayController.EventFinishLevel -= OnLevelFinished;
+            if (scoreManager != null) scoreManager.EventScoreChanged -= SetScoreLabel;
+            if (gameplayController != null) gameplayController.EventFinishLevel -= OnLevelFinished;
         }
 
 
@@ -96,12 +114,16 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void OnFinishMainMenuButtonClicked()
         {
+            HidePanel();
             EventFinishMainMenuButtonClicked?.Invoke();
         }
 
         public void OnLevelFinished(GameStatus gameStatus)
         {
-            SetFinishLevelTextLabel(gameStatus);
+            if (scoreManager != null)
+            {
+                uiGameplayCanvas?.SetFinishLevelScore(scoreManager.CurrentScoreData.TotalScore);
+            }
             ShowFinishLevelPanel();
         }
 
@@ -124,11 +146,6 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         public void ShowFinishLevelPanel()
         {
             uiFinishLevelPanel?.Show();
-        }
-
-        public void SetFinishLevelTextLabel(GameStatus gameStatus)
-        {
-            uiGameplayCanvas?.SetFinishLevelTextLabel(gameStatus);
         }
 
         public void ShowGameplayCanvas()

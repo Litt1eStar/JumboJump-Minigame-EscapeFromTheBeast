@@ -161,6 +161,44 @@ namespace JumboJumps.EFTB.Manager
             GameContext.Instance.Remove(this);
         }
 
+        public void ResetLevel()
+        {
+            while (activeSegmentQueue.Count > 0)
+            {
+                visualizer?.RecycleOldestSegment();
+                activeSegmentQueue.Dequeue();
+            }
+
+            activeFurnitureObstacles.Clear();
+
+            var poolManager = GameContext.Instance?.Get<ObjectPoolManager>();
+            for (int i = 0; i < activeTreats.Count; i++)
+            {
+                if (activeTreats[i] != null)
+                {
+                    activeTreats[i].EventCollected -= OnCollectibleCollected;
+                    activeTreats[i].EventRecycleRequested -= OnCollectibleRecycle;
+                    poolManager?.Recycle(activeTreats[i].gameObject);
+                }
+            }
+            activeTreats.Clear();
+
+            lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
+            lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
+
+            if (config != null)
+            {
+                nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
+                nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
+
+                for (int i = 0; i < config.MaxSegmentAmount; i++)
+                {
+                    float spawnYPosition = i * SegmentHeight;
+                    SpawnSegmentAt(spawnYPosition);
+                }
+            }
+        }
+
         public void UpdateLogic(float deltaTime)
         {
             float playerY = playerTransform != null ? playerTransform.position.y : 0f;
