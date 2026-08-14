@@ -51,11 +51,13 @@ namespace JumboJumps.EFTB.Manager
         {
             activeHazardRows.Clear();
 
-            if (poolManager != null)
+            for (int i = 0; i < activeHazards.Count; i++)
             {
-                for (int i = 0; i < activeHazards.Count; i++)
+                if (activeHazards[i] != null)
                 {
-                    if (activeHazards[i] != null && activeHazards[i].gameObject.activeInHierarchy)
+                    activeHazards[i].EventPlayerHit -= OnHazardPlayerHit;
+                    activeHazards[i].EventDespawnRequested -= OnHazardDespawnRequested;
+                    if (poolManager != null && activeHazards[i].gameObject.activeInHierarchy)
                     {
                         poolManager.Recycle(activeHazards[i].gameObject);
                     }
@@ -64,6 +66,24 @@ namespace JumboJumps.EFTB.Manager
             activeHazards.Clear();
 
             GameContext.Instance.Remove(this);
+        }
+
+        public void ResetLevel()
+        {
+            for (int i = 0; i < activeHazards.Count; i++)
+            {
+                if (activeHazards[i] != null)
+                {
+                    activeHazards[i].EventPlayerHit -= OnHazardPlayerHit;
+                    activeHazards[i].EventDespawnRequested -= OnHazardDespawnRequested;
+                    if (poolManager != null && activeHazards[i].gameObject.activeInHierarchy)
+                    {
+                        poolManager.Recycle(activeHazards[i].gameObject);
+                    }
+                }
+            }
+            activeHazards.Clear();
+            activeHazardRows.Clear();
         }
 
         public void UpdateLogic(float deltaTime)
@@ -176,6 +196,33 @@ namespace JumboJumps.EFTB.Manager
             activeHazards.Add(giHazard);
 
             giHazard.Initialize(rowData.Direction, rowData.Speed, rowData.RowWorldY, despawnX);
+
+            giHazard.EventPlayerHit -= OnHazardPlayerHit;
+            giHazard.EventPlayerHit += OnHazardPlayerHit;
+
+            giHazard.EventDespawnRequested -= OnHazardDespawnRequested;
+            giHazard.EventDespawnRequested += OnHazardDespawnRequested;
+        }
+
+        private void OnHazardPlayerHit(GIHazardObstacle hazard)
+        {
+            var gameplayController = GameContext.Instance?.Get<GameplayController>();
+            gameplayController?.InvokeFinishLevel(GameStatus.Lose);
+        }
+
+        private void OnHazardDespawnRequested(GIHazardObstacle hazard)
+        {
+            if (hazard != null)
+            {
+                hazard.EventPlayerHit -= OnHazardPlayerHit;
+                hazard.EventDespawnRequested -= OnHazardDespawnRequested;
+                activeHazards.Remove(hazard);
+
+                if (poolManager != null && hazard.gameObject.activeInHierarchy)
+                {
+                    poolManager.Recycle(hazard.gameObject);
+                }
+            }
         }
 
         private void CleanupPassedRows(int cutoffRowIndex)
