@@ -45,15 +45,17 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            if (playerManager == null || coroutineHelper == null && warningCoroutine == null) return;
-
             Unsubscribe();
-            coroutineHelper.Stop(warningCoroutine);
+
+            if (coroutineHelper != null && warningCoroutine != null)
+            {
+                coroutineHelper.Stop(warningCoroutine);
+            }
 
             warningCoroutine = null;
             isAntiCampWarningActive = false;
             coroutineHelper = null;
-            
+
             GameContext.Instance.Remove(this);
         }
 
