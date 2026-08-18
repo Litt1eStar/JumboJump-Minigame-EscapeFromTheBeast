@@ -85,7 +85,6 @@ namespace JumboJumps.EFTB.Manager
                     if (container != null && container.FurnitureConfig != null)
                     {
                         furnitureConfig = container.FurnitureConfig;
-                        furniturePlacementModel.Config = furnitureConfig;
                     }
                 }
                 return furnitureConfig;
@@ -93,7 +92,7 @@ namespace JumboJumps.EFTB.Manager
         }
 
         private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
-        private float lastFurnitureWorldY = -999f;
+        private float lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
         private List<GICollectible> activeTreats = new List<GICollectible>();
         private List<LevelSegmentData> segments;
@@ -104,9 +103,6 @@ namespace JumboJumps.EFTB.Manager
 
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
-
-            // Ensure FurnitureConfig property initializes placement model config
-            var _ = FurnitureConfig;
 
             segments = new List<LevelSegmentData>();
             LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
@@ -365,7 +361,8 @@ namespace JumboJumps.EFTB.Manager
                 SegmentHeight,
                 LaneXPositions.Length,
                 ref lastOpenLaneIndex,
-                ref lastFurnitureWorldY
+                ref lastFurnitureWorldY,
+                FurnitureConfig
             );
 
             foreach (var block in furnitureBlocks)
