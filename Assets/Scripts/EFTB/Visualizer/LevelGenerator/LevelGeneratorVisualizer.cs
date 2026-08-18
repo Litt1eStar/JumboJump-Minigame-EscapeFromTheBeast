@@ -55,11 +55,13 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         public void Dispose()
         {
-            while (activeSegments.Count > 0)
-            {
-                RecycleOldestSegment();
-            }
+            var segmentsToRecycle = activeSegments.ToArray();
             activeSegments.Clear();
+
+            for (int i = 0; i < segmentsToRecycle.Length; i++)
+            {
+                RecycleSegment(segmentsToRecycle[i]);
+            }
         }
 
         /// <summary>
@@ -113,9 +115,12 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             int laneIdx = Mathf.Clamp(blockData.LaneIndex, 0, laneXPosition.Length - 1);
             float targetX = laneXPosition[laneIdx];
-            float worldY = segmentYPosition + blockData.YOffset;
+            float rawWorldY = segmentYPosition + blockData.YOffset;
 
-            Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float snappedWorldY = Mathf.RoundToInt(rawWorldY / cellHeight) * cellHeight;
+
+            Vector3 spawnPosition = new Vector3(targetX, rawWorldY, 0f);
             GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
 
             GIFurnitureObstacle giFurniture = spawnedObj.GetComponent<GIFurnitureObstacle>();
@@ -123,7 +128,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             {
                 giFurniture = spawnedObj.AddComponent<GIFurnitureObstacle>();
             }
-            giFurniture.Initialize(blockData.LaneIndex, worldY);
+            giFurniture.Initialize(blockData.LaneIndex, snappedWorldY);
 
             if (giSegment != null)
             {
@@ -131,6 +136,32 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
 
             return giFurniture;
+        }
+
+        public void SetupPrefabFurniture(GIFurnitureObstacle furniture)
+        {
+            if (furniture == null) return;
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float snappedWorldY = Mathf.RoundToInt(furniture.transform.position.y / cellHeight) * cellHeight;
+            int laneIndex = GetClosestLaneIndex(furniture.transform.position.x);
+            furniture.Initialize(laneIndex, snappedWorldY);
+        }
+
+        public int GetClosestLaneIndex(float worldX)
+        {
+            if (laneXPosition == null || laneXPosition.Length == 0) return 0;
+            int closest = 0;
+            float minDiff = Mathf.Abs(worldX - laneXPosition[0]);
+            for (int i = 1; i < laneXPosition.Length; i++)
+            {
+                float diff = Mathf.Abs(worldX - laneXPosition[i]);
+                if (diff < minDiff)
+                {
+                    minDiff = diff;
+                    closest = i;
+                }
+            }
+            return closest;
         }
 
         private void SetupSleepyCat(GameObject catObj, float spawnX)
@@ -293,22 +324,16 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         public void RecycleOldestSegment()
         {
-            if (activeSegments.Count <= 0 || poolManager == null) return;
-
+            if (activeSegments.Count <= 0) return;
             GameObject oldestSegment = activeSegments.Dequeue();
-            if (oldestSegment == null) return;
+            RecycleSegment(oldestSegment);
+        }
 
-            GISegment giSegment = null;
-            try
-            {
-                giSegment = oldestSegment.GetComponent<GISegment>();
-            }
-            catch (MissingReferenceException)
-            {
-                return;
-            }
+        private void RecycleSegment(GameObject segment)
+        {
+            if (segment == null || poolManager == null) return;
 
-            if (giSegment != null)
+            if (segment.TryGetComponent<GISegment>(out var giSegment))
             {
                 IReadOnlyList<GameObject> spawnedObjs = giSegment.SpawnedObjects;
                 if (spawnedObjs != null)
@@ -318,8 +343,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                         GameObject spawnedObj = spawnedObjs[i];
                         if (spawnedObj != null)
                         {
-                            var giCat = spawnedObj.GetComponent<GICat>();
-                            if (giCat != null)
+                            if (spawnedObj.TryGetComponent<GICat>(out var giCat))
                             {
                                 SceneObjectContext.Instance?.Deregister(giCat);
 
@@ -338,7 +362,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             try
             {
-                poolManager.Recycle(oldestSegment);
+                poolManager.Recycle(segment);
             }
             catch (MissingReferenceException)
             {

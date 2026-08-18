@@ -1,5 +1,6 @@
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Utilities;
+using System;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.Visualizer
@@ -17,6 +18,7 @@ namespace JumboJumps.EFTB.Visualizer
                 DebugLogHelper.LogError("GIPlayer not found in SceneObjectContext. PlayerVisualizer initialization failed.");
             }
 
+            giPlayer.Initialize();
         }
 
         public void SetPlayerOnMiddleLane()
@@ -43,7 +45,7 @@ namespace JumboJumps.EFTB.Visualizer
             giPlayer?.SetXPosition(x);
         }
 
-        public void ShowPounceWarning(float duration, System.Action onComplete)
+        public void ShowPounceWarning(float duration, Action onComplete)
         {
             giPlayer?.ShowPounceWarning(duration, onComplete);
         }

@@ -4,6 +4,7 @@ using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Model;
 using UnityEngine;
+using System.Collections;
 
 namespace JumboJumps.EFTB.Manager
 {
@@ -16,6 +17,8 @@ namespace JumboJumps.EFTB.Manager
         private GameDataManager gameDataManager;
         private GameplayStateManager gameplayStateManager;
 
+        private CoroutineHelper coroutineHelper;
+        private Coroutine warningCoroutine;
         private bool isAntiCampWarningActive;
 
         public void Initialize()
@@ -26,10 +29,15 @@ namespace JumboJumps.EFTB.Manager
             catManager = GameContext.Instance.Get<CatManager>();
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
+            coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
+            if (coroutineHelper == null)
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] {nameof(AggressiveCatSpawner)}| Failed to get {typeof(CoroutineHelper).AssemblyQualifiedName} from GameContext");
+            }
 
             if (playerManager != null)
             {
-                playerManager.EventIdleLimitExceeded += OnPlayerIdleLimitExceeded;
+                Subscribe();
             }
 
             GameContext.Instance.Add(this);
@@ -37,12 +45,32 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            if (playerManager != null)
+            Unsubscribe();
+
+            if (coroutineHelper != null && warningCoroutine != null)
             {
-                playerManager.EventIdleLimitExceeded -= OnPlayerIdleLimitExceeded;
+                coroutineHelper.Stop(warningCoroutine);
             }
 
+            warningCoroutine = null;
+            isAntiCampWarningActive = false;
+            coroutineHelper = null;
+
             GameContext.Instance.Remove(this);
+        }
+
+        public void Subscribe()
+        {
+            if (playerManager == null) return;
+
+            playerManager.EventIdleLimitExceeded += OnPlayerIdleLimitExceeded;
+        }
+
+        public void Unsubscribe()
+        {
+            if (playerManager == null) return;
+
+            playerManager.EventIdleLimitExceeded -= OnPlayerIdleLimitExceeded;
         }
 
         private void OnPlayerIdleLimitExceeded()
@@ -52,9 +80,8 @@ namespace JumboJumps.EFTB.Manager
                 return;
             }
 
-            if (isAntiCampWarningActive) return;
+            if (isAntiCampWarningActive || playerManager?.PlayerTransform == null) return;
 
-            if (playerManager?.PlayerTransform == null) return;
             Vector3 cachedTargetPos = playerManager.PlayerTransform.position;
 
             TriggerAlphaCatPounceSequence(cachedTargetPos);
@@ -66,18 +93,24 @@ namespace JumboJumps.EFTB.Manager
             int sideIndex = (Random.value < 0.5f) ? 0 : 1;
             float warningDuration = ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
 
-            if (playerManager != null)
+            playerManager.TriggerPounceWarning(warningDuration, null);
+
+            if (coroutineHelper != null)
             {
-                playerManager.TriggerPounceWarning(warningDuration, () =>
-                {
-                    isAntiCampWarningActive = false;
-                    SpawnAggressiveCat(sideIndex, cachedTargetPos);
-                });
+                warningCoroutine = coroutineHelper.Restart(warningCoroutine, WaitAndSpawnRoutine(sideIndex, cachedTargetPos, warningDuration));
             }
             else
             {
                 isAntiCampWarningActive = false;
             }
+        }
+
+        private IEnumerator WaitAndSpawnRoutine(int sideIndex, Vector3 cachedTargetPos, float warningDuration)
+        {
+            yield return new WaitForSeconds(warningDuration);
+            warningCoroutine = null;
+            isAntiCampWarningActive = false;
+            SpawnAggressiveCat(sideIndex, cachedTargetPos);
         }
 
         private bool CanSpawnAggressiveCat(Vector3 cachedTargetPos, out float spawnY)
