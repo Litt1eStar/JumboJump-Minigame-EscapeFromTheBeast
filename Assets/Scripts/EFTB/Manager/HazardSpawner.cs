@@ -186,10 +186,7 @@ namespace JumboJumps.EFTB.Manager
                 activeHazards.Add(giHazard);
             }
 
-            giHazard.EventCollidedWithPlayer -= OnHazardCollidedWithPlayer;
             giHazard.EventCollidedWithPlayer += OnHazardCollidedWithPlayer;
-
-            giHazard.EventRecycleRequested -= OnHazardRecycleRequested;
             giHazard.EventRecycleRequested += OnHazardRecycleRequested;
 
             giHazard.Initialize(rowData.Direction, rowData.Speed, rowData.RowWorldY, despawnX);
