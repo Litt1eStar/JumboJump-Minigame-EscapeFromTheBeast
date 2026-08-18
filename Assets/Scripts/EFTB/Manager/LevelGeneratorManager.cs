@@ -57,7 +57,6 @@ namespace JumboJumps.EFTB.Manager
         public float HardDifficultyTimePercentage { get; private set; }
         public float MaxGeneratedWorldY => nextYSpawnPosition;
 
-        private FurniturePlacementModel furniturePlacementModel = new FurniturePlacementModel();
         private CollectibleConfigSO collectibleConfig;
         public CollectibleConfigSO CollectibleConfig
         {
@@ -356,7 +355,7 @@ namespace JumboJumps.EFTB.Manager
         {
             if (segmentInstance == null) return;
 
-            var furnitureBlocks = furniturePlacementModel.GenerateSegmentFurniture(
+            var furnitureBlocks = FurniturePlacementHelper.GenerateSegmentFurniture(
                 yPosition,
                 SegmentHeight,
                 LaneXPositions.Length,
