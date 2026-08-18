@@ -57,17 +57,24 @@ namespace JumboJumps.EFTB.Manager
         {
             activeHazardRows.Clear();
 
-            if (poolManager != null)
+            for (int i = 0; i < activeHazards.Count; i++)
             {
-                for (int i = 0; i < activeHazards.Count; i++)
+                if (activeHazards[i] != null)
                 {
-                    if (activeHazards[i] != null && activeHazards[i].gameObject.activeInHierarchy)
-                    {
-                        poolManager.Recycle(activeHazards[i].gameObject);
-                    }
+                    activeHazards[i].EventPlayerHit -= OnHazardPlayerHit;
+                    activeHazards[i].EventDespawnRequested -= OnHazardDespawnRequested;
+                    
+                    poolManager?.Recycle(activeHazards[i].gameObject);
+                    
                 }
             }
             activeHazards.Clear();
+
+            poolManager = null;
+            levelGeneratorManager = null;
+            gameDataManager = null;
+            gameplayStateManager = null;
+            playerManager = null;
 
             GameContext.Instance.Remove(this);
         }
@@ -174,18 +181,37 @@ namespace JumboJumps.EFTB.Manager
             Vector3 spawnPos = new Vector3(spawnX, rowData.RowWorldY, 0f);
 
             GameObject hazardObj = poolManager.Spawn(prefab, spawnPos, Quaternion.identity);
+            
             if (hazardObj == null) return;
 
             GIHazardObstacle giHazard = hazardObj.GetComponent<GIHazardObstacle>();
-            if (giHazard == null)
-            {
-                giHazard = hazardObj.AddComponent<GIHazardObstacle>();
-            }
 
             activeHazards.RemoveAll(h => h == null || !h.gameObject.activeInHierarchy);
             activeHazards.Add(giHazard);
 
             giHazard.Initialize(rowData.Direction, rowData.Speed, rowData.RowWorldY, despawnX);
+
+            giHazard.EventPlayerHit += OnHazardPlayerHit;
+            giHazard.EventDespawnRequested += OnHazardDespawnRequested;
+        }
+
+        private void OnHazardPlayerHit(GIHazardObstacle hazard)
+        {
+            var gameplayController = GameContext.Instance?.Get<GameplayController>();
+            gameplayController?.InvokeFinishLevel(GameStatus.Lose);
+        }
+
+        private void OnHazardDespawnRequested(GIHazardObstacle hazard)
+        {
+            if (hazard != null)
+            {
+                hazard.EventPlayerHit -= OnHazardPlayerHit;
+                hazard.EventDespawnRequested -= OnHazardDespawnRequested;
+                activeHazards.Remove(hazard);
+
+                poolManager?.Recycle(hazard.gameObject);
+                
+            }
         }
 
         private void CleanupPassedRows(int cutoffRowIndex)
