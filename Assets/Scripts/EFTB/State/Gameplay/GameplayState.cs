@@ -66,12 +66,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             levelGeneratorManager = new LevelGeneratorManager();
             levelGeneratorManager.Initialize(playerManager.PlayerTransform);
 
-            aggressiveCatSpawner = new AggressiveCatSpawner();
-            aggressiveCatSpawner.Initialize();
-
-            hazardSpawner = new HazardSpawner();
-            hazardSpawner.Initialize();
-
             gameplayController = new GameplayController();
 
             gameplayStateManager = new GameplayStateManager();
@@ -79,6 +73,12 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             gameplayController.Initialize(gameplayStateManager.StateController);
             gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
+
+            aggressiveCatSpawner = new AggressiveCatSpawner();
+            aggressiveCatSpawner.Initialize();
+
+            hazardSpawner = new HazardSpawner();
+            hazardSpawner.Initialize();
         }
 
         public override void OnEnterState()
@@ -141,6 +141,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             if (!IsSceneLoaded) return;
 
             gameplayStateManager?.UpdateLogic(deltaTime);
+            hazardSpawner?.UpdateLogic(deltaTime);
         }
 
         public void ReturnBackToMainMenu()

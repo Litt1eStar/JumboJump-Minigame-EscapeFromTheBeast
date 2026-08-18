@@ -11,11 +11,11 @@ namespace JumboJumps.EFTB.Manager
 {
     public class HazardSpawner
     {
-        private ObjectPoolManager poolManager => GameContext.Instance?.Get<ObjectPoolManager>();
-        private LevelGeneratorManager levelGeneratorManager => GameContext.Instance?.Get<LevelGeneratorManager>();
-        private GameDataManager gameDataManager => GameContext.Instance?.Get<GameDataManager>();
-        private GameplayStateManager gameplayStateManager => GameContext.Instance?.Get<GameplayStateManager>();
-        private PlayerManager playerManager => GameContext.Instance?.Get<PlayerManager>();
+        private ObjectPoolManager poolManager;
+        private LevelGeneratorManager levelGeneratorManager;
+        private GameDataManager gameDataManager;
+        private GameplayStateManager gameplayStateManager;
+        private PlayerManager playerManager;
 
         private readonly HazardProgressionModel progressionModel = new HazardProgressionModel();
         private readonly Dictionary<int, HazardRowData> activeHazardRows = new Dictionary<int, HazardRowData>();
@@ -44,6 +44,12 @@ namespace JumboJumps.EFTB.Manager
 
         public void Initialize()
         {
+            poolManager = GameContext.Instance.Get<ObjectPoolManager>();
+            levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
+            gameDataManager = GameContext.Instance.Get<GameDataManager>();
+            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
+            playerManager = GameContext.Instance.Get<PlayerManager>();
+
             GameContext.Instance.Add(this);
         }
 
@@ -64,6 +70,12 @@ namespace JumboJumps.EFTB.Manager
                 }
             }
             activeHazards.Clear();
+
+            poolManager = null;
+            levelGeneratorManager = null;
+            gameDataManager = null;
+            gameplayStateManager = null;
+            playerManager = null;
 
             GameContext.Instance.Remove(this);
         }
