@@ -1,4 +1,4 @@
-using JumboJumps.EFTB.Visualizer.Gameplay;
+using JumboJumps.EFTB.UI.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
@@ -8,15 +8,14 @@ namespace JumboJumps.EFTB.Manager
 {
     public class WarningIndicatorManager
     {
-        private WarningIndicatorVisualizer visualizer;
+        private UIGameplayCanvas gameplayCanvas;
         private CoroutineHelper coroutineHelper;
         private Coroutine warningRoutine;
 
         public void Initialize()
         {
             GameContext.Instance.Add(this);
-            visualizer = new WarningIndicatorVisualizer();
-            visualizer.Initialize();
+            gameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
         }
 
@@ -29,7 +28,6 @@ namespace JumboJumps.EFTB.Manager
                 warningRoutine = null;
             }
 
-            visualizer = null;
             GameContext.Instance.Remove(this);
         }
 
@@ -37,11 +35,16 @@ namespace JumboJumps.EFTB.Manager
         {
             DebugLogHelper.Log($"[WarningIndicatorManager] ShowWarning called for lane: {laneIndex}, duration: {duration}");
 
-            if (visualizer != null)
+            if (gameplayCanvas == null)
             {
-                visualizer.SetWarningIndicatorActive(laneIndex, true);
+                gameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
+                if (gameplayCanvas == null)
+                {
+                    DebugLogHelper.LogError("[WarningIndicatorManager] Failed to find UIGameplayCanvas in SceneObjectContext!");
+                }
             }
 
+            gameplayCanvas.SetWarningIndicatorActive(laneIndex, true);
             warningRoutine = coroutineHelper.Restart(warningRoutine, WarningRoutine(laneIndex, duration, onCompleteCallback));
         }
 
@@ -50,9 +53,9 @@ namespace JumboJumps.EFTB.Manager
             yield return new WaitForSeconds(duration);
 
             DebugLogHelper.Log($"[WarningIndicatorManager] Timer expired for lane: {laneIndex}");
-            if (visualizer != null)
+            if (gameplayCanvas != null)
             {
-                visualizer.SetWarningIndicatorActive(laneIndex, false);
+                gameplayCanvas.SetWarningIndicatorActive(laneIndex, false);
             }
             onCompleteCallback?.Invoke();
         }

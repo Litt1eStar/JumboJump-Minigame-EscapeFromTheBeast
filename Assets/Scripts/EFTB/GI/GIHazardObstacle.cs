@@ -1,15 +1,18 @@
-using System;
+using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Model.Obstacle;
+using JumboJumps.EFTB.State.Gameplay;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
 {
     public class GIHazardObstacle : MonoBehaviour
     {
-        public event Action<GIPlayer> EventCollidedWithPlayer;
-        public event Action<GIHazardObstacle> EventRecycleRequested;
-
+        private GameplayController gameplayController;
+        private GameplayStateManager gameplayStateManager;
         private Collider2D hazardCollider;
+        private SpriteRenderer spriteRenderer;
 
         private HazardDirectionEnum direction;
         private float speed;
@@ -18,9 +21,16 @@ namespace JumboJumps.EFTB.GI
 
         public float RowWorldY { get; private set; }
 
+        private ObjectPoolManager poolManager;
+
         public void Initialize(HazardDirectionEnum direction, float speed, float rowWorldY, float despawnX)
         {
+            gameplayController = GameContext.Instance.Get<GameplayController>();
+            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
+            poolManager = GameContext.Instance.Get<ObjectPoolManager>();
+
             hazardCollider = GetComponent<Collider2D>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
 
             this.direction = direction;
             this.speed = speed;
@@ -37,9 +47,14 @@ namespace JumboJumps.EFTB.GI
             }
         }
 
-        public void UpdateLogic(float deltaTime)
+        private void Update()
         {
-            float moveStep = (int)direction * speed * deltaTime;
+            if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
+            {
+                return;
+            }
+
+            float moveStep = (int)direction * speed * Time.deltaTime;
             transform.position += new Vector3(moveStep, 0f, 0f);
 
             bool passedDespawn = (direction == HazardDirectionEnum.LeftToRight)
@@ -54,7 +69,15 @@ namespace JumboJumps.EFTB.GI
 
         private void RecycleSelf()
         {
-            EventRecycleRequested?.Invoke(this);
+            if (poolManager == null)
+            {
+                poolManager = GameContext.Instance?.Get<ObjectPoolManager>();
+            }
+
+            if (poolManager != null)
+            {
+                poolManager.Recycle(gameObject);
+            }
         }
 
         private void HandlePlayerCollision(GameObject collidedObj)
@@ -67,7 +90,16 @@ namespace JumboJumps.EFTB.GI
                 if (player != null)
                 {
                     hasTriggered = true;
-                    EventCollidedWithPlayer?.Invoke(player);
+
+                    if (gameplayController == null)
+                    {
+                        gameplayController = GameContext.Instance?.Get<GameplayController>();
+                    }
+
+                    if (gameplayController != null)
+                    {
+                        gameplayController.InvokeFinishLevel(GameStatus.Lose);
+                    }
                 }
             }
         }
