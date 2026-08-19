@@ -9,6 +9,8 @@ namespace JumboJumps.EFTB.Manager
     public class PlayerManager
     {
         public Transform PlayerTransform { get; private set;}
+        public PlayerStateController StateController => stateController;
+        public event System.Action EventIdleLimitExceeded;
         private PlayerStateController stateController;
         private PlayerVisualizer visualizer => stateController.Visualizer;
         public void Initialize()
@@ -16,6 +18,7 @@ namespace JumboJumps.EFTB.Manager
             Debug.Log($"{this.GetType().Name} was Initialize");
             stateController = new PlayerStateController();
             stateController.Initialize();
+            stateController.EventIdleLimitExceeded += OnIdleLimitExceeded;
             stateController.StartStateController();
 
             PlayerTransform = SceneObjectContext.Instance.Get<GIPlayer>().transform;
@@ -35,15 +38,29 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            stateController.Dispose();
-            stateController = null;
+            if (stateController != null)
+            {
+                stateController.EventIdleLimitExceeded -= OnIdleLimitExceeded;
+                stateController.Dispose();
+                stateController = null;
+            }
 
             GameContext.Instance.Remove(this);
+        }
+
+        private void OnIdleLimitExceeded()
+        {
+            EventIdleLimitExceeded?.Invoke();
         }
 
         public void UpdateLogic(float deltaTime)
         {
             stateController.UpdateLogic(deltaTime);
+        }
+
+        public void TriggerPounceWarning(float duration, System.Action onComplete)
+        {
+            visualizer?.ShowPounceWarning(duration, onComplete);
         }
     }
 }

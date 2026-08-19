@@ -37,6 +37,12 @@ namespace JumboJumps.EFTB.State.Player
         }
         public SwipeDirectionEnum LastSwipeDirection { get; set; }
         public bool IsStepUpRequested { get; set; }
+        public event Action EventIdleLimitExceeded;
+
+        public void InvokeIdleLimitExceeded()
+        {
+            EventIdleLimitExceeded?.Invoke();
+        }
 
         public PlayerStateController()
         {

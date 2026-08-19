@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f525d63862e137a4ab502d30cff63202, type: 3}
+  m_Name: HazardConfigSO
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Config.HazardConfigSO
+  safeZoneCells: 5
+  baseIntervalLow: 2.4
+  baseIntervalHigh: 3.6
+  stepIntervalReduction: 0.15
+  stepIntervalCells: 30
+  minSpawnInterval: 1.6
+  floorSpeedDurationLow: 0.45
+  floorSpeedDurationHigh: 0.6
+  spawnOffscreenXOffset: 7.5
+  despawnOffscreenXOffset: 7.5
+  hazardPrespawnOffset: 70

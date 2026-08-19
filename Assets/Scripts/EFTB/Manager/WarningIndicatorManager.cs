@@ -9,15 +9,25 @@ namespace JumboJumps.EFTB.Manager
     public class WarningIndicatorManager
     {
         private UIGameplayCanvas gameplayCanvas;
+        private CoroutineHelper coroutineHelper;
+        private Coroutine warningRoutine;
 
         public void Initialize()
         {
             GameContext.Instance.Add(this);
             gameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
+            coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
         }
 
         public void Dispose()
         {
+            if (coroutineHelper != null)
+            {
+                coroutineHelper.Stop(warningRoutine);
+                coroutineHelper = null;
+                warningRoutine = null;
+            }
+
             GameContext.Instance.Remove(this);
         }
 
@@ -34,11 +44,8 @@ namespace JumboJumps.EFTB.Manager
                 }
             }
 
-            if (gameplayCanvas != null)
-            {
-                gameplayCanvas.SetWarningIndicatorActive(laneIndex, true);
-                gameplayCanvas.StartCoroutine(WarningRoutine(laneIndex, duration, onCompleteCallback));
-            }
+            gameplayCanvas.SetWarningIndicatorActive(laneIndex, true);
+            warningRoutine = coroutineHelper.Restart(warningRoutine, WarningRoutine(laneIndex, duration, onCompleteCallback));
         }
 
         private IEnumerator WarningRoutine(int laneIndex, float duration, Action onCompleteCallback)
@@ -49,70 +56,6 @@ namespace JumboJumps.EFTB.Manager
             if (gameplayCanvas != null)
             {
                 gameplayCanvas.SetWarningIndicatorActive(laneIndex, false);
-            }
-            onCompleteCallback?.Invoke();
-        }
-
-        public void ShowCatEventWarning(float duration, Action onCompleteCallback)
-        {
-            DebugLogHelper.Log($"[WarningIndicatorManager] ShowCatEventWarning called, duration: {duration}");
-
-            if (gameplayCanvas == null)
-            {
-                gameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
-            }
-
-            if (gameplayCanvas != null)
-            {
-                gameplayCanvas.SetCatEventWarningActive(true);
-                gameplayCanvas.StartCoroutine(CatEventWarningRoutine(duration, onCompleteCallback));
-            }
-            else
-            {
-                onCompleteCallback?.Invoke();
-            }
-        }
-
-        private IEnumerator CatEventWarningRoutine(float duration, Action onCompleteCallback)
-        {
-            yield return new WaitForSeconds(duration);
-
-            DebugLogHelper.Log("[WarningIndicatorManager] CatEventWarning expired");
-            if (gameplayCanvas != null)
-            {
-                gameplayCanvas.SetCatEventWarningActive(false);
-            }
-            onCompleteCallback?.Invoke();
-        }
-
-        public void ShowCatDirectionWarning(int sideIndex, float duration, Action onCompleteCallback)
-        {
-            DebugLogHelper.Log($"[WarningIndicatorManager] ShowCatDirectionWarning called for side: {sideIndex}, duration: {duration}");
-
-            if (gameplayCanvas == null)
-            {
-                gameplayCanvas = SceneObjectContext.Instance.Get<UIGameplayCanvas>();
-            }
-
-            if (gameplayCanvas != null)
-            {
-                gameplayCanvas.SetCatDirectionWarningActive(sideIndex, true);
-                gameplayCanvas.StartCoroutine(CatDirectionWarningRoutine(sideIndex, duration, onCompleteCallback));
-            }
-            else
-            {
-                onCompleteCallback?.Invoke();
-            }
-        }
-
-        private IEnumerator CatDirectionWarningRoutine(int sideIndex, float duration, Action onCompleteCallback)
-        {
-            yield return new WaitForSeconds(duration);
-
-            DebugLogHelper.Log($"[WarningIndicatorManager] CatDirectionWarning expired for side: {sideIndex}");
-            if (gameplayCanvas != null)
-            {
-                gameplayCanvas.SetCatDirectionWarningActive(sideIndex, false);
             }
             onCompleteCallback?.Invoke();
         }
