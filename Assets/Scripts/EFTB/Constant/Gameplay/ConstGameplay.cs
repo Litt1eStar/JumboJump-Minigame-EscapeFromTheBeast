@@ -70,14 +70,15 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const int SINGLE_BLOCK_MAX_CELLS = 120; // Maximum number of cells for a single furniture block (120)
                 public const int MAX_BLOCKS_PER_ROW = 2; // Maximum number of furniture blocks allowed per row (2)
                 public const int MIN_ROW_SPACING_CELLS = 1; // Minimum spacing between furniture rows in cells (1)
-                public const float UNINITIALIZED_LAST_FURNITURE_WORLD_Y = -1f;
                 public const string DEFAULT_FURNITURE_PREFAB = "Prefab_Obstacle_Chair";
+                public const float UNINITIALIZED_LAST_FURNITURE_WORLD_Y = -1f;
                 public static readonly string[] FURNITURE_PREFAB_NAMES = new string[]
                 {
                     DEFAULT_FURNITURE_PREFAB,
                     "Prefab_Obstacle_Box",
                     "Prefab_Obstacle_Plant"
                 };
+
             }
 
             public class Hazard
@@ -89,8 +90,8 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const int STEP_INTERVAL_CELLS = 30;          // Step height in cells
                 public const float MIN_SPAWN_INTERVAL = 0.5f;       // Minimum spawn interval limit (s)
 
-                public const float FLOOR_SPEED_DURATION_LOW = 1.0f; // Hazard speed floor range low (0.5s / lane)
-                public const float FLOOR_SPEED_DURATION_HIGH = 2.0f;// Hazard speed floor range high (0.9s / lane)
+                public const float FLOOR_SPEED_DURATION_LOW = 0.1f; // Hazard speed floor range low (0.5s / lane)
+                public const float FLOOR_SPEED_DURATION_HIGH = 0.3f;// Hazard speed floor range high (0.9s / lane)
                 public const float SPAWN_OFFSCREEN_X_OFFSET = 7.5f;   // Offscreen initial spawn X coordinate offset (units)
                 public const float DESPAWN_OFFSCREEN_X_OFFSET = 7.5f; // Offscreen despawn X coordinate offset (units)
                 public const int SAFE_ZONE_CELLS = 5;

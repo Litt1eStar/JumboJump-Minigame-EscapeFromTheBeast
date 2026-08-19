@@ -1,4 +1,3 @@
-using System;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.State.Player;
 using JumboJumps.EFTB.Utilities;
@@ -10,8 +9,8 @@ namespace JumboJumps.EFTB.Manager
     public class PlayerManager
     {
         public Transform PlayerTransform { get; private set;}
-        public event Action EventIdleLimitExceeded;
         public PlayerStateController StateController => stateController;
+        public event System.Action EventIdleLimitExceeded;
         private PlayerStateController stateController;
         private PlayerVisualizer visualizer => stateController.Visualizer;
         public void Initialize()
@@ -19,7 +18,7 @@ namespace JumboJumps.EFTB.Manager
             Debug.Log($"{this.GetType().Name} was Initialize");
             stateController = new PlayerStateController();
             stateController.Initialize();
-            Subscribe();
+            stateController.EventIdleLimitExceeded += OnIdleLimitExceeded;
             stateController.StartStateController();
 
             PlayerTransform = SceneObjectContext.Instance.Get<GIPlayer>().transform;
@@ -32,16 +31,6 @@ namespace JumboJumps.EFTB.Manager
             GameContext.Instance.Add(this);
         }
 
-        public void Subscribe()
-        {
-            stateController.EventIdleLimitExceeded += OnIdleLimitExceeded;
-        }
-
-        public void Unsubscribe()
-        {
-            stateController.EventIdleLimitExceeded -= OnIdleLimitExceeded;
-        }
-
         private void SetPlayerToMiddleLane()
         {
             visualizer.SetPlayerOnMiddleLane();
@@ -51,7 +40,7 @@ namespace JumboJumps.EFTB.Manager
         {
             if (stateController != null)
             {
-                Unsubscribe();
+                stateController.EventIdleLimitExceeded -= OnIdleLimitExceeded;
                 stateController.Dispose();
                 stateController = null;
             }

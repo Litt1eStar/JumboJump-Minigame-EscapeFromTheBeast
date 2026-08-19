@@ -6,8 +6,8 @@ namespace JumboJumps.EFTB.GI
 {
     public class GIHazardObstacle : MonoBehaviour
     {
-        public event Action<GIPlayer> EventCollidedWithPlayer;
-        public event Action<GIHazardObstacle> EventRecycleRequested;
+        public event Action<GIHazardObstacle> EventPlayerHit;
+        public event Action<GIHazardObstacle> EventDespawnRequested;
 
         private Collider2D hazardCollider;
 
@@ -15,6 +15,7 @@ namespace JumboJumps.EFTB.GI
         private float speed;
         private float despawnX;
         private bool hasTriggered;
+        private bool isMoving;
 
         public float RowWorldY { get; private set; }
 
@@ -27,6 +28,7 @@ namespace JumboJumps.EFTB.GI
             this.RowWorldY = rowWorldY;
             this.despawnX = despawnX;
             this.hasTriggered = false;
+            this.isMoving = true;
 
             float yRotation = (direction == HazardDirectionEnum.LeftToRight) ? 0f : 180f;
             transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
@@ -37,9 +39,16 @@ namespace JumboJumps.EFTB.GI
             }
         }
 
-        public void UpdateLogic(float deltaTime)
+        public void SetMoving(bool moving)
         {
-            float moveStep = (int)direction * speed * deltaTime;
+            isMoving = moving;
+        }
+
+        private void Update()
+        {
+            if (!isMoving) return;
+
+            float moveStep = (int)direction * speed * Time.deltaTime;
             transform.position += new Vector3(moveStep, 0f, 0f);
 
             bool passedDespawn = (direction == HazardDirectionEnum.LeftToRight)
@@ -48,13 +57,8 @@ namespace JumboJumps.EFTB.GI
 
             if (passedDespawn)
             {
-                RecycleSelf();
+                EventDespawnRequested?.Invoke(this);
             }
-        }
-
-        private void RecycleSelf()
-        {
-            EventRecycleRequested?.Invoke(this);
         }
 
         private void HandlePlayerCollision(GameObject collidedObj)
@@ -67,7 +71,7 @@ namespace JumboJumps.EFTB.GI
                 if (player != null)
                 {
                     hasTriggered = true;
-                    EventCollidedWithPlayer?.Invoke(player);
+                    EventPlayerHit?.Invoke(this);
                 }
             }
         }
