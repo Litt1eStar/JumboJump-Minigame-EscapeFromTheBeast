@@ -40,7 +40,8 @@ namespace JumboJumps.EFTB.Model.Obstacle
             float segmentHeight,
             int laneCount,
             ref int lastOpenLaneIndex,
-            ref float lastFurnitureWorldY)
+            ref float lastFurnitureWorldY,
+            System.Func<float, bool> isRowOccupiedFunc = null)
         {
             List<FurnitureBlockData> generatedBlocks = new List<FurnitureBlockData>();
             float cellHeight = Config != null ? Config.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
@@ -51,6 +52,12 @@ namespace JumboJumps.EFTB.Model.Obstacle
             {
                 int globalRowIndex = startRowIndex + r;
                 float worldY = (globalRowIndex * cellHeight) + 1.0f;
+
+                if (isRowOccupiedFunc != null && isRowOccupiedFunc(worldY))
+                {
+                    lastFurnitureWorldY = worldY;
+                    continue;
+                }
 
                 if (!ShouldSpawnFurnitureOnRow(worldY, lastFurnitureWorldY))
                 {
@@ -77,7 +84,7 @@ namespace JumboJumps.EFTB.Model.Obstacle
             // Check minimum 1-cell spacing constraint in cell-index space to prevent float precision drift at high Y
             int lastFurnitureCellIndex = lastFurnitureWorldY >= 0f ? Mathf.RoundToInt(lastFurnitureWorldY / cellHeight) : -999;
             int minSpacing = Config != null ? Config.MinRowSpacingCells : ConstGameplay.Obstacle.Furniture.MIN_ROW_SPACING_CELLS;
-            int minSpacingCells = minSpacing + 1;
+            int minSpacingCells = minSpacing + 2;
 
             if (lastFurnitureCellIndex >= 0 && (currentCellIndex - lastFurnitureCellIndex) < minSpacingCells)
             {
