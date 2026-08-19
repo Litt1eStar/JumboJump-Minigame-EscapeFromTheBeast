@@ -40,10 +40,12 @@ namespace JumboJumps.EFTB.State.Player
                 float t = Mathf.Clamp01(elapsed / duration);
                 Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
                 playerVisualizer.SetPosition(currentPos);
+                playerStateController.InvokePlayerMoved(currentPos);
                 yield return null;
             }
 
             playerVisualizer.SetPosition(targetPos);
+            playerStateController.InvokePlayerMoved(targetPos);
             StateController.ChangeState(typeof(PlayerIdleState));
         }
 

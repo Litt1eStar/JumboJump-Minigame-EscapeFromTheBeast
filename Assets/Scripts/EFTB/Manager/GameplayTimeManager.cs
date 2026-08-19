@@ -16,7 +16,6 @@ namespace JumboJumps.EFTB.Manager
         public event Action<float> EventGameplayTimerChanged;
 
         private LevelGeneratorManager levelGeneratorManager;
-        private GameplayTimeVisualizer visualizer;
         private GameplayController gameplayController;
         private GameplayStateManager gameplayStateManager;
         private GameplayDifficultyEnum currentDifficulty;
@@ -28,9 +27,6 @@ namespace JumboJumps.EFTB.Manager
 
         public void Initialize()
         {
-            visualizer = new GameplayTimeVisualizer();
-            visualizer.Initialize(this);
-
             levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
             gameplayController = GameContext.Instance.Get<GameplayController>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
@@ -59,9 +55,6 @@ namespace JumboJumps.EFTB.Manager
         public void Dispose()
         {
             CurrentTimer = 0f;
-            
-            visualizer?.Dispose();
-            visualizer = null;
 
             GameContext.Instance.Remove(this);
         }
