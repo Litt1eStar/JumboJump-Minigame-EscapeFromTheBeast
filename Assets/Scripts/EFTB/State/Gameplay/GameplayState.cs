@@ -70,6 +70,9 @@ namespace JumboJumps.EFTB.State.Gameplay
             hazardSpawner = new HazardSpawner();
             hazardSpawner.Initialize();
             
+            soundManager = new SoundManager();
+            soundManager.Initialize();
+
             gameplayController = new GameplayController();
 
             gameplayStateManager = new GameplayStateManager();
@@ -79,9 +82,6 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             aggressiveCatSpawner = new AggressiveCatSpawner();
             aggressiveCatSpawner.Initialize();
-
-            soundManager = new SoundManager();
-            soundManager.Initialize();
 
             gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
         }

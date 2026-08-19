@@ -19,7 +19,7 @@ namespace JumboJumps.EFTB.Constant.Sound
                 public const string BUTTON_CLICK = "SFX_UI_ButtonClick";
                 public const string GAME_OVER = "SFX_UI_GameOver";
                 public const string READY = "SFX_UI_Ready";
-                public const string GO = "SFX_UI_GO";
+                public const string GO = "SFX_UI_Go";
             }
 
             public static class BGM

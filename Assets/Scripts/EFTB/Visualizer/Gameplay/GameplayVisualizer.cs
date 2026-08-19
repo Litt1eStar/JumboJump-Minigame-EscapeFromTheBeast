@@ -1,5 +1,6 @@
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.UI.Gameplay;
 using JumboJumps.EFTB.UI.Gameplay.FinishLevel;
@@ -99,21 +100,25 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void OnPauseButtonClicked()
         {
+            EFTBSound.PlayUIClick();
             EventPauseUIButtonClicked?.Invoke();
         }
 
         public void OnResumeButtonClicked()
         {
+            EFTBSound.PlayUIClick();
             EventResumeUIButtonClicked?.Invoke();
         }
 
         public void OnMainMenuButtonClicked()
         {
+            EFTBSound.PlayUIClick();
             EventMainMenuUIButtonClicked?.Invoke();
         }
 
         public void OnFinishMainMenuButtonClicked()
         {
+            EFTBSound.PlayUIClick();
             HidePanel();
             EventFinishMainMenuButtonClicked?.Invoke();
         }
@@ -124,6 +129,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             {
                 uiGameplayCanvas?.SetFinishLevelScore(scoreManager.CurrentScoreData.TotalScore);
             }
+            EFTBSound.PlayGameOver();
             ShowFinishLevelPanel();
         }
 

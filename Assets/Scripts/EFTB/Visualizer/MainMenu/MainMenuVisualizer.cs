@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.UI.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using System;
@@ -158,11 +159,13 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
 
         public void OnPlayButtonClicked()
         {
+            EFTBSound.PlayUIClick();
             EventPlayUIButtonClicked?.Invoke();
         }
 
         public void OnExitButtonClicked()
         {
+            EFTBSound.PlayUIClick();
             EventExitUIButtonClicked?.Invoke();
         }
     }

@@ -1,6 +1,7 @@
 using JumboJumps.EFTB.Config;
 using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
@@ -192,6 +193,7 @@ namespace JumboJumps.EFTB.UI.MainMenu
 
             Quaternion originalRotation = elementTransform != null ? elementTransform.localRotation : Quaternion.identity;
 
+            EFTBSound.PlayUIReady();
             // Fade In + Pop Scale + Z-Rotation Swing Impact
             while (elapsed < fadeDuration)
             {
@@ -249,6 +251,7 @@ namespace JumboJumps.EFTB.UI.MainMenu
             float targetScale = (UIConfig != null) ? UIConfig.ReadyGoScaleTarget : ConstGameplay.UI.MainMenu.READY_GO_SCALE_TARGET;
             float scaleOutTarget = (UIConfig != null) ? UIConfig.GoScaleOutTarget : ConstGameplay.UI.MainMenu.GO_SCALE_OUT_TARGET;
 
+            EFTBSound.PlayUIGo();
             // Fade In & Scale Up to target
             while (elapsed < fadeDuration)
             {

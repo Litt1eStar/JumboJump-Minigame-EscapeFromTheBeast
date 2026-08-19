@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.MainMenu;
@@ -18,6 +19,8 @@ namespace JumboJumps.EFTB.State.MainMenu
         public override void OnEnterState()
         {
             base.OnEnterState();
+
+            EFTBSound.PlayGameplayBGM();
 
             visualizer = new MainMenuVisualizer();
             visualizer.Initialize();
