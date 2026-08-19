@@ -92,7 +92,7 @@ namespace JumboJumps.EFTB.State.Player
             }
             else if (swipeDirection == SwipeDirectionEnum.Right)
             {
-                targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
+                targetLane = Mathf.Min(playerStateController.LANE_X_POSITIONS.Length - 1, targetLane + 1);
             }
 
             float currentY = playerStateController.Visualizer.PlayerPosition.y;
@@ -119,7 +119,7 @@ namespace JumboJumps.EFTB.State.Player
             }
             else if (swipeDirection == SwipeDirectionEnum.Right)
             {
-                targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
+                targetLane = Mathf.Min(playerStateController.LANE_X_POSITIONS.Length - 1, targetLane + 1);
             }
 
             float targetY = playerStateController.Visualizer.PlayerPosition.y + ConstGameplay.Player.STEP_DISTANCE_Y;

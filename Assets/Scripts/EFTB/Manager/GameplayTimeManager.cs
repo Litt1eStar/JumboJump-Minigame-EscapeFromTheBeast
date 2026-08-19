@@ -34,8 +34,11 @@ namespace JumboJumps.EFTB.Manager
             limitPlayTime = ConstGameplay.LIMIT_PLAY_TIME;
             CurrentTimer = 0f;
 
-            mediumDifficultyThreshold = limitPlayTime * levelGeneratorManager.Config.MediumDifficultyTimePercentage;
-            hardDifficultyThreshold = limitPlayTime * levelGeneratorManager.Config.HardDifficultyTimePercentage;
+            if (levelGeneratorManager != null && levelGeneratorManager.Config != null)
+            {
+                mediumDifficultyThreshold = limitPlayTime * levelGeneratorManager.Config.MediumDifficultyTimePercentage;
+                hardDifficultyThreshold = limitPlayTime * levelGeneratorManager.Config.HardDifficultyTimePercentage;
+            }
 
             GameContext.Instance.Add(this);
         }

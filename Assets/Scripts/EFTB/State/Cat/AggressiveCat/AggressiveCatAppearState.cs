@@ -25,11 +25,11 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             stateController.GiAggressiveCat?.SetHandActive(false);
 
             targetPosition = stateController.GiCat.transform.position;
- 
+
             float direction = (stateController.GiCat.CurrentSightDirection == CatSightDirection.Right)
                 ? ConstGameplay.Cat.AggressiveCat.SLIDE_DIRECTION_LEFT_MULTIPLIER
                 : ConstGameplay.Cat.AggressiveCat.SLIDE_DIRECTION_RIGHT_MULTIPLIER;
-            
+
             startPosition = new Vector3(
                 targetPosition.x + direction * stateController.Config.SlideDistance,
                 targetPosition.y,
@@ -48,13 +48,16 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             Vector3 currentPos = stateController.GiCat.transform.position;
             float newX;
 
-            if (t < ConstGameplay.Cat.AggressiveCat.CAT_APPEAR_SNEAK_IN_DURATION_PERCENTAGE)
+            float sneakInDurationPercentage = ConstGameplay.Cat.AggressiveCat.CAT_APPEAR_SNEAK_IN_DURATION_PERCENTAGE;
+            float stayDurationPercentage = ConstGameplay.Cat.AggressiveCat.CAT_APPEAR_STAY_DURATION_PERCENTAGE;
+
+            if (t < sneakInDurationPercentage)
             {
                 // Sneak In (0% to SneakInDurationPercentage duration) - Fast
-                float progress = t / ConstGameplay.Cat.AggressiveCat.CAT_APPEAR_SNEAK_IN_DURATION_PERCENTAGE;
+                float progress = t / sneakInDurationPercentage;
                 newX = Mathf.Lerp(startPosition.x, targetPosition.x, progress);
             }
-            else if (t < ConstGameplay.Cat.AggressiveCat.CAT_APPEAR_STAY_DURATION_PERCENTAGE)
+            else if (t < stayDurationPercentage)
             {
                 // Stay (SneakInDurationPercentage to StayDurationPercentage duration) - Hold at target position
                 newX = targetPosition.x;
@@ -62,8 +65,8 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             else
             {
                 // Sneak Out (StayDurationPercentage to 100% duration)
-                float progress = (t - ConstGameplay.Cat.AggressiveCat.CAT_APPEAR_STAY_DURATION_PERCENTAGE) 
-                    / (ConstGameplay.Cat.AggressiveCat.TRANSITION_PROGRESS_COMPLETE - ConstGameplay.Cat.AggressiveCat.CAT_APPEAR_STAY_DURATION_PERCENTAGE);
+                float progress = (t - stayDurationPercentage) 
+                    / (ConstGameplay.Cat.AggressiveCat.TRANSITION_PROGRESS_COMPLETE - stayDurationPercentage);
                 newX = Mathf.Lerp(targetPosition.x, startPosition.x, progress);
             }
 

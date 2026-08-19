@@ -43,12 +43,8 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 }
                 else
                 {
-                    startPosition = giAggressive.transform.position;
-                    float[] lanePositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
-                    float targetX = (lanePositions != null && lanePositions.Length > 1)
-                        ? lanePositions[1]
-                        : 0f;
-                    targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
+                    InitializeSmashParameters(giAggressive);
+                    return;
                 }
 
                 float yRotation = (currentSightDirection == CatSightDirection.Right) 
@@ -60,6 +56,29 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 giAggressive.SetHandRotation(catHandRotation);
                 giAggressive.SetHandPosition(startPosition);
             }
+        }
+
+        private void InitializeSmashParameters(GIAggressiveCat giAggressive)
+        {
+            giAggressive.SetHandActive(true);
+
+            startPosition = giAggressive.transform.position;
+            currentSightDirection = giAggressive.CurrentSightDirection;
+            
+            float[] lanePositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+            float targetX = (currentSightDirection == CatSightDirection.Right)
+                ? (lanePositions != null && lanePositions.Length > 0 ? lanePositions[0] : -2.0f)
+                : (lanePositions != null && lanePositions.Length > 1 ? lanePositions[lanePositions.Length - 1] : 2.0f);
+
+            float rotation = (currentSightDirection == CatSightDirection.Right) 
+                ? ConstGameplay.Cat.AggressiveCat.CAT_LEFT_HAND_Y_ROTATION 
+                : ConstGameplay.Cat.AggressiveCat.CAT_RIGHT_HAND_Y_ROTATION;
+
+            targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
+            
+            Quaternion catHandRotation = Quaternion.Euler(0f, rotation, 0f);
+            giAggressive.SetHandRotation(catHandRotation);
+            giAggressive.SetHandPosition(startPosition);
         }
 
         public override void UpdateLogic(float deltaTime)
@@ -91,7 +110,6 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                     return;
                 }
 
-                // Wait for the specified stay duration after the smash
                 stayTimer += deltaTime;
                 if (stayTimer >= stateController.Config.SmashStayDuration)
                 {

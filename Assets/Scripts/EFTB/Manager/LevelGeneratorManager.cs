@@ -86,7 +86,9 @@ namespace JumboJumps.EFTB.Manager
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
-            segments = new List<LevelSegmentData>();
+            segments = (gameDataManager != null && gameDataManager.LevelSegmentData != null)
+                ? gameDataManager.LevelSegmentData.Values.ToList()
+                : new List<LevelSegmentData>();
             LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
             MaxSegmentAmount = ConstGameplay.LevelGenerator.MAX_SEGMENT_AMOUNT;
             SegmentHeight = ConstGameplay.LevelGenerator.SEGMENT_HEIGHT;
@@ -105,12 +107,12 @@ namespace JumboJumps.EFTB.Manager
                                               MediumDifficultyTimePercentage,
                                               HardDifficultyTimePercentage);
 
-            nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
-            nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
+            nextTriggerPosition = SegmentHeight + config.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            nextYSpawnPosition = SegmentHeight * config.MAX_SEGMENT_AMOUNT;
 
             GameContext.Instance.Add(this);
 
-            for (int i = 0; i < config.MaxSegmentAmount; i++)
+            for (int i = 0; i < config.MAX_SEGMENT_AMOUNT; i++)
             {
                 float spawnYPosition = i * SegmentHeight;
                 SpawnSegmentAt(spawnYPosition);
