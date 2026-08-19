@@ -61,7 +61,7 @@ namespace JumboJumps.EFTB.UI.Gameplay
         {
             if (scoreCounterLabel != null)
             {
-                scoreCounterLabel.text = ConstUI.Gameplay.BASE_SCORE_LABEL + scoreData.TotalScore.ToString();
+                scoreCounterLabel.text = scoreData.TotalScore.ToString();
             }
         }
 
