@@ -117,11 +117,6 @@ namespace JumboJumps.EFTB.GI
             playerTransform.position = position;
         }
 
-        public void SetPosition(Vector3 position)
-        {
-            playerTransform.position = position;
-        }
-
         public void SetXPosition(float x)
         {
             playerTransform.position = new Vector3(x, playerTransform.position.y, playerTransform.position.z);

@@ -35,12 +35,6 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public const int TREAT_POINT_VALUE = 100;
         }
 
-        public class Player
-        {
-            public const float Step_Distance_Y = 2.0f;
-            public const float Step_Duration = 0.12f;
-        }
-
         public class Cat
         {
             public const float CAT_LEFT_LANE_SPAWN_POSITION = -4.3f;

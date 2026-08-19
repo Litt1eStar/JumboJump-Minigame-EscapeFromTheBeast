@@ -47,10 +47,6 @@ namespace JumboJumps.EFTB.State.Player
             playerStateController.CurrentLaneIndex = targetLane;
             Vector3 targetPos = new Vector3(targetX, targetY, startPos.z);
 
-            Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
-            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Player.Step_Distance_Y : 0f;
-            Vector3 targetPos = new Vector3(targetX, startPos.y + stepY, startPos.z);
-
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
             switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SmoothStepLane(startPos, targetPos));
         }
