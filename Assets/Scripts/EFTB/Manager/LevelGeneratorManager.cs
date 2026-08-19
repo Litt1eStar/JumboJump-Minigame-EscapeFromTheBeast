@@ -388,10 +388,24 @@ namespace JumboJumps.EFTB.Manager
                 giCollectible.EventCollected -= OnCollectibleCollected;
                 giCollectible.EventRecycleRequested -= OnCollectibleRecycle;
                 activeTreats.Remove(giCollectible);
+                giCollectible.ResetState();
 
                 var poolManager = GameContext.Instance?.Get<ObjectPoolManager>();
                 poolManager?.Recycle(giCollectible.gameObject);
             }
+        }
+
+        public bool IsRowOccupiedByFurniture(float targetWorldY)
+        {
+            if (LaneXPositions == null || LaneXPositions.Length == 0) return false;
+            for (int l = 0; l < LaneXPositions.Length; l++)
+            {
+                if (IsCellBlockedByFurniture(l, targetWorldY))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void ProcedurallyGenerateFurniture(float yPosition, GameObject segmentInstance, GISegment giSegment)
@@ -403,7 +417,8 @@ namespace JumboJumps.EFTB.Manager
                 SegmentHeight,
                 LaneXPositions.Length,
                 ref lastOpenLaneIndex,
-                ref lastFurnitureWorldY
+                ref lastFurnitureWorldY,
+                IsRowOccupiedByFurniture
             );
 
             foreach (var block in furnitureBlocks)

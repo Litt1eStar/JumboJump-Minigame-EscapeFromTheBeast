@@ -144,7 +144,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             if (!gameDataManager.TryGetPrefab(prefabName, out GameObject prefab))
             {
                 DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for collectible: {prefabName}");
-                return null;   
+                return null;
             }
 
             int laneIdx = Mathf.Clamp(collectibleData.LaneIndex, 0, laneXPosition.Length - 1);
@@ -367,15 +367,21 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                                 {
                                     catManager.DeregisterCat(giCat);
                                 }
+                                var giCollectible = spawnedObj.GetComponent<GICollectible>();
+                                if (giCollectible != null)
+                                {
+                                    giCollectible.ResetState();
+                                }
+
+                                poolManager.Recycle(spawnedObj);
                             }
-                            poolManager.Recycle(spawnedObj);
                         }
                     }
+                    giSegment.ClearSpawnedObjects();
                 }
-                giSegment.ClearSpawnedObjects();
-            }
 
-            poolManager.Recycle(oldestSegment);
+                poolManager.Recycle(oldestSegment);
+            }
         }
     }
 }

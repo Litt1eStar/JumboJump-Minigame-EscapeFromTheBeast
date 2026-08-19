@@ -40,7 +40,8 @@ namespace JumboJumps.EFTB.Model.Obstacle
             float segmentHeight,
             int laneCount,
             ref int lastOpenLaneIndex,
-            ref float lastFurnitureWorldY)
+            ref float lastFurnitureWorldY,
+            System.Func<float, bool> isRowOccupiedFunc = null)
         {
             List<FurnitureBlockData> generatedBlocks = new List<FurnitureBlockData>();
             float cellHeight = Config != null ? Config.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
@@ -51,6 +52,12 @@ namespace JumboJumps.EFTB.Model.Obstacle
             {
                 int globalRowIndex = startRowIndex + r;
                 float worldY = (globalRowIndex * cellHeight) + 1.0f;
+
+                if (isRowOccupiedFunc != null && isRowOccupiedFunc(worldY))
+                {
+                    lastFurnitureWorldY = worldY;
+                    continue;
+                }
 
                 if (!ShouldSpawnFurnitureOnRow(worldY, lastFurnitureWorldY))
                 {
