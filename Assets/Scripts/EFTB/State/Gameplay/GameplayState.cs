@@ -18,14 +18,15 @@ namespace JumboJumps.EFTB.State.Gameplay
         private CatManager catManager;
         private CollectibleManager collectibleManager;
         private ScoreManager scoreManager;
-        private AggressiveCatSpawner aggressiveCatSpawner;
         private WarningIndicatorManager warningIndicatorManager;
+        private HazardSpawner hazardSpawner;
 
         private GameplayController gameplayController;
         private GameStateController stateController;
 
         private Input2DManager input2DManager;
         private ObjectPoolManager poolManager;
+        private AggressiveCatSpawner aggressiveCatSpawner;
 
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
@@ -76,6 +77,8 @@ namespace JumboJumps.EFTB.State.Gameplay
             aggressiveCatSpawner = new AggressiveCatSpawner();
             aggressiveCatSpawner.Initialize();
 
+            hazardSpawner = new HazardSpawner();
+            hazardSpawner.Initialize();
         }
 
         public override void OnEnterState()
@@ -87,14 +90,17 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnExitState();
 
+            hazardSpawner?.Dispose();
+            hazardSpawner = null;
+
+            aggressiveCatSpawner?.Dispose();
+            aggressiveCatSpawner = null;
+
             scoreManager?.Dispose();
             scoreManager = null;
 
             gameplayStateManager?.Dispose();
             gameplayStateManager = null;
-
-            aggressiveCatSpawner?.Dispose();
-            aggressiveCatSpawner = null;
 
             warningIndicatorManager?.Dispose();
             warningIndicatorManager = null;
@@ -138,7 +144,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             playerManager?.UpdateLogic(deltaTime);
             levelGeneratorManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
-            aggressiveCatSpawner?.UpdateLogic(deltaTime);
+            hazardSpawner?.UpdateLogic(deltaTime);
 
             input2DManager.UpdateLogic(deltaTime);
         }

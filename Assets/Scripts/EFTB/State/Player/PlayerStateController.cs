@@ -39,7 +39,12 @@ namespace JumboJumps.EFTB.State.Player
         }
         public SwipeDirectionEnum LastSwipeDirection { get; set; }
         public bool IsStepUpRequested { get; set; }
-        
+        public event Action EventIdleLimitExceeded;
+
+        public void InvokeIdleLimitExceeded()
+        {
+            EventIdleLimitExceeded?.Invoke();
+        }
 
         public void InvokePlayerMoved(Vector3 position)
         {
@@ -66,6 +71,12 @@ namespace JumboJumps.EFTB.State.Player
                 { typeof(PlayerMovingState), new PlayerMovingState(this) },
                 { typeof(PlayerSwitchLaneState), new PlayerSwitchLaneState(this) }
             };
+        }
+
+        public bool IsTargetCellBlocked(int targetLaneIndex, float targetWorldY)
+        {
+            var levelGen = GameContext.Instance.Get<LevelGeneratorManager>();
+            return levelGen != null && levelGen.IsCellBlockedByFurniture(targetLaneIndex, targetWorldY);
         }
 
         public override void UpdateLogic(float deltaTime)

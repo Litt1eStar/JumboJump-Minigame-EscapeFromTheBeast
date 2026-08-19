@@ -57,9 +57,10 @@ namespace JumboJumps.EFTB.Manager
 
         private void OnPlayerMoved(Vector3 position)
         {
-            float initialY = playerManager != null ? playerManager.InitialPlayerY : 0f;
-            float deltaY = position.y - initialY;
-            float stepDistance = ConstGameplay.Player.STEP_DISTANCE_Y;
+            if (playerManager == null) return;
+
+            float deltaY = position.y - playerManager.InitialPlayerY;
+            float stepDistance = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             int currentCells = Mathf.Max(0, Mathf.FloorToInt((deltaY + (stepDistance * 0.5f)) / stepDistance));
 
             if (currentCells > MaxCellsClimbed)
@@ -67,6 +68,13 @@ namespace JumboJumps.EFTB.Manager
                 MaxCellsClimbed = currentCells;
                 EventScoreChanged?.Invoke(CurrentScoreData);
             }
+        }
+
+        public void ResetScore()
+        {
+            MaxCellsClimbed = 0;
+            TreatsCollected = 0;
+            EventScoreChanged?.Invoke(CurrentScoreData);
         }
 
         private void OnTreatsCollectedChanged(int totalValue)
