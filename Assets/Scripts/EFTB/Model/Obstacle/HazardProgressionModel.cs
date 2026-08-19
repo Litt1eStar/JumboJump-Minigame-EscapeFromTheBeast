@@ -4,9 +4,9 @@ using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 using static UnityEngine.Rendering.STP;
 
-namespace JumboJumps.EFTB.Utilities
+namespace JumboJumps.EFTB.Model.Obstacle
 {
-    public static class HazardHelper
+    public class HazardProgressionModel
     {
         private HazardConfigSO config;
         public HazardConfigSO Config
@@ -28,7 +28,7 @@ namespace JumboJumps.EFTB.Utilities
         /// Starts at Base Range [Base_Interval_Low, Base_Interval_High] and reduces by Step_Interval_Reduction every 30 cells,
         /// clamped to Min_Spawn_Interval.
         /// </summary>
-        public static float GetRandomSpawnInterval(float worldY)
+        public float GetRandomSpawnInterval(float worldY)
         {
             float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             int stepCells = Config != null ? Config.StepIntervalCells : ConstGameplay.Obstacle.Hazard.STEP_INTERVAL_CELLS;
@@ -52,7 +52,7 @@ namespace JumboJumps.EFTB.Utilities
         /// Calculates horizontal movement speed (units/sec) for objects on a row.
         /// Picks a random duration per lane from Floor Range [FLOOR_SPEED_DURATION_LOW, FLOOR_SPEED_DURATION_HIGH] and converts to speed (units/sec).
         /// </summary>
-        public static float GetRandomRowSpeed()
+        public float GetRandomRowSpeed()
         {
             float speedLow = Config.FloorSpeedDurationLow;
             float speedHigh = Config.FloorSpeedDurationHigh;
