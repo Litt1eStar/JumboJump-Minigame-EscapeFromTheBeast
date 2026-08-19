@@ -30,7 +30,7 @@ namespace JumboJumps.EFTB.State.Player
             }
             else if (playerStateController.LastSwipeDirection == SwipeDirectionEnum.Right)
             {
-                targetLane = Mathf.Min(playerStateController.LANE_X_POSITIONS.Length - 1, targetLane + 1);
+                targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
             }
 
             Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
@@ -43,9 +43,13 @@ namespace JumboJumps.EFTB.State.Player
                 return;
             }
 
-            float targetX = playerStateController.LANE_X_POSITIONS[targetLane];
+            float targetX = playerStateController.LaneXPositions[targetLane];
             playerStateController.CurrentLaneIndex = targetLane;
             Vector3 targetPos = new Vector3(targetX, targetY, startPos.z);
+
+            Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
+            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Player.Step_Distance_Y : 0f;
+            Vector3 targetPos = new Vector3(targetX, startPos.y + stepY, startPos.z);
 
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
             switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SmoothStepLane(startPos, targetPos));

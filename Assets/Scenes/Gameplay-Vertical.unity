@@ -2460,9 +2460,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1565583785
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7776443102747383264, guid: 28f452fee2453c646a48d81052fc629d, type: 3}
+  m_PrefabInstance: {fileID: 1938388547870550204}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
