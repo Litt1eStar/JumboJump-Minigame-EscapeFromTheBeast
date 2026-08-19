@@ -77,7 +77,7 @@ namespace JumboJumps.EFTB.Model.Obstacle
             // Check minimum 1-cell spacing constraint in cell-index space to prevent float precision drift at high Y
             int lastFurnitureCellIndex = lastFurnitureWorldY >= 0f ? Mathf.RoundToInt(lastFurnitureWorldY / cellHeight) : -999;
             int minSpacing = Config != null ? Config.MinRowSpacingCells : ConstGameplay.Obstacle.Furniture.MIN_ROW_SPACING_CELLS;
-            int minSpacingCells = minSpacing + 1;
+            int minSpacingCells = minSpacing + 2;
 
             if (lastFurnitureCellIndex >= 0 && (currentCellIndex - lastFurnitureCellIndex) < minSpacingCells)
             {
