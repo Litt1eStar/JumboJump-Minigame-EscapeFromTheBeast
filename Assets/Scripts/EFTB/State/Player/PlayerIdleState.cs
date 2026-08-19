@@ -1,12 +1,13 @@
-using JumboJumps.EFTB.State.Player;
 using JumboJumps.EFTB.Model;
-using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Constant.Gameplay;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerIdleState : BaseState
     {
         private PlayerStateController playerStateController => (PlayerStateController)StateController;
+        private float idleTimer;
 
         public PlayerIdleState(BaseStateController stateController) : base(stateController)
         {
@@ -18,14 +19,34 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
+            idleTimer = 0f;
             Subscribe();
         }
 
         public override void OnExitState()
         {
             Unsubscribe();
-            
+
+            idleTimer = 0f;
+
             base.OnExitState();
+        }
+
+        public override void UpdateLogic(float deltaTime)
+        {
+            base.UpdateLogic(deltaTime);
+
+            IdleTimerTracking(deltaTime);
+        }
+
+        private void IdleTimerTracking(float deltaTime)
+        {
+            idleTimer += deltaTime;
+            if (idleTimer >= ConstGameplay.Cat.AggressiveCat.IDLE_LIMIT)
+            {
+                idleTimer = 0f;
+                playerStateController.InvokeIdleLimitExceeded();
+            }
         }
 
         public void Subscribe()
@@ -48,6 +69,14 @@ namespace JumboJumps.EFTB.State.Player
 
         public void OnTap()
         {
+            float targetY = playerStateController.Visualizer.PlayerPosition.y + ConstGameplay.Player.STEP_DISTANCE_Y;
+
+            if (playerStateController.IsTargetCellBlocked(playerStateController.CurrentLaneIndex, targetY))
+            {
+                // Furniture in next cell of player so moving forward cannot execute
+                return;
+            }
+
             playerStateController.IsStepUpRequested = true;
 
             StateController.ChangeState(typeof(PlayerMovingState));
@@ -55,6 +84,25 @@ namespace JumboJumps.EFTB.State.Player
 
         public void OnSwipe(SwipeDirectionEnum swipeDirection)
         {
+            int targetLane = playerStateController.CurrentLaneIndex;
+
+            if (swipeDirection == SwipeDirectionEnum.Left)
+            {
+                targetLane = Mathf.Max(0, targetLane - 1);
+            }
+            else if (swipeDirection == SwipeDirectionEnum.Right)
+            {
+                targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
+            }
+
+            float currentY = playerStateController.Visualizer.PlayerPosition.y;
+
+            if (playerStateController.IsTargetCellBlocked(targetLane, currentY))
+            {
+                // Target lane cell is blocked by furniture -> lane switch cannot execute!
+                return;
+            }
+
             playerStateController.IsStepUpRequested = false;
             playerStateController.LastSwipeDirection = swipeDirection;
             
@@ -63,6 +111,25 @@ namespace JumboJumps.EFTB.State.Player
 
         public void OnCombinedStep(SwipeDirectionEnum swipeDirection)
         {
+            int targetLane = playerStateController.CurrentLaneIndex;
+
+            if (swipeDirection == SwipeDirectionEnum.Left)
+            {
+                targetLane = Mathf.Max(0, targetLane - 1);
+            }
+            else if (swipeDirection == SwipeDirectionEnum.Right)
+            {
+                targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
+            }
+
+            float targetY = playerStateController.Visualizer.PlayerPosition.y + ConstGameplay.Player.STEP_DISTANCE_Y;
+
+            if (playerStateController.IsTargetCellBlocked(targetLane, targetY))
+            {
+                // Target cell is blocked by furniture so combined step cannot execute
+                return;
+            }
+
             playerStateController.IsStepUpRequested = true;
             playerStateController.LastSwipeDirection = swipeDirection;
             

@@ -1,12 +1,12 @@
-﻿using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Utilities;
 using System;
 
 namespace JumboJumps.EFTB.Manager
 {
     public class CollectibleManager
     {
-        public event Action<int> EventTotalCoinValueChanged;
-        public int TotalCoinValue { get; private set; }
+        public event Action<int> EventTotalCollectibleValueChanged;
+        public int TotalCollectibleValue { get; private set; }
 
         public void Initialize()
         {
@@ -20,8 +20,8 @@ namespace JumboJumps.EFTB.Manager
 
         public void AddValue(int value)
         {
-            TotalCoinValue += value;
-            EventTotalCoinValueChanged?.Invoke(TotalCoinValue); //Notify UI to update coin value
+            TotalCollectibleValue += value;
+            EventTotalCollectibleValueChanged?.Invoke(TotalCollectibleValue);
         }
     }
 }

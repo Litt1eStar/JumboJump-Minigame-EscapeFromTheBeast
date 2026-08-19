@@ -16,53 +16,41 @@ namespace JumboJumps.EFTB.Manager
         public event Action<float> EventGameplayTimerChanged;
 
         private LevelGeneratorManager levelGeneratorManager;
-        private GameplayTimeVisualizer visualizer;
         private GameplayController gameplayController;
         private GameplayStateManager gameplayStateManager;
         private GameplayDifficultyEnum currentDifficulty;
         public GameplayDifficultyEnum CurrentDifficulty => currentDifficulty;
         public float CurrentTimer { get; private set; } = 0f;
         private float limitPlayTime;
-        private float normalRemainingTime;
-        private float hardRemainingTime;
-        private bool isTimerFinished = false;
+        private float mediumDifficultyThreshold;
+        private float hardDifficultyThreshold;
 
         public void Initialize()
         {
-            visualizer = new GameplayTimeVisualizer();
-            visualizer.Initialize(this);
-
             levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
             gameplayController = GameContext.Instance.Get<GameplayController>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
             currentDifficulty = GameplayDifficultyEnum.Easy;
             limitPlayTime = ConstGameplay.LIMIT_PLAY_TIME;
-            CurrentTimer = limitPlayTime;
-            isTimerFinished = false;
+            CurrentTimer = 0f;
 
-            normalRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.MEDIUM_DIFFICULTY_TIME_PERCENTAGE);
-            hardRemainingTime = limitPlayTime * (1 - levelGeneratorManager.Config.HARD_DIFFICULTY_TIME_PERCENTAGE);
+            if (levelGeneratorManager != null && levelGeneratorManager.Config != null)
+            {
+                mediumDifficultyThreshold = limitPlayTime * levelGeneratorManager.Config.MediumDifficultyTimePercentage;
+                hardDifficultyThreshold = limitPlayTime * levelGeneratorManager.Config.HardDifficultyTimePercentage;
+            }
 
             GameContext.Instance.Add(this);
         }
 
         public void UpdateLogic(float deltaTime)
         {
-            if (isTimerFinished) return;
-
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
             {
                 return;
             }
 
-            CurrentTimer -= deltaTime;
-            if (CurrentTimer <= 0)
-            {
-                CurrentTimer = 0f;
-                isTimerFinished = true;
-                gameplayController?.InvokeFinishLevel(GameStatus.Win);
-            }
-
+            CurrentTimer += deltaTime;
             HandleDifficultyAdjustment();
             EventGameplayTimerChanged?.Invoke(CurrentTimer);
         }
@@ -70,22 +58,23 @@ namespace JumboJumps.EFTB.Manager
         public void Dispose()
         {
             CurrentTimer = 0f;
-            
-            visualizer?.Dispose();
-            visualizer = null;
 
             GameContext.Instance.Remove(this);
         }
 
         private void HandleDifficultyAdjustment()
         {
-            if (CurrentTimer <= normalRemainingTime && CurrentTimer > hardRemainingTime)
+            if (CurrentTimer >= hardDifficultyThreshold)
+            {
+                currentDifficulty = GameplayDifficultyEnum.Hard;
+            }
+            else if (CurrentTimer >= mediumDifficultyThreshold)
             {
                 currentDifficulty = GameplayDifficultyEnum.Normal;
             }
-            else if (CurrentTimer <= hardRemainingTime)
+            else
             {
-                currentDifficulty = GameplayDifficultyEnum.Hard;
+                currentDifficulty = GameplayDifficultyEnum.Easy;
             }
         }
     }

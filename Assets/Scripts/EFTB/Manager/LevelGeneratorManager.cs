@@ -1,13 +1,15 @@
+using JumboJumps.EFTB.Config;
+using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.GameData.LevelSegment;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Model.Obstacle;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.LevelGenerator;
-using LevelSegmentData = JumboJumps.EFTB.Model.LevelGeneratorData.LevelSegmentData;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using JumboJumps.EFTB.Constant.Gameplay;
-using JumboJumps.EFTB.GI;
+using LevelSegmentData = JumboJumps.EFTB.Model.LevelGeneratorData.LevelSegmentData;
 
 namespace JumboJumps.EFTB.Manager
 {
@@ -53,7 +55,45 @@ namespace JumboJumps.EFTB.Manager
         public float SegmentRecycleTriggerOffset { get; private set; }
         public float MediumDifficultyTimePercentage { get; private set; }
         public float HardDifficultyTimePercentage { get; private set; }
+        public float MaxGeneratedWorldY => nextYSpawnPosition;
 
+        private FurnitureConfigSO furnitureConfig;
+        public FurnitureConfigSO FurnitureConfig
+        {
+            get
+            {
+                if (furnitureConfig == null && SceneObjectContext.Instance != null)
+                {
+                    var container = SceneObjectContext.Instance.Get<GIGameplayConfigContainer>();
+                    if (container != null && container.FurnitureConfig != null)
+                    {
+                        furnitureConfig = container.FurnitureConfig;
+                    }
+                }
+                return furnitureConfig;
+            }
+        }
+
+        private CollectibleConfigSO collectibleConfig;
+        public CollectibleConfigSO CollectibleConfig
+        {
+            get
+            {
+                if (collectibleConfig == null && SceneObjectContext.Instance != null)
+                {
+                    var container = SceneObjectContext.Instance.Get<GIGameplayConfigContainer>();
+                    if (container != null && container.CollectibleConfig != null)
+                    {
+                        collectibleConfig = container.CollectibleConfig;
+                    }
+                }
+                return collectibleConfig;
+            }
+        }
+
+        private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
+        private float lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
+        private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
         private List<LevelSegmentData> segments;
 
         public void Initialize(Transform playerTransform)
@@ -63,7 +103,9 @@ namespace JumboJumps.EFTB.Manager
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayTimeManager = GameContext.Instance.Get<GameplayTimeManager>();
 
-            segments = gameDataManager.LevelSegmentData.Values.ToList();
+            segments = (gameDataManager != null && gameDataManager.LevelSegmentData != null)
+                ? gameDataManager.LevelSegmentData.Values.ToList()
+                : new List<LevelSegmentData>();
             LaneXPositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
             MaxSegmentAmount = ConstGameplay.LevelGenerator.MAX_SEGMENT_AMOUNT;
             SegmentHeight = ConstGameplay.LevelGenerator.SEGMENT_HEIGHT;
@@ -74,18 +116,24 @@ namespace JumboJumps.EFTB.Manager
             visualizer = new LevelGeneratorVisualizer(gameDataManager, LaneXPositions, this);
             visualizer.Initialize();
 
-            config = new LevelGeneratorConfig(segments, LaneXPositions, MaxSegmentAmount, SegmentHeight, SegmentRecycleTriggerOffset, MediumDifficultyTimePercentage, HardDifficultyTimePercentage);
+            config = new LevelGeneratorConfig(segments,
+                                              LaneXPositions,
+                                              MaxSegmentAmount,
+                                              SegmentHeight,
+                                              SegmentRecycleTriggerOffset,
+                                              MediumDifficultyTimePercentage,
+                                              HardDifficultyTimePercentage);
 
             nextTriggerPosition = SegmentHeight + config.SEGMENT_RECYCLE_TRIGGER_OFFSET;
             nextYSpawnPosition = SegmentHeight * config.MAX_SEGMENT_AMOUNT;
+
+            GameContext.Instance.Add(this);
 
             for (int i = 0; i < config.MAX_SEGMENT_AMOUNT; i++)
             {
                 float spawnYPosition = i * SegmentHeight;
                 SpawnSegmentAt(spawnYPosition);
             }
-
-            GameContext.Instance.Add(this);
         }
 
         public void Dispose()
@@ -94,6 +142,9 @@ namespace JumboJumps.EFTB.Manager
             visualizer = null;
 
             activeSegmentQueue.Clear();
+            activeFurnitureObstacles.Clear();
+            lastFurnitureWorldY = -999f;
+            lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
             GameContext.Instance.Remove(this);
         }
 
@@ -104,30 +155,6 @@ namespace JumboJumps.EFTB.Manager
             if (playerY >= nextTriggerPosition)
             {
                 RecycleSegment();
-            }
-
-            EventSpawnerHandler(playerY);
-        }
-
-        private void EventSpawnerHandler(float playerY)
-        {
-            foreach (var segment in activeSegmentQueue)
-            {
-                while (segment.PendingEvents.Count > 0)
-                {
-                    var pendingEvent = segment.PendingEvents[0];
-                    float triggerY = segment.SpawnY + pendingEvent.TriggerYOffset;
-
-                    if (playerY >= triggerY)
-                    {
-                        visualizer.SpawnEventObstacle(pendingEvent, segment.SpawnY, segment.SegmentGo, segment.GiSegment);
-                        segment.PendingEvents.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
             }
         }
 
@@ -154,61 +181,88 @@ namespace JumboJumps.EFTB.Manager
             visualizer.RecycleOldestSegment();
             activeSegmentQueue.Dequeue();
 
+            // Purge recycled furniture references
+            activeFurnitureObstacles.RemoveAll(f => f == null || !f.gameObject.activeInHierarchy);
+
             SpawnSegmentAt(nextYSpawnPosition);
 
             nextTriggerPosition += SegmentHeight;
             nextYSpawnPosition += SegmentHeight;
         }
 
-        private SegmentDifficultyEnum GetCurrentDifficulty()
+        public void RegisterFurnitureObstacle(GIFurnitureObstacle furniture)
         {
-            if (gameplayTimeManager == null)
+            if (furniture != null && !activeFurnitureObstacles.Contains(furniture))
             {
-                return SegmentDifficultyEnum.Easy;
+                activeFurnitureObstacles.Add(furniture);
+            }
+        }
+
+        public void UnregisterFurnitureObstacle(GIFurnitureObstacle furniture)
+        {
+            if (furniture != null)
+            {
+                activeFurnitureObstacles.Remove(furniture);
+            }
+        }
+
+        public bool IsValidFurnitureSpawn(int laneIndex, float worldY)
+        {
+            if (laneIndex < 0 || laneIndex >= LaneXPositions.Length) return false;
+
+            int safeZone = FurnitureConfig != null ? FurnitureConfig.SafeZoneCells : ConstGameplay.Obstacle.SAFE_ZONE_CELLS;
+            float cellHeight = FurnitureConfig != null ? FurnitureConfig.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+
+            if (worldY <= safeZone * cellHeight) return false;
+
+            if (IsCellBlockedByFurniture(laneIndex, worldY)) return false;
+
+            return true;
+        }
+
+        public bool IsCellBlockedByFurniture(int targetLaneIndex, float targetWorldY)
+        {
+            for (int i = activeFurnitureObstacles.Count - 1; i >= 0; i--)
+            {
+                if (i >= activeFurnitureObstacles.Count) continue;
+                GIFurnitureObstacle furniture = activeFurnitureObstacles[i];
+                if (furniture != null && furniture.gameObject.activeInHierarchy && furniture.BlocksCell(targetLaneIndex, targetWorldY))
+                {
+                    return true;
+                }
             }
 
-            switch (gameplayTimeManager.CurrentDifficulty)
+            // Self-healing fallback: Query the active GISegment at targetWorldY for active furniture
+            GISegment segment = GetGISegmentAtY(targetWorldY);
+            if (segment != null)
             {
-                case GameplayDifficultyEnum.Easy:
-                    return SegmentDifficultyEnum.Easy;
-                case GameplayDifficultyEnum.Normal:
-                    return SegmentDifficultyEnum.Normal;
-                case GameplayDifficultyEnum.Hard:
-                    return SegmentDifficultyEnum.Hard;
-                default:
-                    return SegmentDifficultyEnum.Easy;
+                var furnitureList = segment.GetComponentsInChildren<GIFurnitureObstacle>(false);
+                foreach (var furniture in furnitureList)
+                {
+                    if (furniture != null && furniture.gameObject.activeInHierarchy)
+                    {
+                        RegisterFurnitureObstacle(furniture);
+                        if (furniture.BlocksCell(targetLaneIndex, targetWorldY))
+                        {
+                            return true;
+                        }
+                    }
+                }
             }
+
+            return false;
         }
 
         private ActiveSegment SpawnSegmentAt(float yPosition)
         {
-            var gameDataManager = GameContext.Instance.Get<GameDataManager>();
-            if (gameDataManager == null || gameDataManager.LevelSegmentData == null || gameDataManager.LevelSegmentData.Count == 0)
-            {
-                return null;
-            }
-
-            LevelSegmentData selectedTemplate;
-            if (yPosition == 0f)
-            {
-                selectedTemplate = new LevelSegmentData(
-                    ConstGameplay.LevelGenerator.InitialSegmentId,
-                    ConstGameplay.LevelGenerator.DefaultInitialSegmentPrefab,
-                    SegmentHeight,
-                    SegmentDifficultyEnum.Easy,
-                    new List<LevelGeneratorData.LaneObjectData>(),
-                    new List<LevelGeneratorData.LaneEventData>()
-                );
-            }
-            else
-            {
-                SegmentDifficultyEnum currentDifficulty = GetCurrentDifficulty();
-                DebugLogHelper.Log(currentDifficulty.ToString());
-
-                List<LevelSegmentData> allSegments = segments;
-                List<LevelSegmentData> matchedTemplates = allSegments.FindAll(t => t.Difficulty == currentDifficulty);
-                selectedTemplate = SelectTemplateFromMatchedTemplate(matchedTemplates, allSegments);
-            }
+            LevelSegmentData selectedTemplate = new LevelSegmentData(
+                ConstGameplay.LevelGenerator.INITIAL_SEGMENT_ID,
+                ConstGameplay.LevelGenerator.DEFAULT_INITIAL_SEGMENT_PREFAB,
+                SegmentHeight,
+                SegmentDifficultyEnum.Easy,
+                new List<LevelGeneratorData.LaneObjectData>(),
+                new List<LevelGeneratorData.LaneEventData>()
+            );
 
             GameObject segmentInstance = visualizer.SpawnSegment(selectedTemplate, yPosition);
 
@@ -217,42 +271,67 @@ namespace JumboJumps.EFTB.Manager
             GISegment giSegment = segmentInstance.GetComponent<GISegment>();
             if (giSegment == null)
             {
-                DebugLogHelper.LogError($"GISegment component not found on the spawned segment instance for template Id : {selectedTemplate.Id}");
+                DebugLogHelper.LogError($"GISegment component not found on spawned segment instance at Y: {yPosition}");
                 return null;
             }
 
             var instance = new ActiveSegment(selectedTemplate, yPosition, segmentInstance, giSegment);
 
-            for (int i = instance.PendingEvents.Count - 1; i >= 0; i--)
+            // Scan and register any pre-baked or static GIFurnitureObstacle instances in the segment hierarchy
+            GIFurnitureObstacle[] prefabFurniture = segmentInstance.GetComponentsInChildren<GIFurnitureObstacle>(true);
+            foreach (var furniture in prefabFurniture)
             {
-                var ev = instance.PendingEvents[i];
-                if (ev.PrefabName == "Prefab_Event_SleepyCat")
+                if (furniture != null)
                 {
-                    visualizer.SpawnEventObstacle(ev, yPosition, segmentInstance, giSegment);
-                    instance.PendingEvents.RemoveAt(i);
+                    furniture.UpdateWorldPositionAndLane();
+                    RegisterFurnitureObstacle(furniture);
                 }
+            }
+
+            // Procedurally generate furniture blocks for this segment
+            var furnitureBlocks = FurniturePlacementHelper.GenerateSegmentFurniture(
+                yPosition,
+                SegmentHeight,
+                LaneXPositions.Length,
+                ref lastOpenLaneIndex,
+                ref lastFurnitureWorldY,
+                FurnitureConfig
+            );
+
+            foreach (var block in furnitureBlocks)
+            {
+                float worldY = yPosition + block.YOffset;
+                if (!IsValidFurnitureSpawn(block.LaneIndex, worldY))
+                {
+                    continue;
+                }
+
+                GIFurnitureObstacle giFurniture = visualizer.SpawnFurnitureObstacle(block, yPosition, segmentInstance, giSegment);
+                if (giFurniture != null)
+                {
+                    RegisterFurnitureObstacle(giFurniture);
+                }
+            }
+
+            // Procedurally generate collectibles for this segment
+            var hazardSpawner = GameContext.Instance.Get<HazardSpawner>();
+            var collectibles = CollectiblePlacementHelper.GenerateSegmentCollectibles(
+                yPosition,
+                SegmentHeight,
+                LaneXPositions.Length,
+                IsCellBlockedByFurniture,
+                (worldY) => hazardSpawner != null && hazardSpawner.IsHazardRow(worldY),
+                CollectibleConfig
+            );
+
+            string collectiblePrefab = CollectibleConfig != null ? CollectibleConfig.PrefabName : "Prefab_Collectible_Coin";
+            foreach (var collectible in collectibles)
+            {
+                visualizer.SpawnCollectible(collectible, yPosition, segmentInstance, giSegment, collectiblePrefab);
             }
 
             activeSegmentQueue.Enqueue(instance);
             return instance;
-        }
-
-        private LevelSegmentData SelectTemplateFromMatchedTemplate(List<LevelSegmentData> matchedTemplates, List<LevelSegmentData> allSegments)
-        {
-            LevelSegmentData selectedTemplate = null;
-
-            if (matchedTemplates.Count > 0)
-            {
-                int randomIndex = UnityEngine.Random.Range(0, matchedTemplates.Count);
-                selectedTemplate = matchedTemplates[randomIndex];
-            }
-            else
-            {
-                int randomIndex = UnityEngine.Random.Range(0, allSegments.Count);
-                selectedTemplate = allSegments[randomIndex];
-            }
-
-            return selectedTemplate;
         }
     }
 }

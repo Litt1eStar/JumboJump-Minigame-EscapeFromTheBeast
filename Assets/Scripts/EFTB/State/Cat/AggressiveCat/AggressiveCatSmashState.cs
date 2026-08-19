@@ -31,7 +31,30 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             var giAggressive = stateController.GiAggressiveCat;
             if (giAggressive != null)
             {
-                InitializeSmashParameters(giAggressive);
+                giAggressive.SetHandActive(true);
+
+                currentSightDirection = giAggressive.CurrentSightDirection;
+
+                if (giAggressive.TargetSmashPosition.HasValue)
+                {
+                    Vector3 cachedPos = giAggressive.TargetSmashPosition.Value;
+                    startPosition = new Vector3(giAggressive.transform.position.x, cachedPos.y, giAggressive.transform.position.z);
+                    targetPosition = new Vector3(cachedPos.x, cachedPos.y, startPosition.z);
+                }
+                else
+                {
+                    InitializeSmashParameters(giAggressive);
+                    return;
+                }
+
+                float yRotation = (currentSightDirection == CatSightDirection.Right) 
+                    ? ConstGameplay.Cat.AggressiveCat.CAT_LEFT_HAND_Y_ROTATION 
+                    : ConstGameplay.Cat.AggressiveCat.CAT_RIGHT_HAND_Y_ROTATION;
+
+                Quaternion catHandRotation = Quaternion.Euler(0f, yRotation, 0f);
+
+                giAggressive.SetHandRotation(catHandRotation);
+                giAggressive.SetHandPosition(startPosition);
             }
         }
 
@@ -39,20 +62,17 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
         {
             giAggressive.SetHandActive(true);
 
-            // Start hand position at the cat body's position
             startPosition = giAggressive.transform.position;
             currentSightDirection = giAggressive.CurrentSightDirection;
             
-            // Determine target lane X based on the cat's side
-            // Left spawn (sight direction Right) targets the Left lane (-0.8f)
-            // Right spawn (sight direction Left) targets the Right lane (0.8f)
+            float[] lanePositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
             float targetX = (currentSightDirection == CatSightDirection.Right)
-                ? ConstGameplay.LevelGenerator.LANE_X_POSITIONS[0]
-                : ConstGameplay.LevelGenerator.LANE_X_POSITIONS[1];
+                ? (lanePositions != null && lanePositions.Length > 0 ? lanePositions[0] : -2.0f)
+                : (lanePositions != null && lanePositions.Length > 1 ? lanePositions[lanePositions.Length - 1] : 2.0f);
 
             float rotation = (currentSightDirection == CatSightDirection.Right) 
-                ? ConstGameplay.Cat.AggressiveCat.CatLeftHandYRotation 
-                : ConstGameplay.Cat.AggressiveCat.CatRightHandYRotation;
+                ? ConstGameplay.Cat.AggressiveCat.CAT_LEFT_HAND_Y_ROTATION 
+                : ConstGameplay.Cat.AggressiveCat.CAT_RIGHT_HAND_Y_ROTATION;
 
             targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
             
@@ -90,7 +110,6 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                     return;
                 }
 
-                // Wait for the specified stay duration after the smash
                 stayTimer += deltaTime;
                 if (stayTimer >= stateController.Config.SmashStayDuration)
                 {

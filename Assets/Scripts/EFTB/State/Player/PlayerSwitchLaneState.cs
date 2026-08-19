@@ -23,6 +23,7 @@ namespace JumboJumps.EFTB.State.Player
             base.OnEnterState();
 
             int targetLane = playerStateController.CurrentLaneIndex;
+
             if (playerStateController.LastSwipeDirection == SwipeDirectionEnum.Left)
             {
                 targetLane = Mathf.Max(0, targetLane - 1);
@@ -32,18 +33,19 @@ namespace JumboJumps.EFTB.State.Player
                 targetLane = Mathf.Min(playerStateController.LaneXPositions.Length - 1, targetLane + 1);
             }
 
-            if (targetLane == playerStateController.CurrentLaneIndex)
+            Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
+            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Obstacle.Furniture.CELL_HEIGHT : 0f;
+            float targetY = startPos.y + stepY;
+
+            if (playerStateController.IsTargetCellBlocked(targetLane, targetY))
             {
-                OnFinishSwitchingLane();
+                StateController.ChangeState(typeof(PlayerIdleState));
                 return;
             }
 
             float targetX = playerStateController.LaneXPositions[targetLane];
             playerStateController.CurrentLaneIndex = targetLane;
-
-            Vector3 startPos = playerStateController.Visualizer.PlayerPosition;
-            float stepY = playerStateController.IsStepUpRequested ? ConstGameplay.Player.Step_Distance_Y : 0f;
-            Vector3 targetPos = new Vector3(targetX, startPos.y + stepY, startPos.z);
+            Vector3 targetPos = new Vector3(targetX, targetY, startPos.z);
 
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
             switchLaneCoroutine = coroutineHelper.Restart(switchLaneCoroutine, SmoothStepLane(startPos, targetPos));
@@ -52,7 +54,7 @@ namespace JumboJumps.EFTB.State.Player
         private IEnumerator SmoothStepLane(Vector3 startPos, Vector3 targetPos)
         {
             float elapsed = 0f;
-            float duration = ConstGameplay.Player.Step_Duration;
+            float duration = ConstGameplay.Player.STEP_DURATION;
 
             while (elapsed < duration)
             {
@@ -63,6 +65,8 @@ namespace JumboJumps.EFTB.State.Player
                 yield return null;
             }
 
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            targetPos.y = Mathf.RoundToInt(targetPos.y / cellHeight) * cellHeight;
             playerStateController.Visualizer.SetPosition(targetPos);
             OnFinishSwitchingLane();
         }

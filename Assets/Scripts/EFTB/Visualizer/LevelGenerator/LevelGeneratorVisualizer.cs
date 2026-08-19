@@ -6,6 +6,7 @@ using UnityEngine;
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJump.EFTB.Constant.UI;
+using JumboJumps.EFTB.Model.Obstacle;
 
 namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 {
@@ -32,7 +33,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             poolManager = GameContext.Instance.Get<ObjectPoolManager>();
             if (poolManager == null)
             {
-                DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContex");
+                DebugLogHelper.LogError($"{GetType().Name} Failed to find ObjectPoolManager in GameContext");
                 return;
             }
 
@@ -40,11 +41,11 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             if (warningIndicatorManager == null)
             {
-                DebugLogHelper.LogError($"{GetType().Name} Failed to find WarningIndicatorManager in GameContex");
+                DebugLogHelper.LogError($"{GetType().Name} Failed to find WarningIndicatorManager in GameContext");
                 return;
             }
 
-            mainCamera = Camera.main ?? SceneObjectContext.Instance.Get<Camera>() ?? UnityEngine.Object.FindAnyObjectByType<Camera>();
+            mainCamera = GetMainCamera();
 
             if (mainCamera == null)
             {
@@ -52,18 +53,26 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             }
         }
 
+        private Camera GetMainCamera()
+        {
+            if (mainCamera == null)
+            {
+                mainCamera = Camera.main ?? SceneObjectContext.Instance?.Get<Camera>() ?? UnityEngine.Object.FindAnyObjectByType<Camera>();
+            }
+            return mainCamera;
+        }
+
         public void Dispose()
         {
+            while (activeSegments.Count > 0)
+            {
+                RecycleOldestSegment();
+            }
             activeSegments.Clear();
         }
 
         public GameObject SpawnSegment(LevelGeneratorData.LevelSegmentData template, float yPosition)
         {
-            /// <summary>
-            /// template : LevelSegmentSO template configuration containing prefab and layout data
-            /// yPosition : y position to spawn the segment
-            /// </summary>
-
             if (poolManager == null || template == null || template.SegmentPrefabName == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] SpawnSegment failed : Missing Instance");
@@ -90,6 +99,80 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             activeSegments.Enqueue(segment);
 
             return segment;
+        }
+
+        public GIFurnitureObstacle SpawnFurnitureObstacle(FurnitureBlockData blockData,
+                                                          float segmentYPosition,
+                                                          GameObject segment,
+                                                          GISegment giSegment)
+        {
+            if (poolManager == null || blockData == null) return null;
+
+            if (!gameDataManager.TryGetPrefab(blockData.PrefabName, out GameObject prefab))
+            {
+                if (!gameDataManager.TryGetPrefab(ConstGameplay.Obstacle.Furniture.DEFAULT_FURNITURE_PREFAB, out prefab))
+                {
+                    DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for furniture: {blockData.PrefabName}");
+                    return null;
+                }
+            }
+
+            int laneIdx = Mathf.Clamp(blockData.LaneIndex, 0, laneXPosition.Length - 1);
+            float targetX = laneXPosition[laneIdx];
+            float worldY = segmentYPosition + blockData.YOffset;
+
+            Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
+            GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
+
+            GIFurnitureObstacle giFurniture = spawnedObj.GetComponent<GIFurnitureObstacle>();
+            if (giFurniture == null)
+            {
+                giFurniture = spawnedObj.AddComponent<GIFurnitureObstacle>();
+            }
+            giFurniture.Initialize(blockData.LaneIndex, worldY);
+
+            if (giSegment != null)
+            {
+                giSegment.RegisterSpawnedObject(spawnedObj);
+            }
+
+            return giFurniture;
+        }
+
+        public GICollectible SpawnCollectible(CollectiblePlacementData blockData,
+                                              float segmentYPosition,
+                                              GameObject segment,
+                                              GISegment giSegment,
+                                              string prefabName = "Prefab_Collectible_Coin")
+        {
+            if (poolManager == null || blockData == null) return null;
+
+            if (!gameDataManager.TryGetPrefab(prefabName, out GameObject prefab))
+            {
+                DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for collectible: {prefabName}");
+                return null;
+            }
+
+            int laneIdx = Mathf.Clamp(blockData.LaneIndex, 0, laneXPosition.Length - 1);
+            float targetX = laneXPosition[laneIdx];
+            float worldY = segmentYPosition + blockData.YOffset;
+
+            Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
+            GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
+
+            GICollectible giCollectible = spawnedObj.GetComponent<GICollectible>();
+            if (giCollectible == null)
+            {
+                giCollectible = spawnedObj.AddComponent<GICollectible>();
+            }
+            giCollectible.Initialize();
+
+            if (giSegment != null)
+            {
+                giSegment.RegisterSpawnedObject(spawnedObj);
+            }
+
+            return giCollectible;
         }
 
         private void SetupSleepyCat(GameObject catObj, float spawnX)
@@ -123,7 +206,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                     if (!gameDataManager.TryGetPrefab(objectData.PrefabName, out GameObject prefab)) continue;
 
                     bool isCat = prefab.GetComponent<GICat>() != null;
-                    float targetX = 0f;
+                    float targetX;
 
                     if (isCat)
                     {
@@ -153,7 +236,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                                        GameObject segment,
                                        GISegment giSegment)
         {
-            if (poolManager == null || eventData == null || string.IsNullOrEmpty(eventData.PrefabName)) return;
+            if (gameDataManager == null || eventData == null) return;
 
             if (!gameDataManager.TryGetPrefab(eventData.PrefabName, out GameObject prefab))
             {
@@ -161,44 +244,29 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                 return;
             }
 
-            bool isCat = prefab.GetComponent<GICat>() != null;
-            float targetX = 0f;
-            float spawnY = 0f;
+            int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
+            float targetX = laneXPosition[laneIdx];
 
+            bool isCat = prefab.GetComponent<GICat>() != null;
             if (isCat)
             {
-                targetX = GetCatSpawnX(eventData.TargetLaneIndex);
-
-                spawnY = segmentYPosition + eventData.TriggerYOffset;
-                SpawnObstacleInstance(eventData, targetX, spawnY, segment, giSegment, prefab);
+                targetX = GetCatSpawnX(laneIdx);
             }
-            else
+
+            warningIndicatorManager?.ShowWarning(laneIdx, ConstUI.Gameplay.WARNING_INDICATOR_DURATION, () =>
             {
-                int laneIdx = Mathf.Clamp(eventData.TargetLaneIndex, 0, laneXPosition.Length - 1);
-                targetX = laneXPosition[laneIdx];
-                float originalSegmentY = segment != null ? segment.transform.position.y : 0f;
-
-                // Spawn warning indicator for 1.5s before spawning the actual lane obstacle
-                warningIndicatorManager.ShowWarning(laneIdx, ConstUI.Gameplay.WARNING_INDICATOR_DURATION, () =>
-                {
-                    HandleSpawnObstacle(eventData, segment, giSegment, targetX, originalSegmentY, prefab);
-                });
-            }
+                ExecuteEventObstacleSpawn(eventData, segment, giSegment, targetX, segmentYPosition, prefab);
+            });
         }
 
-        private void HandleSpawnObstacle(LevelGeneratorData.LaneEventData eventData,
-                                         GameObject segment,
-                                         GISegment giSegment,
-                                         float targetX,
-                                         float originalSegmentY,
-                                         GameObject prefab)
+        private void ExecuteEventObstacleSpawn(LevelGeneratorData.LaneEventData eventData,
+                                                 GameObject segment,
+                                                 GISegment giSegment,
+                                                 float targetX,
+                                                 float originalSegmentY,
+                                                 GameObject prefab)
         {
-            Camera mainCam = mainCamera;
-            if (mainCam == null)
-            {
-                mainCam = Camera.main ?? SceneObjectContext.Instance.Get<Camera>() ?? UnityEngine.Object.FindAnyObjectByType<Camera>();
-                mainCamera = mainCam;
-            }
+            Camera mainCam = GetMainCamera();
 
             if (mainCam == null)
             {
@@ -236,12 +304,10 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             var giCat = spawnedObj.GetComponent<GICat>();
             if (giCat != null)
             {
-                // If the spawned object is a cat, set it up accordingly
                 SetupSleepyCat(spawnedObj, targetX);
             }
             else
             {
-                // If the spawned object is a moving obstacle, initialize its movement speed
                 var movingObstacle = spawnedObj.GetComponent<GIMovingObstacle>();
                 if (movingObstacle == null)
                 {
@@ -268,33 +334,54 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             if (activeSegments.Count <= 0 || poolManager == null) return;
 
             GameObject oldestSegment = activeSegments.Dequeue();
+            if (oldestSegment == null) return;
 
-            GISegment giSegment = oldestSegment.GetComponent<GISegment>();
+            GISegment giSegment = null;
+            try
+            {
+                giSegment = oldestSegment.GetComponent<GISegment>();
+            }
+            catch (MissingReferenceException)
+            {
+                return;
+            }
+
             if (giSegment != null)
             {
                 IReadOnlyList<GameObject> spawnedObjs = giSegment.SpawnedObjects;
-                for (int i = 0; i < spawnedObjs.Count; i++)
+                if (spawnedObjs != null)
                 {
-                    if (spawnedObjs[i] != null)
+                    for (int i = 0; i < spawnedObjs.Count; i++)
                     {
-                        var giCat = spawnedObjs[i].GetComponent<GICat>();
-                        if (giCat != null)
+                        GameObject spawnedObj = spawnedObjs[i];
+                        if (spawnedObj != null)
                         {
-                            SceneObjectContext.Instance.Deregister(giCat);
-
-                            var catManager = GameContext.Instance.Get<CatManager>();
-                            if (catManager != null)
+                            var giCat = spawnedObj.GetComponent<GICat>();
+                            if (giCat != null)
                             {
-                                catManager.DeregisterCat(giCat);
+                                SceneObjectContext.Instance?.Deregister(giCat);
+
+                                var catManager = GameContext.Instance?.Get<CatManager>();
+                                if (catManager != null)
+                                {
+                                    catManager.DeregisterCat(giCat);
+                                }
                             }
+                            poolManager.Recycle(spawnedObj);
                         }
-                        poolManager.Recycle(spawnedObjs[i]);
                     }
                 }
                 giSegment.ClearSpawnedObjects();
             }
 
-            poolManager.Recycle(oldestSegment);
+            try
+            {
+                poolManager.Recycle(oldestSegment);
+            }
+            catch (MissingReferenceException)
+            {
+                // Object destroyed by Unity engine during scene teardown
+            }
         }
     }
 }

@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using JumboJumps.EFTB.Constant.Gameplay;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
@@ -14,6 +17,9 @@ namespace JumboJumps.EFTB.GI
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
+        [SerializeField]
+        private GameObject warningIndicatorObject;
+
         [Header("Player Configuration")]
         [SerializeField]
         private float playerMovementSpeed = 5f;
@@ -21,16 +27,89 @@ namespace JumboJumps.EFTB.GI
         [SerializeField]
         private Transform initialStartPosition;
 
+        private Coroutine warningCoroutine;
+        private Color originalSpriteColor = Color.white;
+
         public Vector3 PlayerPosition => playerTransform.position;
+
+        private void Awake()
+        {
+            if (spriteRenderer != null)
+            {
+                originalSpriteColor = spriteRenderer.color;
+            }
+        }
 
         public void Initialize()
         {
-
+            if (spriteRenderer != null)
+            {
+                originalSpriteColor = spriteRenderer.color;
+            }
         }
 
         public void Dispose()
         {
+            StopPounceWarning();
+        }
 
+        private void OnDisable()
+        {
+            StopPounceWarning();
+        }
+
+        public void ShowPounceWarning(float duration, Action onComplete)
+        {
+            StopPounceWarning();
+            warningCoroutine = StartCoroutine(PounceWarningRoutine(duration, onComplete));
+        }
+
+        public void StopPounceWarning()
+        {
+            if (warningCoroutine != null)
+            {
+                StopCoroutine(warningCoroutine);
+                warningCoroutine = null;
+            }
+
+            if (warningIndicatorObject != null)
+            {
+                warningIndicatorObject.SetActive(false);
+            }
+
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.enabled = true;
+                spriteRenderer.color = originalSpriteColor;
+            }
+        }
+
+        private IEnumerator PounceWarningRoutine(float duration, Action onComplete)
+        {
+            if (warningIndicatorObject != null)
+            {
+                warningIndicatorObject.SetActive(true);
+            }
+
+            float elapsed = 0f;
+            float flashInterval = ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_INTERVAL;
+            bool isFlashColor = false;
+
+            while (elapsed < duration)
+            {
+                if (spriteRenderer != null)
+                {
+                    isFlashColor = !isFlashColor;
+                    spriteRenderer.color = isFlashColor 
+                        ? ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_COLOR 
+                        : originalSpriteColor;
+                }
+                yield return new WaitForSeconds(flashInterval);
+                elapsed += flashInterval;
+            }
+
+            StopPounceWarning();
+            onComplete?.Invoke();
         }
 
         public void SetPosition(Vector3 position)

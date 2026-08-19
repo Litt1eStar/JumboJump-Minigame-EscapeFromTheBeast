@@ -30,9 +30,9 @@ namespace JumboJumps.EFTB.State.Player
         private IEnumerator DiscreteStepForwardRoutine()
         {
             Vector3 startPos = playerVisualizer.PlayerPosition;
-            Vector3 targetPos = startPos + new Vector3(0f, ConstGameplay.Player.Step_Distance_Y, 0f);
+            Vector3 targetPos = startPos + new Vector3(0f, ConstGameplay.Obstacle.Furniture.CELL_HEIGHT, 0f);
             float elapsed = 0f;
-            float duration = ConstGameplay.Player.Step_Duration;
+            float duration = ConstGameplay.Player.STEP_DURATION;
 
             while (elapsed < duration)
             {
@@ -40,10 +40,14 @@ namespace JumboJumps.EFTB.State.Player
                 float t = Mathf.Clamp01(elapsed / duration);
                 Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
                 playerVisualizer.SetPosition(currentPos);
+                playerStateController.InvokePlayerMoved(currentPos);
                 yield return null;
             }
 
+            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            targetPos.y = Mathf.RoundToInt(targetPos.y / cellHeight) * cellHeight;
             playerVisualizer.SetPosition(targetPos);
+            playerStateController.InvokePlayerMoved(targetPos);
             StateController.ChangeState(typeof(PlayerIdleState));
         }
 
