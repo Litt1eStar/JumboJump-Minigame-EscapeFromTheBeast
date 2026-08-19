@@ -367,14 +367,15 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
                                 {
                                     catManager.DeregisterCat(giCat);
                                 }
-                                var giCollectible = spawnedObj.GetComponent<GICollectible>();
-                                if (giCollectible != null)
-                                {
-                                    giCollectible.ResetState();
-                                }
-
-                                poolManager.Recycle(spawnedObj);
                             }
+
+                            var giCollectible = spawnedObj.GetComponent<GICollectible>();
+                            if (giCollectible != null)
+                            {
+                                giCollectible.ResetState();
+                            }
+
+                            poolManager.Recycle(spawnedObj);
                         }
                     }
                     giSegment.ClearSpawnedObjects();

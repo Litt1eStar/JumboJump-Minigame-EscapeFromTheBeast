@@ -60,12 +60,9 @@ namespace JumboJumps.EFTB.GI
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (isCollected) return;
+            if (collision.GetComponent<GIPlayer>() == null) return;
 
-            if (collision.GetComponent<GIPlayer>() != null)
-            {
-                Collect();
-            }
+            Collect();
         }
     }
 }
