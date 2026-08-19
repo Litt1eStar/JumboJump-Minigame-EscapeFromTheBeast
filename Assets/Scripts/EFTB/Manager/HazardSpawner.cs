@@ -79,6 +79,12 @@ namespace JumboJumps.EFTB.Manager
             GameContext.Instance.Remove(this);
         }
 
+        public bool IsHazardRow(float worldY)
+        {
+            int rowIdx = Mathf.RoundToInt(worldY / ConstGameplay.Obstacle.Furniture.CELL_HEIGHT);
+            return activeHazardRows.ContainsKey(rowIdx);
+        }
+
         public void UpdateLogic(float deltaTime)
         {
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))

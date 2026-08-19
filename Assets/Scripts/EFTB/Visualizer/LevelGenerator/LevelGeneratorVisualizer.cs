@@ -139,6 +139,42 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             return giFurniture;
         }
 
+        public GICollectible SpawnCollectible(CollectiblePlacementData blockData,
+                                              float segmentYPosition,
+                                              GameObject segment,
+                                              GISegment giSegment,
+                                              string prefabName = "Prefab_Collectible_Coin")
+        {
+            if (poolManager == null || blockData == null) return null;
+
+            if (!gameDataManager.TryGetPrefab(prefabName, out GameObject prefab))
+            {
+                DebugLogHelper.LogWarning($"[{GetType().Name}] Prefab not found for collectible: {prefabName}");
+                return null;
+            }
+
+            int laneIdx = Mathf.Clamp(blockData.LaneIndex, 0, laneXPosition.Length - 1);
+            float targetX = laneXPosition[laneIdx];
+            float worldY = segmentYPosition + blockData.YOffset;
+
+            Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
+            GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);
+
+            GICollectible giCollectible = spawnedObj.GetComponent<GICollectible>();
+            if (giCollectible == null)
+            {
+                giCollectible = spawnedObj.AddComponent<GICollectible>();
+            }
+            giCollectible.Initialize();
+
+            if (giSegment != null)
+            {
+                giSegment.RegisterSpawnedObject(spawnedObj);
+            }
+
+            return giCollectible;
+        }
+
         private void SetupSleepyCat(GameObject catObj, float spawnX)
         {
             var giCat = catObj.GetComponent<GICat>();

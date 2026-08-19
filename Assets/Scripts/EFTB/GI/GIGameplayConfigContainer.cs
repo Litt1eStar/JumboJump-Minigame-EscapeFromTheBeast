@@ -13,8 +13,12 @@ namespace JumboJumps.EFTB.GI
         [Tooltip("Hazard obstacle balancing settings configured by game designers")]
         [SerializeField] private HazardConfigSO hazardConfig;
 
+        [Tooltip("Collectible treat balancing settings configured by game designers")]
+        [SerializeField] private CollectibleConfigSO collectibleConfig;
+
         public FurnitureConfigSO FurnitureConfig => furnitureConfig;
         public HazardConfigSO HazardConfig => hazardConfig;
+        public CollectibleConfigSO CollectibleConfig => collectibleConfig;
 
     }
 }

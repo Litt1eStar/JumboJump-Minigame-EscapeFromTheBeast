@@ -74,6 +74,23 @@ namespace JumboJumps.EFTB.Manager
             }
         }
 
+        private CollectibleConfigSO collectibleConfig;
+        public CollectibleConfigSO CollectibleConfig
+        {
+            get
+            {
+                if (collectibleConfig == null && SceneObjectContext.Instance != null)
+                {
+                    var container = SceneObjectContext.Instance.Get<GIGameplayConfigContainer>();
+                    if (container != null && container.CollectibleConfig != null)
+                    {
+                        collectibleConfig = container.CollectibleConfig;
+                    }
+                }
+                return collectibleConfig;
+            }
+        }
+
         private int lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
         private float lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
         private List<GIFurnitureObstacle> activeFurnitureObstacles = new List<GIFurnitureObstacle>();
@@ -294,6 +311,23 @@ namespace JumboJumps.EFTB.Manager
                 {
                     RegisterFurnitureObstacle(giFurniture);
                 }
+            }
+
+            // Procedurally generate collectibles for this segment
+            var hazardSpawner = GameContext.Instance.Get<HazardSpawner>();
+            var collectibles = CollectiblePlacementHelper.GenerateSegmentCollectibles(
+                yPosition,
+                SegmentHeight,
+                LaneXPositions.Length,
+                IsCellBlockedByFurniture,
+                (worldY) => hazardSpawner != null && hazardSpawner.IsHazardRow(worldY),
+                CollectibleConfig
+            );
+
+            string collectiblePrefab = CollectibleConfig != null ? CollectibleConfig.PrefabName : "Prefab_Collectible_Coin";
+            foreach (var collectible in collectibles)
+            {
+                visualizer.SpawnCollectible(collectible, yPosition, segmentInstance, giSegment, collectiblePrefab);
             }
 
             activeSegmentQueue.Enqueue(instance);
