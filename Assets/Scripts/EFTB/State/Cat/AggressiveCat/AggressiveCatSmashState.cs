@@ -33,23 +33,30 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             {
                 giAggressive.SetHandActive(true);
 
-                // Start hand position at the cat body's position
-                startPosition = giAggressive.transform.position;
                 currentSightDirection = giAggressive.CurrentSightDirection;
-                // Determine target lane X based on the cat's side
-                // Left spawn (sight direction Right) targets the Left lane (-0.8f)
-                // Right spawn (sight direction Left) targets the Right lane (0.8f)
-                float targetX = (currentSightDirection == CatSightDirection.Right)
-                    ? ConstGameplay.LevelGenerator.LANE_X_POSITIONS[0]
-                    : ConstGameplay.LevelGenerator.LANE_X_POSITIONS[1];
 
-                float rotation = (currentSightDirection == CatSightDirection.Right) 
+                if (giAggressive.TargetSmashPosition.HasValue)
+                {
+                    Vector3 cachedPos = giAggressive.TargetSmashPosition.Value;
+                    startPosition = new Vector3(giAggressive.transform.position.x, cachedPos.y, giAggressive.transform.position.z);
+                    targetPosition = new Vector3(cachedPos.x, cachedPos.y, startPosition.z);
+                }
+                else
+                {
+                    startPosition = giAggressive.transform.position;
+                    float[] lanePositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+                    float targetX = (lanePositions != null && lanePositions.Length > 1)
+                        ? lanePositions[1]
+                        : 0f;
+                    targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
+                }
+
+                float yRotation = (currentSightDirection == CatSightDirection.Right) 
                     ? ConstGameplay.Cat.AggressiveCat.CAT_LEFT_HAND_Y_ROTATION 
                     : ConstGameplay.Cat.AggressiveCat.CAT_RIGHT_HAND_Y_ROTATION;
 
-                targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
-                
-                Quaternion catHandRotation = Quaternion.Euler(0f, rotation, 0f);
+                Quaternion catHandRotation = Quaternion.Euler(0f, yRotation, 0f);
+
                 giAggressive.SetHandRotation(catHandRotation);
                 giAggressive.SetHandPosition(startPosition);
             }
@@ -73,16 +80,17 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
                 {
                     hasSmashed = true;
                     giAggressive.SetHandPosition(targetPosition);
-
-                    // Perform collision check immediately upon smash impact
-                    if (giAggressive.CheckPlayerCollision())
-                    {
-                        stateController.ChangeState(typeof(AggressiveCatCatchState));
-                    }
                 }
             }
-            else
+
+            if (hasSmashed)
             {
+                if (giAggressive.CheckPlayerCollision())
+                {
+                    stateController.ChangeState(typeof(AggressiveCatCatchState));
+                    return;
+                }
+
                 // Wait for the specified stay duration after the smash
                 stayTimer += deltaTime;
                 if (stayTimer >= stateController.Config.SmashStayDuration)

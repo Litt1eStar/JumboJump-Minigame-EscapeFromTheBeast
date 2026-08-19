@@ -64,16 +64,18 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
         public void Dispose()
         {
+            while (activeSegments.Count > 0)
+            {
+                RecycleOldestSegment();
+            }
             activeSegments.Clear();
         }
 
+        /// <summary>
+        /// Spawns a level segment prefab from ObjectPoolManager at the specified world Y position.
+        /// </summary>
         public GameObject SpawnSegment(LevelGeneratorData.LevelSegmentData template, float yPosition)
         {
-            /// <summary>
-            /// template : LevelSegmentSO template configuration containing prefab and layout data
-            /// yPosition : y position to spawn the segment
-            /// </summary>
-
             if (poolManager == null || template == null || template.SegmentPrefabName == null)
             {
                 DebugLogHelper.LogError($"[{GetType().Name}] SpawnSegment failed : Missing Instance");
@@ -256,12 +258,10 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             var giCat = spawnedObj.GetComponent<GICat>();
             if (giCat != null)
             {
-                // If the spawned object is a cat, set it up accordingly
                 SetupSleepyCat(spawnedObj, targetX);
             }
             else
             {
-                // If the spawned object is a moving obstacle, initialize its movement speed
                 var movingObstacle = spawnedObj.GetComponent<GIMovingObstacle>();
                 if (movingObstacle == null)
                 {
@@ -288,33 +288,54 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
             if (activeSegments.Count <= 0 || poolManager == null) return;
 
             GameObject oldestSegment = activeSegments.Dequeue();
+            if (oldestSegment == null) return;
 
-            GISegment giSegment = oldestSegment.GetComponent<GISegment>();
+            GISegment giSegment = null;
+            try
+            {
+                giSegment = oldestSegment.GetComponent<GISegment>();
+            }
+            catch (MissingReferenceException)
+            {
+                return;
+            }
+
             if (giSegment != null)
             {
                 IReadOnlyList<GameObject> spawnedObjs = giSegment.SpawnedObjects;
-                for (int i = 0; i < spawnedObjs.Count; i++)
+                if (spawnedObjs != null)
                 {
-                    if (spawnedObjs[i] != null)
+                    for (int i = 0; i < spawnedObjs.Count; i++)
                     {
-                        var giCat = spawnedObjs[i].GetComponent<GICat>();
-                        if (giCat != null)
+                        GameObject spawnedObj = spawnedObjs[i];
+                        if (spawnedObj != null)
                         {
-                            SceneObjectContext.Instance.Deregister(giCat);
-
-                            var catManager = GameContext.Instance.Get<CatManager>();
-                            if (catManager != null)
+                            var giCat = spawnedObj.GetComponent<GICat>();
+                            if (giCat != null)
                             {
-                                catManager.DeregisterCat(giCat);
+                                SceneObjectContext.Instance?.Deregister(giCat);
+
+                                var catManager = GameContext.Instance?.Get<CatManager>();
+                                if (catManager != null)
+                                {
+                                    catManager.DeregisterCat(giCat);
+                                }
                             }
+                            poolManager.Recycle(spawnedObj);
                         }
-                        poolManager.Recycle(spawnedObjs[i]);
                     }
                 }
                 giSegment.ClearSpawnedObjects();
             }
 
-            poolManager.Recycle(oldestSegment);
+            try
+            {
+                poolManager.Recycle(oldestSegment);
+            }
+            catch (MissingReferenceException)
+            {
+                // Object destroyed by Unity engine during scene teardown
+            }
         }
     }
 }

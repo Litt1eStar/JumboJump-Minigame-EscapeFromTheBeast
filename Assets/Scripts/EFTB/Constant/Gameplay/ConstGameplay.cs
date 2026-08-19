@@ -1,3 +1,6 @@
+using System.Numerics;
+using UnityEngine;
+
 namespace JumboJumps.EFTB.Constant.Gameplay
 {
     public static class ConstGameplay
@@ -12,11 +15,10 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public const float MEDIUM_DIFFICULTY_TIME_PERCENTAGE = 0.5f;
             public const float HARD_DIFFICULTY_TIME_PERCENTAGE = 0.7f;
             public const int INITIAL_LANE_INDEX = 1;
-            public const float SEGMENT_Y_POSITION_TOLERANCE = 0.05f;
             public const string DEFAULT_INITIAL_SEGMENT_PREFAB = "Prefab_Segment_Initial";
             public const int INITIAL_SEGMENT_ID = 0;
             public static readonly float[] LANE_X_POSITIONS = new float[] { -2.0f, 0.0f, 2.0f };
-            public const float LANE_SIZE = 2.0f;
+            public const float LANE_SIZE = 3.0f;
         }
 
         public class Player
@@ -40,13 +42,6 @@ namespace JumboJumps.EFTB.Constant.Gameplay
             public class AggressiveCat
             {
                 public const string PREFAB_NAME = "Prefab_Event_AggressiveCat";
-                public const float INITIAL_MIN_SPAWN_TIME = 7f;
-                public const float INITIAL_MAX_SPAWN_TIME = 15f;
-                public const float NORMAL_MIN_SPAWN_TIME = 5f;
-                public const float NORMAL_MAX_SPAWN_TIME = 10f;
-                public const float HARD_MIN_SPAWN_TIME = 2f;
-                public const float HARD_MAX_SPAWN_TIME = 5f;
-                public const float CAT_VERTICAL_SPAWN_OFFSET = 15f;
                 public const float SLIDE_DIRECTION_LEFT_MULTIPLIER = -1f;
                 public const float SLIDE_DIRECTION_RIGHT_MULTIPLIER = 1f;
                 public const float TRANSITION_PROGRESS_COMPLETE = 1f;
@@ -54,32 +49,54 @@ namespace JumboJumps.EFTB.Constant.Gameplay
                 public const float CAT_RIGHT_HAND_Y_ROTATION = 180f;
                 public const float CAT_APPEAR_SNEAK_IN_DURATION_PERCENTAGE = 0.2f;
                 public const float CAT_APPEAR_STAY_DURATION_PERCENTAGE = 0.8f;
-                public const float EVENT_WARNING_DURATION = 1.0f;
-                public const float DIRECTION_WARNING_DURATION = 1.5f;
-                public const float FALLBACK_SPAWN_CHECK_INTERVAL = 0.5f;
-                public const float NEXT_SPAWN_TIMER = 7f;
+                public const float IDLE_LIMIT = 4.5f;
+                public const float POUNCE_WARNING_DURATION = 1.5f;
+                public const float POUNCE_FLASH_INTERVAL = 0.1f;
+                public static readonly Color POUNCE_FLASH_COLOR = Color.red;
             }
         }
 
         public class Obstacle
         {
+            public const int SAFE_ZONE_CELLS = 5; // Number of cells at the start of the level where no obstacles are spawned (5)
+
             public class Furniture
             {
                 public const float CELL_HEIGHT = 3.0f;
-                public const float BASE_FURNITURE_ROW_RATIO = 0.20f;
-                public const float DENSITY_STEP_RATIO = 0.05f;
-                public const int DENSITY_STEP_CELLS = 30;
-                public const float MAX_FURNITURE_ROW_RATIO = 0.60f;
-                public const int SINGLE_BLOCK_MAX_CELLS = 120;
-                public const int MAX_BLOCKS_PER_ROW = 2;
-                public const int MIN_ROW_SPACING_CELLS = 1;
+                public const float BASE_FURNITURE_ROW_RATIO = 0.20f; // Base spawn ratio for furniture rows (20%)
+                public const float DENSITY_STEP_RATIO = 0.05f; // Incremental spawn ratio increase per density step (5%)
+                public const int DENSITY_STEP_CELLS = 30; // Number of cells after which the density step ratio is applied
+                public const float MAX_FURNITURE_ROW_RATIO = 0.60f; // Maximum spawn ratio for furniture rows (60%)
+                public const int SINGLE_BLOCK_MAX_CELLS = 120; // Maximum number of cells for a single furniture block (120)
+                public const int MAX_BLOCKS_PER_ROW = 2; // Maximum number of furniture blocks allowed per row (2)
+                public const int MIN_ROW_SPACING_CELLS = 1; // Minimum spacing between furniture rows in cells (1)
                 public const string DEFAULT_FURNITURE_PREFAB = "Prefab_Obstacle_Chair";
+                public const float UNINITIALIZED_LAST_FURNITURE_WORLD_Y = -1f;
                 public static readonly string[] FURNITURE_PREFAB_NAMES = new string[]
                 {
                     DEFAULT_FURNITURE_PREFAB,
                     "Prefab_Obstacle_Box",
                     "Prefab_Obstacle_Plant"
                 };
+
+            }
+
+            public class Hazard
+            {
+                public const string PREFAB_NAME = "Prefab_Hazard_Variant01";
+                public const float BASE_INTERVAL_LOW = 3.0f;        // Base spawn interval low (s) 1.5
+                public const float BASE_INTERVAL_HIGH = 6.0f;       // Base spawn interval high (s) 2.4
+                public const float STEP_INTERVAL_REDUCTION = 0.15f; // Spawn interval reduction per step (s)
+                public const int STEP_INTERVAL_CELLS = 30;          // Step height in cells
+                public const float MIN_SPAWN_INTERVAL = 0.5f;       // Minimum spawn interval limit (s)
+
+                public const float FLOOR_SPEED_DURATION_LOW = 0.1f; // Hazard speed floor range low (0.5s / lane)
+                public const float FLOOR_SPEED_DURATION_HIGH = 0.3f;// Hazard speed floor range high (0.9s / lane)
+                public const float SPAWN_OFFSCREEN_X_OFFSET = 7.5f;   // Offscreen initial spawn X coordinate offset (units)
+                public const float DESPAWN_OFFSCREEN_X_OFFSET = 7.5f; // Offscreen despawn X coordinate offset (units)
+                public const int SAFE_ZONE_CELLS = 5;
+
+                public const float HAZARD_PRESPAWN_OFFSET = 70f; // Offset from the player to pre-spawn hazards (in cells)
             }
         }
     }

@@ -11,7 +11,7 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
 {
     public class AggressiveCatStateController : BaseStateController, ICatStateController
     {
-        protected override Type DefaultTypeState => typeof(AggressiveCatAppearState);
+        protected override Type DefaultTypeState => typeof(AggressiveCatSmashState);
         public CatVisualizer Visualizer { get; private set; }
         public AggressiveCatConfigSO Config { get; private set; }
         public GICat GiCat { get; private set; }

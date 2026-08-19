@@ -9,19 +9,14 @@ namespace JumboJumps.EFTB.Manager
 {
     public class AggressiveCatSpawner
     {
-        private float minSpawnTime;
-        private float maxSpawnTime;
-        private float verticalSpawnOffset;
-
         private ObjectPoolManager poolManager;
         private LevelGeneratorManager levelGeneratorManager;
         private PlayerManager playerManager;
         private CatManager catManager;
         private GameDataManager gameDataManager;
         private GameplayStateManager gameplayStateManager;
-        private WarningIndicatorManager warningIndicatorManager;
 
-        private float nextSpawnTimer;
+        private bool isAntiCampWarningActive;
 
         public void Initialize()
         {
@@ -31,108 +26,75 @@ namespace JumboJumps.EFTB.Manager
             catManager = GameContext.Instance.Get<CatManager>();
             gameDataManager = GameContext.Instance.Get<GameDataManager>();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-            warningIndicatorManager = GameContext.Instance.Get<WarningIndicatorManager>();  
 
-            ResetSpawnTimer();
-
-            minSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MIN_SPAWN_TIME;
-            maxSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MAX_SPAWN_TIME;
-            verticalSpawnOffset = ConstGameplay.Cat.AggressiveCat.CAT_VERTICAL_SPAWN_OFFSET;
+            if (playerManager != null)
+            {
+                playerManager.EventIdleLimitExceeded += OnPlayerIdleLimitExceeded;
+            }
 
             GameContext.Instance.Add(this);
         }
 
         public void Dispose()
         {
+            if (playerManager != null)
+            {
+                playerManager.EventIdleLimitExceeded -= OnPlayerIdleLimitExceeded;
+            }
+
             GameContext.Instance.Remove(this);
         }
 
-        public void UpdateLogic(float deltaTime)
+        private void OnPlayerIdleLimitExceeded()
         {
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
             {
                 return;
             }
 
-            UpdateSpawnTimes();
+            if (isAntiCampWarningActive) return;
 
-            nextSpawnTimer -= deltaTime;
-            if (nextSpawnTimer <= 0f)
-            {
-                float spawnY;
-                if (!CanSpawnAggressiveCat(out spawnY))
-                {
-                    nextSpawnTimer = ConstGameplay.Cat.AggressiveCat.NEXT_SPAWN_TIMER;
-                    return;
-                }
+            if (playerManager?.PlayerTransform == null) return;
+            Vector3 cachedTargetPos = playerManager.PlayerTransform.position;
 
-                ResetSpawnTimer();
-                AggressiveCatSpawnSequence();
-            }
+            TriggerAlphaCatPounceSequence(cachedTargetPos);
         }
 
-        private void AggressiveCatSpawnSequence()
+        private void TriggerAlphaCatPounceSequence(Vector3 cachedTargetPos)
         {
-            int sideIndex = (Random.value < 0.5f) ? 0 : 1; 
-            
-            warningIndicatorManager?.ShowCatEventWarning(1.0f, () =>
+            isAntiCampWarningActive = true;
+            int sideIndex = (Random.value < 0.5f) ? 0 : 1;
+            float warningDuration = ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_DURATION;
+
+            if (playerManager != null)
             {
-                warningIndicatorManager?.ShowCatDirectionWarning(sideIndex, 1.5f, () =>
+                playerManager.TriggerPounceWarning(warningDuration, () =>
                 {
-                    SpawnAggressiveCat(sideIndex);
+                    isAntiCampWarningActive = false;
+                    SpawnAggressiveCat(sideIndex, cachedTargetPos);
                 });
-            });
-        }
-
-        private void UpdateSpawnTimes()
-        {
-            var timeManager = GameContext.Instance.Get<GameplayTimeManager>();
-            if (timeManager == null) return;
-
-            switch (timeManager.CurrentDifficulty)
+            }
+            else
             {
-                case GameplayDifficultyEnum.Easy:
-                {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MIN_SPAWN_TIME;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.INITIAL_MAX_SPAWN_TIME;
-                    break;
-                }
-                case GameplayDifficultyEnum.Normal:
-                {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.NORMAL_MIN_SPAWN_TIME;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.NORMAL_MAX_SPAWN_TIME;
-                    break;
-                }
-                case GameplayDifficultyEnum.Hard:
-                {
-                    minSpawnTime = ConstGameplay.Cat.AggressiveCat.HARD_MIN_SPAWN_TIME;
-                    maxSpawnTime = ConstGameplay.Cat.AggressiveCat.HARD_MAX_SPAWN_TIME;
-                    break;
-                }
+                isAntiCampWarningActive = false;
             }
         }
 
-        private void ResetSpawnTimer()
-        {
-            nextSpawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
-        }
-
-        private bool CanSpawnAggressiveCat(out float spawnY)
+        private bool CanSpawnAggressiveCat(Vector3 cachedTargetPos, out float spawnY)
         {
             spawnY = 0f;
-            if (playerManager?.PlayerTransform == null || levelGeneratorManager == null || poolManager == null || gameDataManager == null || catManager == null)
+            if (levelGeneratorManager == null || poolManager == null || gameDataManager == null || catManager == null)
             {
                 return false;
             }
 
-            float playerY = playerManager.PlayerTransform.position.y;
-            spawnY = playerY + verticalSpawnOffset;
+            spawnY = cachedTargetPos.y;
 
             var giSegment = levelGeneratorManager.GetGISegmentAtY(spawnY);
             return giSegment != null;
         }
 
-        private void SpawnAggressiveCat(int sideIndex)
+        private void SpawnAggressiveCat(int sideIndex, Vector3 cachedTargetPos)
         {
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
             {
@@ -141,7 +103,7 @@ namespace JumboJumps.EFTB.Manager
             }
 
             float spawnY;
-            if (!CanSpawnAggressiveCat(out spawnY))
+            if (!CanSpawnAggressiveCat(cachedTargetPos, out spawnY))
             {
                 DebugLogHelper.LogWarning($"[AggressiveCatSpawner] Cannot spawn AggressiveCat: Environment state changed during the warning delay.");
                 return;
@@ -168,19 +130,20 @@ namespace JumboJumps.EFTB.Manager
 
             giSegment.RegisterSpawnedObject(catGo);
 
-            var giCat = catGo.GetComponent<GICat>();
-            if (giCat != null)
+            var giAggressive = catGo.GetComponent<GIAggressiveCat>();
+            if (giAggressive != null)
             {
-                SceneObjectContext.Instance.Register(giCat);
+                giAggressive.SetTargetSmashPosition(cachedTargetPos);
+                SceneObjectContext.Instance.Register(giAggressive);
 
                 CatSightDirection direction = (targetX < 0f) ? CatSightDirection.Right : CatSightDirection.Left;
-                giCat.SetDirection(direction);
+                giAggressive.SetDirection(direction);
 
-                catManager.RegisterDynamicCat(giCat, playerManager.PlayerTransform);
+                catManager.RegisterDynamicCat(giAggressive, playerManager.PlayerTransform);
             }
             else
             {
-                DebugLogHelper.LogError("[AggressiveCatSpawner] Spawned cat GameObject is missing GICat component!");
+                DebugLogHelper.LogError("[AggressiveCatSpawner] Spawned cat GameObject is missing GIAggressiveCat component!");
             }
         }
     }
