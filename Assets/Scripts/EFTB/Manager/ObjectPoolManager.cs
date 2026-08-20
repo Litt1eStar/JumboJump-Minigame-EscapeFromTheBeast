@@ -74,16 +74,18 @@ namespace JumboJumps.EFTB.Manager
                 return;
             }
 
-            poolableObject.OnRecycle();
-            poolableObject.transform.SetParent(poolContainer);
-
             if (!pools.TryGetValue(poolableObject.PoolKey, out var queue))
             {
                 queue = new Queue<PoolableObject>();
                 pools.Add(poolableObject.PoolKey, queue);
             }
 
-            queue.Enqueue(poolableObject);
+            if (!queue.Contains(poolableObject))
+            {
+                poolableObject.OnRecycle();
+                poolableObject.transform.SetParent(poolContainer);
+                queue.Enqueue(poolableObject);
+            }
         }
     }
 }

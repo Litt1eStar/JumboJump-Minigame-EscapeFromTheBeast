@@ -163,6 +163,16 @@ namespace JumboJumps.EFTB.Manager
 
         public void ResetLevel()
         {
+            for (int i = 0; i < activeTreats.Count; i++)
+            {
+                if (activeTreats[i] != null)
+                {
+                    activeTreats[i].EventCollected -= OnCollectibleCollected;
+                    activeTreats[i].EventRecycleRequested -= OnCollectibleRecycle;
+                }
+            }
+            activeTreats.Clear();
+
             while (activeSegmentQueue.Count > 0)
             {
                 visualizer?.RecycleOldestSegment();
@@ -170,18 +180,6 @@ namespace JumboJumps.EFTB.Manager
             }
 
             activeFurnitureObstacles.Clear();
-
-            var poolManager = GameContext.Instance?.Get<ObjectPoolManager>();
-            for (int i = 0; i < activeTreats.Count; i++)
-            {
-                if (activeTreats[i] != null)
-                {
-                    activeTreats[i].EventCollected -= OnCollectibleCollected;
-                    activeTreats[i].EventRecycleRequested -= OnCollectibleRecycle;
-                    poolManager?.Recycle(activeTreats[i].gameObject);
-                }
-            }
-            activeTreats.Clear();
 
             lastFurnitureWorldY = ConstGameplay.Obstacle.Furniture.UNINITIALIZED_LAST_FURNITURE_WORLD_Y;
             lastOpenLaneIndex = ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
