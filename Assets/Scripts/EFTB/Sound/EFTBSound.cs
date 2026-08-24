@@ -50,5 +50,13 @@ namespace JumboJumps.EFTB.Sound
         public static void PlayUIReady() => PlaySFX(ConstSound.Keys.UI.READY);
         public static void PlayUIGo() => PlaySFX(ConstSound.Keys.UI.GO);
         public static void PlayGameplayBGM() => PlayBGM(ConstSound.Keys.BGM.GAMEPLAY);
+
+        public static bool IsSFXOn => SoundManager?.IsSFXOn ?? true;
+        public static bool IsBGMOn => SoundManager?.IsBGMOn ?? true;
+
+        public static void ToggleSFX() => SoundManager?.ToggleSFX();
+        public static void ToggleBGM() => SoundManager?.ToggleBGM();
+        public static void SetSFXOn(bool isOn) => SoundManager?.SetSFXOn(isOn);
+        public static void SetBGMOn(bool isOn) => SoundManager?.SetBGMOn(isOn);
     }
 }

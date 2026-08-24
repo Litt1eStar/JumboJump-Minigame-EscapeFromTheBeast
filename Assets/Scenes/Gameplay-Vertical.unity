@@ -1677,7 +1677,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Gameplay.PauseMenu.UIPauseMenuPanel
   resumeButton: {fileID: 1388899383}
-  mainMenuButton: {fileID: 665529362}
+  sfxButton: {fileID: 2095617125}
+  bgmButton: {fileID: 665529362}
+  sfxImage: {fileID: 1036563348}
+  sfxOnSprite: {fileID: 21300000, guid: 836f535eef524f84498ca2753efbc588, type: 3}
+  sfxOffSprite: {fileID: 21300000, guid: 9ea99d3b76a053445b275a54150efc9e, type: 3}
+  bgmImage: {fileID: 2102870506}
+  bgmOnSprite: {fileID: 21300000, guid: 2dc514ebdec28d046ac48331747f72f2, type: 3}
+  bgmOffSprite: {fileID: 21300000, guid: e878a4a1ce45e7a4c989764b7bbbb83e, type: 3}
 --- !u!1 &777492153
 GameObject:
   m_ObjectHideFlags: 0

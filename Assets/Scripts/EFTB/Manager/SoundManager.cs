@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using JumboJumps.EFTB.Constant.Sound;
 using JumboJumps.EFTB.Utilities;
@@ -7,6 +8,9 @@ namespace JumboJumps.EFTB.Manager
 {
     public class SoundManager
     {
+        public event Action<bool> EventSFXStateChanged;
+        public event Action<bool> EventBGMStateChanged;
+
         private GameObject hostObject;
         private AudioSource bgmSource;
         private AudioSource sfxSource;
@@ -14,6 +18,8 @@ namespace JumboJumps.EFTB.Manager
         private readonly Dictionary<string, AudioClip> audioClipCache = new Dictionary<string, AudioClip>();
 
         public string CurrentBGMKey { get; private set; }
+        public bool IsSFXOn { get; private set; } = true;
+        public bool IsBGMOn { get; private set; } = true;
 
         public void Initialize()
         {
@@ -32,6 +38,7 @@ namespace JumboJumps.EFTB.Manager
             sfxSource.loop = false;
             sfxSource.playOnAwake = false;
 
+            LoadAudioSettings();
             PreloadAudioClips();
 
             GameContext.Instance.Add(this);
@@ -132,6 +139,46 @@ namespace JumboJumps.EFTB.Manager
                 bgmSource.clip = null;
             }
             DebugLogHelper.Log($"[{GetType().Name}] Stopped BGM.");
+        }
+
+        private void LoadAudioSettings()
+        {
+            bool sfxMuted = PlayerPrefs.GetInt(ConstSound.Prefs.SFX_MUTED, 0) == 1;
+            bool bgmMuted = PlayerPrefs.GetInt(ConstSound.Prefs.BGM_MUTED, 0) == 1;
+
+            IsSFXOn = !sfxMuted;
+            IsBGMOn = !bgmMuted;
+
+            if (sfxSource != null) sfxSource.mute = !IsSFXOn;
+            if (bgmSource != null) bgmSource.mute = !IsBGMOn;
+        }
+
+        public void SetSFXOn(bool isOn)
+        {
+            IsSFXOn = isOn;
+            if (sfxSource != null) sfxSource.mute = !isOn;
+            PlayerPrefs.SetInt(ConstSound.Prefs.SFX_MUTED, isOn ? 0 : 1);
+            PlayerPrefs.Save();
+            EventSFXStateChanged?.Invoke(IsSFXOn);
+        }
+
+        public void SetBGMOn(bool isOn)
+        {
+            IsBGMOn = isOn;
+            if (bgmSource != null) bgmSource.mute = !isOn;
+            PlayerPrefs.SetInt(ConstSound.Prefs.BGM_MUTED, isOn ? 0 : 1);
+            PlayerPrefs.Save();
+            EventBGMStateChanged?.Invoke(IsBGMOn);
+        }
+
+        public void ToggleSFX()
+        {
+            SetSFXOn(!IsSFXOn);
+        }
+
+        public void ToggleBGM()
+        {
+            SetBGMOn(!IsBGMOn);
         }
     }
 }

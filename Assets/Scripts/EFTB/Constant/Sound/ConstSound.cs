@@ -2,6 +2,12 @@ namespace JumboJumps.EFTB.Constant.Sound
 {
     public static class ConstSound
     {
+        public static class Prefs
+        {
+            public const string SFX_MUTED = "EFTB_SFX_Muted";
+            public const string BGM_MUTED = "EFTB_BGM_Muted";
+        }
+
         public static class Keys
         {
             public static class Cat
