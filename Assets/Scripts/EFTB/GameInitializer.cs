@@ -14,6 +14,7 @@ namespace JumboJumps.EFTB
         private GameDataManager gameDataManager;
 
         private GameManager gameManager;
+        private LocalizationManager localizationManager;
 
         private void Awake()
         {
@@ -38,6 +39,9 @@ namespace JumboJumps.EFTB
 
             coroutineHelper.Initialize();
             gameDataManager.Initialize();
+
+            localizationManager = new LocalizationManager();
+            localizationManager.Initialize(coroutineHelper);
         }
 
         private void Update()
@@ -47,6 +51,12 @@ namespace JumboJumps.EFTB
 
         private void Dispose()
         {
+            if (localizationManager != null)
+            {
+                localizationManager.Dispose();
+                localizationManager = null;
+            }
+
             if (coroutineHelper != null)
             {
                 coroutineHelper.Dispose();

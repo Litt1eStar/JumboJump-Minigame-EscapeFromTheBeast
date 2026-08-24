@@ -17,7 +17,23 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 82cfbffa74e43a0428d2f90b6e7359bf, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 20789751808
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 618595512320
+    m_Localized: SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 707028217856
+    m_Localized: BGM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 824175128576
+    m_Localized: Your Score
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
