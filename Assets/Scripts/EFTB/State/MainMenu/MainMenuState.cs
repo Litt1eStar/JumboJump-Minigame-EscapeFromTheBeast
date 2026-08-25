@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Plugins;
 using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
@@ -62,18 +63,48 @@ namespace JumboJumps.EFTB.State.MainMenu
 
         public void OnPlayButtonClicked()
         {
-            visualizer?.PlayStartSequence(() =>
+            var miniHubBridge = GameContext.Instance?.Get<MiniHubBridge>();
+            if (miniHubBridge == null)
             {
-                visualizer?.FadeInWorldObjects(0.3f, () =>
+                DebugLogHelper.LogWarning($"[{GetType().Name}] MiniHubBridge not found in GameContext. Creating fallback instance...");
+                var bridgeGo = new GameObject("MiniHubBridge");
+                Object.DontDestroyOnLoad(bridgeGo);
+                miniHubBridge = bridgeGo.AddComponent<MiniHubBridge>();
+                GameContext.Instance?.Add(miniHubBridge);
+            }
+
+            miniHubBridge.StartGameSession((isSuccess, response, error) =>
+            {
+                if (isSuccess)
                 {
-                    StateController.ChangeState(typeof(InGameState));
-                });
+                    DebugLogHelper.Log($"[{GetType().Name}] MiniHub StartGameSession approved! SessionId: {response?.SessionId}");
+                    visualizer?.PlayStartSequence(() =>
+                    {
+                        visualizer?.FadeInWorldObjects(0.3f, () =>
+                        {
+                            StateController.ChangeState(typeof(InGameState));
+                        });
+                    });
+                }
+                else
+                {
+                    DebugLogHelper.LogError($"[{GetType().Name}] Failed to start game session: {error}");
+                }
             });
         }
 
         public void OnExitButtonClicked()
         {
-            Application.Quit();
+            var miniHubBridge = GameContext.Instance?.Get<MiniHubBridge>();
+            if (miniHubBridge != null)
+            {
+                miniHubBridge.CloseGame();
+            }
+            else
+            {
+                DebugLogHelper.Log($"[{GetType().Name}] Application.Quit called.");
+                Application.Quit();
+            }
         }
     }
 }

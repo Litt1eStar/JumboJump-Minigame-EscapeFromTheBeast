@@ -2,6 +2,7 @@ using JumboJumps.EFTB.Constant.Scene;
 using JumboJumps.EFTB.State.Base;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Plugins;
 using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
@@ -70,6 +71,14 @@ namespace JumboJumps.EFTB.State.Gameplay
             hazardSpawner = new HazardSpawner();
             hazardSpawner.Initialize();
             
+            if (GameContext.Instance.Get<MiniHubBridge>() == null)
+            {
+                var bridgeGo = new UnityEngine.GameObject("MiniHubBridge");
+                UnityEngine.GameObject.DontDestroyOnLoad(bridgeGo);
+                var miniHubBridge = bridgeGo.AddComponent<MiniHubBridge>();
+                GameContext.Instance.Add(miniHubBridge);
+            }
+
             soundManager = new SoundManager();
             soundManager.Initialize();
 

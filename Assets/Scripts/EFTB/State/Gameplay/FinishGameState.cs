@@ -1,4 +1,7 @@
+using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Plugins;
 using JumboJumps.EFTB.State.MainMenu;
+using JumboJumps.EFTB.Utilities;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
@@ -22,6 +25,29 @@ namespace JumboJumps.EFTB.State.Gameplay
             {
                 stateController.GameplayVisualizer.EventFinishMainMenuButtonClicked += OnFinishMainMenuButtonClicked;
             }
+
+            int finalScore = GameContext.Instance?.Get<ScoreManager>()?.CurrentScoreData.TotalScore ?? 0;
+            var miniHubBridge = GameContext.Instance?.Get<MiniHubBridge>();
+            if (miniHubBridge == null)
+            {
+                DebugLogHelper.LogWarning($"[{GetType().Name}] MiniHubBridge not found in GameContext during FinishGameState. Creating fallback instance...");
+                var bridgeGo = new UnityEngine.GameObject("MiniHubBridge");
+                UnityEngine.Object.DontDestroyOnLoad(bridgeGo);
+                miniHubBridge = bridgeGo.AddComponent<MiniHubBridge>();
+                GameContext.Instance?.Add(miniHubBridge);
+            }
+
+            miniHubBridge.EndGameSession(finalScore, (isSuccess, response, error) =>
+            {
+                if (isSuccess)
+                {
+                    DebugLogHelper.Log($"[{GetType().Name}] Submitted score to platform: {finalScore}");
+                }
+                else
+                {
+                    DebugLogHelper.LogError($"[{GetType().Name}] Failed to submit score: {error}");
+                }
+            });
         }
 
         public override void OnExitState()
