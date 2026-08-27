@@ -22,6 +22,7 @@ namespace JumboJumps.EFTB.UI.Gameplay.FinishLevel
 
         [Header("Localization References (Optional)")]
         [SerializeField] private LocalizedText scoreHeaderLocalizedText;
+        [SerializeField] private LocalizedImage gameOverHeaderLocalizedImage;
 
         [Header("UI Button References")]
         [SerializeField] private Button mainMenuButton;
@@ -39,6 +40,11 @@ namespace JumboJumps.EFTB.UI.Gameplay.FinishLevel
             if (scoreHeaderLocalizedText != null)
             {
                 scoreHeaderLocalizedText.SetLocalizedKey(ConstLocalization.Keys.RESULT_SCORE_LABEL);
+            }
+
+            if (gameOverHeaderLocalizedImage != null)
+            {
+                gameOverHeaderLocalizedImage.SetLocalizedKey(ConstLocalization.Keys.ASSET_GAME_OVER);
             }
 
             Subscribe();

@@ -937,6 +937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Gameplay.FinishLevel.UIFinishLevelPanel
   scoreTextLabel: {fileID: 434458894}
   scoreHeaderLocalizedText: {fileID: 1222032571}
+  gameOverHeaderLocalizedImage: {fileID: 0}
   mainMenuButton: {fileID: 0}
   replayButton: {fileID: 2139298053}
   panelContentTransform: {fileID: 517951853}
@@ -1685,6 +1686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Gameplay.FinishLevel.UIFinishLevelPanel
   scoreTextLabel: {fileID: 3868680877039971105}
   scoreHeaderLocalizedText: {fileID: 728033403}
+  gameOverHeaderLocalizedImage: {fileID: 0}
   mainMenuButton: {fileID: 0}
   replayButton: {fileID: 0}
   panelContentTransform: {fileID: 5339083771184310033}
@@ -2761,6 +2763,7 @@ MonoBehaviour:
   playButtonCanvasGroup: {fileID: 1573628182}
   exitButton: {fileID: 0}
   exitButtonCanvasGroup: {fileID: 0}
+  playButtonLocalizedImage: {fileID: 0}
   readyTransform: {fileID: 613189430}
   readyCanvasGroup: {fileID: 613189433}
   goTransform: {fileID: 1730488247}
@@ -3718,6 +3721,7 @@ GameObject:
   - component: {fileID: 1573628180}
   - component: {fileID: 1573628179}
   - component: {fileID: 1573628182}
+  - component: {fileID: 1573628183}
   m_Layer: 0
   m_Name: StartBTN
   m_TagString: Untagged
@@ -3838,6 +3842,27 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1573628183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573628177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f7b1d2730af88459494b9bc2f2e985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedImage
+  targetImage: {fileID: 1573628180}
+  localizedSprite:
+    m_TableReference:
+      m_TableCollectionName: GUID:d9220477d5c01894299f2fffecf5a317
+    m_TableEntryReference:
+      m_KeyId: 11092520960
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!1001 &1637194478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5371,6 +5396,7 @@ GameObject:
   - component: {fileID: 3438991661074160268}
   - component: {fileID: 1005273809279476470}
   - component: {fileID: 8286243577688281386}
+  - component: {fileID: 8286243577688281387}
   m_Layer: 0
   m_Name: Image - PopupBackground
   m_TagString: Untagged
@@ -5799,6 +5825,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!114 &8286243577688281387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2597376605905193190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f7b1d2730af88459494b9bc2f2e985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  targetImage: {fileID: 8286243577688281386}
+  localizedSprite:
+    m_TableReference:
+      m_TableCollectionName: GUID:d9220477d5c01894299f2fffecf5a317
+    m_TableEntryReference:
+      m_KeyId: 326860697600
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!224 &8311570216967542778
 RectTransform:
   m_ObjectHideFlags: 0

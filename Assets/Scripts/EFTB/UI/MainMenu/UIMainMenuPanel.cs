@@ -1,7 +1,9 @@
 using JumboJumps.EFTB.Config;
 using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Constant.Localization;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Sound;
+using JumboJumps.EFTB.UI.Utilities;
 using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
@@ -22,6 +24,9 @@ namespace JumboJumps.EFTB.UI.MainMenu
         [SerializeField] private CanvasGroup playButtonCanvasGroup;
         [SerializeField] private Button exitButton;
         [SerializeField] private CanvasGroup exitButtonCanvasGroup;
+
+        [Header("Localization References (Optional)")]
+        [SerializeField] private LocalizedImage playButtonLocalizedImage;
 
         [Header("Ready / Go Sequence References")]
         [SerializeField] private RectTransform readyTransform;
@@ -52,6 +57,11 @@ namespace JumboJumps.EFTB.UI.MainMenu
 
         public void Initialize()
         {
+            if (playButtonLocalizedImage != null)
+            {
+                playButtonLocalizedImage.SetLocalizedKey(ConstLocalization.Keys.ASSET_START_BTN);
+            }
+
             Subscribe();
 
             if (readyCanvasGroup != null) readyCanvasGroup.gameObject.SetActive(false);
