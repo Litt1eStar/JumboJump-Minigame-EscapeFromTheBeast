@@ -38,6 +38,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             if (stateController?.GameplayVisualizer != null)
             {
+                stateController.GameplayVisualizer.ShowGameplayCanvas();
                 stateController.GameplayVisualizer.EventPauseUIButtonClicked += OnClickPauseButton;
             }
         }

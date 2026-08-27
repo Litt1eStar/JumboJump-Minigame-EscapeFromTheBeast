@@ -26,6 +26,7 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             if (stateController?.GameplayVisualizer != null)
             {
+                stateController.GameplayVisualizer.HideGameplayCanvas();
                 stateController.GameplayVisualizer.EventFinishMainMenuButtonClicked += OnFinishMainMenuButtonClicked;
             }
 
