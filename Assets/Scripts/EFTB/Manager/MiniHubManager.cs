@@ -1,10 +1,9 @@
+using JumboJumps.EFTB.Plugins;
 using JumboJumps.EFTB.Utilities;
-using JumboJumps.SpinningCat.Plugins.WebBridge;
-
 using System;
-using static JumboJumps.SpinningCat.Plugins.WebBridge.MiniHubBridge;
+using static JumboJumps.EFTB.Plugins.MiniHubBridge;
 
-namespace JumboJumps.SpinningCat.Manager
+namespace JumboJumps.EFTB.Manager
 {
     public class MiniHubManager
     {

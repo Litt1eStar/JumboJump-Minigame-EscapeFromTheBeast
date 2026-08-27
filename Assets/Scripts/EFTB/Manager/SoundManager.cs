@@ -180,5 +180,35 @@ namespace JumboJumps.EFTB.Manager
         {
             SetBGMOn(!IsBGMOn);
         }
+
+        private bool isAudioSuspendedForAppBackground;
+
+        public void SetAppBackgroundAudioSuspended(bool isSuspended)
+        {
+            if (isSuspended)
+            {
+                SuspendForAppBackground();
+            }
+            else
+            {
+                ResumeFromAppBackground();
+            }
+        }
+
+        public void SuspendForAppBackground()
+        {
+            if (isAudioSuspendedForAppBackground) return;
+            isAudioSuspendedForAppBackground = true;
+            AudioListener.pause = true;
+            DebugLogHelper.Log($"[{GetType().Name}] Audio suspended for app background.");
+        }
+
+        public void ResumeFromAppBackground()
+        {
+            if (!isAudioSuspendedForAppBackground) return;
+            isAudioSuspendedForAppBackground = false;
+            AudioListener.pause = false;
+            DebugLogHelper.Log($"[{GetType().Name}] Audio resumed from app background.");
+        }
     }
 }

@@ -1,8 +1,8 @@
-using JumboJumps.SpinningCat.Constant.Network;
+using JumboJumps.EFTB.Constant.Network;
 using System;
 using UnityEngine;
 
-namespace JumboJumps.SpinningCat.Utilities
+namespace JumboJumps.EFTB.Utilities
 {
     public static class OfflinePlatformUserIdHelper
     {

@@ -1,5 +1,4 @@
-using JumboJumps.EFTB.Manager;
-using JumboJumps.EFTB.Plugins;
+﻿using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
@@ -11,6 +10,8 @@ namespace JumboJumps.EFTB.State.MainMenu
     public class MainMenuState : BaseState
     {
         private MainMenuVisualizer visualizer;
+        private MiniHubManager miniHubManager;
+        private bool isStartingSession;
 
         public MainMenuState(BaseStateController stateController) : base(stateController)
         {
@@ -20,6 +21,9 @@ namespace JumboJumps.EFTB.State.MainMenu
         public override void OnEnterState()
         {
             base.OnEnterState();
+
+            miniHubManager = GameContext.Instance?.Get<MiniHubManager>();
+            isStartingSession = false;
 
             EFTBSound.PlayGameplayBGM();
 
@@ -50,6 +54,9 @@ namespace JumboJumps.EFTB.State.MainMenu
 
         public override void OnExitState()
         {
+            miniHubManager = null;
+            isStartingSession = false;
+
             if (visualizer != null)
             {
                 visualizer.EventPlayUIButtonClicked -= OnPlayButtonClicked;
@@ -63,18 +70,19 @@ namespace JumboJumps.EFTB.State.MainMenu
 
         public void OnPlayButtonClicked()
         {
-            var miniHubBridge = GameContext.Instance?.Get<MiniHubBridge>();
-            if (miniHubBridge == null)
+            if (isStartingSession) return;
+
+            if (miniHubManager == null)
             {
-                DebugLogHelper.LogWarning($"[{GetType().Name}] MiniHubBridge not found in GameContext. Creating fallback instance...");
-                var bridgeGo = new GameObject("MiniHubBridge");
-                Object.DontDestroyOnLoad(bridgeGo);
-                miniHubBridge = bridgeGo.AddComponent<MiniHubBridge>();
-                GameContext.Instance?.Add(miniHubBridge);
+                DebugLogHelper.LogError($"[{GetType().Name}] MiniHubManager not found in GameContext.");
+                return;
             }
 
-            miniHubBridge.StartGameSession((isSuccess, response, error) =>
+            isStartingSession = true;
+
+            miniHubManager.StartGameSession((isSuccess, response, error) =>
             {
+                isStartingSession = false;
                 if (isSuccess)
                 {
                     DebugLogHelper.Log($"[{GetType().Name}] MiniHub StartGameSession approved! SessionId: {response?.SessionId}");
@@ -95,10 +103,9 @@ namespace JumboJumps.EFTB.State.MainMenu
 
         public void OnExitButtonClicked()
         {
-            var miniHubBridge = GameContext.Instance?.Get<MiniHubBridge>();
-            if (miniHubBridge != null)
+            if (miniHubManager != null)
             {
-                miniHubBridge.CloseGame();
+                miniHubManager.CloseGame();
             }
             else
             {

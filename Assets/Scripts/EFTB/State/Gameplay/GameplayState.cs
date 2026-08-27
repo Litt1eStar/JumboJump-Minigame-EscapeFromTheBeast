@@ -70,14 +70,6 @@ namespace JumboJumps.EFTB.State.Gameplay
           
             hazardSpawner = new HazardSpawner();
             hazardSpawner.Initialize();
-            
-            if (GameContext.Instance.Get<MiniHubBridge>() == null)
-            {
-                var bridgeGo = new UnityEngine.GameObject("MiniHubBridge");
-                UnityEngine.GameObject.DontDestroyOnLoad(bridgeGo);
-                var miniHubBridge = bridgeGo.AddComponent<MiniHubBridge>();
-                GameContext.Instance.Add(miniHubBridge);
-            }
 
             soundManager = new SoundManager();
             soundManager.Initialize();

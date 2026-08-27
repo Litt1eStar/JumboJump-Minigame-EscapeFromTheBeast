@@ -1,4 +1,4 @@
-namespace JumboJumps.SpinningCat.Constant.Network
+namespace JumboJumps.EFTB.Constant.Network
 {
     public class ConstNetwork
     {
