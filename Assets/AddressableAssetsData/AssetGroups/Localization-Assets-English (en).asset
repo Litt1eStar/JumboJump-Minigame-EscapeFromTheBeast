@@ -15,14 +15,14 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-English (en)
   m_GUID: bc857c83c57b46f47ba194d763bf9fc0
   m_SerializeEntries:
-  - m_GUID: d30bfdc1659813441bc4968c6b23d0e9
-    m_Address: SPR_PopupGameOver_Background_EN
+  - m_GUID: 6c1a91e90a007524cb3da253cfd78c7f
+    m_Address: Localize=EN, Game Type=Generic
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: eb2a923f4ff8f094b81cdd21cf0f2d87
-    m_Address: UI-Start
+  - m_GUID: d30bfdc1659813441bc4968c6b23d0e9
+    m_Address: SPR_PopupGameOver_Background_EN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
