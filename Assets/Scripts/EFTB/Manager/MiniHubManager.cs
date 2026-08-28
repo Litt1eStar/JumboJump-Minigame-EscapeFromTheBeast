@@ -180,6 +180,8 @@ namespace JumboJumps.EFTB.Manager
 
         private void OnGetProfileCompleted(bool isSuccess, ProfileResponseModel response, string error)
         {
+            IsReady = true;
+
             if (!isSuccess)
             {
                 LogError($"{nameof(OnGetProfileCompleted)}| Failed to load profile. Error: {error}");
@@ -188,7 +190,6 @@ namespace JumboJumps.EFTB.Manager
             }
 
             CachedProfile = response ?? new ProfileResponseModel(null, null);
-            IsReady = true;
             CompleteGetProfile(true);
         }
 

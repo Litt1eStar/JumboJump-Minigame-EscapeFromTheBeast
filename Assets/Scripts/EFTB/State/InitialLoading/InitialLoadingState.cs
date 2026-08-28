@@ -2,6 +2,7 @@ using JumboJumps.EFTB.Constant.UI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Visualizer.ErrorPopup;
 using JumboJumps.EFTB.Visualizer.InitialLoading;
 using System.Collections;
 using UnityEngine;
@@ -15,8 +16,6 @@ namespace JumboJumps.EFTB.State.InitialLoading
         private CoroutineHelper coroutineHelper;
         private Coroutine loadingCoroutine;
         private MiniHubManager miniHubManager;
-
-        private float simulateDuration = ConstUI.Loading.SimulatedLoadingDuration;
 
         public InitialLoadingState(BaseStateController stateController) : base(stateController)
         {
@@ -49,58 +48,22 @@ namespace JumboJumps.EFTB.State.InitialLoading
 
         private IEnumerator LoadingRoutine()
         {
-            float timer = 0f;
-            float targetProgress = 0.3f;
+            visualizer?.SetProgress(0.0f);
 
             if (miniHubManager != null)
             {
-                bool isAuthFinished = false;
-                miniHubManager.GetParentAuthInfo(success =>
+                miniHubManager.GetParentAuthInfo(_ =>
                 {
-                    isAuthFinished = true;
+                    miniHubManager.GetProfile(_ => { });
                 });
 
-                while (!isAuthFinished && timer < 5f)
-                {
-                    timer += Time.deltaTime;
-                    float progress = Mathf.Clamp01(timer / 5f) * 0.3f;
-                    visualizer?.SetProgress(progress);
-                    yield return null;
-                }
-
-                targetProgress = 0.6f;
-                bool isProfileFinished = false;
-                miniHubManager.GetProfile(success =>
-                {
-                    isProfileFinished = true;
-                });
-
-                while (!isProfileFinished && timer < 10f)
-                {
-                    timer += Time.deltaTime;
-                    float progress = 0.3f + (Mathf.Clamp01((timer - 0.3f) / 10f) * 0.3f);
-                    visualizer?.SetProgress(progress);
-                    yield return null;
-                }
+                yield return new WaitUntil(() => miniHubManager.IsReady);
 
                 if (miniHubManager.IsReady && miniHubManager.CachedProfile?.Profile?.LanguageCode != null)
                 {
                     var localizationManager = GameContext.Instance?.Get<LocalizationManager>();
                     localizationManager?.ApplyLanguageCode(miniHubManager.CachedProfile.Profile.LanguageCode);
                 }
-            }
-
-            // Fill remaining progress bar to 1.0f smoothly
-            float fillTimer = 0f;
-            float fillDuration = 0.5f;
-            float startProgress = targetProgress;
-
-            while (fillTimer < fillDuration)
-            {
-                fillTimer += Time.deltaTime;
-                float progress = Mathf.Lerp(startProgress, 1.0f, fillTimer / fillDuration);
-                visualizer?.SetProgress(progress);
-                yield return null;
             }
 
             visualizer?.SetProgress(1.0f);
