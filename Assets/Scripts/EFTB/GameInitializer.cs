@@ -1,4 +1,3 @@
-using JumboJumps.EFTB.GameData;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
@@ -14,6 +13,7 @@ namespace JumboJumps.EFTB
         private GameDataManager gameDataManager;
 
         private GameManager gameManager;
+        private SoundManager soundManager;
 
         private void Awake()
         {
@@ -33,6 +33,9 @@ namespace JumboJumps.EFTB
 
         private void Initialize()
         {
+            soundManager = new SoundManager();
+            soundManager.Initialize();
+
             gameManager = new GameManager();
             gameManager.Initialize();
 
@@ -47,6 +50,12 @@ namespace JumboJumps.EFTB
 
         private void Dispose()
         {
+            if (soundManager != null)
+            {
+                soundManager.Dispose();
+                soundManager = null;
+            }
+
             if (coroutineHelper != null)
             {
                 coroutineHelper.Dispose();
