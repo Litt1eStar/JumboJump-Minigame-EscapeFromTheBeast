@@ -22,9 +22,7 @@ namespace JumboJumps.EFTB.Visualizer.ErrorPopup
                 DebugLogHelper.LogWarning($"[{GetType().Name}] Failed to resolve UIErrorPopupCanvas in SceneObjectContext or Scene.");
             }
 
-            
             GameContext.Instance.Add(this);
-            
         }
 
         public void Dispose()

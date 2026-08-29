@@ -1,6 +1,5 @@
-﻿using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
-using JumboJumps.EFTB.UI.ErrorPopup;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.ErrorPopup;
 
@@ -25,14 +24,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         {
             base.OnEnterState();
             miniHubManager = GameContext.Instance?.Get<MiniHubManager>();
-
             errorPopupVisualizer = GameContext.Instance?.Get<ErrorPopupVisualizer>();
-            
-            if (errorPopupVisualizer == null)
-            {
-                errorPopupVisualizer = new ErrorPopupVisualizer();
-                errorPopupVisualizer.Initialize();
-            }
 
             if (stateController?.GameplayVisualizer != null)
             {

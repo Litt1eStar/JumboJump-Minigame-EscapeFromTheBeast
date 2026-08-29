@@ -2,7 +2,6 @@ using JumboJumps.EFTB.Constant.UI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
-using JumboJumps.EFTB.Visualizer.ErrorPopup;
 using JumboJumps.EFTB.Visualizer.InitialLoading;
 using System.Collections;
 using UnityEngine;
@@ -12,7 +11,6 @@ namespace JumboJumps.EFTB.State.InitialLoading
     public class InitialLoadingState : BaseState
     {
         private InitialLoadingVisualizer visualizer;
-        private GameStateController stateController;
         private CoroutineHelper coroutineHelper;
         private Coroutine loadingCoroutine;
         private MiniHubManager miniHubManager;
@@ -20,8 +18,6 @@ namespace JumboJumps.EFTB.State.InitialLoading
         public InitialLoadingState(BaseStateController stateController) : base(stateController)
         {
             StateTransitionMap.Add(typeof(GameplayState), null);
-
-            this.stateController = (GameStateController)stateController;
         }
 
         public override void OnEnterState()
@@ -52,12 +48,24 @@ namespace JumboJumps.EFTB.State.InitialLoading
 
             if (miniHubManager != null)
             {
-                miniHubManager.GetParentAuthInfo(_ =>
+                bool isFinished = false;
+
+                miniHubManager.GetParentAuthInfo(isAuthSuccess =>
                 {
-                    miniHubManager.GetProfile(_ => { });
+                    if (isAuthSuccess)
+                    {
+                        miniHubManager.GetProfile(isProfileSuccess =>
+                        {
+                            isFinished = true;
+                        });
+                    }
+                    else
+                    {
+                        isFinished = true;
+                    }
                 });
 
-                yield return new WaitUntil(() => miniHubManager.IsReady);
+                yield return new WaitUntil(() => isFinished);
 
                 if (miniHubManager.IsReady && miniHubManager.CachedProfile?.Profile?.LanguageCode != null)
                 {
@@ -67,7 +75,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
             }
 
             visualizer?.SetProgress(1.0f);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(ConstUI.Loading.LoadingFinishDelay);
 
             StateController.ChangeState(typeof(GameplayState));
         }

@@ -11,6 +11,7 @@ namespace JumboJumps.EFTB.UI.ErrorPopup
 
         public void Initialize()
         {
+            //transform.localScale = Vector3.one;
             errorPopupPanel?.Initialize();
             Hide();
             DebugLogHelper.Log("UIErrorPopupPanel was Initialized");
@@ -23,6 +24,8 @@ namespace JumboJumps.EFTB.UI.ErrorPopup
 
         public void Show(Action onConfirmed = null)
         {
+            gameObject.SetActive(true);
+            //transform.localScale = Vector3.one;
             errorPopupPanel?.Show(onConfirmed);
         }
 

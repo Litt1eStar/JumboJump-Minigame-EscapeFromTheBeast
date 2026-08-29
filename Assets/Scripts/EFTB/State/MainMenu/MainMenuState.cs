@@ -1,7 +1,6 @@
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.State.Gameplay;
-using JumboJumps.EFTB.UI.ErrorPopup;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer.ErrorPopup;
 using JumboJumps.EFTB.Visualizer.MainMenu;
@@ -26,6 +25,7 @@ namespace JumboJumps.EFTB.State.MainMenu
             base.OnEnterState();
 
             miniHubManager = GameContext.Instance?.Get<MiniHubManager>();
+            errorPopupVisualizer = GameContext.Instance?.Get<ErrorPopupVisualizer>();
             isStartingSession = false;
 
             EFTBSound.PlayGameplayBGM();
@@ -36,13 +36,6 @@ namespace JumboJumps.EFTB.State.MainMenu
 
             GameplayStateController gameplayStateController = StateController as GameplayStateController;
             gameplayStateController?.GameplayVisualizer?.HidePanel();
-
-            if (errorPopupVisualizer == null)
-            {
-                UIErrorPopupCanvas errorPopupCanvas = SceneObjectContext.Instance?.Get<UIErrorPopupCanvas>();
-                errorPopupVisualizer = new ErrorPopupVisualizer();
-                errorPopupVisualizer.Initialize(errorPopupCanvas);
-            }
 
             visualizer.EventPlayUIButtonClicked += OnPlayButtonClicked;
 
@@ -64,6 +57,7 @@ namespace JumboJumps.EFTB.State.MainMenu
         public override void OnExitState()
         {
             miniHubManager = null;
+            errorPopupVisualizer = null;
             isStartingSession = false;
 
             if (visualizer != null)

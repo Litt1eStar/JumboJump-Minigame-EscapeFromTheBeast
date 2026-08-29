@@ -1,6 +1,7 @@
 using JumboJumps.EFTB.GameData;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Plugins;
+using JumboJumps.EFTB.UI;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ namespace JumboJumps.EFTB
 
         [SerializeField]
         private MiniHubBridge miniHubBridge;
+
+        [SerializeField]
+        private UIInitializer uiInitializer;
 
         private GameManager gameManager;
         private LocalizationManager localizationManager;
@@ -44,6 +48,7 @@ namespace JumboJumps.EFTB
 
             coroutineHelper.Initialize();
             gameDataManager.Initialize();
+            uiInitializer?.Initialize();
 
             localizationManager = new LocalizationManager();
             localizationManager.Initialize(coroutineHelper);
@@ -59,6 +64,12 @@ namespace JumboJumps.EFTB
 
         private void Dispose()
         {
+            if (uiInitializer != null)
+               {
+                uiInitializer.Dispose();
+                uiInitializer = null;
+            }
+
             if (miniHubManager != null)
             {
                 miniHubManager.Dispose();
