@@ -42,7 +42,7 @@ namespace JumboJumps.EFTB.Manager
                 stateController.CurrentLaneIndex = JumboJumps.EFTB.Constant.Gameplay.ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
                 stateController.IsStepUpRequested = false;
                 stateController.ResetIdleTimer();
-                stateController.StartStateController(typeof(PlayerIdleState));
+                stateController.ResetStateController(typeof(PlayerIdleState));
             }
 
             SetPlayerToMiddleLane();

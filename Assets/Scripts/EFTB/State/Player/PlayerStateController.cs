@@ -78,6 +78,21 @@ namespace JumboJumps.EFTB.State.Player
             return levelGen != null && levelGen.IsCellBlockedByFurniture(targetLaneIndex, targetWorldY);
         }
 
+        public override void StartStateController(Type initialStateType = null)
+        {
+            if (CurrentState?.IsStateActive == true)
+            {
+                CurrentState.OnExitState();
+            }
+
+            base.StartStateController(initialStateType);
+        }
+
+        public void ResetStateController(Type targetStateType = null)
+        {
+            StartStateController(targetStateType);
+        }
+
         public override void UpdateLogic(float deltaTime)
         {
             base.UpdateLogic(deltaTime);

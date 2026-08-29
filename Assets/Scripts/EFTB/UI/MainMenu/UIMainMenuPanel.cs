@@ -65,6 +65,19 @@ namespace JumboJumps.EFTB.UI.MainMenu
             if (exitButton != null) exitButton.onClick.AddListener(OnExitButtonClicked);
         }
 
+        public void Unsubscribe()
+        {
+            if (playButton != null) playButton.onClick.RemoveListener(OnPlayButtonClicked);
+            if (exitButton != null) exitButton.onClick.RemoveListener(OnExitButtonClicked);
+        }
+
+        public void Dispose()
+        {
+            StopLogoIdleAnimation();
+            StopStartSequence();
+            Unsubscribe();
+        }
+
         public override void Show()
         {
             base.Show();

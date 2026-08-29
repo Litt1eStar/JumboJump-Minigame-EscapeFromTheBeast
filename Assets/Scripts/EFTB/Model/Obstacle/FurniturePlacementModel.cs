@@ -60,7 +60,8 @@ namespace JumboJumps.EFTB.Model.Obstacle
                 lastOpenLaneIndex = chosenOpenLane;
                 lastFurnitureWorldY = worldY;
 
-                PopulateFurnitureBlocksForRow(generatedBlocks, laneCount, chosenOpenLane, worldY, worldY);
+                float rowYOffset = worldY - segmentStartY;
+                PopulateFurnitureBlocksForRow(generatedBlocks, laneCount, chosenOpenLane, worldY, rowYOffset);
             }
 
             return generatedBlocks;

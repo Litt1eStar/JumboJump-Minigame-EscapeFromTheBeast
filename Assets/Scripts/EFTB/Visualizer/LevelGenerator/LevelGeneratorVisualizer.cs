@@ -113,7 +113,7 @@ namespace JumboJumps.EFTB.Visualizer.LevelGenerator
 
             int laneIdx = Mathf.Clamp(blockData.LaneIndex, 0, laneXPosition.Length - 1);
             float targetX = laneXPosition[laneIdx];
-            float worldY = GIFurnitureObstacle.SnapToCellCenter(blockData.YOffset);
+            float worldY = GIFurnitureObstacle.SnapToCellCenter(segmentYPosition + blockData.YOffset);
 
             Vector3 spawnPosition = new Vector3(targetX, worldY, 0f);
             GameObject spawnedObj = poolManager.Spawn(prefab, spawnPosition, Quaternion.identity, segment.transform);

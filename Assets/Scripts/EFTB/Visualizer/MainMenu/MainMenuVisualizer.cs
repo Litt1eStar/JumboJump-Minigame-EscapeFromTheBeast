@@ -33,7 +33,17 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
         public void Dispose() 
         {
             UnSubscribe();
+
+            if (coroutineHelper != null && fadeInWorldObjectsCoroutine != null)
+            {
+                coroutineHelper.Stop(fadeInWorldObjectsCoroutine);
+                fadeInWorldObjectsCoroutine = null;
+            }
+
+            uiMainMenuCanvas?.Hide();
+            uiMainMenuCanvas?.Dispose();
             uiMainMenuCanvas = null;
+            uiMainMenuPanel = null;
         }
 
         public void Subscribe()

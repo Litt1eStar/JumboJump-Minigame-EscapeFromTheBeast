@@ -142,16 +142,7 @@ namespace JumboJumps.EFTB.Manager
         private bool IsRowBlockedByFurniture(float rowWorldY)
         {
             if (levelGeneratorManager == null) return false;
-
-            int laneCount = levelGeneratorManager.LaneXPositions?.Length ?? 3;
-            for (int lane = 0; lane < laneCount; lane++)
-            {
-                if (levelGeneratorManager.IsCellBlockedByFurniture(lane, rowWorldY))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return levelGeneratorManager.IsRowBlockedByFurniture(rowWorldY);
         }
 
         private void SpawnHazardOnRow(HazardRowData rowData)
