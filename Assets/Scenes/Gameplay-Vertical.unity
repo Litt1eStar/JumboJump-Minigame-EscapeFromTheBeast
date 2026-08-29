@@ -1022,6 +1022,7 @@ GameObject:
   - component: {fileID: 613189432}
   - component: {fileID: 613189431}
   - component: {fileID: 613189433}
+  - component: {fileID: 613189434}
   m_Layer: 0
   m_Name: Ready
   m_TagString: Untagged
@@ -1045,8 +1046,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.8, y: -33.8}
-  m_SizeDelta: {x: 400, y: 300}
+  m_AnchoredPosition: {x: 0, y: -33.8}
+  m_SizeDelta: {x: 312, y: 137.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &613189431
 MonoBehaviour:
@@ -1068,7 +1069,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ca0b19c41d3f6bb479f451fd94eaa651, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4c98065223ce78142a8fed90d0338b0d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1098,6 +1099,27 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &613189434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613189429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f7b1d2730af88459494b9bc2f2e985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedImage
+  targetImage: {fileID: 613189431}
+  localizedSprite:
+    m_TableReference:
+      m_TableCollectionName: GUID:d9220477d5c01894299f2fffecf5a317
+    m_TableEntryReference:
+      m_KeyId: 865787991191552
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!1 &665529360
 GameObject:
   m_ObjectHideFlags: 0
@@ -2349,7 +2371,9 @@ MonoBehaviour:
   playButtonCanvasGroup: {fileID: 1573628182}
   exitButton: {fileID: 0}
   exitButtonCanvasGroup: {fileID: 0}
-  playButtonLocalizedImage: {fileID: 0}
+  playButtonLocalizedImage: {fileID: 1573628183}
+  readyLocalizedImage: {fileID: 613189434}
+  goLocalizedImage: {fileID: 1730488251}
   readyTransform: {fileID: 613189430}
   readyCanvasGroup: {fileID: 613189433}
   goTransform: {fileID: 1730488247}
@@ -3017,6 +3041,7 @@ GameObject:
   - component: {fileID: 1730488249}
   - component: {fileID: 1730488248}
   - component: {fileID: 1730488250}
+  - component: {fileID: 1730488251}
   m_Layer: 0
   m_Name: Go
   m_TagString: Untagged
@@ -3040,8 +3065,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.6, y: -26.8}
-  m_SizeDelta: {x: 400, y: 300}
+  m_AnchoredPosition: {x: 0, y: -26.8}
+  m_SizeDelta: {x: 375, y: 156.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1730488248
 MonoBehaviour:
@@ -3063,7 +3088,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4de6072ef13db694ea99e62b5848f08c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3f0dd733af259e04e8513c8b8bb69037, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3093,6 +3118,27 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1730488251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730488246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f7b1d2730af88459494b9bc2f2e985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedImage
+  targetImage: {fileID: 1730488248}
+  localizedSprite:
+    m_TableReference:
+      m_TableCollectionName: GUID:d9220477d5c01894299f2fffecf5a317
+    m_TableEntryReference:
+      m_KeyId: 865661751029760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!1 &1732330364
 GameObject:
   m_ObjectHideFlags: 0
@@ -3591,7 +3637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3598030222325056448, guid: 0c8096900e7a81d4bb92f5de81ffd77d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -30.99997
+      value: -31
       objectReference: {fileID: 0}
     - target: {fileID: 5071245061341109754, guid: 0c8096900e7a81d4bb92f5de81ffd77d, type: 3}
       propertyPath: m_AnchorMax.y

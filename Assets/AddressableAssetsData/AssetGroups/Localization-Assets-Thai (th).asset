@@ -21,6 +21,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-th
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b086f8850f22a94aa93340a416a8a0f
+    m_Address: label=ready, Localize=true
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-th
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79886d7cef38b8541b933dad10abb144
+    m_Address: label=go, Localize=false
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-th
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4fcc754b95ef064fb42c5b480802c17
     m_Address: UIGameOver_th
     m_ReadOnly: 1

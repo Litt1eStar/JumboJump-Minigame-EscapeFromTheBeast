@@ -24,8 +24,10 @@ namespace JumboJumps.EFTB.Constant.Localization
             public const string RESULT_SCORE_LABEL = "result_scoreLabel";
 
             // Asset Table Keys
-            public const string ASSET_GAME_OVER = "btn_start";
-            public const string ASSET_START_BTN = "panel_gameover";
+            public const string ASSET_START_BTN = "btn_start";
+            public const string ASSET_GAME_OVER = "popup_gameover";
+            public const string ASSET_LABEL_READY = "label_ready";
+            public const string ASSET_LABEL_GO = "label_go";
         }
     }
 }

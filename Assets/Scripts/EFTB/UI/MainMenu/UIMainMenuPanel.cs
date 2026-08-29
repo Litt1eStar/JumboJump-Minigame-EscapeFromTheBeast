@@ -27,6 +27,8 @@ namespace JumboJumps.EFTB.UI.MainMenu
 
         [Header("Localization References (Optional)")]
         [SerializeField] private LocalizedImage playButtonLocalizedImage;
+        [SerializeField] private LocalizedImage readyLocalizedImage;
+        [SerializeField] private LocalizedImage goLocalizedImage;
 
         [Header("Ready / Go Sequence References")]
         [SerializeField] private RectTransform readyTransform;
@@ -60,6 +62,16 @@ namespace JumboJumps.EFTB.UI.MainMenu
             if (playButtonLocalizedImage != null)
             {
                 playButtonLocalizedImage.SetLocalizedKey(ConstLocalization.Keys.ASSET_START_BTN);
+            }
+
+            if (readyLocalizedImage != null)
+            {
+                readyLocalizedImage.SetLocalizedKey(ConstLocalization.Keys.ASSET_LABEL_READY);
+            }
+
+            if (goLocalizedImage != null)
+            {
+                goLocalizedImage.SetLocalizedKey(ConstLocalization.Keys.ASSET_LABEL_GO);
             }
 
             Subscribe();
