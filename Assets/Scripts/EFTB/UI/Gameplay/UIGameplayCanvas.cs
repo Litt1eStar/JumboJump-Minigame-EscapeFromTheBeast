@@ -40,9 +40,9 @@ namespace JumboJumps.EFTB.UI.Gameplay
 
 
         #region Score Counter
-        public void SetScoreLabel(int totalScore)
+        public void SetScoreLabel(JumboJumps.EFTB.Model.ScoreData scoreData)
         {
-            uiGameplayPanel?.SetScoreLabel(totalScore);
+            uiGameplayPanel?.SetScoreLabel(scoreData);
         }
         #endregion
 
@@ -57,9 +57,9 @@ namespace JumboJumps.EFTB.UI.Gameplay
             uiFinishLevelPanel?.Hide();
         }
 
-        public void SetFinishLevelTextLabel(GameStatus gameStatus)
+        public void SetFinishLevelScore(int score)
         {
-            uiFinishLevelPanel?.SetFinishTextLavel(gameStatus);
+            uiFinishLevelPanel?.SetScore(score);
         }
 
         #endregion

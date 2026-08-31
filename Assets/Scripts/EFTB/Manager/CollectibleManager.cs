@@ -23,5 +23,11 @@ namespace JumboJumps.EFTB.Manager
             TotalCollectibleValue += value;
             EventTotalCollectibleValueChanged?.Invoke(TotalCollectibleValue);
         }
+
+        public void ResetValue()
+        {
+            TotalCollectibleValue = 0;
+            EventTotalCollectibleValueChanged?.Invoke(TotalCollectibleValue);
+        }
     }
 }

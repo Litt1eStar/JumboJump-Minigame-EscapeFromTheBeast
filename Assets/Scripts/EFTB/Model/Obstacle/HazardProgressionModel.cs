@@ -13,10 +13,15 @@ namespace JumboJumps.EFTB.Model.Obstacle
         {
             get
             {
-                if (config == null && SceneObjectContext.Instance != null)
+                var container = SceneObjectContext.Instance?.Get<GI.GIGameplayConfigContainer>();
+                if (container != null && container.HazardConfig != null)
                 {
-                    var container = SceneObjectContext.Instance.Get<GI.GIGameplayConfigContainer>();
-                    if (container != null) config = container.HazardConfig;
+                    config = container.HazardConfig;
+                    return config;
+                }
+                if (config == null)
+                {
+                    DebugLogHelper.LogError($"[{GetType().Name}] HazardConfigSO reference is missing.");
                 }
                 return config;
             }
@@ -54,8 +59,8 @@ namespace JumboJumps.EFTB.Model.Obstacle
         /// </summary>
         public float GetRandomRowSpeed()
         {
-            float speedLow = Config.FloorSpeedDurationLow;
-            float speedHigh = Config.FloorSpeedDurationHigh;
+            float speedLow = Config != null ? Config.FloorSpeedDurationLow : 1.0f;
+            float speedHigh = Config != null ? Config.FloorSpeedDurationHigh : 2.0f;
 
             float durationPerLane = Random.Range(speedLow, speedHigh);
             float laneSize = ConstGameplay.LevelGenerator.LANE_SIZE;

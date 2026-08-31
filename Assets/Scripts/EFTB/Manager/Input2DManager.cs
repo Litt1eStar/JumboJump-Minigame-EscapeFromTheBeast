@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.Utilities;
 using System;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ namespace JumboJumps.EFTB.Manager
     {
         public event Action EventTap;
         public event Action<SwipeDirectionEnum> EventSwipe;
-        public event Action<SwipeDirectionEnum> EventCombinedStep;
 
         [Header("Settings")]
         [SerializeField]
@@ -93,6 +93,7 @@ namespace JumboJumps.EFTB.Manager
         {
             if (!isTouchingScreen) return;
 
+
             if (!isSwiping)
             {
                 EventTap?.Invoke();
@@ -106,11 +107,7 @@ namespace JumboJumps.EFTB.Manager
         {
             SwipeDirectionEnum dir = swipedVector.x > 0 ? SwipeDirectionEnum.Right : SwipeDirectionEnum.Left;
 
-            if (swipedVector.y > swipeThreshold * 0.4f)
-            {
-                EventCombinedStep?.Invoke(dir);
-            }
-            else if (Mathf.Abs(swipedVector.x) >= Mathf.Abs(swipedVector.y))
+            if (Mathf.Abs(swipedVector.x) >= Mathf.Abs(swipedVector.y))
             {
                 EventSwipe?.Invoke(dir);
             }

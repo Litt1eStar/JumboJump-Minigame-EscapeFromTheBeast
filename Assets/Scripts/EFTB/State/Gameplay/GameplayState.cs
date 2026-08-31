@@ -2,6 +2,7 @@ using JumboJumps.EFTB.Constant.Scene;
 using JumboJumps.EFTB.State.Base;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Plugins;
 using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private Input2DManager input2DManager;
         private ObjectPoolManager poolManager;
         private AggressiveCatSpawner aggressiveCatSpawner;
+        private SoundManager soundManager;
 
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
@@ -55,15 +57,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager.Initialize();
 
             scoreManager = new ScoreManager();
-            scoreManager.Initialize(playerManager);
-
-            gameplayController = new GameplayController();
-
-            gameplayStateManager = new GameplayStateManager();
-            gameplayStateManager.Initialize(gameplayController);
-
-            gameplayController.Initialize(gameplayStateManager.StateController);
-            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
+            scoreManager.Initialize(playerManager.PlayerTransform);
 
             poolManager = new ObjectPoolManager();
             poolManager.Initialize();
@@ -73,12 +67,24 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             levelGeneratorManager = new LevelGeneratorManager();
             levelGeneratorManager.Initialize(playerManager.PlayerTransform);
+          
+            hazardSpawner = new HazardSpawner();
+            hazardSpawner.Initialize();
+
+            soundManager = new SoundManager();
+            soundManager.Initialize();
+
+            gameplayController = new GameplayController();
+
+            gameplayStateManager = new GameplayStateManager();
+            gameplayStateManager.Initialize(gameplayController);
+
+            gameplayController.Initialize(gameplayStateManager.StateController);
 
             aggressiveCatSpawner = new AggressiveCatSpawner();
             aggressiveCatSpawner.Initialize();
 
-            hazardSpawner = new HazardSpawner();
-            hazardSpawner.Initialize();
+            gameplayController.EventReturnBackToMainMenu += ReturnBackToMainMenu;
         }
 
         public override void OnEnterState()
@@ -89,6 +95,9 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void OnExitState()
         {
             base.OnExitState();
+
+            soundManager?.Dispose();
+            soundManager = null;
 
             hazardSpawner?.Dispose();
             hazardSpawner = null;
@@ -141,17 +150,11 @@ namespace JumboJumps.EFTB.State.Gameplay
             if (!IsSceneLoaded) return;
 
             gameplayStateManager?.UpdateLogic(deltaTime);
-            playerManager?.UpdateLogic(deltaTime);
-            levelGeneratorManager?.UpdateLogic(deltaTime);
-            catManager?.UpdateLogic(deltaTime);
-            hazardSpawner?.UpdateLogic(deltaTime);
-
-            input2DManager.UpdateLogic(deltaTime);
         }
 
         public void ReturnBackToMainMenu()
         {
-            stateController.ChangeState(typeof(MainMenuState));
+            gameplayStateManager?.StateController?.ChangeState(typeof(MainMenuState));
         }
     }
 }

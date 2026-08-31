@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
@@ -27,89 +28,190 @@ namespace JumboJumps.EFTB.GI
         [SerializeField]
         private Transform initialStartPosition;
 
+        private CoroutineHelper coroutineHelper;
         private Coroutine warningCoroutine;
+        private Coroutine moveAnimCoroutine;
         private Color originalSpriteColor = Color.white;
+
+        private SpriteRenderer[] childSpriteRenderers;
 
         public Vector3 PlayerPosition => playerTransform.position;
 
-        private void Awake()
-        {
-            if (spriteRenderer != null)
-            {
-                originalSpriteColor = spriteRenderer.color;
-            }
-        }
-
         public void Initialize()
         {
+            coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
+            
             if (spriteRenderer != null)
             {
                 originalSpriteColor = spriteRenderer.color;
             }
+
+            childSpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         }
 
         public void Dispose()
         {
             StopPounceWarning();
+            StopMoveAnimRoutine();
         }
 
-        private void OnDisable()
+        public void SetMovingAnimation(bool isMoving)
         {
-            StopPounceWarning();
+            if (animator == null) return;
+
+            if (isMoving)
+            {
+                StopMoveAnimRoutine();
+                animator.SetBool(ConstGameplay.Player.MOVING_ANIM_PARAM, true);
+            }
+            else
+            {
+                StopMoveAnimRoutine();
+                if (coroutineHelper != null)
+                {
+                    moveAnimCoroutine = coroutineHelper.Play(ResetMovingAnimRoutine(), this);
+                }
+                else
+                {
+                    moveAnimCoroutine = StartCoroutine(ResetMovingAnimRoutine());
+                }
+            }
+        }
+
+        private IEnumerator ResetMovingAnimRoutine()
+        {
+            if (animator == null) yield break;
+
+            yield return new WaitForSeconds(ConstGameplay.Player.MIN_MOVE_ANIM_DURATION);
+            
+            animator.SetBool(ConstGameplay.Player.MOVING_ANIM_PARAM, false);
+            moveAnimCoroutine = null;
+        }
+
+        private void StopMoveAnimRoutine()
+        {
+            if (moveAnimCoroutine != null)
+            {
+                if (coroutineHelper != null)
+                {
+                    coroutineHelper.Stop(moveAnimCoroutine, this);
+                }
+                else
+                {
+                    StopCoroutine(moveAnimCoroutine);
+                }
+
+                moveAnimCoroutine = null;
+            }
         }
 
         public void ShowPounceWarning(float duration, Action onComplete)
         {
-            StopPounceWarning();
-            warningCoroutine = StartCoroutine(PounceWarningRoutine(duration, onComplete));
+            ShowPounceWarning(duration,
+                              ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_SHAKE_SPEED,
+                              ConstGameplay.Cat.AggressiveCat.POUNCE_WARNING_MAX_Z_ROTATION,
+                              onComplete);
         }
+
+        public void ShowPounceWarning(float duration, float shakeSpeed, float maxZAngle, Action onComplete)
+        {
+            StopPounceWarning();
+            
+            warningCoroutine = coroutineHelper.Play(PounceWarningRoutine(duration, shakeSpeed, maxZAngle, onComplete), this);
+            
+        }
+
+        private Quaternion originalWarningLocalRotation;
+        private SpriteRenderer warningIndicatorSpriteRenderer;
 
         public void StopPounceWarning()
         {
-            if (warningCoroutine != null)
+            if (coroutineHelper != null && warningCoroutine != null)
             {
-                StopCoroutine(warningCoroutine);
+                coroutineHelper.Stop(warningCoroutine, this);
                 warningCoroutine = null;
             }
 
             if (warningIndicatorObject != null)
             {
+                warningIndicatorObject.transform.localRotation = originalWarningLocalRotation;
                 warningIndicatorObject.SetActive(false);
-            }
 
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.enabled = true;
-                spriteRenderer.color = originalSpriteColor;
+                if (warningIndicatorSpriteRenderer != null)
+                {
+                    Color c = warningIndicatorSpriteRenderer.color;
+                    c.a = 1f;
+                    warningIndicatorSpriteRenderer.color = c;
+                }
             }
         }
 
-        private IEnumerator PounceWarningRoutine(float duration, Action onComplete)
+        private IEnumerator PounceWarningRoutine(float duration, float shakeSpeed, float maxZAngle, Action onComplete)
         {
             if (warningIndicatorObject != null)
             {
                 warningIndicatorObject.SetActive(true);
+
+                if (warningIndicatorSpriteRenderer == null)
+                {
+                    warningIndicatorSpriteRenderer = warningIndicatorObject.GetComponent<SpriteRenderer>();
+                    if (warningIndicatorSpriteRenderer == null)
+                    {
+                        warningIndicatorSpriteRenderer = warningIndicatorObject.GetComponentInChildren<SpriteRenderer>();
+                    }
+                }
+
+                originalWarningLocalRotation = warningIndicatorObject.transform.localRotation;
             }
 
             float elapsed = 0f;
-            float flashInterval = ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_INTERVAL;
-            bool isFlashColor = false;
 
             while (elapsed < duration)
             {
-                if (spriteRenderer != null)
+                elapsed += Time.deltaTime;
+                float progress = duration > 0f ? Mathf.Clamp01(elapsed / duration) : 1f;
+
+                if (warningIndicatorObject != null)
                 {
-                    isFlashColor = !isFlashColor;
-                    spriteRenderer.color = isFlashColor 
-                        ? ConstGameplay.Cat.AggressiveCat.POUNCE_FLASH_COLOR 
-                        : originalSpriteColor;
+                    float zAngle = Mathf.Sin(elapsed * shakeSpeed) * maxZAngle;
+                    warningIndicatorObject.transform.localRotation = originalWarningLocalRotation * Quaternion.Euler(0f, 0f, zAngle);
+
+                    if (warningIndicatorSpriteRenderer != null)
+                    {
+                        Color c = warningIndicatorSpriteRenderer.color;
+                        c.a = Mathf.Lerp(0f, 1f, progress);
+                        warningIndicatorSpriteRenderer.color = c;
+                    }
                 }
-                yield return new WaitForSeconds(flashInterval);
-                elapsed += flashInterval;
+
+                yield return null;
             }
 
             StopPounceWarning();
             onComplete?.Invoke();
+        }
+
+        public void SetAlpha(float alpha)
+        {
+            if (spriteRenderer != null)
+            {
+                Color c = spriteRenderer.color;
+                c.a = alpha;
+                spriteRenderer.color = c;
+            }
+
+            if (childSpriteRenderers != null)
+            {
+                foreach (var r in childSpriteRenderers)
+                {
+                    if (r != null)
+                    {
+                        Color c = r.color;
+                        c.a = alpha;
+                        r.color = c;
+                    }
+                }
+            }
         }
 
         public void SetPosition(Vector3 position)
@@ -124,26 +226,19 @@ namespace JumboJumps.EFTB.GI
 
         public void SetInitialStartPosition()
         {
-            transform.position = initialStartPosition.position;
+            if (playerTransform != null && initialStartPosition != null)
+            {
+                playerTransform.position = initialStartPosition.position;
+            }
+            else if (initialStartPosition != null)
+            {
+                transform.position = initialStartPosition.position;
+            }
         }
 
         public void MoveForward(float deltaTime)
         {
             playerTransform.position += new Vector3(0, playerMovementSpeed * deltaTime, 0);
-        }
-
-        private void FlipSpriteBasedFromInputDirection(float input)
-        {
-            if (input > 0)
-            {
-                //face right
-                spriteRenderer.flipX = false;
-            }
-            else if (input < 0)
-            {
-                //face left
-                spriteRenderer.flipX = true;
-            }
         }
     }
 }

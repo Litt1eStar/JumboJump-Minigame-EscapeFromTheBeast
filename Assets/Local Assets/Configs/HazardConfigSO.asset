@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HazardConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Config.HazardConfigSO
   safeZoneCells: 5
+  cellHeight: 3
   baseIntervalLow: 2.4
   baseIntervalHigh: 3.6
   stepIntervalReduction: 0.15
@@ -22,4 +23,5 @@ MonoBehaviour:
   floorSpeedDurationHigh: 0.6
   spawnOffscreenXOffset: 7.5
   despawnOffscreenXOffset: 7.5
-  hazardPrespawnOffset: 70
+  hazardPrespawnOffset: 20
+  rotationSpeed: 5

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using System;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.UI.MainMenu
 {
@@ -21,6 +22,16 @@ namespace JumboJumps.EFTB.UI.MainMenu
         public void Hide()
         {
             uiMainMenuPanel?.Hide();
+        }
+
+        public void StartLogoIdleAnimation()
+        {
+            uiMainMenuPanel?.StartLogoIdleAnimation();
+        }
+
+        public void PlayStartSequence(Action onComplete)
+        {
+            uiMainMenuPanel?.PlayStartSequence(onComplete);
         }
     }
 }

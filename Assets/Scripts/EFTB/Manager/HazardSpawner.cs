@@ -11,11 +11,11 @@ namespace JumboJumps.EFTB.Manager
 {
     public class HazardSpawner
     {
-        private ObjectPoolManager poolManager;
-        private LevelGeneratorManager levelGeneratorManager;
-        private GameDataManager gameDataManager;
-        private GameplayStateManager gameplayStateManager;
-        private PlayerManager playerManager;
+        private ObjectPoolManager poolManager => GameContext.Instance?.Get<ObjectPoolManager>();
+        private LevelGeneratorManager levelGeneratorManager => GameContext.Instance?.Get<LevelGeneratorManager>();
+        private GameDataManager gameDataManager => GameContext.Instance?.Get<GameDataManager>();
+        private GameplayStateManager gameplayStateManager => GameContext.Instance?.Get<GameplayStateManager>();
+        private PlayerManager playerManager => GameContext.Instance?.Get<PlayerManager>();
 
         private readonly HazardProgressionModel progressionModel = new HazardProgressionModel();
         private readonly Dictionary<int, HazardRowData> activeHazardRows = new Dictionary<int, HazardRowData>();
@@ -44,12 +44,6 @@ namespace JumboJumps.EFTB.Manager
 
         public void Initialize()
         {
-            poolManager = GameContext.Instance.Get<ObjectPoolManager>();
-            levelGeneratorManager = GameContext.Instance.Get<LevelGeneratorManager>();
-            gameDataManager = GameContext.Instance.Get<GameDataManager>();
-            gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
-            playerManager = GameContext.Instance.Get<PlayerManager>();
-
             GameContext.Instance.Add(this);
         }
 
@@ -57,32 +51,35 @@ namespace JumboJumps.EFTB.Manager
         {
             activeHazardRows.Clear();
 
-            for (int i = 0; i < activeHazards.Count; i++)
+            if (poolManager != null)
             {
-                if (activeHazards[i] != null)
+                for (int i = 0; i < activeHazards.Count; i++)
                 {
-                    activeHazards[i].EventPlayerHit -= OnHazardPlayerHit;
-                    activeHazards[i].EventDespawnRequested -= OnHazardDespawnRequested;
-                    
-                    poolManager?.Recycle(activeHazards[i].gameObject);
-                    
+                    if (activeHazards[i] != null && activeHazards[i].gameObject.activeInHierarchy)
+                    {
+                        poolManager.Recycle(activeHazards[i].gameObject);
+                    }
                 }
             }
             activeHazards.Clear();
 
-            poolManager = null;
-            levelGeneratorManager = null;
-            gameDataManager = null;
-            gameplayStateManager = null;
-            playerManager = null;
-
             GameContext.Instance.Remove(this);
         }
 
-        public bool IsHazardRow(float worldY)
+        public void ResetLevel()
         {
-            int rowIdx = Mathf.RoundToInt(worldY / ConstGameplay.Obstacle.Furniture.CELL_HEIGHT);
-            return activeHazardRows.ContainsKey(rowIdx);
+            if (poolManager != null)
+            {
+                for (int i = 0; i < activeHazards.Count; i++)
+                {
+                    if (activeHazards[i] != null && activeHazards[i].gameObject.activeInHierarchy)
+                    {
+                        poolManager.Recycle(activeHazards[i].gameObject);
+                    }
+                }
+            }
+            activeHazards.Clear();
+            activeHazardRows.Clear();
         }
 
         public void UpdateLogic(float deltaTime)
@@ -95,7 +92,7 @@ namespace JumboJumps.EFTB.Manager
             if (playerManager?.PlayerTransform == null || levelGeneratorManager == null) return;
 
             float playerY = playerManager.PlayerTransform.position.y;
-            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float cellHeight = HazardConfig != null ? HazardConfig.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
 
             int safeZoneCells = HazardConfig != null ? HazardConfig.SafeZoneCells : ConstGameplay.Obstacle.SAFE_ZONE_CELLS;
             int safeZoneMinRowIndex = safeZoneCells + 1;
@@ -112,7 +109,7 @@ namespace JumboJumps.EFTB.Manager
                 {
                     continue;
                 }
-                float rowWorldY = r * cellHeight;
+                float rowWorldY = (r * cellHeight) + (cellHeight * 0.5f);
 
                 if (IsRowBlockedByFurniture(rowWorldY))
                 {
@@ -163,19 +160,16 @@ namespace JumboJumps.EFTB.Manager
 
             if (IsRowBlockedByFurniture(rowData.RowWorldY))
             {
-                int rowIdx = Mathf.RoundToInt(rowData.RowWorldY / ConstGameplay.Obstacle.Furniture.CELL_HEIGHT);
+                float cellHeight = HazardConfig != null ? HazardConfig.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+                int rowIdx = Mathf.FloorToInt(rowData.RowWorldY / cellHeight);
                 activeHazardRows.Remove(rowIdx);
                 return;
             }
 
             if (!gameDataManager.TryGetPrefab(ConstGameplay.Obstacle.Hazard.PREFAB_NAME, out GameObject prefab))
             {
-                // Fallback to moving obstacle prefab if specific hazard prefab is not yet in registry
-                if (!gameDataManager.TryGetPrefab("Prefab_Obstacle_Car", out prefab))
-                {
-                    DebugLogHelper.LogWarning($"[HazardSpawner] Hazard prefab '{ConstGameplay.Obstacle.Hazard.PREFAB_NAME}' not found in GameDataManager.");
-                    return;
-                }
+                DebugLogHelper.LogWarning($"[HazardSpawner] Hazard prefab '{ConstGameplay.Obstacle.Hazard.PREFAB_NAME}' not found in GameDataManager.");
+                return;                
             }
 
             float spawnOffset = SpawnOffscreenXOffset;
@@ -187,37 +181,19 @@ namespace JumboJumps.EFTB.Manager
             Vector3 spawnPos = new Vector3(spawnX, rowData.RowWorldY, 0f);
 
             GameObject hazardObj = poolManager.Spawn(prefab, spawnPos, Quaternion.identity);
-            
             if (hazardObj == null) return;
 
             GIHazardObstacle giHazard = hazardObj.GetComponent<GIHazardObstacle>();
+            if (giHazard == null)
+            {
+                giHazard = hazardObj.AddComponent<GIHazardObstacle>();
+            }
 
             activeHazards.RemoveAll(h => h == null || !h.gameObject.activeInHierarchy);
             activeHazards.Add(giHazard);
 
-            giHazard.Initialize(rowData.Direction, rowData.Speed, rowData.RowWorldY, despawnX);
-
-            giHazard.EventPlayerHit += OnHazardPlayerHit;
-            giHazard.EventDespawnRequested += OnHazardDespawnRequested;
-        }
-
-        private void OnHazardPlayerHit(GIHazardObstacle hazard)
-        {
-            var gameplayController = GameContext.Instance?.Get<GameplayController>();
-            gameplayController?.InvokeFinishLevel(GameStatus.Lose);
-        }
-
-        private void OnHazardDespawnRequested(GIHazardObstacle hazard)
-        {
-            if (hazard != null)
-            {
-                hazard.EventPlayerHit -= OnHazardPlayerHit;
-                hazard.EventDespawnRequested -= OnHazardDespawnRequested;
-                activeHazards.Remove(hazard);
-
-                poolManager?.Recycle(hazard.gameObject);
-                
-            }
+            float rotationSpeed = HazardConfig != null ? HazardConfig.RotationSpeed : ConstGameplay.Obstacle.Hazard.ROTATION_SPEED;
+            giHazard.Initialize(rowData.Direction, rowData.Speed, rowData.RowWorldY, despawnX, rotationSpeed);
         }
 
         private void CleanupPassedRows(int cutoffRowIndex)

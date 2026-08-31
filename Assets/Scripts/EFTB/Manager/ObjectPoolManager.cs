@@ -43,9 +43,9 @@ namespace JumboJumps.EFTB.Manager
             if (pools.TryGetValue(key, out var queue) && queue.Count > 0)
             {
                 poolableObject = queue.Dequeue();
+                poolableObject.transform.SetParent(parent);
                 poolableObject.transform.position = position;
                 poolableObject.transform.rotation = rotation;
-                poolableObject.transform.SetParent(parent);
             }
             else
             {
@@ -74,16 +74,18 @@ namespace JumboJumps.EFTB.Manager
                 return;
             }
 
-            poolableObject.OnRecycle();
-            poolableObject.transform.SetParent(poolContainer);
-
             if (!pools.TryGetValue(poolableObject.PoolKey, out var queue))
             {
                 queue = new Queue<PoolableObject>();
                 pools.Add(poolableObject.PoolKey, queue);
             }
 
-            queue.Enqueue(poolableObject);
+            if (!queue.Contains(poolableObject))
+            {
+                poolableObject.OnRecycle();
+                poolableObject.transform.SetParent(poolContainer);
+                queue.Enqueue(poolableObject);
+            }
         }
     }
 }

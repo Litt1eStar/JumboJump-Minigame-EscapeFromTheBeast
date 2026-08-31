@@ -11,22 +11,26 @@ namespace JumboJumps.EFTB.Manager
         public event Action<ScoreData> EventScoreChanged;
 
         private CollectibleManager collectibleManager;
-        private PlayerManager playerManager;
+        private Transform playerTransform;
+
+        private float initialPlayerY;
 
         public int MaxCellsClimbed { get; private set; }
-        public int TreatsCollected { get; private set; }
+        public int TreatsCollected => (collectibleManager != null && ConstGameplay.Score.TREAT_POINT_VALUE > 0) 
+            ? (collectibleManager.TotalCollectibleValue / ConstGameplay.Score.TREAT_POINT_VALUE) 
+            : 0;
         public int DistanceScore => MaxCellsClimbed * ConstGameplay.Score.DISTANCE_POINT_PER_CELL;
-        public int TreatScore => TreatsCollected * ConstGameplay.Score.TREAT_POINT_VALUE;
+        public int TreatScore => collectibleManager != null ? collectibleManager.TotalCollectibleValue : 0;
         public int TotalScore => DistanceScore + TreatScore;
 
         public ScoreData CurrentScoreData => new ScoreData(TotalScore, DistanceScore, TreatScore, MaxCellsClimbed, TreatsCollected);
 
-        public void Initialize(PlayerManager playerManager)
+        public void Initialize(Transform playerTransform)
         {
-            this.playerManager = playerManager;
-            if (this.playerManager != null)
+            if (playerTransform != null)
             {
-                this.playerManager.EventPlayerMoved += OnPlayerMoved;
+                this.playerTransform = playerTransform;
+                initialPlayerY = this.playerTransform.position.y;
             }
 
             collectibleManager = GameContext.Instance.Get<CollectibleManager>();
@@ -40,27 +44,22 @@ namespace JumboJumps.EFTB.Manager
 
         public void Dispose()
         {
-            if (playerManager != null)
-            {
-                playerManager.EventPlayerMoved -= OnPlayerMoved;
-                playerManager = null;
-            }
-
             if (collectibleManager != null)
             {
                 collectibleManager.EventTotalCollectibleValueChanged -= OnTreatsCollectedChanged;
                 collectibleManager = null;
             }
 
+            playerTransform = null;
             GameContext.Instance.Remove(this);
         }
 
-        private void OnPlayerMoved(Vector3 position)
+        public void UpdateLogic(float deltaTime)
         {
-            if (playerManager == null) return;
+            if (playerTransform == null) return;
 
-            float deltaY = position.y - playerManager.InitialPlayerY;
-            float stepDistance = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
+            float deltaY = playerTransform.position.y - initialPlayerY;
+            float stepDistance = ConstGameplay.Player.STEP_DISTANCE_Y;
             int currentCells = Mathf.Max(0, Mathf.FloorToInt((deltaY + (stepDistance * 0.5f)) / stepDistance));
 
             if (currentCells > MaxCellsClimbed)
@@ -73,13 +72,15 @@ namespace JumboJumps.EFTB.Manager
         public void ResetScore()
         {
             MaxCellsClimbed = 0;
-            TreatsCollected = 0;
+            if (playerTransform != null)
+            {
+                initialPlayerY = playerTransform.position.y;
+            }
             EventScoreChanged?.Invoke(CurrentScoreData);
         }
 
         private void OnTreatsCollectedChanged(int totalValue)
         {
-            TreatsCollected = totalValue;
             EventScoreChanged?.Invoke(CurrentScoreData);
         }
     }

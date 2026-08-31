@@ -90,6 +90,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Manager.GameDataManager
   prefabRegistry: {fileID: 11400000, guid: 66904e17ae4e4f244be653186c8dd7a5, type: 2}
   localGameData: {fileID: 4900000, guid: 61743feeda0e0da48b2cc1a88ce28a22, type: 3}
+--- !u!1 &3462236006719969164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4631239083429493868}
+  - component: {fileID: 7443590004785511161}
+  m_Layer: 0
+  m_Name: MiniHubBridge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4631239083429493868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3462236006719969164}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8684004947479730063}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7443590004785511161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3462236006719969164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebb36904ae7d5884197b65e1177986fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Plugins.MiniHubBridge
+  editorToken: 
+  editorApiBase: 
 --- !u!1 &3704901676317951813
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +168,7 @@ Transform:
   m_Children:
   - {fileID: 6503111530967871819}
   - {fileID: 2891850162676800555}
+  - {fileID: 4631239083429493868}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &786633819455509821
@@ -138,3 +185,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.GameInitializer
   coroutineHelper: {fileID: 3935307853082323436}
   gameDataManager: {fileID: 8680373453304759209}
+  miniHubBridge: {fileID: 7443590004785511161}

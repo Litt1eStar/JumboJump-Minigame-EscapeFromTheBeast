@@ -1,40 +1,68 @@
-using JumboJumps.EFTB.GameData;
-using JumboJumps.EFTB.Manager;
-using JumboJumps.EFTB.Utilities;
+using System;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
 {
     public class GICollectible : MonoBehaviour
     {
-        [SerializeField]
-        private CollectibleSO collectibleData;
+        public event Action<GICollectible> EventCollected;
+        public event Action<GICollectible> EventRecycleRequested;
+
+        public int PointValue { get; private set; } = 100;
+        public int LaneIndex { get; private set; }
+        public float WorldY { get; private set; }
 
         private bool isCollected = false;
 
-        public void Initialize()
+        public void Initialize(int pointValue = 100, int laneIndex = 0, float worldY = 0f)
         {
+            PointValue = pointValue;
+            LaneIndex = laneIndex;
+            WorldY = worldY;
+            isCollected = false;
 
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null)
+            {
+                col.isTrigger = true;
+                col.enabled = true;
+            }
         }
 
-        public void Dispose()
+        public void ResetState()
         {
+            isCollected = false;
+            EventCollected = null;
+            EventRecycleRequested = null;
 
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null)
+            {
+                col.enabled = false;
+            }
+        }
+
+        public void Collect()
+        {
+            if (isCollected) return;
+
+            isCollected = true;
+            EventCollected?.Invoke(this);
+
+            GISegment parentSegment = GetComponentInParent<GISegment>();
+            if (parentSegment != null)
+            {
+                parentSegment.DeregisterSpawnedObject(gameObject);
+            }
+
+            EventRecycleRequested?.Invoke(this);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Player") && !isCollected)
-            {
-                GameContext.Instance.Get<CollectibleManager>().AddValue(collectibleData.Value);
-                isCollected = true;
+            if (collision.GetComponent<GIPlayer>() == null) return;
 
-                //Play Collection Effect
-                //Play Collection Sound
-                //Play Collection Animation
-                //Destroy gameobject after animation is done
-                Destroy(gameObject);
-            }
+            Collect();
         }
     }
 }

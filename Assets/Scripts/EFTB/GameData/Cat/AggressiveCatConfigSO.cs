@@ -36,6 +36,30 @@ namespace JumboJumps.EFTB.GameData.Cat
         [SerializeField]
         private float smashThresholdY = 1.5f;
 
+        [SerializeField]
+        private AnimationCurve smashMovementCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+        [SerializeField]
+        private AnimationCurve smashRotationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+        [SerializeField]
+        private float smashMoveInPercentage = 0.4f;
+
+        [SerializeField]
+        private float smashWaitPercentage = 0.7f;
+
+        [SerializeField]
+        private float smashCollisionProgressThreshold = 0.8f;
+
+        [SerializeField]
+        private float pounceWarningDuration = 1.5f;
+
+        [SerializeField]
+        private float pounceWarningShakeSpeed = 25f;
+
+        [SerializeField]
+        private float pounceWarningMaxZRotation = 12f;
+
         public float TimeToAppear => timeToAppear;
         public float TimeToAwake => timeToAwake;
         public float TimeToAlert => timeToAlert;
@@ -45,6 +69,14 @@ namespace JumboJumps.EFTB.GameData.Cat
         public float TimeToSmash => timeToSmash;
         public float SmashStayDuration => smashStayDuration;
         public float SmashThresholdY => smashThresholdY;
+        public AnimationCurve SmashMovementCurve => smashMovementCurve;
+        public AnimationCurve SmashRotationCurve => smashRotationCurve;
+        public float SmashMoveInPercentage => smashMoveInPercentage;
+        public float SmashWaitPercentage => smashWaitPercentage;
+        public float SmashCollisionProgressThreshold => smashCollisionProgressThreshold;
+        public float PounceWarningDuration => pounceWarningDuration;
+        public float PounceWarningShakeSpeed => pounceWarningShakeSpeed;
+        public float PounceWarningMaxZRotation => pounceWarningMaxZRotation;
 
         public override ICatStateController BuildStateController(GICat giCat, Transform transform, UICatStateLabel label)
         {

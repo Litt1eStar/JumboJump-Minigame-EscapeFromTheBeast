@@ -16,13 +16,20 @@ namespace JumboJumps.EFTB.GI
         public float WorldY { get; private set; }
         private LevelGeneratorManager levelGeneratorManager;
 
+        public static float SnapToCellCenter(float rawY, float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT)
+        {
+            int rowIdx = Mathf.RoundToInt((rawY - 1.0f) / cellHeight);
+            return (rowIdx * cellHeight) + 1.0f;
+        }
+
         public void Initialize(int laneIndex, float worldY)
         {
             levelGeneratorManager = GameContext.Instance?.Get<LevelGeneratorManager>();
 
-            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
             LaneIndex = laneIndex;
-            WorldY = Mathf.RoundToInt(worldY / cellHeight) * cellHeight;
+            WorldY = SnapToCellCenter(worldY);
+            transform.position = new Vector3(transform.position.x, WorldY, transform.position.z);
+
             RegisterSelf();
         }
 
@@ -39,8 +46,13 @@ namespace JumboJumps.EFTB.GI
 
         public void UpdateWorldPositionAndLane()
         {
-            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
-            WorldY = Mathf.RoundToInt(transform.position.y / cellHeight) * cellHeight;
+            if (levelGeneratorManager == null)
+            {
+                levelGeneratorManager = GameContext.Instance?.Get<LevelGeneratorManager>();
+            }
+
+            WorldY = SnapToCellCenter(transform.position.y);
+            transform.position = new Vector3(transform.position.x, WorldY, transform.position.z);
             LaneIndex = GetClosestLaneIndex(transform.position.x);
         }
 
@@ -79,9 +91,9 @@ namespace JumboJumps.EFTB.GI
             if (!laneMatches) return false;
 
             float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
-            int furnitureRow = Mathf.RoundToInt(WorldY / cellHeight);
-            int transformRow = Mathf.RoundToInt(transform.position.y / cellHeight);
-            int targetRow = Mathf.RoundToInt(targetWorldY / cellHeight);
+            int furnitureRow = Mathf.FloorToInt(WorldY / cellHeight);
+            int transformRow = Mathf.FloorToInt(transform.position.y / cellHeight);
+            int targetRow = Mathf.FloorToInt(targetWorldY / cellHeight);
 
             if (targetRow == furnitureRow || targetRow == transformRow)
             {

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
@@ -19,8 +19,11 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             Time.timeScale = 0f;
 
-            stateController.GameplayVisualizer.EventResumeUIButtonClicked += OnClickResumeButton;
-            stateController.GameplayVisualizer.EventMainMenuUIButtonClicked += OnClickMainMenuButton;
+            if (stateController?.GameplayVisualizer != null)
+            {
+                stateController.GameplayVisualizer.EventResumeUIButtonClicked += OnClickResumeButton;
+                stateController.GameplayVisualizer.RefreshPauseMenuSoundVisuals();
+            }
         }
 
         public void OnClickResumeButton()
@@ -29,15 +32,14 @@ namespace JumboJumps.EFTB.State.Gameplay
             stateController.ChangeState(typeof(InGameState));
         }
 
-        public void OnClickMainMenuButton()
-        {
-            Time.timeScale = 1f;
-
-            gameplayController.ReturnToMainMenu();
-        }
         public override void OnExitState()
         {
             Time.timeScale = 1f;
+
+            if (stateController?.GameplayVisualizer != null)
+            {
+                stateController.GameplayVisualizer.EventResumeUIButtonClicked -= OnClickResumeButton;
+            }
 
             base.OnExitState();
         }

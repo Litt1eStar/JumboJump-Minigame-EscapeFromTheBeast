@@ -1,55 +1,66 @@
-using System;
+using JumboJumps.EFTB.Constant.Gameplay;
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Model.Obstacle;
+using JumboJumps.EFTB.State.Gameplay;
+using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.GI
 {
     public class GIHazardObstacle : MonoBehaviour
     {
-        public event Action<GIHazardObstacle> EventPlayerHit;
-        public event Action<GIHazardObstacle> EventDespawnRequested;
+        private GameplayController gameplayController => GameContext.Instance?.Get<GameplayController>();
+        private GameplayStateManager gameplayStateManager => GameContext.Instance?.Get<GameplayStateManager>();
+        private ObjectPoolManager poolManager => GameContext.Instance?.Get<ObjectPoolManager>();
 
         private Collider2D hazardCollider;
+        private SpriteRenderer spriteRenderer;
 
         private HazardDirectionEnum direction;
         private float speed;
         private float despawnX;
+        private float rotationSpeed;
         private bool hasTriggered;
-        private bool isMoving;
 
         public float RowWorldY { get; private set; }
 
-        public void Initialize(HazardDirectionEnum direction, float speed, float rowWorldY, float despawnX)
+        public void Initialize(HazardDirectionEnum direction, float speed, float rowWorldY, float despawnX, float rotationSpeed = ConstGameplay.Obstacle.Hazard.ROTATION_SPEED)
         {
             hazardCollider = GetComponent<Collider2D>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
             this.direction = direction;
             this.speed = speed;
             this.RowWorldY = rowWorldY;
             this.despawnX = despawnX;
+            this.rotationSpeed = rotationSpeed;
             this.hasTriggered = false;
-            this.isMoving = true;
 
             float yRotation = (direction == HazardDirectionEnum.LeftToRight) ? 0f : 180f;
             transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
 
-            if (hazardCollider != null)
+            if (spriteRenderer != null)
             {
-                hazardCollider.enabled = true;
+                spriteRenderer.transform.localRotation = Quaternion.identity;
             }
-        }
-
-        public void SetMoving(bool moving)
-        {
-            isMoving = moving;
         }
 
         private void Update()
         {
-            if (!isMoving) return;
+            if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
+            {
+                return;
+            }
 
             float moveStep = (int)direction * speed * Time.deltaTime;
             transform.position += new Vector3(moveStep, 0f, 0f);
+
+            if (spriteRenderer != null)
+            {
+                float degPerSec = rotationSpeed * ConstGameplay.Obstacle.Hazard.ROTATION_SPEED_MULTIPLIER;
+                float zRotationStep = -(int)direction * degPerSec * Time.deltaTime;
+                spriteRenderer.transform.Rotate(0f, 0f, zRotationStep, Space.World);
+            }
 
             bool passedDespawn = (direction == HazardDirectionEnum.LeftToRight)
                 ? transform.position.x >= despawnX
@@ -57,8 +68,19 @@ namespace JumboJumps.EFTB.GI
 
             if (passedDespawn)
             {
-                EventDespawnRequested?.Invoke(this);
+                RecycleSelf();
             }
+        }
+
+        private void RecycleSelf()
+        {
+            if (poolManager == null)
+            {
+                DebugLogHelper.LogError("[GIHazardObstacle] : PoolManager is null, cannot recycle object.");
+                return;
+            }
+            
+            poolManager.Recycle(gameObject);
         }
 
         private void HandlePlayerCollision(GameObject collidedObj)
@@ -71,7 +93,11 @@ namespace JumboJumps.EFTB.GI
                 if (player != null)
                 {
                     hasTriggered = true;
-                    EventPlayerHit?.Invoke(this);
+
+                    if (gameplayController != null)
+                    {
+                        gameplayController.InvokeFinishLevel(GameStatus.Lose);
+                    }
                 }
             }
         }

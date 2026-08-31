@@ -1,5 +1,6 @@
-using JumboJumps.EFTB.GameData;
 using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Plugins;
+using JumboJumps.EFTB.UI;
 using JumboJumps.EFTB.Utilities;
 using UnityEngine;
 
@@ -13,7 +14,15 @@ namespace JumboJumps.EFTB
         [SerializeField]
         private GameDataManager gameDataManager;
 
+        [SerializeField]
+        private MiniHubBridge miniHubBridge;
+
+        [SerializeField]
+        private UIInitializer uiInitializer;
+
         private GameManager gameManager;
+        private LocalizationManager localizationManager;
+        private MiniHubManager miniHubManager;
 
         private void Awake()
         {
@@ -25,7 +34,6 @@ namespace JumboJumps.EFTB
         {
             StartGame();
         }
-
 
         private void OnDestroy()
         {
@@ -39,6 +47,13 @@ namespace JumboJumps.EFTB
 
             coroutineHelper.Initialize();
             gameDataManager.Initialize();
+            uiInitializer?.Initialize();
+
+            localizationManager = new LocalizationManager();
+            localizationManager.Initialize(coroutineHelper);
+
+            miniHubManager = new MiniHubManager();
+            miniHubManager.Initialize(miniHubBridge);
         }
 
         private void Update()
@@ -48,6 +63,24 @@ namespace JumboJumps.EFTB
 
         private void Dispose()
         {
+            if (uiInitializer != null)
+               {
+                uiInitializer.Dispose();
+                uiInitializer = null;
+            }
+
+            if (miniHubManager != null)
+            {
+                miniHubManager.Dispose();
+                miniHubManager = null;
+            }
+
+            if (localizationManager != null)
+            {
+                localizationManager.Dispose();
+                localizationManager = null;
+            }
+
             if (coroutineHelper != null)
             {
                 coroutineHelper.Dispose();
@@ -65,6 +98,32 @@ namespace JumboJumps.EFTB
         private void StartGame()
         {
             gameManager?.StartGame();
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            SetAppBackgroundAudioSuspended(pauseStatus);
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            SetAppBackgroundAudioSuspended(!hasFocus);
+        }
+
+        public void OnWebAppSuspended()
+        {
+            SetAppBackgroundAudioSuspended(true);
+        }
+
+        public void OnWebAppResumed()
+        {
+            SetAppBackgroundAudioSuspended(false);
+        }
+
+        private void SetAppBackgroundAudioSuspended(bool isSuspended)
+        {
+            var soundManager = GameContext.Instance?.Get<SoundManager>();
+            soundManager?.SetAppBackgroundAudioSuspended(isSuspended);
         }
     }
 }

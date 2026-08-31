@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390056d9d4147d249b0c306a9f827b56, type: 3}
+  m_Name: UIConfigSO
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.Config.UIConfigSO
+  logoIdleScaleSpeed: 3
+  logoIdleScaleMin: 0.95
+  logoIdleScaleMax: 1.05
+  fadeDuration: 0.3
+  readyGoHoldDuration: 0.15
+  readyGoScaleStart: 0.5
+  readyGoScaleTarget: 0.6
+  readySwingMaxZAngle: 45
+  readySwingSpeed: 10
+  goScaleOutTarget: 1.5

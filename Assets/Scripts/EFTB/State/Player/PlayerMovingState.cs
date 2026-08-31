@@ -23,6 +23,7 @@ namespace JumboJumps.EFTB.State.Player
         {
             base.OnEnterState();
 
+            playerVisualizer?.SetMovingAnimation(true);
             coroutineHelper = GameContext.Instance.Get<CoroutineHelper>();
             stepCoroutine = coroutineHelper.Restart(stepCoroutine, DiscreteStepForwardRoutine());
         }
@@ -30,7 +31,7 @@ namespace JumboJumps.EFTB.State.Player
         private IEnumerator DiscreteStepForwardRoutine()
         {
             Vector3 startPos = playerVisualizer.PlayerPosition;
-            Vector3 targetPos = startPos + new Vector3(0f, ConstGameplay.Obstacle.Furniture.CELL_HEIGHT, 0f);
+            Vector3 targetPos = startPos + new Vector3(0f, ConstGameplay.Player.STEP_DISTANCE_Y, 0f);
             float elapsed = 0f;
             float duration = ConstGameplay.Player.STEP_DURATION;
 
@@ -40,19 +41,19 @@ namespace JumboJumps.EFTB.State.Player
                 float t = Mathf.Clamp01(elapsed / duration);
                 Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
                 playerVisualizer.SetPosition(currentPos);
-                playerStateController.InvokePlayerMoved(currentPos);
                 yield return null;
             }
 
-            float cellHeight = ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
-            targetPos.y = Mathf.RoundToInt(targetPos.y / cellHeight) * cellHeight;
             playerVisualizer.SetPosition(targetPos);
-            playerStateController.InvokePlayerMoved(targetPos);
+            playerStateController.ResetIdleTimer();
+
             StateController.ChangeState(typeof(PlayerIdleState));
         }
 
         public override void OnExitState()
         {
+            playerVisualizer?.SetMovingAnimation(false);
+
             if (coroutineHelper != null)
             {
                 coroutineHelper.Stop(stepCoroutine);

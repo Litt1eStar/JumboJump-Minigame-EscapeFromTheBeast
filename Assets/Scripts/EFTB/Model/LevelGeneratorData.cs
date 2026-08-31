@@ -8,10 +8,10 @@ namespace JumboJumps.EFTB.Model
         public class LevelGeneratorConfigData
         {
             public List<LevelSegmentData> SegmentTemplate { get; private set; }
-            public float LANE_X_POSITIONS { get; private set; }
-            public int MAX_SEGMENT_AMOUNT { get; private set; }
-            public float SEGMENT_HEIGHT { get; private set; }
-            public float SEGMENT_RECYCLE_TRIGGER_OFFSET { get; private set; }
+            public float LaneXPositions { get; private set; }
+            public int MaxSegmentAmount { get; private set; }
+            public float SegmentHeight { get; private set; }
+            public float SegmentRecycleTriggerOffset { get; private set; }
             public float MediumDifficultyDistance { get; private set; }
             public float HardDifficultyDistance { get; private set; }
 
@@ -24,10 +24,10 @@ namespace JumboJumps.EFTB.Model
                                             float hardDifficultyDistance)
             {
                 SegmentTemplate = segmentTemplate;
-                LANE_X_POSITIONS = laneXPositions;
-                MAX_SEGMENT_AMOUNT = maxSegmentAmount;
-                SEGMENT_HEIGHT = segmentHeight;
-                SEGMENT_RECYCLE_TRIGGER_OFFSET = segmentRecycleTriggerOffset;
+                LaneXPositions = laneXPositions;
+                MaxSegmentAmount = maxSegmentAmount;
+                SegmentHeight = segmentHeight;
+                SegmentRecycleTriggerOffset = segmentRecycleTriggerOffset;
                 MediumDifficultyDistance = mediumDifficultyDistance;
                 HardDifficultyDistance = hardDifficultyDistance;
             }
@@ -37,7 +37,7 @@ namespace JumboJumps.EFTB.Model
         {
             public int Id { get; private set; }
             public string SegmentPrefabName { get; private set; }
-            public float SEGMENT_HEIGHT { get; private set; }
+            public float SegmentHeight { get; private set; }
             public SegmentDifficultyEnum Difficulty { get; private set; }
             public List<LaneObjectData> PrePlacedObject { get; private set; }
             public List<LaneEventData> LaneEventData { get; private set; }
@@ -51,7 +51,7 @@ namespace JumboJumps.EFTB.Model
             {
                 Id = id;
                 SegmentPrefabName = segmentPrefabName;
-                SEGMENT_HEIGHT = segmentHeight;
+                SegmentHeight = segmentHeight;
                 Difficulty = difficulty;
                 PrePlacedObject = prePlacedObject ?? new List<LaneObjectData>();
                 LaneEventData = laneEventData ?? new List<LaneEventData>();
