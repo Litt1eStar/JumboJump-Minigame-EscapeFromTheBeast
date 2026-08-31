@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.State.Gameplay;
 using JumboJumps.EFTB.Utilities;
 
@@ -17,6 +18,8 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
         {
             base.OnEnterState();
             gameplayStateManager = GameContext.Instance.Get<GameplayStateManager>();
+
+            EFTBSound.PlayCatMeowSad();
 
             gameplayStateManager?.GameplayController?.InvokeFinishLevel(GameStatus.Lose);
         }

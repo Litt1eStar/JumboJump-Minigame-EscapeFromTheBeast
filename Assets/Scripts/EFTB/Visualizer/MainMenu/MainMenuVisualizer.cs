@@ -1,4 +1,5 @@
 using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.UI.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using System;
@@ -10,7 +11,6 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
     public class MainMenuVisualizer
     {
         public event Action EventPlayUIButtonClicked;
-        public event Action EventExitUIButtonClicked;
 
         private UIMainMenuCanvas uiMainMenuCanvas;
         
@@ -33,17 +33,7 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
         public void Dispose() 
         {
             UnSubscribe();
-
-            if (coroutineHelper != null && fadeInWorldObjectsCoroutine != null)
-            {
-                coroutineHelper.Stop(fadeInWorldObjectsCoroutine);
-                fadeInWorldObjectsCoroutine = null;
-            }
-
-            uiMainMenuCanvas?.Hide();
-            uiMainMenuCanvas?.Dispose();
             uiMainMenuCanvas = null;
-            uiMainMenuPanel = null;
         }
 
         public void Subscribe()
@@ -51,7 +41,6 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
             if (uiMainMenuPanel != null)
             {
                 uiMainMenuPanel.EventPlayUIButtonClicked += OnPlayButtonClicked;
-                uiMainMenuPanel.EventExitUIButtonClicked += OnExitButtonClicked;
             }
         }
 
@@ -60,7 +49,6 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
             if (uiMainMenuPanel != null)
             {
                 uiMainMenuPanel.EventPlayUIButtonClicked -= OnPlayButtonClicked;
-                uiMainMenuPanel.EventExitUIButtonClicked -= OnExitButtonClicked;
             }
         }
 
@@ -168,12 +156,8 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
 
         public void OnPlayButtonClicked()
         {
+            EFTBSound.PlayUIClick();
             EventPlayUIButtonClicked?.Invoke();
-        }
-
-        public void OnExitButtonClicked()
-        {
-            EventExitUIButtonClicked?.Invoke();
         }
     }
 }

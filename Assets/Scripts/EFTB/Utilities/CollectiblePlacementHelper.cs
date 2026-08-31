@@ -39,17 +39,16 @@ namespace JumboJumps.EFTB.Utilities
 
                 if (globalRowIndex <= config.SafeZoneCells) continue;
 
-                bool isHazardRow = isHazardRowFunc != null && isHazardRowFunc(worldY);
-
-                float effectiveSpawnRatio = isHazardRow
-                    ? Mathf.Min(1.0f, config.SpawnRowRatio * config.HazardLaneWeightMultiplier)
-                    : config.SpawnRowRatio;
-
-                if (UnityEngine.Random.value >= effectiveSpawnRatio) continue;
+                // 15% spawn ratio check per row
+                if (UnityEngine.Random.value >= config.SpawnRowRatio) continue;
 
                 float rowYOffset = worldY - segmentStartY;
+                bool isHazardRow = isHazardRowFunc != null && isHazardRowFunc(worldY);
 
                 validLanesBuffer.Clear();
+                laneWeightsBuffer.Clear();
+
+                float totalWeight = 0f;
                 for (int l = 0; l < laneCount; l++)
                 {
                     // Rule: Never sit on a furniture cell
@@ -58,12 +57,30 @@ namespace JumboJumps.EFTB.Utilities
                         continue;
                     }
 
+                    // Rule: 3x weight multiplier for open lanes on hazard rows (favor risk)
+                    float weight = isHazardRow ? config.HazardLaneWeightMultiplier : 1.0f;
                     validLanesBuffer.Add(l);
+                    laneWeightsBuffer.Add(weight);
+                    totalWeight += weight;
                 }
 
-                if (validLanesBuffer.Count == 0) continue;
+                if (validLanesBuffer.Count == 0 || totalWeight <= 0f) continue;
 
-                int selectedLane = validLanesBuffer[UnityEngine.Random.Range(0, validLanesBuffer.Count)];
+                // Weighted random lane selection
+                float randomValue = UnityEngine.Random.value * totalWeight;
+                float currentSum = 0f;
+                int selectedLane = validLanesBuffer[0];
+
+                for (int i = 0; i < validLanesBuffer.Count; i++)
+                {
+                    currentSum += laneWeightsBuffer[i];
+                    if (randomValue <= currentSum)
+                    {
+                        selectedLane = validLanesBuffer[i];
+                        break;
+                    }
+                }
+
                 generatedCollectibles.Add(new CollectiblePlacementData(selectedLane, rowYOffset));
             }
 

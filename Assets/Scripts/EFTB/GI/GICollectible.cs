@@ -24,7 +24,21 @@ namespace JumboJumps.EFTB.GI
             Collider2D col = GetComponent<Collider2D>();
             if (col != null)
             {
+                col.isTrigger = true;
                 col.enabled = true;
+            }
+        }
+
+        public void ResetState()
+        {
+            isCollected = false;
+            EventCollected = null;
+            EventRecycleRequested = null;
+
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null)
+            {
+                col.enabled = false;
             }
         }
 
@@ -46,12 +60,9 @@ namespace JumboJumps.EFTB.GI
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (isCollected) return;
+            if (collision.GetComponent<GIPlayer>() == null) return;
 
-            if (collision.GetComponent<GIPlayer>() != null)
-            {
-                Collect();
-            }
+            Collect();
         }
     }
 }

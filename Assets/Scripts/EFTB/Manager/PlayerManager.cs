@@ -2,7 +2,6 @@ using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.State.Player;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
-using System;
 using UnityEngine;
 
 namespace JumboJumps.EFTB.Manager
@@ -10,53 +9,30 @@ namespace JumboJumps.EFTB.Manager
     public class PlayerManager
     {
         public Transform PlayerTransform { get; private set;}
-        public float InitialPlayerY { get; private set; }
-
         public PlayerStateController StateController => stateController;
-        public event Action EventIdleLimitExceeded;
-        public event Action<Vector3> EventPlayerMoved;
+        public event System.Action EventIdleLimitExceeded;
         private PlayerStateController stateController;
         public PlayerVisualizer Visualizer => stateController.Visualizer;
-
         public void Initialize()
         {
             Debug.Log($"{this.GetType().Name} was Initialize");
             stateController = new PlayerStateController();
             stateController.Initialize();
             stateController.EventIdleLimitExceeded += OnIdleLimitExceeded;
-            stateController.EventPlayerMoved += OnPlayerMoved;
             stateController.StartStateController();
 
-            GIPlayer giPlayer = SceneObjectContext.Instance?.Get<GIPlayer>();
-            if (giPlayer != null)
-            {
-                PlayerTransform = giPlayer.transform;
-                InitialPlayerY = PlayerTransform.position.y;
-            }
-            else
-            {
-                DebugLogHelper.LogError($"[{GetType().Name}] GIPlayer not found in SceneObjectContext");
-            }
-
+            PlayerTransform = SceneObjectContext.Instance.Get<GIPlayer>().transform;
             SetPlayerToMiddleLane();
             
-            if (stateController.LaneXPositions != null && stateController.CurrentLaneIndex < stateController.LaneXPositions.Length)
-            {
-                float startX = stateController.LaneXPositions[stateController.CurrentLaneIndex];
-                Visualizer?.SetXPosition(startX);
-            }
+            float startX = stateController.LaneXPositions[stateController.CurrentLaneIndex];
+            Visualizer.SetXPosition(startX);
 
             GameContext.Instance.Add(this);
         }
 
-        private void OnPlayerMoved(Vector3 position)
-        {
-            EventPlayerMoved?.Invoke(position);
-        }
-
         private void SetPlayerToMiddleLane()
         {
-            Visualizer?.SetPlayerOnMiddleLane();
+            Visualizer.SetPlayerOnMiddleLane();
         }
 
         public void ResetPlayer()
@@ -66,12 +42,12 @@ namespace JumboJumps.EFTB.Manager
                 stateController.CurrentLaneIndex = JumboJumps.EFTB.Constant.Gameplay.ConstGameplay.LevelGenerator.INITIAL_LANE_INDEX;
                 stateController.IsStepUpRequested = false;
                 stateController.ResetIdleTimer();
-                stateController.ResetStateController(typeof(PlayerIdleState));
+                stateController.StartStateController(typeof(PlayerIdleState));
             }
 
             SetPlayerToMiddleLane();
 
-            if (stateController != null && stateController.LaneXPositions != null && stateController.CurrentLaneIndex < stateController.LaneXPositions.Length)
+            if (stateController != null)
             {
                 float startX = stateController.LaneXPositions[stateController.CurrentLaneIndex];
                 Visualizer?.SetXPosition(startX);
@@ -83,7 +59,6 @@ namespace JumboJumps.EFTB.Manager
             if (stateController != null)
             {
                 stateController.EventIdleLimitExceeded -= OnIdleLimitExceeded;
-                stateController.EventPlayerMoved -= OnPlayerMoved;
                 stateController.Dispose();
                 stateController = null;
             }

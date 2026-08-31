@@ -82,13 +82,6 @@ namespace JumboJumps.EFTB.Manager
             activeHazardRows.Clear();
         }
 
-        public bool IsHazardRow(float worldY)
-        {
-            float cellHeight = HazardConfig != null ? HazardConfig.CellHeight : ConstGameplay.Obstacle.Furniture.CELL_HEIGHT;
-            int rowIdx = Mathf.RoundToInt(worldY / cellHeight);
-            return activeHazardRows.ContainsKey(rowIdx);
-        }
-
         public void UpdateLogic(float deltaTime)
         {
             if (gameplayStateManager == null || gameplayStateManager.StateController == null || !(gameplayStateManager.StateController.CurrentState is InGameState))
@@ -149,7 +142,16 @@ namespace JumboJumps.EFTB.Manager
         private bool IsRowBlockedByFurniture(float rowWorldY)
         {
             if (levelGeneratorManager == null) return false;
-            return levelGeneratorManager.IsRowBlockedByFurniture(rowWorldY);
+
+            int laneCount = levelGeneratorManager.LaneXPositions?.Length ?? 3;
+            for (int lane = 0; lane < laneCount; lane++)
+            {
+                if (levelGeneratorManager.IsCellBlockedByFurniture(lane, rowWorldY))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void SpawnHazardOnRow(HazardRowData rowData)

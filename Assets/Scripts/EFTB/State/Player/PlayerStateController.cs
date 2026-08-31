@@ -1,19 +1,17 @@
 using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.Model;
+using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Utilities;
 using JumboJumps.EFTB.Visualizer;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace JumboJumps.EFTB.State.Player
 {
     public class PlayerStateController : BaseStateController
     {
         protected override Type DefaultTypeState => typeof(PlayerIdleState);
-        
-        public event Action<Vector3> EventPlayerMoved;
         public PlayerVisualizer Visualizer { get; private set; }
         public Input2DManager Input2DManager { get; private set; }
         public int CurrentLaneIndex { get; set; }
@@ -52,11 +50,6 @@ namespace JumboJumps.EFTB.State.Player
             EventIdleLimitExceeded?.Invoke();
         }
 
-        public void InvokePlayerMoved(Vector3 position)
-        {
-            EventPlayerMoved?.Invoke(position);
-        }
-
         public PlayerStateController()
         {
             Visualizer = new PlayerVisualizer();
@@ -83,21 +76,6 @@ namespace JumboJumps.EFTB.State.Player
         {
             var levelGen = GameContext.Instance.Get<LevelGeneratorManager>();
             return levelGen != null && levelGen.IsCellBlockedByFurniture(targetLaneIndex, targetWorldY);
-        }
-
-        public override void StartStateController(Type initialStateType = null)
-        {
-            if (CurrentState?.IsStateActive == true)
-            {
-                CurrentState.OnExitState();
-            }
-
-            base.StartStateController(initialStateType);
-        }
-
-        public void ResetStateController(Type targetStateType = null)
-        {
-            StartStateController(targetStateType);
         }
 
         public override void UpdateLogic(float deltaTime)

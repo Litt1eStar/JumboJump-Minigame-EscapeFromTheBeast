@@ -1,6 +1,7 @@
 using JumboJumps.EFTB.Config;
 using JumboJumps.EFTB.Constant.Gameplay;
 using JumboJumps.EFTB.GI;
+using JumboJumps.EFTB.Sound;
 using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
@@ -12,15 +13,12 @@ namespace JumboJumps.EFTB.UI.MainMenu
     public class UIMainMenuPanel : UIBasePanel
     {
         public event Action EventPlayUIButtonClicked;
-        public event Action EventExitUIButtonClicked;
 
         [Header("Main Menu UI References")]
         [SerializeField] private RectTransform logoTransform;
         [SerializeField] private CanvasGroup logoCanvasGroup;
         [SerializeField] private Button playButton;
         [SerializeField] private CanvasGroup playButtonCanvasGroup;
-        [SerializeField] private Button exitButton;
-        [SerializeField] private CanvasGroup exitButtonCanvasGroup;
 
         [Header("Ready / Go Sequence References")]
         [SerializeField] private RectTransform readyTransform;
@@ -62,20 +60,6 @@ namespace JumboJumps.EFTB.UI.MainMenu
         public void Subscribe()
         {
             if (playButton != null) playButton.onClick.AddListener(OnPlayButtonClicked);
-            if (exitButton != null) exitButton.onClick.AddListener(OnExitButtonClicked);
-        }
-
-        public void Unsubscribe()
-        {
-            if (playButton != null) playButton.onClick.RemoveListener(OnPlayButtonClicked);
-            if (exitButton != null) exitButton.onClick.RemoveListener(OnExitButtonClicked);
-        }
-
-        public void Dispose()
-        {
-            StopLogoIdleAnimation();
-            StopStartSequence();
-            Unsubscribe();
         }
 
         public override void Show()
@@ -90,7 +74,6 @@ namespace JumboJumps.EFTB.UI.MainMenu
 
             if (logoCanvasGroup != null) logoCanvasGroup.alpha = 1f;
             if (playButtonCanvasGroup != null) playButtonCanvasGroup.alpha = 1f;
-            if (exitButtonCanvasGroup != null) exitButtonCanvasGroup.alpha = 1f;
 
             if (readyCanvasGroup != null)
             {
@@ -170,13 +153,11 @@ namespace JumboJumps.EFTB.UI.MainMenu
                 float t = Mathf.Clamp01(elapsed / fadeDuration);
                 if (logoCanvasGroup != null) logoCanvasGroup.alpha = 1f - t;
                 if (playButtonCanvasGroup != null) playButtonCanvasGroup.alpha = 1f - t;
-                if (exitButtonCanvasGroup != null) exitButtonCanvasGroup.alpha = 1f - t;
                 yield return null;
             }
 
             if (logoCanvasGroup != null) logoCanvasGroup.alpha = 0f;
             if (playButtonCanvasGroup != null) playButtonCanvasGroup.alpha = 0f;
-            if (exitButtonCanvasGroup != null) exitButtonCanvasGroup.alpha = 0f;
 
             // Phase 2: Ready GameObject Impactful Z-Rotation Swing
             yield return AnimateReadySwingAndPop(readyTransform, readyCanvasGroup, fadeDuration, holdDuration);
@@ -205,6 +186,7 @@ namespace JumboJumps.EFTB.UI.MainMenu
 
             Quaternion originalRotation = elementTransform != null ? elementTransform.localRotation : Quaternion.identity;
 
+            EFTBSound.PlayUIReady();
             // Fade In + Pop Scale + Z-Rotation Swing Impact
             while (elapsed < fadeDuration)
             {
@@ -262,6 +244,7 @@ namespace JumboJumps.EFTB.UI.MainMenu
             float targetScale = (UIConfig != null) ? UIConfig.ReadyGoScaleTarget : ConstGameplay.UI.MainMenu.READY_GO_SCALE_TARGET;
             float scaleOutTarget = (UIConfig != null) ? UIConfig.GoScaleOutTarget : ConstGameplay.UI.MainMenu.GO_SCALE_OUT_TARGET;
 
+            EFTBSound.PlayUIGo();
             // Fade In & Scale Up to target
             while (elapsed < fadeDuration)
             {
@@ -310,11 +293,6 @@ namespace JumboJumps.EFTB.UI.MainMenu
         {
             if (playButton != null) playButton.interactable = false;
             EventPlayUIButtonClicked?.Invoke();
-        }
-
-        private void OnExitButtonClicked()
-        {
-            EventExitUIButtonClicked?.Invoke(); 
         }
     }
 }

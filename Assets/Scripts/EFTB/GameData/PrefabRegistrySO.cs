@@ -28,18 +28,23 @@ namespace JumboJumps.EFTB.GameData
             }
         }
 
-        public bool TryGetPrefab(string prefabName, out GameObject gameObject)
+        public GameObject GetPrefab(string prefabName)
         {
-            gameObject = null;
-            if (string.IsNullOrEmpty(prefabName)) return false;
+            if (string.IsNullOrEmpty(prefabName)) return null;
 
-            if (PrefabCache.TryGetValue(prefabName, out gameObject))
+            if (PrefabCache.TryGetValue(prefabName, out GameObject prefab))
             {
-                return true;
+                return prefab;
             }
 
             Debug.LogWarning($"[{GetType().Name}] Prefab not found for name: {prefabName}");
-            return false;
+            return null;
+        }
+
+        public bool HasPrefab(string prefabName)
+        {
+            if (string.IsNullOrEmpty(prefabName)) return false;
+            return PrefabCache.ContainsKey(prefabName);
         }
 
         private void OnValidate()

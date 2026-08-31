@@ -33,10 +33,5 @@ namespace JumboJumps.EFTB.UI.MainMenu
         {
             uiMainMenuPanel?.PlayStartSequence(onComplete);
         }
-
-        public void Dispose()
-        {
-            uiMainMenuPanel?.Dispose();
-        }
     }
 }
