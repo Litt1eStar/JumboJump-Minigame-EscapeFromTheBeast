@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 397605608}
   - component: {fileID: 397605610}
   - component: {fileID: 397605609}
+  - component: {fileID: 397605611}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -459,8 +460,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7, y: 2.4}
-  m_SizeDelta: {x: 87.0349, y: 24.1242}
+  m_AnchoredPosition: {x: 16.274582, y: 2.4}
+  m_SizeDelta: {x: 96.9841, y: 24.1242}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &397605609
 MonoBehaviour:
@@ -486,8 +487,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: deea439992bc6c94c88fd43397c24feb, type: 2}
-  m_sharedMaterial: {fileID: -4869602136251802454, guid: deea439992bc6c94c88fd43397c24feb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 03a0ac37658b43a47bade856870fe3e5, type: 2}
+  m_sharedMaterial: {fileID: 8693133383784386394, guid: 03a0ac37658b43a47bade856870fe3e5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -517,8 +518,8 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 8
   m_fontSizeMax: 20
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -564,6 +565,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397605607}
   m_CullTransparentMesh: 1
+--- !u!114 &397605611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397605607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5b2ea0a5b43954a82c0dac5985d1c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedText
+  targetText: {fileID: 397605609}
+  localizedString:
+    m_TableReference:
+      m_TableCollectionName: GUID:82cfbffa74e43a0428d2f90b6e7359bf
+    m_TableEntryReference:
+      m_KeyId: 707028217856
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &434458892
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,6 +936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Gameplay.FinishLevel.UIFinishLevelPanel
   scoreTextLabel: {fileID: 434458894}
+  scoreHeaderLocalizedText: {fileID: 1222032571}
   mainMenuButton: {fileID: 0}
   replayButton: {fileID: 2139298053}
   panelContentTransform: {fileID: 517951853}
@@ -1490,6 +1517,7 @@ GameObject:
   - component: {fileID: 666478289}
   - component: {fileID: 666478291}
   - component: {fileID: 666478290}
+  - component: {fileID: 666478292}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1513,8 +1541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7, y: 2.4}
-  m_SizeDelta: {x: 87.0349, y: 24.1242}
+  m_AnchoredPosition: {x: 17.1776, y: 2.4}
+  m_SizeDelta: {x: 98.19, y: 24.1242}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &666478290
 MonoBehaviour:
@@ -1540,8 +1568,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: deea439992bc6c94c88fd43397c24feb, type: 2}
-  m_sharedMaterial: {fileID: -4869602136251802454, guid: deea439992bc6c94c88fd43397c24feb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 03a0ac37658b43a47bade856870fe3e5, type: 2}
+  m_sharedMaterial: {fileID: 8693133383784386394, guid: 03a0ac37658b43a47bade856870fe3e5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1571,8 +1599,8 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 8
   m_fontSizeMax: 20
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1618,6 +1646,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666478288}
   m_CullTransparentMesh: 1
+--- !u!114 &666478292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666478288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5b2ea0a5b43954a82c0dac5985d1c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedText
+  targetText: {fileID: 666478290}
+  localizedString:
+    m_TableReference:
+      m_TableCollectionName: GUID:82cfbffa74e43a0428d2f90b6e7359bf
+    m_TableEntryReference:
+      m_KeyId: 20789751808
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &749846547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,6 +1732,9 @@ MonoBehaviour:
   resumeButton: {fileID: 1388899383}
   sfxButton: {fileID: 2095617125}
   bgmButton: {fileID: 665529362}
+  resumeButtonLocalizedText: {fileID: 666478292}
+  sfxButtonLocalizedText: {fileID: 778056113}
+  bgmButtonLocalizedText: {fileID: 397605611}
   sfxImage: {fileID: 1036563348}
   sfxOnSprite: {fileID: 21300000, guid: 836f535eef524f84498ca2753efbc588, type: 3}
   sfxOffSprite: {fileID: 21300000, guid: 9ea99d3b76a053445b275a54150efc9e, type: 3}
@@ -1771,6 +1827,7 @@ GameObject:
   - component: {fileID: 778056110}
   - component: {fileID: 778056112}
   - component: {fileID: 778056111}
+  - component: {fileID: 778056113}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1794,8 +1851,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7, y: 2.4}
-  m_SizeDelta: {x: 87.0349, y: 24.1242}
+  m_AnchoredPosition: {x: 20.47648, y: 2.4}
+  m_SizeDelta: {x: 104.3526, y: 24.1242}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &778056111
 MonoBehaviour:
@@ -1819,8 +1876,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SFX
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: deea439992bc6c94c88fd43397c24feb, type: 2}
-  m_sharedMaterial: {fileID: -4869602136251802454, guid: deea439992bc6c94c88fd43397c24feb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 03a0ac37658b43a47bade856870fe3e5, type: 2}
+  m_sharedMaterial: {fileID: 8693133383784386394, guid: 03a0ac37658b43a47bade856870fe3e5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1850,8 +1907,8 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 8
   m_fontSizeMax: 20
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1897,6 +1954,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778056109}
   m_CullTransparentMesh: 1
+--- !u!114 &778056113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778056109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5b2ea0a5b43954a82c0dac5985d1c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedText
+  targetText: {fileID: 778056111}
+  localizedString:
+    m_TableReference:
+      m_TableCollectionName: GUID:82cfbffa74e43a0428d2f90b6e7359bf
+    m_TableEntryReference:
+      m_KeyId: 618595512320
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &780380736
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,8 +2704,6 @@ MonoBehaviour:
   logoCanvasGroup: {fileID: 864763767}
   playButton: {fileID: 1573628179}
   playButtonCanvasGroup: {fileID: 1573628182}
-  exitButton: {fileID: 0}
-  exitButtonCanvasGroup: {fileID: 0}
   readyTransform: {fileID: 613189430}
   readyCanvasGroup: {fileID: 613189433}
   goTransform: {fileID: 1730488247}
@@ -2814,8 +2894,9 @@ GameObject:
   - component: {fileID: 1222032568}
   - component: {fileID: 1222032570}
   - component: {fileID: 1222032569}
+  - component: {fileID: 1222032571}
   m_Layer: 5
-  m_Name: Score (1)
+  m_Name: Score Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2940,6 +3021,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222032567}
   m_CullTransparentMesh: 1
+--- !u!114 &1222032571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222032567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5b2ea0a5b43954a82c0dac5985d1c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedText
+  targetText: {fileID: 1222032569}
+  localizedString:
+    m_TableReference:
+      m_TableCollectionName: GUID:82cfbffa74e43a0428d2f90b6e7359bf
+    m_TableEntryReference:
+      m_KeyId: 824175128576
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1236677531
 GameObject:
   m_ObjectHideFlags: 0

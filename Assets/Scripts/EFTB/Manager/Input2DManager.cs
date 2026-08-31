@@ -75,15 +75,11 @@ namespace JumboJumps.EFTB.Manager
             isSwiping = false;
             startTouchPosition = touch.position;
             touchDuration = 0f;
-
-            DebugLogHelper.Log($"Touch began at position: {startTouchPosition}");
         }
 
         private void HandleTouchMoved(Touch touch)
         {
             if (isSwiping) return;
-
-            DebugLogHelper.Log($"Touch began at position: {startTouchPosition}");
 
             Vector2 moveDelta = touch.position - startTouchPosition;
             if (moveDelta.sqrMagnitude > swipeThresholdSquare)
@@ -97,7 +93,6 @@ namespace JumboJumps.EFTB.Manager
         {
             if (!isTouchingScreen) return;
 
-            DebugLogHelper.Log($"Touch began at position: {startTouchPosition}");
 
             if (!isSwiping)
             {
@@ -111,8 +106,6 @@ namespace JumboJumps.EFTB.Manager
         public void HandleSwipe(Vector2 swipedVector)
         {
             SwipeDirectionEnum dir = swipedVector.x > 0 ? SwipeDirectionEnum.Right : SwipeDirectionEnum.Left;
-
-            DebugLogHelper.Log($"Touch began at position: {startTouchPosition}");
 
             if (Mathf.Abs(swipedVector.x) >= Mathf.Abs(swipedVector.y))
             {
