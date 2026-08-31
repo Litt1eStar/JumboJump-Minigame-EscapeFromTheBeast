@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-English (en)
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Localization-Assets-English (en)
+  m_GUID: bc857c83c57b46f47ba194d763bf9fc0
+  m_SerializeEntries:
+  - m_GUID: 3f0dd733af259e04e8513c8b8bb69037
+    m_Address: SPR_Label_Go_EN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c98065223ce78142a8fed90d0338b0d
+    m_Address: SPR_Label_Ready_EN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c1a91e90a007524cb3da253cfd78c7f
+    m_Address: SPR_Button_Start_EN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d30bfdc1659813441bc4968c6b23d0e9
+    m_Address: SPR_PopupGameOver_Background_EN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 4a72fbbdc76ee454f844d40c183d1bb2, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 006add0996950cb4e8149e6c36ab8407, type: 2}
+    - {fileID: 11400000, guid: 91692e9c55897a141944068658b509cd, type: 2}

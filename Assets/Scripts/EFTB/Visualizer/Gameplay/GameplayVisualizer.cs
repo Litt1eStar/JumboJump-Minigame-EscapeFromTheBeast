@@ -188,6 +188,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
         {
             uiPauseMenuPanel?.Hide();
             uiFinishLevelPanel?.Hide();
+            HideGameplayCanvas();
         }
 
         public void ShowFinishLevelPanel()

@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: ca0b19c41d3f6bb479f451fd94eaa651
+guid: 6b086f8850f22a94aa93340a416a8a0f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7868705027545752903
-    second: UI-Ready_0
-  - first:
-      213: -3652130155022970056
-    second: UI-Ready_1
+      213: 1012994782285168199
+    second: label=ready, Localize=true_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -129,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI-Ready_0
+      name: label=ready, Localize=true_0
       rect:
         serializedVersion: 2
-        x: 58
-        y: 86
-        width: 212
-        height: 92
+        x: 31
+        y: 9
+        width: 184
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,30 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 745e1394881433d60800000000000000
-      internalID: 7868705027545752903
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI-Ready_1
-      rect:
-        serializedVersion: 2
-        x: 280
-        y: 103
-        width: 47
-        height: 67
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8331d5c49f6015dc0800000000000000
-      internalID: -3652130155022970056
+      spriteID: 74e7e6d2361ee0e00800000000000000
+      internalID: 1012994782285168199
       vertices: []
       indices: 
       edges: []
@@ -186,8 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UI-Ready_0: 7868705027545752903
-      UI-Ready_1: -3652130155022970056
+      label=ready, Localize=true_0: 1012994782285168199
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

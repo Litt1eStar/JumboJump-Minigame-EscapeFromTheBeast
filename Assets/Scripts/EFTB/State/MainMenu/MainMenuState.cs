@@ -35,6 +35,7 @@ namespace JumboJumps.EFTB.State.MainMenu
             visualizer.Show();
 
             GameplayStateController gameplayStateController = StateController as GameplayStateController;
+            gameplayStateController?.GameplayVisualizer?.HideGameplayCanvas();
             gameplayStateController?.GameplayVisualizer?.HidePanel();
 
             visualizer.EventPlayUIButtonClicked += OnPlayButtonClicked;
