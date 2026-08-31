@@ -1108,11 +1108,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 613189429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5f7b1d2730af88459494b9bc2f2e985, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f55fcc3768689a4f9cf863b8c11c618, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedImage
-  targetImage: {fileID: 613189431}
-  localizedSprite:
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeSpriteEvent
+  m_LocalizedAssetReference:
     m_TableReference:
       m_TableCollectionName: GUID:d9220477d5c01894299f2fffecf5a317
     m_TableEntryReference:
@@ -1120,6 +1119,21 @@ MonoBehaviour:
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
+  m_UpdateAsset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 613189431}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_sprite
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &665529360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,8 +1434,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Gameplay.FinishLevel.UIFinishLevelPanel
   scoreTextLabel: {fileID: 3868680877039971105}
-  scoreHeaderLocalizedText: {fileID: 728033403}
-  gameOverHeaderLocalizedImage: {fileID: 0}
   mainMenuButton: {fileID: 0}
   replayButton: {fileID: 2139298053}
   panelContentTransform: {fileID: 5339083771184310033}
@@ -1525,9 +1537,6 @@ MonoBehaviour:
   resumeButton: {fileID: 269948521}
   sfxButton: {fileID: 269948523}
   bgmButton: {fileID: 269948522}
-  resumeButtonLocalizedText: {fileID: 666478292}
-  sfxButtonLocalizedText: {fileID: 778056113}
-  bgmButtonLocalizedText: {fileID: 397605611}
   sfxImage: {fileID: 1175288819}
   sfxOnSprite: {fileID: 21300000, guid: 836f535eef524f84498ca2753efbc588, type: 3}
   sfxOffSprite: {fileID: 21300000, guid: 9ea99d3b76a053445b275a54150efc9e, type: 3}
@@ -2371,9 +2380,6 @@ MonoBehaviour:
   playButtonCanvasGroup: {fileID: 1573628182}
   exitButton: {fileID: 0}
   exitButtonCanvasGroup: {fileID: 0}
-  playButtonLocalizedImage: {fileID: 1573628183}
-  readyLocalizedImage: {fileID: 613189434}
-  goLocalizedImage: {fileID: 1730488251}
   readyTransform: {fileID: 613189430}
   readyCanvasGroup: {fileID: 613189433}
   goTransform: {fileID: 1730488247}
@@ -2920,11 +2926,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1573628177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5f7b1d2730af88459494b9bc2f2e985, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f55fcc3768689a4f9cf863b8c11c618, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedImage
-  targetImage: {fileID: 1573628180}
-  localizedSprite:
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeSpriteEvent
+  m_LocalizedAssetReference:
     m_TableReference:
       m_TableCollectionName: GUID:d9220477d5c01894299f2fffecf5a317
     m_TableEntryReference:
@@ -2932,6 +2937,21 @@ MonoBehaviour:
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
+  m_UpdateAsset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1573628180}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_sprite
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1684437919
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,11 +3147,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1730488246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5f7b1d2730af88459494b9bc2f2e985, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f55fcc3768689a4f9cf863b8c11c618, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumboJumps.EFTB.UI.Utilities.LocalizedImage
-  targetImage: {fileID: 1730488248}
-  localizedSprite:
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeSpriteEvent
+  m_LocalizedAssetReference:
     m_TableReference:
       m_TableCollectionName: GUID:d9220477d5c01894299f2fffecf5a317
     m_TableEntryReference:
@@ -3139,6 +3158,21 @@ MonoBehaviour:
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
+  m_UpdateAsset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1730488248}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_sprite
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1732330364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,11 +4834,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2597376605905193190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5f7b1d2730af88459494b9bc2f2e985, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f55fcc3768689a4f9cf863b8c11c618, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  targetImage: {fileID: 8286243577688281386}
-  localizedSprite:
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeSpriteEvent
+  m_LocalizedAssetReference:
     m_TableReference:
       m_TableCollectionName: GUID:d9220477d5c01894299f2fffecf5a317
     m_TableEntryReference:
@@ -4812,6 +4845,21 @@ MonoBehaviour:
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
+  m_UpdateAsset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8286243577688281386}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_sprite
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!224 &8311570216967542778
 RectTransform:
   m_ObjectHideFlags: 0

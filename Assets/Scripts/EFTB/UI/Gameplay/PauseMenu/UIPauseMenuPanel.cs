@@ -1,5 +1,3 @@
-using JumboJumps.EFTB.Constant.Localization;
-using JumboJumps.EFTB.UI.Utilities;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,11 +15,6 @@ namespace JumboJumps.EFTB.UI.Gameplay.PauseMenu
         [SerializeField] private Button sfxButton;
         [SerializeField] private Button bgmButton;
 
-        [Header("Localization References (Optional)")]
-        [SerializeField] private LocalizedText resumeButtonLocalizedText;
-        [SerializeField] private LocalizedText sfxButtonLocalizedText;
-        [SerializeField] private LocalizedText bgmButtonLocalizedText;
-
         [Header("SFX Visual Settings")]
         [SerializeField] private Image sfxImage;
         [SerializeField] private Sprite sfxOnSprite;
@@ -34,10 +27,6 @@ namespace JumboJumps.EFTB.UI.Gameplay.PauseMenu
 
         public void Initialize()
         {
-            if (resumeButtonLocalizedText != null) resumeButtonLocalizedText.SetLocalizedKey(ConstLocalization.Keys.BTN_RESUME);
-            if (sfxButtonLocalizedText != null) sfxButtonLocalizedText.SetLocalizedKey(ConstLocalization.Keys.BTN_SFX);
-            if (bgmButtonLocalizedText != null) bgmButtonLocalizedText.SetLocalizedKey(ConstLocalization.Keys.BTN_BGM);
-
             Subscribe();
         }
 

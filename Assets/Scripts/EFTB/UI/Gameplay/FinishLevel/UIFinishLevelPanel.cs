@@ -1,8 +1,6 @@
-using JumboJumps.EFTB.Constant.Localization;
 using JumboJumps.EFTB.Constant.UI;
 using JumboJumps.EFTB.Model;
 using JumboJumps.EFTB.State.Gameplay;
-using JumboJumps.EFTB.UI.Utilities;
 using JumboJumps.EFTB.Utilities;
 using System;
 using System.Collections;
@@ -20,10 +18,6 @@ namespace JumboJumps.EFTB.UI.Gameplay.FinishLevel
         [Header("UI Text References")]
         [SerializeField] private TextMeshProUGUI scoreTextLabel;
 
-        [Header("Localization References (Optional)")]
-        [SerializeField] private LocalizedText scoreHeaderLocalizedText;
-        [SerializeField] private LocalizedImage gameOverHeaderLocalizedImage;
-
         [Header("UI Button References")]
         [SerializeField] private Button mainMenuButton;
         [SerializeField] private Button replayButton;
@@ -37,16 +31,6 @@ namespace JumboJumps.EFTB.UI.Gameplay.FinishLevel
 
         public void Initialize()
         {
-            if (scoreHeaderLocalizedText != null)
-            {
-                scoreHeaderLocalizedText.SetLocalizedKey(ConstLocalization.Keys.RESULT_SCORE_LABEL);
-            }
-
-            if (gameOverHeaderLocalizedImage != null)
-            {
-                gameOverHeaderLocalizedImage.SetLocalizedKey(ConstLocalization.Keys.ASSET_GAME_OVER);
-            }
-
             Subscribe();
 
             coroutineHelper = GameContext.Instance?.Get<CoroutineHelper>();
