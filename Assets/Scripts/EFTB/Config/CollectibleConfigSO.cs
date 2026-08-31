@@ -26,7 +26,7 @@ namespace JumboJumps.EFTB.Config
         [SerializeField] private float hazardLaneWeightMultiplier = 3.0f;
 
         [Header("Prefab Reference")]
-        [Tooltip("Default prefab name for treat collectibles in GameDataManager (default: Prefab_Collectible_Collectible)")]
+        [Tooltip("Default prefab name for treat collectibles in GameDataManager (default: Prefab_Collectible_Coin)")]
         [SerializeField] private string prefabName = "Prefab_Collectible_Coin";
 
         public int SafeZoneCells => safeZoneCells;

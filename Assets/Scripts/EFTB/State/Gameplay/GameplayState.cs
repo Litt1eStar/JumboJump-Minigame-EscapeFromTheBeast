@@ -55,7 +55,7 @@ namespace JumboJumps.EFTB.State.Gameplay
             collectibleManager.Initialize();
 
             scoreManager = new ScoreManager();
-            scoreManager.Initialize(playerManager.PlayerTransform);
+            scoreManager.Initialize(playerManager);
 
             poolManager = new ObjectPoolManager();
             poolManager.Initialize();

@@ -129,6 +129,29 @@ namespace JumboJumps.EFTB.State.Cat.AggressiveCat
             return closestLane;
         }
 
+        private void InitializeSmashParameters(GIAggressiveCat giAggressive)
+        {
+            giAggressive.SetHandActive(true);
+
+            startPosition = giAggressive.transform.position;
+            currentSightDirection = giAggressive.CurrentSightDirection;
+            
+            float[] lanePositions = ConstGameplay.LevelGenerator.LANE_X_POSITIONS;
+            float targetX = (currentSightDirection == CatSightDirection.Right)
+                ? (lanePositions != null && lanePositions.Length > 0 ? lanePositions[0] : -2.0f)
+                : (lanePositions != null && lanePositions.Length > 1 ? lanePositions[lanePositions.Length - 1] : 2.0f);
+
+            float rotation = (currentSightDirection == CatSightDirection.Right) 
+                ? ConstGameplay.Cat.AggressiveCat.CAT_LEFT_HAND_Y_ROTATION 
+                : ConstGameplay.Cat.AggressiveCat.CAT_RIGHT_HAND_Y_ROTATION;
+
+            targetPosition = new Vector3(targetX, startPosition.y, startPosition.z);
+            
+            Quaternion catHandRotation = Quaternion.Euler(0f, rotation, 0f);
+            giAggressive.SetHandRotation(catHandRotation);
+            giAggressive.SetHandPosition(startPosition);
+        }
+
         public override void UpdateLogic(float deltaTime)
         {
             var giAggressive = stateController.GiAggressiveCat;

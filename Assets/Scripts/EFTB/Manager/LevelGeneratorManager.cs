@@ -80,13 +80,13 @@ namespace JumboJumps.EFTB.Manager
                 DebugLogHelper.LogError($"[{GetType().Name}] Failed to find GameDataManager in GameContext.");
             }
 
-            
-            GIGameplayConfigContainer container = SceneObjectContext.Instance.Get<GIGameplayConfigContainer>();
-            
-            furnitureConfig = container.FurnitureConfig;
-            collectibleConfig = container.CollectibleConfig;
-                
-            furniturePlacementModel.Config = furnitureConfig;
+            GIGameplayConfigContainer container = SceneObjectContext.Instance?.Get<GIGameplayConfigContainer>();
+            if (container != null)
+            {
+                furnitureConfig = container.FurnitureConfig;
+                collectibleConfig = container.CollectibleConfig;
+                furniturePlacementModel.Config = furnitureConfig;
+            }
 
             segments = (gameDataManager != null && gameDataManager.LevelSegmentData != null)
                 ? gameDataManager.LevelSegmentData.Values.ToList()
@@ -109,12 +109,12 @@ namespace JumboJumps.EFTB.Manager
                                               MediumDifficultyTimePercentage,
                                               HardDifficultyTimePercentage);
 
-            nextTriggerPosition = SegmentHeight + config.SegmentRecycleTriggerOffset;
-            nextYSpawnPosition = SegmentHeight * config.MaxSegmentAmount;
+            nextTriggerPosition = SegmentHeight + config.SEGMENT_RECYCLE_TRIGGER_OFFSET;
+            nextYSpawnPosition = SegmentHeight * config.MAX_SEGMENT_AMOUNT;
 
             GameContext.Instance.Add(this);
 
-            for (int i = 0; i < config.MaxSegmentAmount; i++)
+            for (int i = 0; i < config.MAX_SEGMENT_AMOUNT; i++)
             {
                 float spawnYPosition = i * SegmentHeight;
                 SpawnSegmentAt(spawnYPosition);

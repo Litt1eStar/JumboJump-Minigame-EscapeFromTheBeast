@@ -14,7 +14,7 @@ namespace JumboJumps.EFTB.State.InitialLoading
         private CoroutineHelper coroutineHelper;
         private Coroutine loadingProgressCoroutine;
 
-        private float simulateDuration = ConstUI.Loading.SimulatedLoadingDuration; // Simulated loading duration in seconds
+        private float simulateDuration = ConstUI.Loading.SIMULATED_LOADING_DURATION; // Simulated loading duration in seconds
 
         public InitialLoadingState(BaseStateController stateController) : base(stateController)
         {

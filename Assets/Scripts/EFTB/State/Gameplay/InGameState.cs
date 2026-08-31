@@ -10,7 +10,6 @@ namespace JumboJumps.EFTB.State.Gameplay
         private GameplayStateController stateController;
 
         private PlayerManager playerManager;
-        private ScoreManager scoreManager;
         private LevelGeneratorManager levelGeneratorManager;
         private CatManager catManager;
         private HazardSpawner hazardSpawner;
@@ -30,7 +29,6 @@ namespace JumboJumps.EFTB.State.Gameplay
             base.OnEnterState();
 
             playerManager = GameContext.Instance?.Get<PlayerManager>();
-            scoreManager = GameContext.Instance?.Get<ScoreManager>();
             levelGeneratorManager = GameContext.Instance?.Get<LevelGeneratorManager>();
             catManager = GameContext.Instance?.Get<CatManager>();
             hazardSpawner = GameContext.Instance?.Get<HazardSpawner>();
@@ -64,7 +62,6 @@ namespace JumboJumps.EFTB.State.Gameplay
 
             input2DManager?.UpdateLogic(deltaTime);
             playerManager?.UpdateLogic(deltaTime);
-            scoreManager?.UpdateLogic(deltaTime);
             levelGeneratorManager?.UpdateLogic(deltaTime);
             catManager?.UpdateLogic(deltaTime);
             hazardSpawner?.UpdateLogic(deltaTime);

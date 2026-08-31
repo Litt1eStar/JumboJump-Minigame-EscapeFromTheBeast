@@ -75,7 +75,6 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             if (scoreManager != null) scoreManager.EventScoreChanged += SetScoreLabel;
             
             if (gameplayController != null) gameplayController.EventFinishLevel += OnLevelFinished;
-            
         }
 
         public void UnSubscribe()
@@ -95,7 +94,6 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
             if (scoreManager != null) scoreManager.EventScoreChanged -= SetScoreLabel;
             if (gameplayController != null) gameplayController.EventFinishLevel -= OnLevelFinished;
         }
-
 
         public void OnPauseButtonClicked()
         {
@@ -129,7 +127,7 @@ namespace JumboJumps.EFTB.Visualizer.Gameplay
 
         public void SetScoreLabel(ScoreData scoreData)
         {
-            uiGameplayCanvas?.SetScoreLabel(scoreData);
+            uiGameplayCanvas?.SetScoreLabel(scoreData.TotalScore);
         }
 
         public void ShowPauseMenu()
