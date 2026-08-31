@@ -1,4 +1,3 @@
-using JumboJumps.EFTB.GameData;
 using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.Plugins;
 using JumboJumps.EFTB.UI;
