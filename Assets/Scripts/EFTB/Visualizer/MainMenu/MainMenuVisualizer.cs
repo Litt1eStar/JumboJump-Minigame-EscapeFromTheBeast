@@ -11,7 +11,6 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
     public class MainMenuVisualizer
     {
         public event Action EventPlayUIButtonClicked;
-        public event Action EventExitUIButtonClicked;
 
         private UIMainMenuCanvas uiMainMenuCanvas;
         
@@ -42,7 +41,6 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
             if (uiMainMenuPanel != null)
             {
                 uiMainMenuPanel.EventPlayUIButtonClicked += OnPlayButtonClicked;
-                uiMainMenuPanel.EventExitUIButtonClicked += OnExitButtonClicked;
             }
         }
 
@@ -51,7 +49,6 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
             if (uiMainMenuPanel != null)
             {
                 uiMainMenuPanel.EventPlayUIButtonClicked -= OnPlayButtonClicked;
-                uiMainMenuPanel.EventExitUIButtonClicked -= OnExitButtonClicked;
             }
         }
 
@@ -161,12 +158,6 @@ namespace JumboJumps.EFTB.Visualizer.MainMenu
         {
             EFTBSound.PlayUIClick();
             EventPlayUIButtonClicked?.Invoke();
-        }
-
-        public void OnExitButtonClicked()
-        {
-            EFTBSound.PlayUIClick();
-            EventExitUIButtonClicked?.Invoke();
         }
     }
 }

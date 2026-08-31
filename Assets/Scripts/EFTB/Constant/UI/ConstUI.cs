@@ -5,6 +5,7 @@ namespace JumboJumps.EFTB.Constant.UI
         public class Loading
         {
             public const float SimulatedLoadingDuration = 2f;
+            public const float LoadingFinishDelay = 0.2f;
         }
 
         public class Gameplay

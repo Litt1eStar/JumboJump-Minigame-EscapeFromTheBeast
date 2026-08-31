@@ -14,6 +14,7 @@ namespace JumboJumps.EFTB.Manager
         private GameObject hostObject;
         private AudioSource bgmSource;
         private AudioSource sfxSource;
+        private bool isAudioSuspendedForAppBackground;
 
         private readonly Dictionary<string, AudioClip> audioClipCache = new Dictionary<string, AudioClip>();
 
@@ -179,6 +180,34 @@ namespace JumboJumps.EFTB.Manager
         public void ToggleBGM()
         {
             SetBGMOn(!IsBGMOn);
+        }
+
+        public void SetAppBackgroundAudioSuspended(bool isSuspended)
+        {
+            if (isSuspended)
+            {
+                SuspendForAppBackground();
+            }
+            else
+            {
+                ResumeFromAppBackground();
+            }
+        }
+
+        public void SuspendForAppBackground()
+        {
+            if (isAudioSuspendedForAppBackground) return;
+            isAudioSuspendedForAppBackground = true;
+            AudioListener.pause = true;
+            DebugLogHelper.Log($"[{GetType().Name}] Audio suspended for app background.");
+        }
+
+        public void ResumeFromAppBackground()
+        {
+            if (!isAudioSuspendedForAppBackground) return;
+            isAudioSuspendedForAppBackground = false;
+            AudioListener.pause = false;
+            DebugLogHelper.Log($"[{GetType().Name}] Audio resumed from app background.");
         }
     }
 }

@@ -2,6 +2,7 @@ using JumboJumps.EFTB.Constant.Scene;
 using JumboJumps.EFTB.State.Base;
 using JumboJumps.EFTB.GI;
 using JumboJumps.EFTB.Manager;
+using JumboJumps.EFTB.Plugins;
 using JumboJumps.EFTB.State.MainMenu;
 using JumboJumps.EFTB.Utilities;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace JumboJumps.EFTB.State.Gameplay
         private Input2DManager input2DManager;
         private ObjectPoolManager poolManager;
         private AggressiveCatSpawner aggressiveCatSpawner;
+        private SoundManager soundManager;
 
         public GameplayState(BaseStateController stateController) : base(stateController)
         {
@@ -69,6 +71,9 @@ namespace JumboJumps.EFTB.State.Gameplay
             hazardSpawner = new HazardSpawner();
             hazardSpawner.Initialize();
 
+            soundManager = new SoundManager();
+            soundManager.Initialize();
+
             gameplayController = new GameplayController();
 
             gameplayStateManager = new GameplayStateManager();
@@ -90,6 +95,9 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void OnExitState()
         {
             base.OnExitState();
+
+            soundManager?.Dispose();
+            soundManager = null;
 
             hazardSpawner?.Dispose();
             hazardSpawner = null;

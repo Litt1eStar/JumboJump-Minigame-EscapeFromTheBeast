@@ -1,4 +1,7 @@
+using JumboJumps.EFTB.Manager;
 using JumboJumps.EFTB.State.MainMenu;
+using JumboJumps.EFTB.Utilities;
+using JumboJumps.EFTB.Visualizer.ErrorPopup;
 
 namespace JumboJumps.EFTB.State.Gameplay
 {
@@ -6,6 +9,8 @@ namespace JumboJumps.EFTB.State.Gameplay
     {
         private GameplayStateController stateController;
         private GameplayController gameplayController;
+        private MiniHubManager miniHubManager;
+        private ErrorPopupVisualizer errorPopupVisualizer;
 
         public FinishGameState(BaseStateController stateController, GameplayController gameplayController) : base(stateController)
         {
@@ -18,14 +23,47 @@ namespace JumboJumps.EFTB.State.Gameplay
         public override void OnEnterState()
         {
             base.OnEnterState();
+            miniHubManager = GameContext.Instance?.Get<MiniHubManager>();
+            errorPopupVisualizer = GameContext.Instance?.Get<ErrorPopupVisualizer>();
+
             if (stateController?.GameplayVisualizer != null)
             {
                 stateController.GameplayVisualizer.EventFinishMainMenuButtonClicked += OnFinishMainMenuButtonClicked;
             }
+
+            int finalScore = GameContext.Instance?.Get<ScoreManager>()?.CurrentScoreData.TotalScore ?? 0;
+
+            if (miniHubManager == null)
+            {
+                DebugLogHelper.LogError($"[{GetType().Name}] MiniHubManager not found in GameContext during FinishGameState.");
+                ShowEndGameSessionErrorPopup();
+                return;
+            }
+
+            miniHubManager.EndGameSession(finalScore, (isSuccess, response, error) =>
+            {
+                if (isSuccess)
+                {
+                    DebugLogHelper.Log($"[{GetType().Name}] Submitted score to platform: {finalScore}");
+                }
+                else
+                {
+                    DebugLogHelper.LogError($"[{GetType().Name}] Failed to submit score: {error}");
+                    ShowEndGameSessionErrorPopup();
+                }
+            });
+        }
+
+        private void ShowEndGameSessionErrorPopup()
+        {
+            errorPopupVisualizer?.Show();
         }
 
         public override void OnExitState()
         {
+            miniHubManager = null;
+            errorPopupVisualizer = null;
+
             if (stateController?.GameplayVisualizer != null)
             {
                 stateController.GameplayVisualizer.HidePanel();
