@@ -16,19 +16,19 @@ MonoBehaviour:
   m_GUID: bc857c83c57b46f47ba194d763bf9fc0
   m_SerializeEntries:
   - m_GUID: 3f0dd733af259e04e8513c8b8bb69037
-    m_Address: label=go, Localize=true
+    m_Address: SPR_Label_Go_EN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c98065223ce78142a8fed90d0338b0d
-    m_Address: label=ready, Localize=false
+    m_Address: SPR_Label_Ready_EN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6c1a91e90a007524cb3da253cfd78c7f
-    m_Address: Localize=EN, Game Type=Generic
+    m_Address: SPR_Button_Start_EN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

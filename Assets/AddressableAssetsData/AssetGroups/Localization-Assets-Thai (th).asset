@@ -16,25 +16,25 @@ MonoBehaviour:
   m_GUID: cbfb546e0497ad548b0f36c5e63bbf58
   m_SerializeEntries:
   - m_GUID: 4820ce130087fda4faa43b19b29d2176
-    m_Address: UIStartBtn_th
+    m_Address: SPR_Button_Start_TH
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-th
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6b086f8850f22a94aa93340a416a8a0f
-    m_Address: label=ready, Localize=true
+    m_Address: SPR_Label_Ready_TH
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-th
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 79886d7cef38b8541b933dad10abb144
-    m_Address: label=go, Localize=false
+    m_Address: SPR_Label_Go_TH
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-th
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4fcc754b95ef064fb42c5b480802c17
-    m_Address: UIGameOver_th
+    m_Address: SPR_PopupGameOver_Background_TH
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-th
